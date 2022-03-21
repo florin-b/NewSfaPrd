@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <ScrollView
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.5" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textDateRetur"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_gravity="left"
+                android:layout_marginLeft="7dp"
+                android:gravity="center_vertical"
+                android:text="Date comanda"
+                android:textColor="#7D9E7D"
+                android:textSize="19sp"
+                android:typeface="sans" />
+
+            <LinearLayout
+                android:id="@+id/layoutDateLivrare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:background="@drawable/rounded_shape"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="Data retur" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDataRetur"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.75"
+                        android:gravity="left" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="Transport" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTranspRetur"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.75"
+                        android:gravity="left" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="Motiv" />
+
+                    <Spinner
+                        android:id="@+id/spinnerMotivRetur"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.75"
+                        android:gravity="left" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="Persoana contact" />
+
+                    <EditText
+                        android:id="@+id/textPersoana"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:gravity="left"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="65"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="Telefon" />
+
+                    <EditText
+                        android:id="@+id/textTelefon"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:gravity="left"
+                        android:inputType="textNoSuggestions" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="Observatii" />
+
+                    <EditText
+                        android:id="@+id/textObservatii"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:gravity="left"
+                        android:inputType="textNoSuggestions" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="Adresa" />
+
+                    <Spinner
+                        android:id="@+id/spinnerAdresaRetur"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.75"
+                        android:gravity="left" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutAdresa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="7dip"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/dateLivrareDlLabel"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.25"
+                            android:text="Judet" />
+
+                        <Spinner
+                            android:id="@+id/spinnerJudet"
+                            android:layout_width="0dp"
+                            android:layout_height="45dip"
+                            android:layout_gravity="left|bottom"
+                            android:layout_weight="0.75"
+                            android:gravity="left" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@id/layoutAdresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/dateLivrareDlLabel"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.25"
+                            android:text="Oras" />
+
+                        <EditText
+                            android:id="@+id/textOras"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.75"
+                            android:gravity="left"
+                            android:inputType="textNoSuggestions" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@id/layoutAdresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/dateLivrareDlLabel"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.25"
+                            android:text="Strada" />
+
+                        <EditText
+                            android:id="@+id/textStrada"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.75"
+                            android:gravity="left"
+                            android:inputType="textNoSuggestions" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@id/layoutAdresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/dateLivrareDlLabel"
+                            android:layout_width="0dip"
+                            android:layout_height="35dip"
+                            android:layout_weight="0.25"
+                            android:text="" />
+
+                        <Button
+                            android:id="@+id/btnPozitieAdresa"
+                            style="@style/ok_button"
+                            android:layout_width="0dip"
+                            android:layout_height="30dip"
+                            android:layout_marginTop="5dip"
+                            android:layout_weight="0.75"
+                            android:background="@drawable/cancel_button_style"
+                            android:text="Pozitionati adresa pe harta" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5" >
+    </LinearLayout>
+
+</LinearLayout>

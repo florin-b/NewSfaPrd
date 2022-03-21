@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="1dip"
+    android:paddingTop="1dip" >
+
+    <TextView
+        android:id="@+id/textNumeAgent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:paddingLeft="3dip"
+        android:textColor="@color/agentiColor"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textCodAgent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:paddingLeft="3dip"
+        android:textColor="@color/agentiColor"
+        android:textSize="13sp"
+        android:typeface="monospace" />
+
+</LinearLayout>

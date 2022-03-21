@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutSalvareEveniment"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentRight="true"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btnSaveUrmarire"
+        style="@style/ok_button"
+        android:layout_width="20dip"
+        android:layout_height="40dip"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
+        android:background="@drawable/ok_button_style"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:text="Salveaza" />
+
+    <ProgressBar
+        android:id="@+id/progressSaveUrmarire"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dip"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:max="50"
+        android:progressDrawable="@drawable/progress_bar_style" />
+
+</TableLayout>

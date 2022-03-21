@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dip"
+    android:background="@drawable/drop_back_color_1" >
+
+    <TextView
+        android:id="@+id/textRowName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:gravity="left|center"
+        android:textColor="@color/dropColor2"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textRowId"
+        android:layout_width="1dip"
+        android:layout_height="1dip"
+        android:textSize="1sp" />
+
+</LinearLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="15dip"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:id="@+id/radioTipCmd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dip"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/radioCV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dip"
+                android:checked="false"
+                android:text="Comanda de vanzare"
+                android:textColor="@color/detColor1"
+                android:textSize="17sp"
+                android:typeface="sans" >
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioDL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dip"
+                android:checked="true"
+                android:text="Dispozitie de livrare DL"
+                android:textColor="@color/detColor1"
+                android:textSize="17sp"
+                android:typeface="sans" >
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioCC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dip"
+                android:checked="false"
+                android:text="Livrare din custodie"
+                android:textColor="@color/detColor1"
+                android:textSize="17sp"
+                android:typeface="sans" >
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioCLP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dip"
+                android:checked="false"
+                android:text="Comanda de livrare CLP"
+                android:textColor="@color/detColor1"
+                android:textSize="17sp"
+                android:typeface="sans" >
+            </RadioButton>
+        </RadioGroup>
+
+        <Spinner
+            android:id="@+id/spinFilialaCLP"
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="20dip"
+            android:layout_marginLeft="30dip"
+            android:layout_weight="0.1"
+            android:gravity="left"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="15dip"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnOkTipCmd"
+            style="@style/ok_button"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:background="@drawable/ok_button_style"
+            android:text="Ok" />
+    </LinearLayout>
+
+</LinearLayout>

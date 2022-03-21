@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/layoutSelectieClient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.005" />
+
+                <EditText
+                    android:id="@+id/textNumeClient"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.25"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="30"
+                    android:singleLine="true"
+                    android:typeface="monospace" />
+
+                <Button
+                    android:id="@+id/cautaClientBtn"
+                    style="@style/ok_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="25dp"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/ok_button_style"
+                    android:text="@string/strCauta"
+                    android:textSize="19sp" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listClienti"
+                android:layout_width="match_parent"
+                android:layout_height="250dip"
+                android:layout_margin="20dp"
+                android:dividerHeight="1sp"
+                android:drawSelectorOnTop="true"
+                android:fadeScrollbars="false" />
+
+            <LinearLayout
+                android:id="@+id/layoutClient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dip"
+                android:orientation="horizontal"
+                android:visibility="invisible" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="45dip"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Client"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/labelNumeClient"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.25"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/schimbaClientBtn"
+                    style="@style/ok_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_margin="10dip"
+                    android:background="@drawable/ok_button_style"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:text="Schimba client" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSuma"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:layout_marginLeft="20dip"
+                android:orientation="horizontal"
+                android:visibility="invisible" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Suma"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <EditText
+                    android:id="@+id/txtSuma"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.25"
+                    android:gravity="left"
+                    android:inputType="numberDecimal"
+                    android:maxLength="65"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutFacturi"
+                android:layout_width="match_parent"
+                android:layout_height="300dip"
+                android:layout_marginLeft="20dip"
+                android:orientation="horizontal"
+                android:visibility="invisible" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Facturi neincasate"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <ListView
+                    android:id="@+id/listNeincasate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:layout_weight="0.25"
+                    android:dividerHeight="1sp"
+                    android:drawSelectorOnTop="true"
+                    android:fadeScrollbars="false" />
+
+                <Button
+                    android:id="@+id/facturiBtn"
+                    style="@style/ok_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_margin="15dip"
+                    android:background="@drawable/ok_button_style"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:text="Afiseaza facturi"
+                    android:textSize="19sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTipPlata"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:layout_marginLeft="20dip"
+                android:orientation="horizontal"
+                android:visibility="invisible" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Tip plata"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <RadioGroup
+                    android:id="@+id/myRadioGroupPlata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioCEC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="50dip"
+                        android:text="CEC" />
+
+                    <RadioButton
+                        android:id="@+id/radioBO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bilet la ordin" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSerie"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:layout_marginLeft="20dip"
+                android:orientation="horizontal"
+                android:visibility="invisible" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Serie/numar"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <EditText
+                    android:id="@+id/txtSerie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.25"
+                    android:gravity="left"
+                    android:maxLength="14"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutEmitere"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:layout_marginLeft="20dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Data emitere"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/txtEmitere"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.2"
+                    android:gravity="left"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/dataEmitereBtn"
+                    style="@style/ok_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_gravity="right"
+                    android:background="@drawable/ok_button_style"
+                    android:paddingLeft="40dip"
+                    android:paddingRight="40dip"
+                    android:text="Selecteaza data" />
+
+                <View
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutScadenta"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:layout_marginLeft="20dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Data scadenta"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/txtScadent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.2"
+                    android:gravity="left"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/dataScadentaBtn"
+                    style="@style/ok_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_gravity="right"
+                    android:background="@drawable/ok_button_style"
+                    android:paddingLeft="40dip"
+                    android:paddingRight="40dip"
+                    android:text="Selecteaza data" />
+
+                <View
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutGirant"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:layout_marginLeft="20dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Emitent/girant"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <EditText
+                    android:id="@+id/txtGirant"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.25"
+                    android:gravity="left"
+                    android:maxLength="50"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/salveazaPlataBtn"
+                style="@style/ok_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_margin="60dip"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="40dip"
+                android:paddingRight="40dip"
+                android:text="Salveaza"
+                android:textSize="19sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </ScrollView>
+
+</merge>

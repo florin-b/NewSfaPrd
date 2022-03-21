@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/textAn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textLuna"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textVanz03"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz06"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz07"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz09"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz040"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz041"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+</LinearLayout>

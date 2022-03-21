@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/clp_border_1" >
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/myScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadeScrollbars="false"
+            android:fillViewport="true"
+            android:scrollbars="vertical" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/clientData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="100dip"
+                android:layout_marginTop="10dip"
+                android:orientation="vertical" >
+
+                <RadioGroup
+                    android:id="@+id/radioTipDest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dip"
+                    android:layout_marginLeft="120dp"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioClient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Client"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioFiliala"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dip"
+                        android:text="Filiala"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+                </RadioGroup>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/labelClient"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Client"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/numeSelClient"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:textColor="@color/dropColor2"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/layoutAdr1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Judet"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerJudetCLP"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/dropdown_style_1"
+                        android:gravity="left" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:layout_marginLeft="30dp"
+                        android:layout_weight="0.05"
+                        android:gravity="left"
+                        android:text="Oras"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txtOrasCLP"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="text"
+                        android:maxLength="200"
+                        android:nextFocusDown="@+id/txtStradaCLP"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp"
+                        android:windowSoftInputMode="stateUnchanged" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.11" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutAdr2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Strada, nr"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txtStradaCLP"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="65"
+                        android:nextFocusDown="@+id/txtPersContCLP"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.01" />
+
+                    <Button
+                        android:id="@+id/btnPozitieAdresa"
+                        style="@style/ok_button"
+                        android:layout_width="0dip"
+                        android:layout_height="35dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dip"
+                        android:layout_weight="0.08"
+                        android:background="@drawable/cancel_button_style"
+                        android:text="Pozitionati adresa pe harta" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.01" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Pers. contact"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/txtPersContCLP"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="65"
+                        android:nextFocusDown="@+id/txtTelefonCLP"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:text="Telefon"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/txtTelefonCLP"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="number"
+                        android:maxLength="65"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:text="Furnizor"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/numeSelFurnizor"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:textColor="@color/dropColor2"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:text="Furnizor de produse"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/numeSelFurnizorProd"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:textColor="@color/dropColor2"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:text="Tip marfa"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/txtTipMarfa"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="text"
+                        android:maxLength="150"
+                        android:nextFocusDown="@+id/txtMasaMarfa"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:maxLength="150"
+                        android:text="Masa"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/txtMasaMarfa"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:text="Tip camion"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTipCamion"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/dropdown_style_1"
+                        android:gravity="left" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:text="Incarcare"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTipIncarcare"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/dropdown_style_1"
+                        android:gravity="left" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left|center"
+                        android:text="Data livrare"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textDataLivrareCLP"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.04"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.15" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Depozit"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDepozDl_Dest"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/dropdown_style_1"
+                        android:typeface="sans" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Tip plata"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTipPlata"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/dropdown_style_1"
+                        android:typeface="sans" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/layoutValoareCLP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Valoare"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/txtValoareCLP"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="numberDecimal"
+                        android:maxLength="65"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="5dip"
+                        android:text="RON"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Transport"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTransp"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.13"
+                        android:background="@drawable/dropdown_style_1"
+                        android:gravity="left" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.02" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTonaj"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/dropdown_style_1"
+                        android:gravity="left" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/layoutSelAgentiDl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/labelAgentiDl"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Agent"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerAgentiDl"
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/dropdown_style_1"
+                        android:typeface="sans" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="3dip"
+                        android:gravity="left"
+                        android:text="Observatii"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/txtObservatiiClp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="left"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="150"
+                        android:singleLine="true"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.04" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.15" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|left"
+                        android:layout_weight="0.04" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.15" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <SlidingDrawer
+                android:id="@+id/clientSlidingDrawer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:content="@+id/contentLayout"
+                android:handle="@+id/slideButton"
+                android:orientation="vertical"
+                android:padding="1dip"
+                android:rotation="180" >
+
+                <RelativeLayout
+                    android:id="@+id/slideButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#E0E0E0" >
+
+                    <TextView
+                        android:id="@+id/labelTipClient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="50dip"
+                        android:rotation="180"
+                        android:text="Selectie client"
+                        android:textColor="#BABABA"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:contentDescription="@string/img_content_desc"
+                        android:src="@drawable/sliding_up_down" />
+                </RelativeLayout>
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/dl_selclient_header" />
+            </SlidingDrawer>
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

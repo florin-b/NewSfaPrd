@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/documentData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/ShadowTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="45dip"
+                android:layout_gravity="top|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.04"
+                android:gravity="left|top"
+                android:text="Agent:"
+                android:textSize="19sp" />
+
+            <Spinner
+                android:id="@+id/spinnerFilialaVanzAg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.1"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.02"
+                android:gravity="left" />
+
+            <Spinner
+                android:id="@+id/spinnerAgentiVanzAg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.15"
+                android:scrollbarStyle="outsideInset" />
+
+            <TextView
+                android:id="@+id/textAgentiVanzAg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:textColor="@color/dropColor2"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.1"
+                android:gravity="left" />
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

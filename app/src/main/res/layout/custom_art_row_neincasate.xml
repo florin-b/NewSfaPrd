@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.005"
+        android:textSize="1sp" />
+
+    <TextView
+        android:id="@+id/textNrCrt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.02"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/textReferinta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.13"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textEmitere"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textScadenta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textAcoperit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textTipPlata"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.07"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textScadentaBO"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textValoare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.06"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textIncasat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.06"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textRest"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.06"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp"
+        android:typeface="monospace" />
+
+    <Button
+        android:id="@+id/btnDetalii"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|right"
+        android:layout_weight="0.03"
+        android:text="..." />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.005"
+        android:textSize="1sp" />
+
+</LinearLayout>

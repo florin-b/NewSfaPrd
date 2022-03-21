@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/textNrCrt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dip"
+        android:layout_weight="0.03"
+        android:gravity="center"
+        android:textColor="@color/agentiColor"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/textNumeClient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="3dip"
+        android:layout_weight="0.25"
+        android:gravity="left"
+        android:textColor="@color/agentiColor"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep01"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep02"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep03"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep04"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep05"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep06"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep07"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep08"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textDep09"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+</LinearLayout>

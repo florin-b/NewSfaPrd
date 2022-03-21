@@ -1,0 +1,130 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutHeaderVanz_Arts"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="5dip"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/textNrCrt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="3dip"
+        android:layout_weight="0.03"
+        android:gravity="left"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textNumeSintetic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left|center_vertical"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textCodSintetic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="left|center_vertical"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textNumeMaterial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.2"
+        android:gravity="left|center_vertical"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textCodMaterial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="left|center_vertical"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textCons30"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right|center_vertical"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textStoc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textPropunere"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.08"
+        android:gravity="right"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textCA"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/intrariI1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/intrariI2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/intrariI3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dip"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+</LinearLayout>

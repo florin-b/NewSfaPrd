@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/textNrCrt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="left"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textCodArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="@color/artRowColor"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textNumeArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.3"
+        android:gravity="left"
+        android:textColor="@color/artRowColor"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textCantArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="16sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textUmArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="16sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/textPretUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="16sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textUmBaza"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="16sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textPretUnitClient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:text=""
+        android:textColor="@color/artRowColor"
+        android:textSize="16sp"
+        android:typeface="monospace" />
+
+    <ImageView
+        android:id="@+id/imageAlertaPret"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_weight="0.05"
+        android:contentDescription="@string/img_content_desc" />
+
+</LinearLayout>

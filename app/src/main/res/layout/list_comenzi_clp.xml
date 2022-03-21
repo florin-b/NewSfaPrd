@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_cmd_spinner_style"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textIdCmdClp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:textColor="@color/rowColor1"
+            android:textSize="15sp"
+            android:typeface="serif" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textClient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.3"
+            android:gravity="left"
+            android:textColor="@color/rowColor1"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textData"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.1"
+            android:gravity="left"
+            android:textColor="@color/detColor1"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textCmdSAP"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.1"
+            android:gravity="left"
+            android:textColor="@color/customColor2"
+            android:textSize="15sp"
+            android:typeface="monospace" />
+        
+        <TextView
+            android:id="@+id/textDepoz"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.1"
+            android:gravity="left"
+            android:textColor="@color/statusCmdColor"
+            android:textSize="15sp"
+            android:typeface="monospace" />        
+        
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textAgent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:textColor="@color/detColor1"
+            android:textSize="16sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textUL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:textColor="@color/customColor2"
+            android:textSize="15sp"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/textStatusClp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:textColor="@color/statusCmdColor"
+            android:textSize="15sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+</LinearLayout>

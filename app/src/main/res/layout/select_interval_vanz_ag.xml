@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/documentData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/ShadowTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="45dip"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.04"
+                android:gravity="left|center"
+                android:text="Interval:"
+                android:textSize="19sp" />
+
+            <TextView
+                style="@style/ShadowTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_weight="0.02"
+                android:gravity="center"
+                android:text="Inceput:"
+                android:textColor="#8B5742"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtDataStartRap"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_weight="0.04"
+                android:background="@drawable/edittext_style_1"
+                android:gravity="center"
+                android:maxLength="65"
+                android:singleLine="true"
+                android:textColor="@color/editTextColor1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.02"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/ShadowTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_weight="0.02"
+                android:gravity="center"
+                android:text="Sfarsit:"
+                android:textColor="#8B5742"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtDataStopRap"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_weight="0.04"
+                android:background="@drawable/edittext_style_1"
+                android:gravity="center"
+                android:maxLength="65"
+                android:singleLine="true"
+                android:textColor="@color/editTextColor1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.1"
+                android:gravity="left" />
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

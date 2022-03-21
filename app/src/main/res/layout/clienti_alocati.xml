@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:id="@+id/headerClienti"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="30dip"
+            android:background="#D6DBDF"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textNrCrt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dip"
+                android:layout_weight="0.03"
+                android:gravity="center"
+                android:text="Nr."
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textNumeClient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.25"
+                android:gravity="left"
+                android:text="Client"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep01"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Lemnoase"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep02"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Feronerie"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep03"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Parchet"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep04"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Mat. grele"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep05"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Electrice"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep06"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Gips"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep07"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Chimice"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep08"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Instalatii"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textDep09"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="Hidroizolatii"
+                android:textColor="#616A6B"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutListClienti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:orientation="horizontal" >
+
+            <ListView
+                android:id="@+id/listClienti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:drawSelectorOnTop="true"
+                android:fadeScrollbars="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+</merge>

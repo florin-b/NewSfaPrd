@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/table_ntcf"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="40dip"
+    android:visibility="invisible" >
+
+    <TableRow
+        android:layout_height="40dip"
+        android:background="#D6DBDF" >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="0.04"
+            android:padding="3dip"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Ian"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Feb"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Mar"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Apr"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Mai"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Iun"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Iul"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Aug"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Sep"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Oct"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Nov"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="Dec"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="0.04"
+            android:padding="3dip"
+            android:text="Cl. fact. an anterior"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_ian"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_feb"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_mar"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_apr"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_mai"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_iun"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_iul"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_aug"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_sep"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_oct"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_nov"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/cl_fact_aa_dec"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+    </TableRow>
+
+    <TableRow android:background="#EFF0F1">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="0.04"
+            android:padding="3dip"
+            android:text="Target an curent"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/target_curent_ian"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_feb"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_mar"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_apr"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_mai"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_iun"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_iul"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_aug"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_sep"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_oct"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_nov"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/target_curent_dec"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="0.04"
+            android:padding="3dip"
+            android:text="Cl. fact. an curent"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_ian"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_feb"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_mar"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_apr"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_mai"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_iun"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_iul"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_aug"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_sep"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_oct"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_nov"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/client_fact_curent_dec"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+    </TableRow>
+
+    <TableRow android:background="#EFF0F1">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="0.04"
+            android:padding="3dip"
+            android:text="Coef. de afectare"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/coef_afect_ian"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_feb"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_mar"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_apr"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_mai"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_iun"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_iul"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_aug"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_sep"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_oct"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_nov"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/coef_afect_dec"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:padding="3dip"
+            android:textColor="#616A6B"
+            android:textSize="17sp"
+            android:typeface="sans" />
+    </TableRow>
+
+</TableLayout>

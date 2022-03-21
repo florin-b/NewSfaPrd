@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/textTipInterval"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_weight="0.15"
+        android:gravity="left"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textVenitNetP"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textMP"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textVenitNetP1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textMP1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textVenitNetTotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textMTotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="@color/artRowColor"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+</LinearLayout>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- App theme -->
+
+    <style name="LRTheme" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="android:style/Widget.Holo.ActionBar">
+        <item name="android:titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
+        <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
+        <item name="android:background">#BAEBBA</item>
+        <item name="android:backgroundStacked">#BAEBBA</item>
+        <item name="android:backgroundSplit">#BAEBBA</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="MyActionBar.TitleTextStyle">
+        <item name="android:textColor">#008000</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyActionBar.MenuTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#F0F</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!-- Logon theme -->
+
+    <style name="LiteTheme" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/LogonActionBar</item>
+    </style>
+
+    <style name="LogonActionBar" parent="android:style/Widget.Holo.ActionBar">
+        <item name="android:titleTextStyle">@style/LogonActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="LogonActionBar.TitleTextStyle">
+        <item name="android:textColor">#008000</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CustomListViewArt" parent="@android:style/Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector</item>
+    </style>
+
+    <color name="totalColor1">#4682b4</color>
+    <color name="salarizareHeaderTotal">#57789e</color>
+    <color name="spinnerOptions1">#CE1620</color>
+
+    <style name="ShadowText">
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:shadowColor">#595959</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="ok_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#4D4D4D</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="det_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#4D4D4D</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="button_text_1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#FFFDD0</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="button_text_2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#FFFDD0</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="button_text_3">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#FFFDD0</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="checkbox_text_1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#1560BD</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SwitchText">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">#FFeeFFee</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:shadowColor">#BB000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="mySwitchStyle">
+        <item name="switchTextAppearanceAttrib">@style/mySwitchTextAppearance</item>
+        <item name="textOn">ON</item>
+        <item name="textOff">OFF</item>
+        <item name="pushStyle">false</item>
+        <item name="textOnThumb">true</item>
+        <item name="thumbExtraMovement">0dp</item>
+        <item name="thumbTextPadding">6dp</item>
+        <item name="trackTextPadding">10dp</item>
+        <item name="switchMinWidth">300dp</item>
+        <item name="switchMinHeight">20dp</item>
+        <item name="switchPadding">6dp</item>
+    </style>
+
+    <style name="mySwitchTextAppearance">
+        <item name="textColor">#F5F5F5</item>
+        <item name="textSize">17sp</item>
+    </style>
+
+    <style name="ShadowTextStyle">
+        <item name="android:typeface">normal</item>
+        <item name="android:shadowDx">1.2</item>
+        <item name="android:shadowDy">1.2</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:textColor">#5C87AB</item>
+/> 
+                                                                                        <item name="android:shadowColor">#71A6D2</item>
+    </style>
+
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance.Holo.Medium">
+        <item name="android:textColor">#FFeeFFee</item>
+    </style>
+
+    <style name="ShadowTextStyle_1">
+        <item name="android:typeface">normal</item>
+        <item name="android:shadowDx">1.2</item>
+        <item name="android:shadowDy">1.2</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:textColor">#5CABA7</item>
+> 
+                                                                                                <item name="android:shadowColor">#CFCFCF</item>
+    </style>
+
+    <style name="dateLivrareDlLabel">
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:gravity">left|bottom</item>
+        <item name="android:textColor">@color/foreColorObiective1</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="dateLivrareDlValori">
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/listArticol</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="dateLivrareDlLayout">
+        <item name="android:layout_marginLeft">5dip</item>
+        <item name="android:layout_marginRight">5dip</item>
+        <item name="android:layout_marginTop">20dip</item>
+        <item name="android:background">@drawable/bottom_line</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:icon">@drawable/feather32</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="LRTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarStyle">@style/Widget.AppTheme.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
+    </style>
+
+    <style name="Widget.AppTheme.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
+
+        <item name="background">@color/actionBarBack</item>
+
+        <item name="elevation">4dp</item>
+    </style>
+
+
+    <style name="ThemeOverlay.AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+
+
+</resources>

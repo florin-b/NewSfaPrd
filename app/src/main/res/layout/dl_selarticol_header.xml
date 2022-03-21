@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contentLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#E8E8E8"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="1dip"
+    android:rotation="180" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_weight="0.005" />
+
+        <ToggleButton
+            android:id="@+id/tglTipArtDl"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.07"
+            android:background="@drawable/button_style_5"
+            android:textOff="Articol"
+            android:textOn="Sintetic" />
+
+        <ToggleButton
+            android:id="@+id/togglebuttonDl"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.07"
+            android:background="@drawable/button_style_5"
+            android:textOff="Nume"
+            android:textOn="Cod" />
+
+        <EditText
+            android:id="@+id/txtNumeArtDl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.25"
+            android:background="@drawable/edittext_style_1"
+            android:inputType="textNoSuggestions"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:textColor="@color/editTextColor1"
+            android:typeface="monospace" />
+
+        <Button
+            android:id="@+id/articoleBtnDl"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="0.07"
+            android:background="@drawable/button_style_1"
+            android:text="@string/strCauta" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/listArticole"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:choiceMode="singleChoice"
+            android:dividerHeight="1.0sp"
+            android:drawSelectorOnTop="false" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05" />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/resLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dip"
+            android:layout_weight="0.3"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textNumeArticolDl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text=""
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textCodArticolDl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text=""
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="25dip" >
+            </View>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.005" />
+
+                <TextView
+                    android:id="@+id/labelCantArtDl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_weight="0.1"
+                    android:gravity="center|left"
+                    android:text="Cantitate"
+                    android:textColor="@color/detColor1"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <EditText
+                    android:id="@+id/txtCantArtDl"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.13"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="right"
+                    android:inputType="number|numberDecimal"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/editTextColor1"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/textUmAprov"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0.06"
+                    android:gravity="center|left"
+                    android:textColor="@color/detColor1"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.20" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="50dip" >
+            </View>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:gravity="left"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/saveArtBtnDl"
+                    style="@style/button_text_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:background="@drawable/button_style_1"
+                    android:paddingLeft="15dip"
+                    android:paddingRight="15dip"
+                    android:text="@string/strAdauga" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

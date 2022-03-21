@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textNumeArticol"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="7dip"
+            android:layout_weight="0.6"
+            android:textColor="@color/listArticol"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textStoc"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:textColor="@color/foreColorObiective1"
+            android:textSize="14sp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textCodArticol"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="0.6"
+            android:textColor="@color/listCodArticol"
+            android:textSize="14sp"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/textTipArt"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:textColor="@color/listCodArticol"
+            android:textSize="14sp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+</LinearLayout>

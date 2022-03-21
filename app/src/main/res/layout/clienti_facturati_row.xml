@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Creat de robert -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:weightSum="13"
+   
+    android:orientation="horizontal" >
+    
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:textSize="1sp" />
+        
+        <TextView
+            android:id="@+id/txtNr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5"            
+            android:gravity="left"
+            android:text="Nr."
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/txtCodClient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.5"
+            android:gravity="left"
+            android:text="Cod client"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtNumeClient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:gravity="left"
+            android:text="Nume client"
+            android:textColor="#7f5327"
+            android:textSize="14sp" />
+
+        
+
+        <TextView
+            android:id="@+id/txtValoareLuna1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="luna1"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/txtValoareLuna2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="luna2"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/txtValoareLuna3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="luna3"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/txtValoareLuna4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="luna4"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/txtValoareLuna5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="luna5"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/txtValoareLuna6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="luna6"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/txtValoareLuna7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="luna7"
+            android:textColor="#7f5327"
+            android:textSize="15sp" />
+        
+        
+        
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:textSize="1sp" />
+    
+
+</LinearLayout>

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainContainer"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="left"
+    android:layout_marginLeft="40dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="40dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.6"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textFurnizor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_light_blue"
+                android:textSize="17sp"
+                android:typeface="sans"
+                android:visibility="gone" />
+            
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textClient"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginTop="19dp"
+                    android:layout_weight="0.3"
+                    android:text="Fara client"
+                    android:textColor="@color/headerColor"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textLimCrd"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.2"
+                    android:gravity="left"
+                    android:textColor="@color/antetColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textRestCrd"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="15dip"
+                    android:layout_weight="0.2"
+                    android:gravity="left"
+                    android:textColor="@color/antetColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textCursValut"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="30dip"
+                    android:layout_weight="0.2"
+                    android:gravity="left"
+                    android:textColor="@color/antetColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="37dip"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textAdrLivr"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.3"
+                    android:gravity="left"
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textPersContact"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0.2"
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textTelefon"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textNrFact"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.1"
+                    android:gravity="left"
+                    android:text="1 factura"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textCantar"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textTipPlata"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textTransport"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_weight="0.4"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_weight="0.4" >
+
+                <TextView
+                    android:id="@+id/textPondereB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|top"
+                    android:gravity="right"
+                    android:textColor="@color/headerColor"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight="0.6"
+                android:gravity="right"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" >
+
+                    <TextView
+                        android:id="@+id/labelTotal"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:layout_weight="0.6"
+                        android:gravity="right"
+                        android:text="Total"
+                        android:textColor="@color/headerColor"
+                        android:textSize="19sp"
+                        android:typeface="sans" />
+
+                    <TextView
+                        android:id="@+id/textTotalCmd"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="10dip"
+                        android:layout_weight="0.4"
+                        android:gravity="left"
+                        android:textColor="@color/headerColor"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:typeface="sans" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/layoutTaxaVerde"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" >
+
+                    <TextView
+                        android:id="@+id/labelTaxaVerde"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:layout_weight="0.6"
+                        android:gravity="right"
+                        android:text="(Taxa verde"
+                        android:textColor="@color/headerColor"
+                        android:textSize="17sp"
+                        android:typeface="sans" />
+
+                    <TextView
+                        android:id="@+id/textTaxaVerde"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="10dip"
+                        android:layout_weight="0.4"
+                        android:gravity="left"
+                        android:text="0.25"
+                        android:textColor="@color/headerColor"
+                        android:textSize="17sp"
+                        android:textStyle="normal"
+                        android:typeface="sans" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dip"
+        android:background="#96CE96"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textNrCrt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left"
+            android:text="Nr."
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCodArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="left"
+            android:text="Cod"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textNumeArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:gravity="left"
+            android:text="Nume"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCantArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Cant."
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textUmArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="UmV"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textPretUnit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Pret unit."
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textUmBaza"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="UmB"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textProcRed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Disc.(%)"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textPretArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Valoare"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listArtCmd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="true" />
+    </LinearLayout>
+
+</LinearLayout>

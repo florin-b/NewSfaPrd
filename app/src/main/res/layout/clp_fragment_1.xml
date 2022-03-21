@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/clp_border_1"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="50dip"
+        android:layout_marginTop="10dip"
+        android:fadeScrollbars="false" >
+
+        <LinearLayout
+            android:id="@+id/clientData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioGroup
+                    android:id="@+id/radioTipDest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dip"
+                    android:layout_marginLeft="120dp"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioClient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Client"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioFiliala"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dip"
+                        android:text="Filiala"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTipClient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioGroup
+                    android:id="@+id/radioTipClient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dip"
+                    android:layout_marginLeft="120dp"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioClientPF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="PF - persoana fizica"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioClientPJ"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dip"
+                        android:text="PJ -persoana juridica"
+                        android:textColor="@color/detColor4"
+                        android:textSize="16sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutFiliala"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/labelClient"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Client"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/numeSelClient"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutAdr1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Judet"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerJudetCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="0.05"
+                    android:gravity="left"
+                    android:text="Oras"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/txtOrasCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:maxLength="200"
+                    android:nextFocusDown="@+id/txtStradaCLP"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp"
+                    android:windowSoftInputMode="stateUnchanged" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.11" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutAdr2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Strada, nr"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/txtStradaCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="65"
+                    android:nextFocusDown="@+id/txtPersContCLP"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.01" />
+
+                <Button
+                    android:id="@+id/btnPozitieAdresa"
+                    style="@style/ok_button"
+                    android:layout_width="0dip"
+                    android:layout_height="35dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="5dip"
+                    android:layout_weight="0.08"
+                    android:background="@drawable/cancel_button_style"
+                    android:text="Pozitionati adresa pe harta" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.01" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPersCont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Pers. contact"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtPersContCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.15"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="65"
+                    android:nextFocusDown="@+id/txtTelefonCLP"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Telefon"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtTelefonCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:inputType="number"
+                    android:maxLength="65"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Filiala"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerFilialaCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.15" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Tip marfa"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtTipMarfa"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:maxLength="150"
+                    android:nextFocusDown="@+id/txtMasaMarfa"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:maxLength="150"
+                    android:text="Masa"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtMasaMarfa"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Tip camion"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerTipCamion"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Incarcare"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerTipIncarcare"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Data livrare"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textDataLivrareCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.04"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="center"
+                    android:maxLength="65"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.15" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Plata"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerPlata"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.12"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Transport"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerTransp"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.15"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <Spinner
+                    android:id="@+id/spinnerTonaj"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Depozit"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerDepozClp_Dest"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/dropdown_style_1"
+                    android:typeface="sans" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Observatii"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtObservatiiCLP"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="left"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="140"
+                    android:singleLine="true"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.1" />
+            </LinearLayout>
+
+             <LinearLayout
+                android:id="@+id/layoutIndoire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="Prelucrare"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerIndoire"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/dropdown_style_1"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.15" />
+            </LinearLayout>
+            
+            
+            <LinearLayout
+                android:id="@+id/layoutSelAgentiClp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/labelAgentiClp"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Agent"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerAgentiClp"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.17"
+                    android:background="@drawable/dropdown_style_1"
+                    android:typeface="sans" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutDepartament"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/labelDepartament"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Departament"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerDepartament"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.17"
+                    android:background="@drawable/dropdown_style_1"
+                    android:typeface="sans" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="80dip"
+                    android:layout_weight="0.3" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <SlidingDrawer
+            android:id="@+id/clientSlidingDrawer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:content="@+id/contentLayout"
+            android:handle="@+id/slideButton"
+            android:orientation="vertical"
+            android:padding="1dip"
+            android:rotation="180" >
+
+            <RelativeLayout
+                android:id="@+id/slideButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#E0E0E0" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50dip"
+                    android:rotation="180"
+                    android:text="Selectie client"
+                    android:textColor="#BABABA"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:contentDescription="@string/img_content_desc"
+                    android:src="@drawable/sliding_up_down" />
+            </RelativeLayout>
+
+            <include
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/clp_selclient_header" />
+        </SlidingDrawer>
+    </LinearLayout>
+
+</FrameLayout>

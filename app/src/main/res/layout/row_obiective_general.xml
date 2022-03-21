@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="7dip"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textNumeLinie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:gravity="left"
+            android:textColor="#3C838B"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="3dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textValoareLinie"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.3"
+                android:gravity="left"
+                android:inputType="textNoSuggestions"
+                android:textColor="#008100"
+                android:textSize="17sp"
+                android:typeface="serif" />
+
+            <ImageButton
+                android:id="@+id/btnModificaValoare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="right"
+                android:src="@drawable/icon_write_32" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

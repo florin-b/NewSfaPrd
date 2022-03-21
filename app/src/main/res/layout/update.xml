@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ButtonsTable"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:stretchColumns="3" >
+
+    <TableRow android:layout_marginTop="5dp" >
+
+        <TextView
+            style="@style/ShadowText"
+            android:layout_gravity="left|bottom"
+            android:text="@string/title"
+            android:textColor="#808000"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:width="150dip" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="30dp" >
+
+        <TextView
+            android:gravity="left|bottom"
+            android:text="Versiune aplicatie"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp"
+            android:width="210dp" />
+
+        <TextView
+            android:id="@+id/currVer"
+            android:layout_width="fill_parent"
+            android:gravity="left|bottom"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:width="180dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="10dp" >
+
+        <TextView
+            android:layout_gravity="bottom"
+            android:gravity="left|bottom"
+            android:text="Versiune cod"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp"
+            android:width="210dp" />
+
+        <TextView
+            android:id="@+id/currVerCod"
+            android:layout_width="fill_parent"
+            android:gravity="left|bottom"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:width="180dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="10dp" >
+
+        <TextView
+            android:layout_gravity="bottom"
+            android:text="Data instalare"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp"
+            android:width="210dp" />
+
+        <TextView
+            android:id="@+id/installDate"
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:width="250dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="30dp" >
+
+        <Button
+            android:id="@+id/buttonUpdate"
+            style="@style/button_text_1"
+            android:layout_width="200dip"
+            android:layout_height="45dip"
+            android:layout_span="2"
+            android:background="@drawable/button_style_1"
+            android:text="Verifica actualizare" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/newVersionLabel"
+            android:layout_marginTop="15dp"
+            android:text="Versiune noua"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/newVersion"
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:width="250dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/newVersionCodeLabel"
+            android:text="Versiune cod"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/newVersionCode"
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:width="250dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/releaseDateLabel"
+            android:text="Data lansare"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp"
+            android:width="210dp" />
+
+        <TextView
+            android:id="@+id/releaseDate"
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:width="250dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/buttonInstall"
+            style="@style/button_text_1"
+            android:layout_width="100dip"
+            android:layout_height="45dip"
+            android:layout_span="2"
+            android:background="@drawable/button_style_1"
+            android:text="Instaleaza" />
+    </TableRow>
+
+</TableLayout>

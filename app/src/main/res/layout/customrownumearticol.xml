@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity = "center_horizontal"
+             
+        >
+<TableRow >
+ 	<TextView 
+ 	    	android:id="@+id/textNumeArticol" 
+			android:textSize="17sp" 
+			android:textStyle="bold" 
+			android:textColor="@color/rowColor1" 
+			android:layout_width="440dp" 
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			 />
+</TableRow>
+<TableRow >
+	<TextView 
+	    	android:id="@+id/textCodArticol"
+			android:textSize="14sp" 
+			android:textStyle="bold|italic" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:textColor="@color/rowColor1" 
+			android:layout_gravity="bottom" />
+	<TextView 
+	    	android:id="@+id/textCodSintetic"
+			android:textSize="1sp" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom" />   	    	
+			
+	<TextView 
+	    	android:id="@+id/textUmVanz"
+			android:textSize="1sp" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom" />	
+			
+	<TextView 
+	    	android:id="@+id/textCodDepart"
+			android:textSize="1sp" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom" />
+	
+	<TextView 
+	    	android:id="@+id/textTipArt"
+			android:textSize="14sp" 
+			android:layout_width="15dip" 
+			android:layout_height="wrap_content"
+			android:textColor="@color/dropColor2"
+			android:layout_gravity="bottom" />		
+		
+</TableRow>
+ 	</TableLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layoutHeaderClInactivi"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dip"
+        android:background="#D1BC71"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.005"
+            android:textSize="1sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.02"
+            android:gravity="left"
+            android:text="Nr"
+            android:textColor="#A66D33"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textNumeClient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.2"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Nume client"
+            android:textColor="#A66D33"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.07"
+            android:gravity="left"
+            android:text="Cod client"
+            android:textColor="#A66D33"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textJudet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.06"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Jud"
+            android:textColor="#A66D33"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textLocalitate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.08"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Loc"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.08"
+            android:gravity="right"
+            android:text="Strada"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.08"
+            android:gravity="right"
+            android:text="Pers. contact"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.08"
+            android:gravity="right"
+            android:text="Telefon"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:id="@+id/textVanzMed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.075"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Vanz medie"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.075"
+            android:gravity="right"
+            android:text="Vanz 03"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.075"
+            android:gravity="right"
+            android:text="Vanz 06"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.075"
+            android:gravity="right"
+            android:text="Vanz 07"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.075"
+            android:gravity="right"
+            android:text="Vanz 09"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.075"
+            android:gravity="right"
+            android:text="Vanz 040"
+            android:textColor="#A66D33" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dip"
+            android:layout_weight="0.075"
+            android:gravity="right"
+            android:text="Vanz 041"
+            android:textColor="#A66D33" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutRapVanzAg"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:layout_marginBottom="45dip"
+        android:layout_marginTop="45dip"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listClientiInactivi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="false" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.45"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnAfis"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|left"
+                android:layout_margin="20dp"
+                android:background="@drawable/cancel_button_style"
+                android:paddingBottom="3dip"
+                android:paddingLeft="30dip"
+                android:paddingRight="30dip"
+                android:paddingTop="3dip"
+                android:text="Actualizeaza" />
+
+            <TextView
+                android:id="@+id/textPozitie"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="40dip"
+                android:layout_weight="0.6"
+                android:textColor="#9AC0CD"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listObiective"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="7.0sp" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="0.55"
+        
+        class="com.google.android.gms.maps.SupportMapFragment" />
+
+</LinearLayout>

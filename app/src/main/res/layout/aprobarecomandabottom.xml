@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentRight="true"
+    android:layout_gravity="right|bottom"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/aprobaCmd"
+         style="@style/ok_button"
+        android:layout_width="150dip"
+        android:layout_height="40dip"
+        android:background="@drawable/ok_button_style"
+        android:paddingLeft="40dip"
+        android:paddingRight="40dip"
+        android:text="@string/strAproba" />
+
+    <Button
+        android:id="@+id/respingeCmd"
+         style="@style/ok_button"
+        android:layout_width="150dip"
+        android:layout_height="40dip"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/cancel_button_style"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:text="Respinge" />
+
+    <Button
+        android:id="@+id/trimiteCond"
+         style="@style/ok_button"
+        android:layout_width="200dip"
+        android:layout_height="40dip"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/ok_button_style"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:text="  Trimite conditii" />
+
+</LinearLayout>

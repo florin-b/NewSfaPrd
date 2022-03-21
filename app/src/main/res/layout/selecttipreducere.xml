@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/AntetReduceriTable"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="left"
+    android:focusableInTouchMode="true"
+    android:stretchColumns="4" >
+
+    <TableRow android:layout_marginTop="30dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_gravity="left|center"
+            android:text="Tip reducere"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinnerTipReducere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="20dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_gravity="left|center"
+            android:text="Frecventa"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinnerFrecventaReducere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="20dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:text="Valabilitate"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TableLayout>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textDataStart"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginLeft="35dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/textDataStop"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:typeface="monospace" />
+            </TableRow>
+        </TableLayout>
+    </TableRow>
+
+    <TableRow android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/labelCoefCalit"
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom|left"
+            android:gravity="left"
+            android:text="Coeficient calitate"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="35dp" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="left" >
+
+                <EditText
+                    android:id="@+id/textCoefCalitSelect"
+                    android:layout_width="fill_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/edittext_style_1"
+                    android:gravity="right"
+                    android:inputType="number|numberDecimal"
+                    android:text=""
+                    android:textColor="@color/editTextColor1"
+                    android:typeface="monospace"
+                    android:width="100dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:gravity="left"
+                    android:text="%"
+                    android:textColor="@color/detColor4"
+                    android:textSize="18sp" />
+            </TableRow>
+        </TableLayout>
+    </TableRow>
+
+    <TableRow android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/labelTotDepart"
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:text="Tot departamentul"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TableLayout android:layout_marginLeft="35dp" >
+
+            <TableRow android:layout_marginTop="5dip" >
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="45dip" />
+
+                <ToggleButton
+                    android:id="@+id/tglTotDepart"
+                    style="@style/button_text_1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:background="@drawable/button_style_5"
+                    android:textOff="Nu"
+                    android:textOn="Da" />
+
+                <TableLayout
+                    android:id="@+id/tableTotDepart"
+                    android:layout_width="wrap_content" >
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/labelValDepart"
+                            android:layout_width="fill_parent"
+                            android:layout_gravity="bottom|left"
+                            android:layout_marginLeft="40dip"
+                            android:gravity="left"
+                            android:text="Valoare"
+                            android:textColor="@color/detColor4"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/textValDepart"
+                            android:layout_width="fill_parent"
+                            android:layout_gravity="left|bottom"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/edittext_style_1"
+                            android:gravity="right"
+                            android:inputType="number|numberDecimal"
+                            android:textColor="@color/editTextColor1"
+                            android:typeface="monospace"
+                            android:width="100dip" />
+
+                        <TextView
+                            android:id="@+id/labelMonTotDepart"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|left"
+                            android:text="RON"
+                            android:textColor="@color/detColor4"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/labelProcRedB5"
+                            android:layout_width="fill_parent"
+                            android:layout_gravity="bottom|left"
+                            android:layout_marginLeft="40dp"
+                            android:gravity="left"
+                            android:text="Procent reducere"
+                            android:textColor="@color/detColor4"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/textProcRedB5"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/edittext_style_1"
+                            android:gravity="right"
+                            android:inputType="number|numberDecimal"
+                            android:maxLength="5"
+                            android:textColor="@color/editTextColor1"
+                            android:typeface="monospace"
+                            android:width="100dip" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="bottom|left"
+                            android:gravity="left"
+                            android:text="%"
+                            android:textColor="@color/detColor4"
+                            android:textSize="18sp" />
+                    </TableRow>
+                </TableLayout>
+            </TableRow>
+        </TableLayout>
+    </TableRow>
+
+</TableLayout>

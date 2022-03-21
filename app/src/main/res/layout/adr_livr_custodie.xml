@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="45dip" />
+
+                <RadioGroup
+                    android:id="@+id/radioAdresa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioLista"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Selecteaza adresa din lista"
+                        android:textColor="@color/labelColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Introdu adresa noua"
+                        android:textColor="@color/labelColor"
+                        android:textSize="17sp" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutListAdrese"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Adresa livrare"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Spinner
+                    android:id="@+id/spinnerAdreseLivrare"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.25"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_weight="0.13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutAdr1"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Judet"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Spinner
+                    android:id="@+id/spinnerJudet"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.1"
+                    android:gravity="left" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="0.05"
+                    android:gravity="right"
+                    android:text="Localitate"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteLocalitate"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.1"
+                    android:dropDownHeight="250dp"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutAdr2"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Strada"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteStrada"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="20dip"
+                    android:layout_weight="0.15"
+                    android:dropDownHeight="250dp"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:maxLength="80"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="0.05"
+                    android:gravity="right"
+                    android:text="Nr"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <EditText
+                    android:id="@+id/textNrStr"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.05"
+                    android:dropDownHeight="250dp"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutHarta"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Pozitionare"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/btnPozitieAdresa"
+                    style="@style/ok_button"
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/cancel_button_style"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:text="Pozitionati adresa pe harta" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTonaj"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                 >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Tonaj"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Spinner
+                    android:id="@+id/spinnerTonaj"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.1"
+                    android:gravity="left" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                 >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Data livrare"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/textDataLivrare"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/btnDataLivrare"
+                    style="@style/ok_button"
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/cancel_button_style"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:text="Selectati data livrare" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="80dip"
+                    android:layout_weight="0.3" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</merge>

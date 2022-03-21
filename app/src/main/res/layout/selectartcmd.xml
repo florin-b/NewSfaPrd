@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layoutHeaderArt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_weight="0.005" />
+
+        <TextView
+            android:id="@+id/textAfisStatistic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:text="Produse cumparate frecvent"
+            android:textColor="@color/detColor1"
+            android:textSize="21sp"
+            android:typeface="sans"
+            android:visibility="gone" />
+
+        <ToggleButton
+            android:id="@+id/tglTipArt"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.07"
+            android:background="@drawable/button_style_5"
+            android:textOff="Articol"
+            android:textOn="Sintetic" />
+
+        <ToggleButton
+            android:id="@+id/togglebutton"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.07"
+            android:background="@drawable/button_style_5"
+            android:textOff="Nume"
+            android:textOn="Cod" />
+
+        <EditText
+            android:id="@+id/txtNumeArt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.2"
+            android:background="@drawable/edittext_style_1"
+            android:inputType="textNoSuggestions"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:textColor="@color/editTextColor1"
+            android:typeface="monospace" />
+
+        <Button
+            android:id="@+id/articoleBtn"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.07"
+            android:background="@drawable/button_style_1"
+            android:text="@string/strCauta" />
+
+        <Spinner
+            android:id="@+id/spinnerDepoz"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_weight="0.08"
+            android:background="@drawable/dropdown_style_1"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.40"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="false" />
+
+        <LinearLayout
+            android:id="@+id/resLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.6"
+            android:background="@drawable/rounded_shape"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textCodArticol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="-"
+                        android:textColor="@color/detColor1"
+                        android:textSize="17sp"
+                        android:typeface="sans" />
+
+                    <TextView
+                        android:id="@+id/textNumeArticol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:textColor="@color/detColor1"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:typeface="sans" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/labelStoc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:text="Stoc"
+                        android:textColor="@color/detColor2"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:typeface="sans" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/textStoc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_weight="0.2"
+                            android:gravity="right"
+                            android:textColor="@color/detColor2"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/textUm"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.05"
+                            android:gravity="right"
+                            android:textColor="@color/detColor2"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutStocKA"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/labelStocKA"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_weight="0.07"
+                            android:gravity="right"
+                            android:text="Disp"
+                            android:textColor="@color/dropColor2"
+                            android:textSize="15sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/textStocKA"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_weight="0.13"
+                            android:gravity="right"
+                            android:textColor="@color/dropColor2"
+                            android:textSize="15sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/textUmKA"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.05"
+                            android:gravity="right"
+                            android:text="sdfd"
+                            android:textColor="@color/dropColor2"
+                            android:textSize="15sp"
+                            android:typeface="monospace" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.005" />
+
+                    <TextView
+                        android:id="@+id/labelCant"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:layout_weight="0.06"
+                        android:gravity="center|left"
+                        android:text="Cantitate"
+                        android:textColor="@color/detColor1"
+                        android:textSize="17sp"
+                        android:typeface="sans" />
+
+                    <EditText
+                        android:id="@+id/txtCantArt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|bottom"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="0.07"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="right"
+                        android:inputType="number|numberDecimal"
+                        android:maxLength="10"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/editTextColor1"
+                        android:typeface="monospace" />
+
+                    <Spinner
+                        android:id="@+id/spinnerUnitMas"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|bottom"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.06"
+                        android:background="@drawable/dropdown_style_1"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:typeface="sans" />
+
+                    <Button
+                        android:id="@+id/pretBtn"
+                        style="@style/button_text_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|bottom"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.05"
+                        android:background="@drawable/button_style_1"
+                        android:text="@string/strPret" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.15" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/RedBtnTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dip"
+                        android:layout_weight="0.005" />
+
+                    <ToggleButton
+                        android:id="@+id/tglProc"
+                        style="@style/button_text_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|bottom"
+                        android:layout_weight="0.04"
+                        android:background="@drawable/button_style_5"
+                        android:textOff="%"
+                        android:textOn="RON" />
+
+                    <EditText
+                        android:id="@+id/textProcRed"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="0.07"
+                        android:background="@drawable/edittext_style_1"
+                        android:gravity="right|bottom"
+                        android:inputType="number|numberDecimal"
+                        android:maxLength="10"
+                        android:textColor="@color/editTextColor1"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/txtPretArt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.07"
+                        android:gravity="left|center"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="19sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/txtMultipluArt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right|center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.1"
+                        android:gravity="right|center"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="17sp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtImpachetare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|center"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="right|center"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="17sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/txtPretUmAlt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|center"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/editTextColor1"
+                    android:textSize="17sp"
+                    android:typeface="monospace" />
+
+                <LinearLayout
+                    android:id="@+id/layoutIstoricPret1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/labelIstoricPret"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_weight="0.1"
+                        android:gravity="left|center"
+                        android:text="Istoric pret: "
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="17sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/txtIstoricPret1"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_weight="0.4"
+                        android:gravity="left|center"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="17sp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutIstoricPret2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone" >
+
+                    <View
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1" />
+
+                    <TextView
+                        android:id="@+id/txtIstoricPret2"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.4"
+                        android:gravity="left|center"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="17sp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutIstoricPret3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone" >
+
+                    <View
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1" />
+
+                    <TextView
+                        android:id="@+id/txtIstoricPret3"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.4"
+                        android:gravity="left|center"
+                        android:textColor="@color/editTextColor1"
+                        android:textSize="17sp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/layoutPretMaxKA"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/labelPretMaxKA"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_weight="0.22"
+                                android:text="Pret minim: "
+                                android:textColor="@color/detColor5"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:id="@+id/textPretMaxKA"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="0.15"
+                                android:gravity="left"
+                                android:text="0.0"
+                                android:textColor="@color/detColor5"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutPretMediuKA"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/labelPretMediuKA"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_weight="0.22"
+                                android:text="Pret mediu: "
+                                android:textColor="#228B22"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:id="@+id/textPretMediuKA"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="0.15"
+                                android:gravity="left"
+                                android:text="0.0"
+                                android:textColor="#228B22"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/labelPretTVA"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_weight="0.22"
+                                android:text="Pret cu tva: "
+                                android:textColor="@color/detColor2"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:id="@+id/textPretTVA"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="0.15"
+                                android:gravity="left"
+                                android:text="0.0"
+                                android:textColor="@color/detColor2"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/labelDisc"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_weight="0.22"
+                                android:text="Disc. client (%) "
+                                android:textColor="@color/detColor2"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:id="@+id/procDisc"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="0.15"
+                                android:gravity="left"
+                                android:textColor="@color/detColor2"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/labelPretGed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_weight="0.22"
+                                android:text="Pret GED: "
+                                android:textColor="@color/detColor2"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:id="@+id/textPretGed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="0.15"
+                                android:gravity="left"
+                                android:textColor="@color/detColor2"
+                                android:textSize="16sp"
+                                android:typeface="monospace" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textPromo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:textColor="@color/warningColor2"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textCondPret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="5dp"
+                        android:gravity="left"
+                        android:lines="8"
+                        android:maxLines="8"
+                        android:textColor="@color/detColor2"
+                        android:textSize="15sp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

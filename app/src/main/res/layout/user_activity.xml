@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/Aimage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/img_content_desc"
+            android:gravity="left"
+            android:src="@drawable/id_icon" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.23" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:text="Nume"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/numeUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.23"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left"
+            android:text="Filiala"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/filiala"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.23"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="left|center"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left|center"
+            android:text="Departament"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinnerDepart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_weight="0.04"
+            android:background="@drawable/dropdown_style_1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="0.19"
+            android:gravity="left|center"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left"
+            android:text="Cod"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/codUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.23"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left"
+            android:text="Tip acces"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tipAcces"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.23"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/labelFiliala"
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="left|center"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left|center"
+            android:text="Filiala"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinnerFiliala"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.03"
+            android:background="@drawable/dropdown_style_1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="0.20"
+            android:gravity="left|center"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSalarizare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left"
+            android:text="Acces salarizare"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <RadioGroup
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_weight="0.3"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radioSalPermis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dip"
+                android:text="Permis"
+                android:textColor="@color/dropColor2"
+                android:textSize="17sp"
+                android:typeface="monospace" />
+
+            <RadioButton
+                android:id="@+id/radioSalBlocat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blocat"
+                android:textColor="@color/dropColor2"
+                android:textSize="17sp"
+                android:typeface="monospace" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.05"
+            android:gravity="left"
+            android:text="Versiune cod"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textVersiuneCod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.23"
+            android:gravity="left"
+            android:textColor="@color/dropColor2"
+            android:textSize="18sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+</LinearLayout>

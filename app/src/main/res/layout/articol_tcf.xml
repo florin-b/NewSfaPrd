@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/textVenitGrilaInc"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textTargetPropus"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textTargetReal"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textCoefAfect"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textVenitTcf"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="17sp" />
+
+</LinearLayout>

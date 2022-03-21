@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/documentData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="45dip"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.04"
+                android:gravity="left|center"
+                android:text="Documente:"
+                android:textColor="@color/detColor4"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/txtDocumentVanz"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|bottom"
+                android:layout_weight="0.25"
+                android:background="@drawable/edittext_style_1"
+                android:inputType="number"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@color/editTextColor1"
+                android:typeface="monospace" />
+
+            <Button
+                android:id="@+id/documenteBtnVanz"
+                style="@style/button_text_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.07"
+                android:background="@drawable/button_style_1"
+                android:text="@string/strAdauga" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.1"
+                android:gravity="left" />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.04"
+                android:gravity="left" />
+
+            <ListView
+                android:id="@+id/listViewSelDocument"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:choiceMode="singleChoice"
+                android:drawSelectorOnTop="false" />
+
+            <ImageButton
+                android:id="@+id/deleteDocumentBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dip"
+                android:contentDescription="@string/img_content_desc"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/delete_icon_" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.1"
+                android:gravity="left" />
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ButtonsTable"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="left"
+    android:focusableInTouchMode="true"
+    android:stretchColumns="3" >
+
+    <TableRow>
+
+        <TextView
+            android:layout_gravity="bottom"
+            android:layout_marginTop="15dp"
+            android:text="Conexiune"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:width="160dp" />
+
+        <TextView
+            android:id="@+id/conType"
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:width="180dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_gravity="bottom"
+            android:layout_marginTop="15dp"
+            android:text="Furnizor"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:width="160dp" />
+
+        <TextView
+            android:id="@+id/params"
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:lines="4"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:width="500dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_gravity="bottom"
+            android:layout_marginTop="15dp"
+            android:text="Imei"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:width="160dp" />
+
+        <TextView
+            android:id="@+id/imeiNr"
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:width="180dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="1dip"
+            android:gravity="left"
+            android:textSize="1sp"
+            android:width="1dp" />
+    </TableRow>
+
+</TableLayout>

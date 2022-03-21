@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layoutSelInterval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:orientation="horizontal" >
+
+        <Spinner
+            android:id="@+id/lunaSalarizare"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:textColor="@color/black" />
+
+        <Spinner
+            android:id="@+id/anSalarizare"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.3"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnOkInterval"
+            style="@style/ok_button"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_margin="10dp"
+            android:background="@drawable/ok_button_style"
+            android:text="Afiseaza" />
+    </LinearLayout>
+
+</LinearLayout>

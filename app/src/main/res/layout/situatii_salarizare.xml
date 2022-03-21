@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RadioGroup
+        android:id="@+id/grupSituatii"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip" >
+
+        <RadioButton
+            android:id="@+id/radioDepartament"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:checked="true"
+            android:text="Sef de departament"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <RadioButton
+            android:id="@+id/radioAgenti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:text="Agenti"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnOkSituatie"
+            style="@style/ok_button"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_margin="10dp"
+            android:background="@drawable/ok_button_style"
+            android:text="Afiseaza" />
+    </LinearLayout>
+
+</LinearLayout>

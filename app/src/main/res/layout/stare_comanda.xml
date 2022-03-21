@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/spinnerComenzi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="0dp"
+            android:background="@drawable/spinner_style_2"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ListView
+            android:id="@+id/listClientiBorderou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="7.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0.4"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1" >
+            </View>
+
+            <Button
+                android:id="@+id/hartaButton"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="@drawable/cancel_button_style"
+                android:paddingLeft="40dip"
+                android:paddingRight="40dip"
+                android:text="Harta" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1" >
+            </View>
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            class="com.google.android.gms.maps.MapFragment" />
+    </LinearLayout>
+
+</LinearLayout>

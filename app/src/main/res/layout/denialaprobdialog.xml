@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/spinnerSelDenialOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dip"
+        android:gravity="left"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnCancelDenial"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/cancel_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Renunta" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.1" />
+
+        <Button
+            android:id="@+id/btnOkDenial"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:background="@drawable/ok_button_style"
+            android:paddingLeft="80dip"
+            android:paddingRight="80dip"
+            android:text="OK" />
+    </LinearLayout>
+
+</LinearLayout>

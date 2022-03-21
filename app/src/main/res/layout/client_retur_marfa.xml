@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.45"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/txtNumeClient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="bottom"
+            android:inputType="textNoSuggestions"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:textColor="@color/editTextColor1"
+            android:textSize="19sp"
+            android:typeface="monospace" />
+
+        <ListView
+            android:id="@+id/listClienti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="7dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.55"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/clientBtn"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="50dip"
+                android:paddingRight="50dip"
+                android:text="@string/strCauta" />
+
+            <View
+                android:layout_width="30dip"
+                android:layout_height="match_parent" >
+            </View>
+
+            <RadioGroup
+                android:id="@+id/groupTipDistrib"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/radioDistrib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Comanda distributie"
+                    android:textColor="@color/artRowColor1" />
+
+                <RadioButton
+                    android:id="@+id/radioGed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comanda Ged"
+                    android:textColor="@color/artRowColor1" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/selectIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:drawableLeft="@drawable/select_item" />
+    </LinearLayout>
+
+</LinearLayout>

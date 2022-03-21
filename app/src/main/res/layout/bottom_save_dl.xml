@@ -1,0 +1,60 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutSaveDl"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     >
+
+    <TableRow>
+
+        <SlidingDrawer
+            android:id="@+id/slidingDrawerDl"
+            android:layout_width="200dip"
+            android:layout_height="80dip"
+            android:content="@+id/contentLayoutDl"
+            android:handle="@+id/slideButtonDl"
+            android:orientation="horizontal"
+            android:padding="1dip" >
+
+            <Button
+                android:id="@+id/slideButtonDl"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:background="@drawable/slideleft32" >
+            </Button>
+
+            <TableLayout
+                android:id="@+id/contentLayoutDl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/saveDlBtn"
+                        style="@style/button_text_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dip"
+                        android:background="@drawable/button_style_1"
+                        android:paddingLeft="20dip"
+                        android:paddingRight="20dip"
+                        android:text="@string/strSalveaza" />
+                </TableRow>
+
+                <TableRow>
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_savedl"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="5dip"
+                        android:layout_marginTop="7dp"
+                        android:max="50"
+                        android:progressDrawable="@drawable/progress_bar_style" />
+                </TableRow>
+            </TableLayout>
+        </SlidingDrawer>
+    </TableRow>
+
+</TableLayout>    

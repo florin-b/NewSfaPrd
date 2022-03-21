@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_artvmd_vanz"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E8E8E8"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="#9AC0CD" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.005"
+            android:textSize="1sp" />
+
+        <TextView
+            android:id="@+id/textNrCrt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.02"
+            android:gravity="left"
+            android:text="Nr."
+            android:textColor="#364f8b"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textNumeArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.19"
+            android:gravity="left"
+            android:text="Nume"
+            android:textColor="#364f8b"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCodArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="Cod"
+            android:textColor="#364f8b"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCantArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.08"
+            android:gravity="right"
+            android:text="Cantitate"
+            android:textColor="#364f8b"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textValArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="Valoare"
+            android:textColor="#364f8b"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.01"
+            android:textSize="1sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listViewCmdArt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice" />
+    </LinearLayout>
+
+</LinearLayout>

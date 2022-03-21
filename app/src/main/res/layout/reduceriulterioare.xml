@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ButtonsTable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:focusableInTouchMode="true"
+        android:weightSum="100">
+
+
+        <TableRow
+                android:weightSum="100"
+                android:layout_marginTop="20dip">
+
+                <ListView
+                        android:layout_marginTop="15dip"
+                        android:id="@+id/listArt"
+                        android:choiceMode="singleChoice"
+                        style="@style/CustomListViewArt"
+                        android:listSelector="#407095"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="80"
+                        android:layout_gravity="left" />
+
+
+                <TableLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/AddrTable"
+                        android:layout_marginTop="15dip"
+                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_gravity="right"
+                        android:focusableInTouchMode="true"
+                        android:layout_marginLeft="10dp"
+                        android:stretchColumns="*">
+
+                        <TableRow>
+                                <TableLayout>
+                                        <TableRow>
+                                                <TextView
+                                                        android:id="@+id/labelTipReducere"
+                                                        android:typeface="sans"
+                                                        android:textSize="16sp"
+                                                        android:text="Tip reducere"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/detColor4" />
+                                                <TextView
+                                                        android:layout_marginLeft="20dp"
+                                                        android:id="@+id/textTipReducere"
+                                                        android:typeface="monospace"
+                                                        android:textSize="16sp"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/dropColor2" />
+                                        </TableRow>
+                                        <TableRow
+                                                android:layout_marginTop="5dp">
+                                                <TextView
+                                                        android:id="@+id/labelTipFrecventa"
+                                                        android:typeface="sans"
+                                                        android:textSize="16sp"
+                                                        android:text="Frecventa"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/detColor4" />
+                                                <TextView
+                                                        android:layout_marginLeft="20dp"
+                                                        android:id="@+id/textTipFrecventa"
+                                                        android:typeface="monospace"
+                                                        android:textSize="16sp"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/dropColor2" />
+                                        </TableRow>
+                                        <TableRow
+                                                android:layout_marginTop="5dp">
+                                                <TextView
+                                                        android:id="@+id/labelStartValabil"
+                                                        android:typeface="sans"
+                                                        android:textSize="16sp"
+                                                        android:text="Valabilitate"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/detColor4" />
+                                                <TableLayout>
+                                                        <TableRow>
+                                                                <TextView
+                                                                        android:layout_marginLeft="20dp"
+                                                                        android:id="@+id/textStartValabil"
+                                                                        android:typeface="monospace"
+                                                                        android:textSize="16sp"
+                                                                        android:layout_gravity="left"
+                                                                        android:textColor="@color/dropColor2" />
+                                                                <TextView
+                                                                        android:layout_marginLeft="10dp"
+                                                                        android:id="@+id/textStopValabil"
+                                                                        android:typeface="monospace"
+                                                                        android:textSize="16sp"
+                                                                        android:layout_gravity="left"
+                                                                        android:textColor="@color/dropColor2" />
+                                                        </TableRow>
+                                                </TableLayout>
+                                        </TableRow>
+                                        <TableRow
+                                                android:layout_marginTop="5dp">
+                                                <TextView
+                                                        android:layout_width="fill_parent"
+                                                        android:id="@+id/labelProcRedB5"
+                                                        android:textSize="16sp"
+                                                        android:text="Procent reducere"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/detColor4" />
+                                                <TextView
+                                                        android:layout_marginLeft="20dp"
+                                                        android:id="@+id/textProcRedB5"
+                                                        android:typeface="monospace"
+                                                        android:textSize="16sp"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/dropColor2" />
+                                        </TableRow>
+                                        <TableRow
+                                                android:layout_marginTop="5dp">
+                                                <TextView
+                                                        android:layout_width="fill_parent"
+                                                        android:id="@+id/labelCoefCalit"
+                                                        android:textSize="16sp"
+                                                        android:text="Coeficient calitate"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/detColor4" />
+                                                <TextView
+                                                        android:layout_marginLeft="20dp"
+                                                        android:id="@+id/textCoefCalitHead"
+                                                        android:typeface="monospace"
+                                                        android:textSize="16sp"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/dropColor2" />
+                                        </TableRow>
+                                        <TableRow
+                                                android:layout_marginTop="5dp">
+                                                <TextView
+                                                        android:layout_width="fill_parent"
+                                                        android:id="@+id/labelValTotDepHead"
+                                                        android:textSize="16sp"
+                                                        android:text="Valoare totala"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/detColor4" />
+                                                <TextView
+                                                        android:layout_marginLeft="20dp"
+                                                        android:id="@+id/textValTotDepHead"
+                                                        android:typeface="monospace"
+                                                        android:textSize="16sp"
+                                                        android:layout_gravity="left"
+                                                        android:textColor="@color/dropColor2" />
+                                        </TableRow>
+                                </TableLayout>
+
+                        </TableRow>
+
+
+                        <TableRow>
+                                <ListView
+                                        android:id="@+id/clientList"
+                                        android:layout_marginBottom="95dp"
+                                        android:layout_marginTop="20dp">
+                                </ListView>
+                        </TableRow>
+
+
+
+
+
+
+                </TableLayout>
+
+        </TableRow>
+
+
+</TableLayout>
+

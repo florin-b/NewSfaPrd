@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/textArticol"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_marginLeft="5dip"
+        android:layout_weight="0.2"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textVenitGrInc"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textPondere"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="0.07"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textTargetPropCant"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textTargetRealCant"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_marginLeft="5dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textUm"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textTargetPropVal"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textRealizatVal"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textRealizareTarget"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textTargetPonderat"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_marginRight="5dip"
+        android:layout_weight="0.07"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="16sp" />
+
+</LinearLayout>

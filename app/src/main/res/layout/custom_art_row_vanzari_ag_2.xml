@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+	android:descendantFocusability="blocksDescendants"    
+     >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.005"
+        android:textSize="1sp" />    
+    
+    <TextView
+        android:id="@+id/textNrCrt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.02"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="17sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textNumeAgent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textNumeArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textCodArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textCantArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.08"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textValArt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:gravity="right"
+        android:textColor="#A66D33"
+        android:textSize="15sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:textSize="1sp" />
+
+</LinearLayout>

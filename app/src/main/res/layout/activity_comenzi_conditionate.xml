@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.64"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/spinnerCmdCond"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/spinner_style_2"
+            android:scrollbarStyle="outsideInset" />
+
+        <ListView
+            android:id="@+id/listArtCmdCond"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
+            android:fastScrollAlwaysVisible="true"
+            android:fastScrollEnabled="true"
+            android:scrollbarStyle="outsideInset" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:layout_weight="0.36" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layoutCmdCondHead"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/container_dropshadow"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:text="Judet"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textJudet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:paddingTop="2dip"
+                android:text="Oras"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textOras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:paddingTop="2dip"
+                android:text="Adresa"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textAdrLivr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:paddingTop="2dip"
+                android:text="Persoana de contact"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textPersContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:paddingTop="2dip"
+                android:text="Telefon"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textTelefon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:paddingTop="2dip"
+                android:text="Tip plata"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textTipPlata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:paddingTop="2dip"
+                android:text="Tip transport"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textTransport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingLeft="5dip"
+                android:paddingTop="2dip"
+                android:text="Comentarii"
+                android:textColor="#00CC99"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textComentarii"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingBottom="5dip"
+                android:paddingLeft="5dip"
+                android:textColor="#008B8B"
+                android:textSize="15sp"
+                android:typeface="serif" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

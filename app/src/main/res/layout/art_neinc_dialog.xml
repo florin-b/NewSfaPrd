@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.005"
+            android:textSize="1sp" />
+
+        <TextView
+            android:id="@+id/textNrCrt"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.02"
+            android:gravity="left"
+            android:text="Nr."
+            android:textStyle="bold"
+            android:textColor="@color/artRowColor1"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textNumeArt"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.2"
+            android:gravity="left"
+            android:text="Nume"
+            android:textStyle="bold"
+            android:textColor="@color/artRowColor1"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textCodArt"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Cod"
+            android:textStyle="bold"
+            android:textColor="@color/artRowColor1" />
+
+        <TextView
+            android:id="@+id/textCantArt"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Cantitate"
+            android:textStyle="bold"
+            android:textColor="@color/artRowColor1"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textValArt"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Valoare"
+            android:textStyle="bold"
+            android:textColor="@color/artRowColor1"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.01"
+            android:textSize="1sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listArtNeinc"
+        android:layout_width="match_parent"
+        android:layout_height="250dip"
+        android:layout_margin="5dip"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="1.0sp"
+        android:drawSelectorOnTop="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnClose"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:background="@drawable/cancel_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Inchide" />
+    </LinearLayout>
+
+</LinearLayout>

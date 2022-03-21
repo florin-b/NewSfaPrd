@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contentLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#E8E8E8"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="1dip"
+    android:rotation="180" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dip"
+        android:layout_marginRight="50dip"
+        android:layout_marginTop="50dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/labelTextData"
+            android:layout_width="350dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:background="@color/backColorObiective1"
+            android:textColor="@color/foreColorObiective1"
+            android:textSize="16sp"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/backColorObiective1" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dip"
+        android:layout_marginRight="50dip"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/layoutDivizii"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight = "10dip"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/checkPARC"
+                style="@style/checkbox_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:button="@drawable/checkbox_style_1"
+                android:text="Parchet        " />
+
+            <CheckBox
+                android:id="@+id/checkMATE"
+                style="@style/checkbox_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:button="@drawable/checkbox_style_1"
+                android:text="Materiale grele" />
+
+            <CheckBox
+                android:id="@+id/checkELEC"
+                style="@style/checkbox_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:button="@drawable/checkbox_style_1"
+                android:text="Electrice      " />
+
+            <CheckBox
+                android:id="@+id/checkINST"
+                style="@style/checkbox_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:button="@drawable/checkbox_style_1"
+                android:text="Instalatii     " />
+
+            <CheckBox
+                android:id="@+id/checkGIPS"
+                style="@style/checkbox_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:button="@drawable/checkbox_style_1"
+                android:text="Gips           " />
+
+            <CheckBox
+                android:id="@+id/checkCHIM"
+                style="@style/checkbox_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:button="@drawable/checkbox_style_1"
+                android:text="Chimice        " />
+
+            <CheckBox
+                android:id="@+id/checkHIDR"
+                style="@style/checkbox_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:button="@drawable/checkbox_style_1"
+                android:text="Hidroizolatii" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/textData"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dip"
+            android:layout_weight="0.3"
+            android:background="@drawable/edit_text_border_1"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:maxLines="10"
+            android:textColor="@color/foreColorText1"
+            android:textSize="16sp"
+            android:typeface="monospace" />
+
+        <Button
+            android:id="@+id/saveDataBtn"
+            style="@style/button_text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_gravity="left"
+            android:background="@drawable/button_style_1"
+            android:paddingLeft="15dip"
+            android:paddingRight="15dip"
+            android:text="@string/strSalveaza" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dip"
+            android:layout_weight="0.1" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="0.45"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textCurrentPage"
+                android:layout_width="0dip"
+                android:layout_height="50dip"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.1"
+                android:textColor="#008100"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinnerClienti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layoutOptiuniClient"
+            android:layout_width="match_parent"
+            android:layout_height="80dip"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="0.1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/labelData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data"
+                    android:textColor="#3C838B"
+                    android:textSize="18sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textDataEveniment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="02.04.2015"
+                    android:textColor="#008100"
+                    android:textSize="18sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnModificaData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="right"
+                android:src="@drawable/icon_write_32" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.08" />
+
+            <Spinner
+                android:id="@+id/spinnerUrmarireObiective"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_marginRight="7dp"
+                android:layout_weight="0.5"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layoutOptiuniEveniment"
+            android:layout_width="match_parent"
+            android:layout_height="150dip"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="0.15"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Eveniment produs"
+                    android:textColor="#3C838B"
+                    android:textSize="18sp"
+                    android:typeface="sans" />
+
+                <RadioGroup
+                    android:id="@+id/radioEveniment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioDa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Da"
+                        android:textColor="#008100"
+                        android:typeface="sans" />
+
+                    <RadioButton
+                        android:id="@+id/radioNu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dip"
+                        android:checked="true"
+                        android:text="Nu"
+                        android:textColor="#008100"
+                        android:typeface="sans" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.03" />
+
+            <TextView
+                android:id="@+id/textObservatii"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="0.5"
+                android:hint="Observatii"
+                android:maxLength="150"
+                android:scrollbars="vertical"
+                android:textColor="#008100"
+                android:textSize="18sp"
+                android:typeface="sans" />
+
+            <ImageButton
+                android:id="@+id/btnModificaObservatii"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="30dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="right"
+                android:src="@drawable/icon_write_32" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

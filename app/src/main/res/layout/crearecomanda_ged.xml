@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_gravity="left"
+    android:layout_marginLeft="40dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_weight="0.6"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textFurnizor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_light_blue"
+                android:textSize="17sp"
+                android:typeface="sans"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left" >
+
+                <TextView
+                    android:id="@+id/textClient"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginTop="19dp"
+                    android:layout_weight="0.3"
+                    android:text="Fara client"
+                    android:textColor="@color/headerColor"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textAdrLivr"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.3"
+                    android:gravity="left"
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textPersContact"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0.2"
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textTelefon"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/detColor1"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textCantar"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="0dip"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textTipPlata"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.1"
+                    android:gravity="left"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textTransport"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/detColor4"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_weight="0.4"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textTotalGed"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_weight="0.2"
+                    android:gravity="right"
+                    android:textColor="@color/headerColor"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/labelTotal"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="0.1"
+                    android:gravity="right"
+                    android:text="Total client:"
+                    android:textColor="@color/headerColor"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textTotalCmd"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="0.1"
+                    android:gravity="left"
+                    android:textColor="@color/headerColor"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textComisionGed"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_weight="0.2"
+                    android:gravity="right"
+                    android:textColor="@color/marjaColor1"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/labelComisionClient"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="0.1"
+                    android:gravity="right"
+                    android:textColor="@color/marjaColor1"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textComisionClient"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="0.1"
+                    android:gravity="left"
+                    android:textColor="@color/marjaColor1"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="35dip"
+                    android:layout_gravity="right|bottom"
+                    android:layout_weight="0.2"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <Button
+                    android:id="@+id/valTransp"
+                    style="@style/button_text_2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.15"
+                    android:background="@drawable/button_style_6"
+                    android:gravity="center"
+                    android:text="Transport:" />
+
+                <Button
+                    android:id="@+id/debugBtn"
+                    style="@style/button_text_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_style_6"
+                    android:gravity="center"
+                    android:text="Debug" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="35dip"
+                    android:layout_gravity="right|bottom"
+                    android:layout_weight="0.05"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textAlertaMarja"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dip"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:textColor="@color/marjaAlert1"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dip"
+        android:background="#96CE96"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textNrCrt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="left"
+            android:text="Nr."
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCodArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="left"
+            android:text="Cod"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textNumeArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:gravity="left"
+            android:text="Nume"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCantArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Cant."
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textUmArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="UmV"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textPretGed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Pret GED"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textUmBaza"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="UmB"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textPretClient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Pret client"
+            android:textColor="@color/headerColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listArtCmd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="true" />
+    </LinearLayout>
+
+</LinearLayout>

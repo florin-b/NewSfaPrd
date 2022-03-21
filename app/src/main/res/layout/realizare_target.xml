@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textAntetTcf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="5dip"
+        android:text="Venit TCF"
+        android:textColor="@color/artRowColor1"
+        android:textSize="17sp"
+        android:typeface="sans" />
+
+    <LinearLayout
+        android:id="@+id/layoutAntetTcf"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_margin="5dip"
+        android:background="#D1BC71"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textVenitGrilaInc"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Venit gr. inc."
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textTargetPropus"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Target propus"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textTargetReal"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Target realizat"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCoefAfect"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Coef. de afectare"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textVenitTcf"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Venit Tcf"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip" >
+
+        <ListView
+            android:id="@+id/listTCF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="7.0sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textAntetTpr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="5dip"
+        android:text="Venit TPR"
+        android:textColor="@color/artRowColor1"
+        android:textSize="17sp"
+        android:typeface="sans" />
+
+    <LinearLayout
+        android:id="@+id/layoutAntetTpr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:background="#D1BC71"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textArticol"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.2"
+            android:gravity="left"
+            android:text="Nume"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textVenitGrInc"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Venit grila inc."
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textPondere"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.07"
+            android:gravity="right"
+            android:text="Pondere"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textTargetPropCant"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Target prop cant"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textTargetRealCant"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Target real cant"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textUm"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="Um"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textTargetPropVal"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Target prop val"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textRealizatVal"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Target real val"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textRealizareTarget"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:text="Realizare target"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textTargetPonderat"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.07"
+            android:gravity="right"
+            android:text="Target pond"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip" >
+
+        <ListView
+            android:id="@+id/listTPR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="7.0sp" />
+    </LinearLayout>
+
+</LinearLayout>

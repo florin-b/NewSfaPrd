@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="0.45"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="55dip"
+            android:layout_margin="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textCurrentPage"
+                android:layout_width="0dip"
+                android:layout_height="50dip"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.1"
+                android:textColor="#008100"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@drawable/swipe_left" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listObiectiveGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="7dp"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="7.0sp" />
+    </LinearLayout>
+
+</LinearLayout>

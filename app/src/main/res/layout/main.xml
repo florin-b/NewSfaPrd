@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mySwitch="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
+    android:layout_marginTop="140dp"
+    android:baselineAligned="false"
+    android:background="@drawable/logongradientbkg"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.7"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_weight="0.2" />
+
+            <TextView
+                style="@style/ShadowText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0.55"
+                android:gravity="right|bottom"
+                android:text="Lite SFA"
+                android:textColor="#808000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/appVer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.05"
+                android:gravity="left|bottom"
+                android:text="1.1"
+                android:textColor="#709472"
+                android:textSize="19sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="0dp"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_weight="0.3" />
+
+            <EditText
+                android:id="@+id/txtUserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_weight="0.15"
+                android:maxLength="20"
+                android:inputType = "text"
+                android:singleLine="true"
+                android:textColor="#177245"
+                android:textSize="20sp"
+                android:typeface="monospace" />
+
+            <EditText
+                android:id="@+id/txtPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="0.15"
+                android:maxLength="20"
+                android:inputType = "textPassword"
+                android:singleLine="true"
+                android:textColor="#177245"
+                android:textSize="20sp"
+                android:typeface="monospace" />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_weight="0.65" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_weight="0.25" />
+
+             <my.logon.screen.MySwitch
+                android:id="@+id/switchLogon"
+                style="@style/mySwitchStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dip"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                mySwitch:textOff=" "
+                mySwitch:textOn="@string/strGliseaza"
+                mySwitch:textOnThumb="false"
+                mySwitch:thumb="@drawable/switch_thumb_arrow"
+                mySwitch:track="@drawable/switch_track" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="0.3"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="5dp"
+            
+            android:gravity="left|center_vertical"
+            android:textColor="#CD7F32"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_weight="0.005" />
+
+        <ToggleButton
+            android:id="@+id/tglTipArt"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.1"
+            android:background="@drawable/button_style_5"
+            android:textOff="Articol"
+            android:textOn="Sintetic" />
+
+        <ToggleButton
+            android:id="@+id/togglebutton"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.1"
+            android:background="@drawable/button_style_5"
+            android:textOff="Nume"
+            android:textOn="Cod" />
+
+        <EditText
+            android:id="@+id/txtCodArt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.25"
+            android:background="@drawable/edittext_style_1"
+            android:inputType="textNoSuggestions"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:textColor="@color/editTextColor1"
+            android:typeface="monospace" />
+
+        <Button
+            android:id="@+id/stocBtn"
+            style="@style/button_text_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_marginTop="25dp"
+            android:layout_weight="0.1"
+            android:background="@drawable/button_style_1"
+            android:text="@string/strCauta"
+            android:textSize="19sp" />
+
+        <Spinner
+            android:id="@+id/spinFilialaStoc"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.12"
+            android:background="@drawable/dropdown_style_1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.3"
+            android:choiceMode="singleChoice"
+            android:dividerHeight="1sp"
+            android:drawSelectorOnTop="true" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.015" />
+
+        <LinearLayout
+            android:id="@+id/resLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dip"
+            android:layout_weight="0.3"
+            android:background="@drawable/rounded_shape"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textNumeArticol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dip"
+                android:textColor="@color/listArticol"
+                android:textSize="18sp"
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/textCodArticol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dip"
+                android:textColor="@color/listArticol"
+                android:textSize="16sp"
+                android:typeface="sans" />
+
+            <LinearLayout
+                android:id="@+id/ArtStocTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dip"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textCmpArticol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="40dip"
+                android:text="Cmp:"
+                android:textColor="@color/detColor1"
+                android:textSize="16sp"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textStocImbatranit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="20dip"
+                android:textColor="@color/detColor1"
+                android:textSize="16sp"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textStocBlocat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="40dip"
+                android:layout_marginLeft="20dip"
+                android:textColor="@color/detColor1"
+                android:textSize="16sp"
+                android:typeface="monospace"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ArtPretTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginBottom="20dip"
+                android:layout_marginTop="20dip"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/textCodBare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="40dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="40dip"
+                android:maxLines="5"
+                android:singleLine="false"
+                android:textColor="@color/detColor1"
+                android:textSize="16sp"
+                android:typeface="monospace" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

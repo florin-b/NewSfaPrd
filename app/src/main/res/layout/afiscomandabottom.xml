@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutAfisTotalCmd"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentRight="true"
+    android:orientation="vertical" >
+
+    <SlidingDrawer
+        android:id="@+id/slidingDrawerCmdAfis"
+        android:layout_width="380dip"
+        android:layout_height="70dip"
+        android:content="@+id/contentLayout"
+        android:handle="@+id/slideButtonCmdAfis"
+        android:orientation="horizontal"
+        android:padding="1dip" >
+
+        <Button
+            android:id="@+id/slideButtonCmdAfis"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:background="@drawable/slideleft32" >
+        </Button>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:gravity="right"
+                        android:text="Valoare comenzi:"
+                        android:textColor="@color/totalColor1"
+                        android:textSize="16sp"
+                        android:typeface="sans" />
+
+                    <TextView
+                        android:id="@+id/textValTotalCmd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginLeft="20dip"
+                        android:gravity="right"
+                        android:textColor="@color/totalColor1"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/textValTotalCmdTva"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginLeft="20dip"
+                        android:gravity="right"
+                        android:textColor="@color/totalColor1"
+                        android:textSize="16sp"
+                        android:typeface="monospace"
+                        android:textStyle="bold"
+                        android:layout_span="2" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </SlidingDrawer>
+
+</LinearLayout>

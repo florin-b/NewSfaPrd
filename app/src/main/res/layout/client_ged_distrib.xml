@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutClientDistrib"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/txtNumeClientDistrib"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edittext_style_1"
+            android:gravity="bottom"
+            android:inputType="textNoSuggestions"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:textColor="@color/editTextColor1"
+            android:textSize="19sp"
+            android:typeface="monospace" />
+
+        <ListView
+            android:id="@+id/listClienti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="7dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="0.55"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/cautaClientBtn"
+                style="@style/button_text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:background="@drawable/button_style_1"
+                android:paddingLeft="50dip"
+                android:paddingRight="50dip"
+                android:text="@string/strCauta" />
+        </LinearLayout>
+
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+           
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="65dip"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dip"
+            android:fadeScrollbars="false"
+            android:fillViewport="true"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                 android:id="@+id/detaliiClientDistrib"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_shape"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Nume client" />
+
+                    <TextView
+                        android:id="@+id/textNumeClientDistrib"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Cod client" />
+
+                    <TextView
+                        android:id="@+id/textCodClientDistrib"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Adresa" />
+
+                    <TextView
+                        android:id="@+id/textAdrClient"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Limita credit" />
+
+                    <TextView
+                        android:id="@+id/textLimitaCredit"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Rest credit" />
+
+                    <TextView
+                        android:id="@+id/textRestCredit"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Tip client" />
+
+                    <TextView
+                        android:id="@+id/tipClient"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Stare" />
+
+                    <TextView
+                        android:id="@+id/clientBlocat"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp" >
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:text="Filiala" />
+
+                    <TextView
+                        android:id="@+id/filClient"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>

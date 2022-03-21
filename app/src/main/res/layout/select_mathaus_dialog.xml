@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginBottom="20dip"
+         />
+
+    <Spinner
+        android:id="@+id/spinnerMagazine"
+        android:layout_width="250dip"
+        android:layout_height="45dip"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dip"
+        android:layout_marginBottom="40dip"
+        android:layout_marginTop="10dip" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/ok_button"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:background="@drawable/cancel_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Inchide" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05" />
+
+        <Button
+            android:id="@+id/btnOk"
+            style="@style/ok_button"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="left"
+            android:layout_weight="0.1"
+            android:background="@drawable/ok_button_style"
+            android:paddingLeft="40dip"
+            android:paddingRight="40dip"
+            android:text="Selecteaza" />
+    </LinearLayout>
+
+</LinearLayout>

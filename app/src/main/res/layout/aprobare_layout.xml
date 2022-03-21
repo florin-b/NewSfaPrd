@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/aprobareLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentRight="true"
+    android:layout_gravity="right|bottom"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/aprobaBtn"
+        style="@style/ok_button"
+        android:layout_width="150dip"
+        android:layout_height="40dip"
+        android:background="@drawable/ok_button_style"
+        android:paddingLeft="40dip"
+        android:paddingRight="40dip"
+        android:text="@string/strAproba" />
+
+    <TextView
+        android:layout_width="10dip"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/respingeBtn"
+        style="@style/ok_button"
+        android:layout_width="150dip"
+        android:layout_height="40dip"
+        android:background="@drawable/cancel_button_style"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:text="Respinge" />
+
+</LinearLayout>

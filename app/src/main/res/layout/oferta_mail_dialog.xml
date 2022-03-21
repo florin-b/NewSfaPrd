@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dip"
+        android:gravity="left"
+        android:text="Adresa mail:"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/textAdresaMail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dip"
+        android:gravity="left"
+        android:inputType="textNoSuggestions"
+        android:maxLength="100"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginTop="50dip"
+        android:gravity="right|bottom"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="right"
+            android:src="@drawable/ok_icon_32" />
+
+        <ImageButton
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="10dip"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="right"
+            android:src="@drawable/cancel_icon_32" />
+    </LinearLayout>
+
+</LinearLayout>

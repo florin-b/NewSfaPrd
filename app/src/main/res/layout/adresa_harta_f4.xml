@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textLabel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="0.2"
+            android:text="Atingeti harta pentru pozitionare"
+            android:textColor="@color/detColor4"
+            android:textSize="18sp"
+            android:typeface="serif" />
+
+        <Button
+            android:id="@+id/btnCloseDialog"
+            style="@style/ok_button"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="0.06"
+            android:background="@drawable/cancel_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Inchide" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+    	       
+
+</LinearLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <SlidingDrawer
+                android:id="@+id/clientSlidingDrawer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:content="@+id/contentLayout"
+                android:handle="@+id/slideButton"
+                android:orientation="vertical"
+                android:padding="1dip"
+                android:rotation="180" >
+
+                <RelativeLayout
+                    android:id="@+id/slideButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#E0E0E0" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:contentDescription="@string/img_content_desc"
+                        android:src="@drawable/sliding_up_down" />
+                </RelativeLayout>
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/vanzari_ag_selclient_header" />
+            </SlidingDrawer>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/clientData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/ShadowTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.04"
+                android:gravity="left"
+                android:text="Clienti:"
+                android:textSize="19sp" />
+
+            <ListView
+                android:id="@+id/listViewSelClient"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_weight="0.2"
+                android:background="@drawable/listview_border_2"
+                android:choiceMode="singleChoice"
+                android:drawSelectorOnTop="false"
+                android:fastScrollAlwaysVisible="true"
+                android:fastScrollEnabled="true"
+                android:scrollbarStyle="outsideInset" />
+
+            <ImageButton
+                android:id="@+id/deleteClientBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dip"
+                android:contentDescription="@string/img_content_desc"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/delete_icon_" />
+
+            <ImageButton
+                android:id="@+id/deleteAllClntBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dip"
+                android:contentDescription="@string/img_content_desc"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/delete_all_icon_" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dip"
+                android:layout_weight="0.1"
+                android:gravity="left" />
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

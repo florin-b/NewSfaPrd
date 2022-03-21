@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/textValoareLinie"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center_vertical"
+        android:inputType="textNoSuggestions|textMultiLine"
+        android:gravity="left"
+        android:textColor="#7f5327"
+        android:textSize="17sp" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="right"
+            android:src="@drawable/ok_icon_32" />
+
+        <ImageButton
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="10dip"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="right"
+            android:src="@drawable/cancel_icon_32" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginBottom="5dip"
+    android:layout_marginLeft="5dip"
+    android:layout_marginRight="5dip"
+    android:layout_marginTop="5dip"
+    android:focusableInTouchMode="true" >
+
+    <ListView
+        android:id="@+id/listGradReduceri"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:background="@color/backColorCmdList"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="1.0sp"
+        android:drawSelectorOnTop="false" />
+
+    <View
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3" >
+    </View>
+
+</LinearLayout>

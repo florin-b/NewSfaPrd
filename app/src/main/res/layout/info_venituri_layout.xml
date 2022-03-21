@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dip"
+            android:layout_marginRight="50dip"
+            android:layout_marginTop="20dip"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/layoutSelFiliala"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dip"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="350dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:background="@color/backColorObiective1"
+                    android:text="Filiala"
+                    android:textColor="@color/foreColorObiective1"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="@color/backColorObiective1" />
+
+                <Spinner
+                    android:id="@+id/spinnerFiliale"
+                    android:layout_width="250dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dip"
+                    android:background="@drawable/spinner_style_2"
+                    android:scrollbarStyle="outsideInset" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dip" />
+
+                <Spinner
+                    android:id="@+id/spinnerAgenti"
+                    android:layout_width="250dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dip"
+                    android:background="@drawable/spinner_style_2"
+                    android:scrollbarStyle="outsideInset" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="350dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/backColorObiective1"
+                android:text="Perioada"
+                android:textColor="@color/foreColorObiective1"
+                android:textSize="16sp"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/backColorObiective1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dip"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/spinnerLuna"
+                    android:layout_width="250dip"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_style_2"
+                    android:scrollbarStyle="outsideInset" />
+
+                <Spinner
+                    android:id="@+id/spinnerAn"
+                    android:layout_width="250dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/spinner_style_2"
+                    android:scrollbarStyle="outsideInset" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dip"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="40dip" />
+
+                <Button
+                    android:id="@+id/afisResult"
+                    style="@style/button_text_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/button_style_1"
+                    android:paddingLeft="40dip"
+                    android:paddingRight="40dip"
+                    android:text="@string/strAfis" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHeaderVenituri"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="30dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textInterval"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center"
+                android:layout_weight="0.15"
+                android:gravity="left"
+                android:text="Interval"
+                android:textColor="@color/headerColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textVenit1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:layout_weight="0.05"
+                android:gravity="right"
+                android:text="Venit net"
+                android:textColor="@color/headerColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textMarja1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:layout_weight="0.05"
+                android:gravity="right"
+                android:text="Marja bruta"
+                android:textColor="@color/headerColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textVenit2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:layout_weight="0.05"
+                android:gravity="right"
+                android:text="Venit net"
+                android:textColor="@color/headerColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textMarja2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:layout_weight="0.05"
+                android:gravity="right"
+                android:text="Marja bruta"
+                android:textColor="@color/headerColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textVenitTotal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:layout_weight="0.05"
+                android:gravity="right"
+                android:text="Venit net"
+                android:textColor="@color/headerColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textMarjaTotal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:layout_weight="0.05"
+                android:gravity="right"
+                android:text="Marja bruta"
+                android:textColor="@color/headerColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="50dip"
+            android:orientation="horizontal" >
+
+            <ListView
+                android:id="@+id/listResultsVenituri"
+                android:layout_width="0dip"
+                android:layout_height="180dip"
+                android:layout_weight="0.45"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:drawSelectorOnTop="true" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="30dip" />
+    </LinearLayout>
+
+</ScrollView>

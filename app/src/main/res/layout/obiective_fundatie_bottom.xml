@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/checkInchideOb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginRight="50dip"
+        android:text="Inchide obiectivul" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnSaveObiective"
+            style="@style/ok_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/ok_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Salveaza" />
+
+        <ProgressBar
+            android:id="@+id/progressSaveObiective"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dip"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp"
+            android:max="50"
+            android:progressDrawable="@drawable/progress_bar_style" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/headerNecesar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dip"
+        android:background="#D1BC71"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dip"
+            android:layout_weight="0.03"
+            android:gravity="left"
+            android:text="Nr."
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textNumeSintetic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Nume sintetic"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textCodSintetic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Cod sintetic"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textNumeMaterial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.2"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Nume material"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textCodMaterial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:drawableLeft="@drawable/sort_up_green"
+            android:gravity="left"
+            android:text="Cod material"
+            android:textColor="#7f5327"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textCons30"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:drawableRight="@drawable/sort_up_green"
+            android:gravity="right|center_vertical"
+            android:text="Cons 30 zile"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textStoc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:drawableRight="@drawable/sort_up_green"
+            android:gravity="right|center_vertical"
+            android:text="Stoc curent"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textPropunere"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.08"
+            android:drawableRight="@drawable/sort_up_green"
+            android:gravity="right|center_vertical"
+            android:text="Propunere necesar"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="CA neelib"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/intrariI1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="Interval 1"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/intrariI2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="Interval 2"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/intrariI3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dip"
+            android:layout_weight="0.05"
+            android:gravity="right"
+            android:text="Interval 3"
+            android:textColor="#7f5327"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dip"
+        android:layout_marginTop="20dip"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/listMaterialeNecesar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dip"
+            android:choiceMode="singleChoice"
+            android:dividerHeight="0.0sp" />
+    </LinearLayout>
+
+</LinearLayout>

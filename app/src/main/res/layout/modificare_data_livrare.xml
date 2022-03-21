@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/spinnerComenzi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/spinner_style_2" />
+
+        <ListView
+            android:id="@+id/listArtComenzi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutDataLivrare"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:layout_margin="15dip"
+        android:layout_weight="0.4"
+        android:orientation="vertical"
+        android:visibility="invisible"
+         >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="120dip"
+            android:background="@drawable/rounded_shape"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                style="@style/dateLivrareDlLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    style="@style/dateLivrareDlLabel"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:text="Data livrare" />
+
+                <TextView
+                    android:id="@+id/textDataLivrare"
+                    style="@style/dateLivrareDlValori"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dip" >
+
+                <Button
+                    android:id="@+id/btnDataLivrare"
+                    style="@style/ok_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dip"
+                    android:background="@drawable/cancel_button_style"
+                    android:text="Modifica data livrare" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dip" >
+
+                <Button
+                    android:id="@+id/btnSalveaza"
+                    style="@style/ok_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:background="@drawable/ok_button_style"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="Salveaza"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

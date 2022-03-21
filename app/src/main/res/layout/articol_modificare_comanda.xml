@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textNrCrt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="0.03"
+            android:textColor="@color/detColor11"
+            android:textSize="15sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textNumeArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_weight="0.4"
+            android:textColor="@color/listArticol"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <ImageView
+            android:id="@+id/imageAlertaPret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:contentDescription="@string/img_content_desc" />
+
+        <TextView
+            android:id="@+id/textCantArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:textColor="#7171C6"
+            android:textSize="15sp"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/textUmArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="8dip"
+            android:layout_weight="0.04"
+            android:gravity="left"
+            android:textColor="#7171C6"
+            android:textSize="15sp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="0.03" />
+
+        <TextView
+            android:id="@+id/textCodArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="0.1"
+            android:textColor="@color/listCodArticol"
+            android:textSize="14sp"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/textDepozit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="0.1"
+            android:textColor="@color/rowColor1" />
+
+        <TextView
+            android:id="@+id/textObsArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_weight="0.2"
+            android:textColor="#D2691E" />
+
+        <TextView
+            android:id="@+id/textPretArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:textColor="#008B00"
+            android:textSize="15sp"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/textMonedaArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="8dip"
+            android:layout_weight="0.04"
+            android:gravity="left"
+            android:text="RON"
+            android:textColor="#008B00"
+            android:textSize="15sp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="0.03" />
+
+        <TextView
+            android:id="@+id/textStatusArt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="0.4"
+            android:gravity="bottom"
+            android:textColor="@color/statusCmdColor"
+            android:textSize="15sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textProcRed"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:gravity="right"
+            android:textColor="@color/discountColor1"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
+            android:layout_marginLeft="8dip"
+            android:layout_weight="0.04"
+            android:gravity="left"
+            android:text="%"
+            android:textColor="@color/discountColor1"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dip"
+        android:layout_marginTop="7dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="0.03" />
+
+        <ImageButton
+            android:id="@+id/stergeArticolBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="right"
+            android:src="@drawable/delete_32" />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textConditie"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.30"
+                    android:gravity="right"
+                    android:text="Conditii: "
+                    android:textColor="#006E00"
+                    android:textSize="16sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textPretConditie"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.1"
+                    android:gravity="right|top"
+                    android:textColor="#006E00"
+                    android:textSize="15sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/textMonedaConditie"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|top"
+                    android:layout_marginLeft="8dip"
+                    android:layout_weight="0.04"
+                    android:gravity="left"
+                    android:text="RON"
+                    android:textColor="#006E00"
+                    android:textSize="15sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.30" />
+
+                <TextView
+                    android:id="@+id/textCantConditie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.1"
+                    android:gravity="right"
+                    android:textColor="#006E00"
+                    android:textSize="15sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/textUmConditie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="8dip"
+                    android:layout_weight="0.04"
+                    android:gravity="left"
+                    android:textColor="#006E00"
+                    android:textSize="15sp"
+                    android:typeface="sans" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1" >
+
+            <ImageButton
+                android:id="@+id/acceptaConditiiBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/checked_32" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

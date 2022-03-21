@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="0.005"
+        android:textSize="1sp" />
+
+    <TextView
+        android:id="@+id/textNrCrt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.02"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textNumeClient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.2"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textCodClient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.07"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textJudet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.06"
+        android:gravity="left"
+        android:textColor="#A66D33"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textLocalitate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.08"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textStrada"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.08"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textNumePersCont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.08"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textTelPersCont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.08"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanzMedie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.075"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz03"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.075"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz06"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.075"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz07"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.075"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz09"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.075"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz040"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.075"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+    <TextView
+        android:id="@+id/textVanz041"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dip"
+        android:layout_weight="0.075"
+        android:gravity="right"
+        android:textColor="#A66D33" />
+
+</LinearLayout>
