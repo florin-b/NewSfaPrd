@@ -85,6 +85,7 @@ public class DateLivrare {
 	private String refClient;
 	private TipCmdGed tipComandaGed = TipCmdGed.COMANDA_VANZARE;
 	private boolean isClientBlocat;
+	private double limitaCredit;
 	
 	private DateLivrareAfisare dateLivrareAfisare;
 
@@ -145,6 +146,7 @@ public class DateLivrare {
 		this.codFilialaCLP = dateLivrareAfisare.getCodFilialaCLP();
 		this.delegat = dateLivrareAfisare.getDelegat();
 		this.refClient = dateLivrareAfisare.getRefClient();
+		this.limitaCredit = dateLivrareAfisare.getLimitaCredit();
 	}
 
 	public boolean isClientRaft() {
@@ -631,7 +633,15 @@ public class DateLivrare {
 	public void setClientBlocat(boolean isClientBlocat) {
 		this.isClientBlocat = isClientBlocat;
 	}
-	
+
+	public double getLimitaCredit() {
+		return limitaCredit;
+	}
+
+	public void setLimitaCredit(double limitaCredit) {
+		this.limitaCredit = limitaCredit;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -686,6 +696,7 @@ public class DateLivrare {
 		refClient = "";
 		tipComandaGed = TipCmdGed.COMANDA_VANZARE;
 		isClientBlocat = false;
+		limitaCredit = 0;
 
 	}
 

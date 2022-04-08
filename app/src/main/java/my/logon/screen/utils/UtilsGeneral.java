@@ -1,5 +1,13 @@
 package my.logon.screen.utils;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,18 +16,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.UserInfo;
 import my.logon.screen.R;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 import my.logon.screen.enums.EnumTipAlert;
 import my.logon.screen.enums.TipCmdDistrib;
+import my.logon.screen.model.DateLivrare;
+import my.logon.screen.model.UserInfo;
 
 public class UtilsGeneral {
 
@@ -179,20 +180,23 @@ public class UtilsGeneral {
 		return retVal;
 	}
 
-	public static String getDescTipPlata(String codPlata) {
+	public static String getDescTipPlata(String codPlata, String termenPlata) {
 
 		String tipPlata = "nedefinit";
 
 		if (codPlata.equals("B")) {
 			tipPlata = "Bilet la ordin";
 		} else if (codPlata.equals("C")) {
-			tipPlata = "Card bancar";
+			tipPlata = "Cec";
 		} else if (codPlata.equals("E")) {
 			tipPlata = "Plata in numerar";
 		} else if (codPlata.equals("L")) {
 			tipPlata = "Plata interna buget-trezorerie";
 		} else if (codPlata.equals("O")) {
-			tipPlata = "Ordin de plata avans";
+			if (termenPlata != null && termenPlata.equals("C000"))
+				tipPlata = "Ordin de plata avans";
+			else
+				tipPlata = "Ordin de plata";
 		} else if (codPlata.equals("U")) {
 			tipPlata = "Plata interna-alte institutii";
 		} else if (codPlata.equals("W")) {

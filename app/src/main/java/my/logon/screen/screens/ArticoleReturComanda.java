@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.OpenableColumns;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +33,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import org.apache.commons.net.util.Base64;
 
@@ -404,7 +405,7 @@ public class ArticoleReturComanda extends Fragment implements ListaArtReturListe
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setMessage(
-				"\nPentru acest motiv de reducere livrarea trebuia facuta cu cel mult 2 zile in urma. \nAceasta comanda s-a livrat in data de "
+				"\nPentru acest motiv de retur livrarea trebuia facuta cu cel mult 2 zile in urma. \nAceasta comanda s-a livrat in data de "
 						+ UtilsDates.formatDateFromSap(DateLivrareReturComanda.dataLivrareComanda) + ".\n").setCancelable(false)
 				.setPositiveButton("Inchide", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {

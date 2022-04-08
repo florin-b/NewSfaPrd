@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#C9C9C9" >
 
-    <model.ViewPagerCustomDuration
+    <my.logon.screen.model.ViewPagerCustomDuration
         android:id="@+id/returviewpager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

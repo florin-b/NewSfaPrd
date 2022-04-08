@@ -39,9 +39,9 @@ import my.logon.screen.model.VanzariAgenti;
 
 public class VanzariAgentiActivity extends Activity {
 
-	final String[] fragments = { "my.logon.screen.SelectArticolVanzariAg", "my.logon.screen.SelectClientVanzariAg",
-			"my.logon.screen.SelectAgentVanzariAg", "my.logon.screen.SelectIntervalVanzariAg", "my.logon.screen.SelectTipComandaVanzariAg",
-			"my.logon.screen.AfisRaportVanzariAg", };
+	final String[] fragments = { "my.logon.screen.screens.SelectArticolVanzariAg", "my.logon.screen.screens.SelectClientVanzariAg",
+			"my.logon.screen.screens.SelectAgentVanzariAg", "my.logon.screen.screens.SelectIntervalVanzariAg", "my.logon.screen.screens.SelectTipComandaVanzariAg",
+			"my.logon.screen.screens.AfisRaportVanzariAg", };
 
 	public static String var1 = "Main var";
 	private static ArrayList<HashMap<String, String>> menuList = new ArrayList<HashMap<String, String>>();

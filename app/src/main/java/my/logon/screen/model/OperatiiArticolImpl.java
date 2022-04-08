@@ -17,6 +17,7 @@ import my.logon.screen.beans.ArticolCant;
 import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.beans.BeanArticolSimulat;
 import my.logon.screen.beans.BeanArticolStoc;
+import my.logon.screen.beans.BeanCablu05;
 import my.logon.screen.beans.BeanGreutateArticol;
 import my.logon.screen.beans.BeanParametruPretGed;
 import my.logon.screen.beans.PretArticolGed;
@@ -144,7 +145,13 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		numeComanda = EnumArticoleDAO.GET_ARTICOLE_CANT;
 		this.params = params;
 		performOperation();
-	}	
+	}
+
+	public void getCabluri05(HashMap<String, String> params) {
+		numeComanda = EnumArticoleDAO.GET_CABLURI_05;
+		this.params = params;
+		performOperation();
+	}
 	
 	@Override
 	public Object getDepartBV90(String codArticol) {
@@ -161,6 +168,86 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 	private void performOperation() {
 		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
 		call.getCallResultsFromFragment();
+	}
+
+	public ArrayList<BeanCablu05> deserializeCabluri05(String serListArticole) {
+
+		ArrayList<BeanCablu05> listCabluri = new ArrayList<BeanCablu05>();
+
+		try {
+
+			JSONArray jsonArray = new JSONArray(serListArticole);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject articolObject = jsonArray.getJSONObject(i);
+
+				BeanCablu05 cablu = new BeanCablu05();
+				cablu.setCodBoxa(articolObject.getString("codBoxa"));
+				cablu.setNumeBoxa(articolObject.getString("numeBoxa"));
+				cablu.setStoc(articolObject.getString("stoc"));
+
+				listCabluri.add(cablu);
+
+			}
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return listCabluri;
+	}
+
+	public ArrayList<BeanCablu05> deserializeCantCabluri05(String serListArticole) {
+
+		ArrayList<BeanCablu05> listCabluri = new ArrayList<BeanCablu05>();
+
+		try {
+
+			JSONArray jsonArray = new JSONArray(serListArticole);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject articolObject = jsonArray.getJSONObject(i);
+
+				BeanCablu05 cablu = new BeanCablu05();
+				cablu.setCodBoxa(articolObject.getString("codBoxa"));
+				cablu.setNumeBoxa(articolObject.getString("numeBoxa"));
+				cablu.setCantitate(articolObject.getString("cantitate"));
+
+				listCabluri.add(cablu);
+
+			}
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return listCabluri;
+	}
+
+	public String serializeCabluri05(List<BeanCablu05> listCabluri) {
+
+		JSONArray cabluArray = new JSONArray();
+
+		if (listCabluri == null)
+			return "";
+
+		try {
+
+			for (BeanCablu05 cablu : listCabluri) {
+				JSONObject obj = new JSONObject();
+				obj.put("numeBoxa", cablu.getNumeBoxa());
+				obj.put("codBoxa", cablu.getCodBoxa());
+				obj.put("cantitate", cablu.getCantitate());
+				cabluArray.put(obj);
+
+			}
+
+		} catch (Exception ex) {
+			Toast.makeText(context, ex.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return cabluArray.toString();
+
 	}
 
 	public ArrayList<ArticolDB> deserializeArticoleVanzare(String serializedListArticole) {

@@ -4,42 +4,6 @@
  */
 package my.logon.screen.screens;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.TreeSet;
-
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.ComenziDAOListener;
-import my.logon.screen.listeners.OfertaMailListener;
-import my.logon.screen.listeners.OperatiiArticolListener;
-import my.logon.screen.listeners.SelectClientListener;
-import my.logon.screen.model.ArticolComanda;
-import my.logon.screen.model.ComenziDAO;
-import my.logon.screen.model.Constants;
-import my.logon.screen.model.InfoStrings;
-import my.logon.screen.model.OperatiiArticol;
-import my.logon.screen.model.OperatiiArticolImpl;
-import my.logon.screen.model.UserInfo;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import my.logon.screen.screens.AsyncTaskWSCall;
-import my.logon.screen.R;
-import my.logon.screen.patterns.CriteriuComenziSimulate;
-import my.logon.screen.utils.UtilsDates;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.adapters.ArticolSimulatAdapter;
-import my.logon.screen.adapters.ComandaSimulataAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -63,6 +27,26 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.TreeSet;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.ArticolSimulatAdapter;
+import my.logon.screen.adapters.ComandaSimulataAdapter;
 import my.logon.screen.beans.ArticolSimulat;
 import my.logon.screen.beans.BeanArticolSimulat;
 import my.logon.screen.beans.BeanArticolStoc;
@@ -74,6 +58,21 @@ import my.logon.screen.dialogs.OfertaMailDialog;
 import my.logon.screen.dialogs.SelectClientCmdSimDialog;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumComenziDAO;
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.ComenziDAOListener;
+import my.logon.screen.listeners.OfertaMailListener;
+import my.logon.screen.listeners.OperatiiArticolListener;
+import my.logon.screen.listeners.SelectClientListener;
+import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ComenziDAO;
+import my.logon.screen.model.Constants;
+import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.OperatiiArticol;
+import my.logon.screen.model.OperatiiArticolImpl;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.patterns.CriteriuComenziSimulate;
+import my.logon.screen.utils.UtilsDates;
+import my.logon.screen.utils.UtilsGeneral;
 
 public class AfisComenziSimulate extends Activity implements AsyncTaskListener, ComenziDAOListener, OperatiiArticolListener, OfertaMailListener,
 		SelectClientListener {
@@ -678,7 +677,7 @@ public class AfisComenziSimulate extends Activity implements AsyncTaskListener, 
 
 		listArticoleSimulate.setVisibility(View.VISIBLE);
 
-		textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrareCmdCurent.getTipPlata()));
+		textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrareCmdCurent.getTipPlata(), dateLivrareCmdCurent.getTermenPlata()));
 		textTransport.setText(UtilsGeneral.getDescTipTransport(dateLivrareCmdCurent.getTransport()));
 		textOras.setText(dateLivrareCmdCurent.getOras());
 		textJudet.setText(InfoStrings.numeJudet(dateLivrareCmdCurent.getCodJudet()));

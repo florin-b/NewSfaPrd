@@ -1,23 +1,19 @@
 package my.logon.screen.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import android.content.Context;
+import android.widget.Toast;
 
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.ComenziDAOListener;
-import my.logon.screen.model.CriteriulDivizie;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.screens.AsyncTaskWSCall;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import my.logon.screen.utils.UtilsGeneral;
-import android.content.Context;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import my.logon.screen.beans.ArticolCalculDesc;
 import my.logon.screen.beans.ArticolSimulat;
 import my.logon.screen.beans.BeanArticoleAfisare;
@@ -30,11 +26,12 @@ import my.logon.screen.beans.BeanConditiiHeader;
 import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.FurnizorComanda;
-
-import com.google.android.gms.maps.model.LatLng;
-
 import my.logon.screen.enums.EnumComenziDAO;
 import my.logon.screen.enums.EnumTipClientIP;
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.ComenziDAOListener;
+import my.logon.screen.screens.AsyncTaskWSCall;
+import my.logon.screen.utils.UtilsGeneral;
 
 public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
@@ -380,6 +377,8 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 				if (jsonLivrare.has("isClientBlocat"))
 					dateLivrare.setClientBlocat(Boolean.valueOf(jsonLivrare.getString("isClientBlocat")));
 
+				dateLivrare.setLimitaCredit(Double.valueOf(jsonLivrare.getString("limitaCredit")));
+
 				JSONArray jsonArticole = jsonObject.getJSONArray("articoleComanda");
 				String tipAlert, subCmp;
 				for (int i = 0; i < jsonArticole.length(); i++) {
@@ -453,6 +452,9 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
 					if (articolObject.has("umPalet"))
 						articol.setUmPalet(articolObject.getString("umPalet").equals("1") ? true : false);
+
+					if (articolObject.has("listCabluri"))
+						articol.setListCabluri(new OperatiiArticolImpl(context).deserializeCantCabluri05(articolObject.getString("listCabluri")));
 
 					listArticole.add(articol);
 

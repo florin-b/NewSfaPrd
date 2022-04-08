@@ -95,6 +95,7 @@ import my.logon.screen.model.InfoStrings;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
+import my.logon.screen.model.OperatiiArticolImpl;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.patterns.UlSiteComparator;
 import my.logon.screen.utils.UtilsComenzi;
@@ -1199,7 +1200,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
 	private boolean isCondPF10_000() {
 		return DateLivrare.getInstance().getTipPersClient().equals("PF")
-				&& (DateLivrare.getInstance().getTipPlata().equals("E") || DateLivrare.getInstance().getTipPlata().equals("E1"))
+				&& (DateLivrare.getInstance().getTipPlata().equals("E") || DateLivrare.getInstance().getTipPlata().equals("E1")
+				|| DateLivrare.getInstance().getTipPlata().equals("N") || DateLivrare.getInstance().getTipPlata().equals("R"))
 				&& Double.valueOf(DateLivrare.getInstance().getTotalComanda()) > 10000;
 	}
 
@@ -1212,8 +1214,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
 						DateLivrare dateLivrareInstance = DateLivrare.getInstance();
 
-						if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("E1")) && totalComanda > 5000
-								&& CreareComandaGed.tipClient.equals("PJ")) {
+						if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("E1")
+								|| dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance.getTipPlata().equals("R"))
+								&& totalComanda > 5000 && CreareComandaGed.tipClient.equals("PJ")) {
 							Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de 5000 RON!", Toast.LENGTH_SHORT)
 									.show();
 							return;
@@ -1639,6 +1642,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 				obj.put("valTransport", listArticole.get(i).getValTransport());
 				obj.put("procTransport", listArticole.get(i).getProcTransport());
 				obj.put("depart", listArticole.get(i).getDepart());
+				obj.put("listCabluri", new OperatiiArticolImpl(this).serializeCabluri05(listArticole.get(i).getListCabluri()));
 
 				myArray.put(obj);
 
@@ -1934,6 +1938,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 			UserInfo.getInstance().setUnitLog(DateLivrare.getInstance().getCodFilialaCLP());
 		}
 
+		tipComandaGed = TipCmdGed.COMANDA_VANZARE;
+
 		// reset variabile
 		resetAllVars();
 
@@ -1970,7 +1976,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 		isTotalNegociat = false;
 
 		listTermenPlata = new ArrayList<String>();
-
+		tipComandaGed = TipCmdGed.COMANDA_VANZARE;
 		DateLivrare.getInstance().resetAll();
 
 		filialaAlternativa = UserInfo.getInstance().getUnitLog();

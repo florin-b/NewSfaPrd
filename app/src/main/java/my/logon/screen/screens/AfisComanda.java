@@ -4,39 +4,11 @@
  */
 package my.logon.screen.screens;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import my.logon.screen.listeners.ClientDialogListener;
-import my.logon.screen.listeners.ComenziDAOListener;
-import my.logon.screen.listeners.CustomSpinnerClass;
-import my.logon.screen.listeners.CustomSpinnerListener;
-import my.logon.screen.listeners.DivizieDialogListener;
-import my.logon.screen.listeners.IntervalDialogListener;
-import my.logon.screen.listeners.OperatiiAgentListener;
-import my.logon.screen.model.ArticolComanda;
-import my.logon.screen.model.ComandaCreata;
-import my.logon.screen.model.ComenziDAO;
-import my.logon.screen.model.InfoStrings;
-import my.logon.screen.model.OperatiiAgent;
-import my.logon.screen.model.OperatiiFiliala;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
-import my.logon.screen.adapters.ArticolAfisAdapter;
-import my.logon.screen.adapters.ComandaAfisAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -57,6 +29,18 @@ import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.ArticolAfisAdapter;
+import my.logon.screen.adapters.ComandaAfisAdapter;
 import my.logon.screen.beans.BeanArticoleAfisare;
 import my.logon.screen.beans.BeanComandaCreata;
 import my.logon.screen.beans.DateLivrareAfisare;
@@ -66,6 +50,22 @@ import my.logon.screen.dialogs.SelectClientDialog;
 import my.logon.screen.dialogs.SelectDivizieDialog;
 import my.logon.screen.dialogs.SelectIntervalDialog;
 import my.logon.screen.enums.EnumComenziDAO;
+import my.logon.screen.listeners.ClientDialogListener;
+import my.logon.screen.listeners.ComenziDAOListener;
+import my.logon.screen.listeners.CustomSpinnerClass;
+import my.logon.screen.listeners.CustomSpinnerListener;
+import my.logon.screen.listeners.DivizieDialogListener;
+import my.logon.screen.listeners.IntervalDialogListener;
+import my.logon.screen.listeners.OperatiiAgentListener;
+import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ComandaCreata;
+import my.logon.screen.model.ComenziDAO;
+import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.OperatiiAgent;
+import my.logon.screen.model.OperatiiFiliala;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class AfisComanda extends Activity implements CustomSpinnerListener, OperatiiAgentListener, IntervalDialogListener, ClientDialogListener,
 		ComenziDAOListener, DivizieDialogListener {
@@ -668,7 +668,7 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 			textPondereArtBAfis.setVisibility(View.VISIBLE);
 		}
 
-		textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrare.getTipPlata()));
+		textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrare.getTipPlata(), dateLivrare.getTermenPlata()));
 		textTransport.setText(UtilsGeneral.getDescTipTransport(dateLivrare.getTransport()));
 		textDataLivrare.setText(dateLivrare.getDataLivrare());
 		textCantar.setText(dateLivrare.getCantar().equals("1") ? "Cu cantarire" : "Fara cantarire");

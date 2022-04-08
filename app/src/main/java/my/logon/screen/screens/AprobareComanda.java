@@ -815,7 +815,7 @@ public class AprobareComanda extends Activity implements ComenziDAOListener, Den
 
 		textAdresaLivrare.setText("Adresa livrare: " + strAdresaLivrare.toString());
 		textTipTransport.setText("Transport: " + UtilsGeneral.getDescTipTransport(dateLivrare.getTransport()));
-		textMetodaPlata.setText("Plata: " + UtilsGeneral.getDescTipPlata(dateLivrare.getTipPlata()));
+		textMetodaPlata.setText("Plata: " + UtilsGeneral.getDescTipPlata(dateLivrare.getTipPlata(), dateLivrare.getTermenPlata()));
 
 		String strTipReducere = UtilsGeneral.getTipReducere(dateLivrare.getFactRed()).isEmpty() ? " " : "Tip reducere: "
 				+ UtilsGeneral.getTipReducere(dateLivrare.getFactRed());

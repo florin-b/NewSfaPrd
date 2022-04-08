@@ -615,7 +615,7 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <my.logon.screen.WrappingSlidingDrawer
+            <my.logon.screen.screens.WrappingSlidingDrawer
                 android:id="@+id/slidingDrawerAprob"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -775,7 +775,7 @@
                             android:scrollbarStyle="outsideInset" />
                     </LinearLayout>
                 </LinearLayout>
-            </my.logon.screen.WrappingSlidingDrawer>
+            </my.logon.screen.screens.WrappingSlidingDrawer>
         </LinearLayout>
     </FrameLayout>
 

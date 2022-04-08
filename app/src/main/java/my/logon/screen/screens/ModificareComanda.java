@@ -4,55 +4,6 @@
  */
 package my.logon.screen.screens;
 
-import my.logon.screen.helpers.HelperCostDescarcare;
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeSet;
-
-import my.logon.screen.listeners.ArticolModificareListener;
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.ComenziDAOListener;
-import my.logon.screen.listeners.CostMacaraListener;
-import my.logon.screen.listeners.PaletiListener;
-import my.logon.screen.model.AlgoritmComandaGed;
-import my.logon.screen.model.ArticolComanda;
-import my.logon.screen.model.Comanda;
-import my.logon.screen.model.ComenziDAO;
-import my.logon.screen.model.Constants;
-import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.HelperTranspBuc;
-import my.logon.screen.model.InfoStrings;
-import my.logon.screen.model.ListaArticoleComandaGed;
-import my.logon.screen.model.ListaArticoleModificareComanda;
-import my.logon.screen.model.UserInfo;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import my.logon.screen.screens.CreareComanda;
-import my.logon.screen.R;
-import my.logon.screen.screens.SelectArtCmdGed;
-import my.logon.screen.utils.UtilsComenzi;
-import my.logon.screen.utils.UtilsComenziGed;
-import my.logon.screen.utils.UtilsFormatting;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
-import my.logon.screen.adapters.ArticolModificareAdapter;
-import my.logon.screen.adapters.ArticolePretTransport;
-import my.logon.screen.adapters.ComandaModificareAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -79,6 +30,30 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.TreeSet;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.ArticolModificareAdapter;
+import my.logon.screen.adapters.ArticolePretTransport;
+import my.logon.screen.adapters.ComandaModificareAdapter;
 import my.logon.screen.beans.ArticolCalculDesc;
 import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.beans.BeanArticoleAfisare;
@@ -94,6 +69,29 @@ import my.logon.screen.dialogs.CostPaletiDialog;
 import my.logon.screen.enums.EnumComenziDAO;
 import my.logon.screen.enums.EnumPaleti;
 import my.logon.screen.enums.EnumTipClientIP;
+import my.logon.screen.helpers.HelperCostDescarcare;
+import my.logon.screen.listeners.ArticolModificareListener;
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.ComenziDAOListener;
+import my.logon.screen.listeners.CostMacaraListener;
+import my.logon.screen.listeners.PaletiListener;
+import my.logon.screen.model.AlgoritmComandaGed;
+import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.Comanda;
+import my.logon.screen.model.ComenziDAO;
+import my.logon.screen.model.Constants;
+import my.logon.screen.model.DateLivrare;
+import my.logon.screen.model.HelperTranspBuc;
+import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ListaArticoleComandaGed;
+import my.logon.screen.model.ListaArticoleModificareComanda;
+import my.logon.screen.model.OperatiiArticolImpl;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsComenzi;
+import my.logon.screen.utils.UtilsComenziGed;
+import my.logon.screen.utils.UtilsFormatting;
+import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class ModificareComanda extends Activity implements AsyncTaskListener, ComenziDAOListener, ArticolModificareListener, Observer,
 		CostMacaraListener, PaletiListener {
@@ -413,11 +411,15 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 					nextScreenLivr.putExtra("codClient", selectedClientCode);
 					nextScreenLivr.putExtra("parrentClass", "ModificareComanda");
 					nextScreenLivr.putExtra("tipPlataContract", DateLivrare.getInstance().getTipPlata());
+					nextScreenLivr.putExtra("limitaCredit", DateLivrare.getInstance().getLimitaCredit());
+					nextScreenLivr.putExtra("termenPlata", DateLivrare.getInstance().getTermenPlata());
 
 				} else {
 					nextScreenLivr = new Intent(getApplicationContext(), SelectAdrLivrCmd.class);
 					nextScreenLivr.putExtra("parrentClass", "ModificareComanda");
 					nextScreenLivr.putExtra("tipPlataContract", DateLivrare.getInstance().getTipPlata());
+					nextScreenLivr.putExtra("limitaCredit", DateLivrare.getInstance().getLimitaCredit());
+					nextScreenLivr.putExtra("termenPlata", DateLivrare.getInstance().getTermenPlata());
 				}
 
 				selectedCmdAdrLivr = selectedCmd;
@@ -492,7 +494,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 			// ***************sf. cantar
 
 			textFactRed.setText(UtilsGeneral.getTipReducere(dateLivrareInstance.getRedSeparat()));
-			textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrareInstance.getTipPlata()));
+			textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrareInstance.getTipPlata(), dateLivrareInstance.getTermenPlata()));
 			textTransport.setText(UtilsGeneral.getDescTipTransport(dateLivrareInstance.getTransport()));
 
 			if (!isUserCV() && !isComandaGed()) {
@@ -628,7 +630,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
 						prepareArtForDelivery();
 
-						if (dateLivrareInstance.getTipPlata().equals("E") && totalComanda > 5000 && tipClientVar.equals("PJ")) {
+						if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("N")
+								| dateLivrareInstance.getTipPlata().equals("E1") || dateLivrareInstance.getTipPlata().equals("R"))
+								&& totalComanda > 5000 && tipClientVar.equals("PJ")) {
 							Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de 5000 RON!", Toast.LENGTH_SHORT)
 									.show();
 							return;
@@ -1071,6 +1075,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 				obj.put("istoricPret", listArticoleComanda.get(i).getIstoricPret());
 				obj.put("valTransport", listArticoleComanda.get(i).getValTransport());
 				obj.put("filialaSite", listArticoleComanda.get(i).getFilialaSite());
+				obj.put("listCabluri", new OperatiiArticolImpl(this).serializeCabluri05(listArticoleComanda.get(i).getListCabluri()));
 
 				if (!UtilsUser.isAgentOrSDorKA()) {
 					if ((listArticoleComanda.get(i).getNumeArticol() != null && listArticoleComanda.get(i).getPonderare() == 1)
@@ -1516,7 +1521,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 		textPersContact.setText(dateLivrare.getPersContact());
 		textTelefon.setText(dateLivrare.getNrTel());
 		textCantar.setText(UtilsGeneral.getTipCantarire(dateLivrare.getCantar()));
-		textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrare.getTipPlata()));
+		textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrare.getTipPlata(), dateLivrare.getTermenPlata()));
 		textTransport.setText(UtilsGeneral.getDescTipTransport(dateLivrare.getTransport()));
 		textFactRed.setText(UtilsGeneral.getTipReducere(dateLivrare.getRedSeparat()));
 

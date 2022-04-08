@@ -91,9 +91,6 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 
 			((SupportMapFragment) fm.findFragmentById(R.id.map)).getMapAsync(this);
 
-
-
-
 			super.show();
 		} catch (Exception e) {
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();

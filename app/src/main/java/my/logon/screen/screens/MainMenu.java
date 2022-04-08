@@ -60,7 +60,7 @@ public class MainMenu extends Activity {
 	public GridView gridview;
 
 	public String[] btnNamesAgents = { "Utilizator", "Creare comanda", "Modificare comanda", "Afisare comanda", "Creare cmd GED", "Comenzi simulate",
-			"Cmz.blocate limita credit", "Creare CLP", "Afisare CLP", "Modificare custodie", "Afisare DL", "Retur paleti", "Stare retur paleti",
+			"Cmz.blocate limita credit", "Creare CLP", "Afisare CLP", "Modificare custodie", "Afisare DL", "Retur paleti", "Stare retur",
 			"Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi",
 			"Pierderi vanzari", "Salarizare", "Urmarire sablon", "Info client", "Clienti alocati", "Plati CEC", "Adrese clienti", "Delegatii",
 			"Despre", "Iesire" };
@@ -74,7 +74,7 @@ public class MainMenu extends Activity {
 
 	public String[] btnNamesSD = { "Utilizator", "Creare comanda", "Modificare comanda", "Afisare comanda", "Creare cmd GED", "Comenzi simulate",
 			"Cmz.blocate limita credit", "Creare CLP", "Aprobare CLP", "Afisare CLP", "Aprobare DL", "Afisare DL", "Retur paleti",
-			"Stare retur paleti", "Retur comenzi", "Modificare custodie", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri", "Obiective",
+			"Stare retur", "Retur comenzi", "Modificare custodie", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri", "Obiective",
 			"Preturi", "Preturi concurenta", "Stare comenzi", "Pierderi vanzari", "Salarizare", "Articole avarie", "Creare sablon", "Afisare sablon",
 			"Urmarire sablon", "Aprobare comanda", "Comenzi conditionate", "Info client", "Plati CEC", "Clienti alocati", "Adrese clienti",
 			"Delegatii", "Despre", "Iesire" };
@@ -89,7 +89,7 @@ public class MainMenu extends Activity {
 			R.drawable.despre_icon, R.drawable.exit_icon, R.drawable.blank };
 
 	public String[] btnNamesSDIP = { "Utilizator", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate",
-			"Cmz.blocate limita credit", "Creare CLP", "Afisare CLP", "Retur paleti", "Stare retur paleti", "Retur comenzi", "Obiective", "Modificare data livrare",
+			"Cmz.blocate limita credit", "Creare CLP", "Afisare CLP", "Retur paleti", "Stare retur", "Retur comenzi", "Obiective", "Modificare data livrare",
 			"Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Info client", "Delegatii", "Despre", "Iesire" };
 
 	public int[] btnImageSDIP = new int[] { R.drawable.id_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon, R.drawable.preview_icon,
@@ -110,7 +110,7 @@ public class MainMenu extends Activity {
 
 	public String[] btnNamesKA = { "Utilizator", "Creare comanda", "Modificare comanda", "Afisare comanda", "Cmz.blocate limita credit",
 			"Creare CLP", "Afisare CLP", "Afisare DL", "Obiective", "Modificare custodie", "Modificare data livrare", "Retur paleti",
-			"Stare retur paleti", "Retur comenzi", "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Pierderi vanzari", "Info client",
+			"Stare retur", "Retur comenzi", "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Pierderi vanzari", "Info client",
 			"Plati CEC", "Clienti facturati", "Clienti alocati", "Salarizare", "Adrese clienti", "Delegatii", "Despre", "Iesire" };
 
 	public int[] btnImageKA = new int[] { R.drawable.id_icon, R.drawable.new_icon, R.drawable.modif_icon, R.drawable.preview_icon, R.drawable.clp,
@@ -128,7 +128,7 @@ public class MainMenu extends Activity {
 			R.drawable.despre_icon, R.drawable.exit_icon, R.drawable.blank };
 
 	public String[] btnNamesCVA = { "Utilizator", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate", "Creare CLP",
-			"Afisare CLP", "Retur paleti", "Stare retur paleti", "Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri",
+			"Afisare CLP", "Retur paleti", "Stare retur", "Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri",
 			"Preturi", "Stare comenzi", "Info client", "Delegatii", "Despre", "Iesire" };
 
 	public int[] btnImageCVA = new int[] { R.drawable.id_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon, R.drawable.preview_icon,
@@ -137,7 +137,7 @@ public class MainMenu extends Activity {
 			R.drawable.client_info, R.drawable.blank, R.drawable.despre_icon, R.drawable.exit_icon };
 
 	public String[] btnNamesSM = { "Utilizator", "Creare comanda", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate",
-			"Creare CLP", "Aprobare CLP", "Afisare CLP", "Retur paleti", "Stare retur paleti", "Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari",
+			"Creare CLP", "Aprobare CLP", "Afisare CLP", "Retur paleti", "Stare retur", "Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari",
 			"Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Info client", "Delegatii", "Despre", "Iesire" };
 
 	public int[] btnImageSM = new int[] { R.drawable.id_icon, R.drawable.new_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon,
@@ -147,7 +147,7 @@ public class MainMenu extends Activity {
 			R.drawable.blank };
 
 	public String[] btnNamesCONSGED = { "Utilizator", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate", "Retur paleti",
-			"Stare retur paleti", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Preturi concurenta",
+			"Stare retur", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Preturi concurenta",
 			"Retur comenzi", "Obiective", "Info client", "Despre", "Iesire" };
 
 	public int[] btnImageCONSGED = new int[] { R.drawable.id_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon, R.drawable.preview_icon,
@@ -176,7 +176,7 @@ public class MainMenu extends Activity {
 			R.drawable.dollar_icon, R.drawable.despre_icon, R.drawable.exit_icon };
 
 	public String[] btnNamesCVR = { "Utilizator", "Creare comanda", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate",
-			"Creare CLP", "Afisare CLP", "Retur paleti", "Stare retur paleti","Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari", "Neincasate",
+			"Creare CLP", "Afisare CLP", "Retur paleti", "Stare retur","Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari", "Neincasate",
 			"Stocuri", "Preturi", "Stare comenzi", "Info client", "Delegatii", "Despre", "Iesire" };
 
 	public int[] btnImageCVR = new int[] { R.drawable.id_icon, R.drawable.new_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon,
@@ -532,7 +532,7 @@ public class MainMenu extends Activity {
 
 				}
 
-				if (selectedBtnName.equalsIgnoreCase("Stare retur paleti")) {
+				if (selectedBtnName.equalsIgnoreCase("Stare retur")) {
 
 					Intent nextScreen = new Intent(MainMenu.this, AfisareReturMarfa.class);
 					startActivity(nextScreen);

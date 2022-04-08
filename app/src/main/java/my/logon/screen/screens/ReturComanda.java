@@ -131,7 +131,7 @@ public class ReturComanda extends FragmentActivity implements ClientReturListene
 		private List<Fragment> fragments;
 
 		public ReturMarfaPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
-			super(fm);
+			super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 			this.fragments = fragments;
 		}
 

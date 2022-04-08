@@ -32,8 +32,8 @@ import my.logon.screen.model.UserInfo;
 
 public class Neincasate extends Activity {
 
-	final String[] fragments = { "my.logon.screen.SelectClientNeincasate", "my.logon.screen.SelectAgentNeincasate",
-			"my.logon.screen.AfisRaportNeincasate" };
+	final String[] fragments = { "my.logon.screen.screens.SelectClientNeincasate", "my.logon.screen.screens.SelectAgentNeincasate",
+			"my.logon.screen.screens.AfisRaportNeincasate" };
 
 	ListView listViewMenu;
 	DrawerMenuAdapter menuAdapter;

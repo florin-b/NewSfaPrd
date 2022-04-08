@@ -1,9 +1,10 @@
 package my.logon.screen.utils;
 
+import android.widget.Spinner;
+
+import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.InfoStrings;
-import android.widget.Spinner;
-import my.logon.screen.enums.TipCmdDistrib;
 
 public class UtilsComenzi {
 

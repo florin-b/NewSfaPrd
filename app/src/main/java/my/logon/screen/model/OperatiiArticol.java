@@ -8,6 +8,7 @@ import my.logon.screen.beans.ArticolCant;
 import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.beans.BeanArticolSimulat;
 import my.logon.screen.beans.BeanArticolStoc;
+import my.logon.screen.beans.BeanCablu05;
 import my.logon.screen.beans.BeanGreutateArticol;
 import my.logon.screen.beans.BeanParametruPretGed;
 import my.logon.screen.beans.PretArticolGed;
@@ -69,4 +70,9 @@ public interface OperatiiArticol {
 
 	public ArrayList<ArticolCant> deserializeArticoleCant(String listArticole);
 
+	public void getCabluri05(HashMap<String, String> params);
+
+	public ArrayList<BeanCablu05> deserializeCabluri05(String listArticole);
+
+	public String serializeCabluri05(List<BeanCablu05> listCabluri);
 }

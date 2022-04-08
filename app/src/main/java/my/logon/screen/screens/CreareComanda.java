@@ -948,7 +948,8 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
 						DateLivrare dateLivrareInstance = DateLivrare.getInstance();
 
-						if (dateLivrareInstance.getTipPlata().equals("E") && totalComanda > 5000 && CreareComanda.tipClientVar.equals("PJ")) {
+						if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance
+								.getTipPlata().equals("R")) && totalComanda > 5000 && CreareComanda.tipClientVar.equals("PJ")) {
 							Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de 5000 RON!", Toast.LENGTH_SHORT)
 									.show();
 							return;
@@ -1354,6 +1355,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 				articolCmd.setDepartAprob(articol.getDepartAprob());
 				articolCmd.setIstoricPret(articol.getIstoricPret());
 				articolCmd.setFilialaSite(articol.getFilialaSite());
+				articolCmd.setListCabluri(articol.getListCabluri());
 
 				if (isArtGedExceptie(articol))
 					articolCmd.setObservatii(articol.getObservatii());
@@ -1454,6 +1456,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 				obj.put("filialaSite", listArticole.get(i).getFilialaSite());
 				obj.put("valTransport", "0");
 				obj.put("procTransport", "0");
+				obj.put("listCabluri", opArticol.serializeCabluri05(listArticole.get(i).getListCabluri()));
 				myArray.put(obj);
 			}
 		} catch (Exception ex) {

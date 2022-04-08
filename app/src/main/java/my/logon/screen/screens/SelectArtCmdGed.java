@@ -49,15 +49,18 @@ import java.util.Locale;
 import my.logon.screen.R;
 import my.logon.screen.adapters.CautareArticoleAdapter;
 import my.logon.screen.beans.ArticolDB;
+import my.logon.screen.beans.BeanCablu05;
 import my.logon.screen.beans.BeanParametruPretGed;
 import my.logon.screen.beans.DepoziteUl;
 import my.logon.screen.beans.PretArticolGed;
+import my.logon.screen.dialogs.Cabluri05Dialog;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
 import my.logon.screen.enums.EnumTipClientIP;
 import my.logon.screen.enums.EnumTipComanda;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.filters.DecimalDigitsInputFilter;
+import my.logon.screen.listeners.Cablu05SelectedListener;
 import my.logon.screen.listeners.MagazinMathausListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.model.ArticolComandaGed;
@@ -76,7 +79,7 @@ import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
 
-public class SelectArtCmdGed extends ListActivity implements OperatiiArticolListener, MagazinMathausListener {
+public class SelectArtCmdGed extends ListActivity implements OperatiiArticolListener, MagazinMathausListener, Cablu05SelectedListener {
 
 	Button articoleBtn, saveArtBtn, pretBtn;
 	String filiala = "", nume = "", cod = "", umStoc = "";
@@ -156,6 +159,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
 	private String unitLogUnic = "";
 	private boolean isFilialaMavSite = false;
+	private List<BeanCablu05> listCabluri;
 
 	private enum EnumDepoz {
 		MAV1;
@@ -915,6 +919,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
 			selectedUnitMas = "";
 			selectedUnitMasPret = "";
+			listCabluri = null;
+
 			if (listUmVanz.size() > 1) {
 				artMap = (HashMap<String, String>) spinnerUnitMas.getSelectedItem();
 				selectedUnitMas = artMap.get("rowText");
@@ -1092,6 +1098,14 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 	}
 
 	protected void performGetArticole() {
+		if (DateLivrare.getInstance().getFurnizorComanda() != null && !DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().trim().isEmpty()) {
+			performGetArticoleFurnizor();
+		} else {
+			performGetArticoleDistributie();
+		}
+	}
+
+	protected void performGetArticoleDistributie() {
 
 		String numeArticol = txtNumeArticol.getText().toString().trim();
 		String tipCautare = "", tipArticol = "";
@@ -1123,6 +1137,41 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
 	}
 
+	private void performGetArticoleFurnizor() {
+		HashMap<String, String> params = new HashMap<String, String>();
+
+		String tipArticol1 = "", tipArticol2 = "";
+
+		if (tglButton.isChecked()) {
+			tipArticol1 = "1";
+			if (tglTipArtBtn.isChecked()) {
+				tipArticol2 = "2";
+			} else {
+				tipArticol2 = "1";
+			}
+
+		} else {
+			tipArticol1 = "2";
+			if (tglTipArtBtn.isChecked()) {
+				tipArticol2 = "2";
+			} else {
+				tipArticol2 = "1";
+			}
+
+		}
+
+		String numeArticol = txtNumeArticol.getText().toString().trim();
+
+		params.put("codArticol", numeArticol);
+		params.put("tip1", tipArticol1);
+		params.put("tip2", tipArticol2);
+		params.put("furnizor", DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa());
+		params.put("codDepart", selectedDepartamentAgent);
+		params.put("codUser", UserInfo.getInstance().getCod());
+
+		opArticol.getArticoleFurnizor(params);
+	}
+
 	boolean isAgentorSD() {
 		return UserInfo.getInstance().getTipUser().equals("AV") || UserInfo.getInstance().getTipUser().equals("SD");
 	}
@@ -1146,6 +1195,11 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 					nfPret.setMaximumFractionDigits(3);
 
 					if (textCant.getVisibility() != View.VISIBLE) {
+						return;
+					}
+
+					if (isConditieCabluri05BV90() && listCabluri == null) {
+						getCabluri05(codArticol);
 						return;
 					}
 
@@ -1199,7 +1253,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 						}
 					}
 
-					if (Double.parseDouble(textCant.getText().toString().trim()) * (valoareUmrez / valoareUmren) > Double.parseDouble(textStoc
+					if (!isComandaDL() && Double.parseDouble(textCant.getText().toString().trim()) * (valoareUmrez / valoareUmren) > Double.parseDouble(textStoc
 							.getText().toString().replaceAll(",", ""))) {
 						if (tipComanda.equalsIgnoreCase("S") && !rezervStoc) {
 
@@ -1347,6 +1401,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 						articol.setUmPalet(articolDBSelected.isUmPalet());
 						articol.setFilialaSite(CreareComandaGed.filialaAlternativa);
 						articol.setLungime(articolDBSelected.getLungime());
+						articol.setListCabluri(listCabluri);
 
 						if (procRedFin > 0)
 							articol.setIstoricPret(selectedArticol.getIstoricPret());
@@ -1379,6 +1434,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
 						valoareUmrez = 1;
 						valoareUmren = 1;
+
+						listCabluri = null;
 
 						redBtnTable.setVisibility(View.GONE);
 						labelStoc.setVisibility(View.GONE);
@@ -1415,6 +1472,37 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
 	}
 
+	private boolean isConditieCabluri05BV90() {
+		return articolDBSelected.getDepart().equals("05") && CreareComandaGed.filialaAlternativa.equals("BV90");
+	}
+
+	private void getCabluri05(String codArticol) {
+
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("codArticol", codArticol);
+		params.put("sinteticArticol", articolDBSelected.getSintetic());
+		opArticol.getCabluri05(params);
+
+	}
+
+	private void afisCabluri05(List<BeanCablu05> listCabluri) {
+
+		if (listCabluri.isEmpty()) {
+			this.listCabluri = listCabluri;
+			saveArtBtn.performClick();
+			return;
+		}
+
+		int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
+		int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
+
+		Cabluri05Dialog cabluriDialog = new Cabluri05Dialog(SelectArtCmdGed.this, listCabluri, textCant.getText().toString().trim());
+		cabluriDialog.getWindow().setLayout(width, height);
+		cabluriDialog.setCabluSelectedListener(this);
+		cabluriDialog.show();
+
+	}
+
 	private boolean conditiiCmdIP() {
 
 		if (CreareComandaGed.filialaAlternativa.equals("BV90")) {
@@ -1440,6 +1528,10 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
 		return true;
 
+	}
+
+	private boolean isComandaDL() {
+		return DateLivrare.getInstance().getFurnizorComanda() != null && DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa() != null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2036,6 +2128,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 	public void operationComplete(EnumArticoleDAO methodName, Object result) {
 		switch (methodName) {
 		case GET_ARTICOLE_DISTRIBUTIE:
+			case GET_ARTICOLE_FURNIZOR:
 			populateListViewArticol(opArticol.deserializeArticoleVanzare((String) result));
 			break;
 		case GET_STOC_DEPOZIT:
@@ -2047,6 +2140,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 		case GET_FACTOR_CONVERSIE:
 			loadFactorConversie((String) result);
 			break;
+			case GET_CABLURI_05:
+				afisCabluri05(opArticol.deserializeCabluri05((String) result));
+				break;
 		default:
 			break;
 
@@ -2070,6 +2166,13 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
 		CreareComandaGed.permitArticoleDistribIP = false;
 		ModificareComanda.permitArticoleDistribIP = false;
+
+	}
+
+	@Override
+	public void cabluriSelected(List<BeanCablu05> listCabluri) {
+		this.listCabluri = listCabluri;
+		saveArtBtn.performClick();
 
 	}
 

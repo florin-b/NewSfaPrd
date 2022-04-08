@@ -4,17 +4,6 @@
  */
 package my.logon.screen.screens;
 
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.GenericDialogListener;
-import my.logon.screen.listeners.OperatiiReturListener;
-import my.logon.screen.model.OperatiiReturMarfa;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.adapters.ArticoleReturAdapter;
-import my.logon.screen.adapters.ComandaReturAfisAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,12 +21,24 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.List;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.ArticoleReturAdapter;
+import my.logon.screen.adapters.ComandaReturAfisAdapter;
 import my.logon.screen.beans.BeanComandaRetur;
 import my.logon.screen.beans.BeanComandaReturAfis;
 import my.logon.screen.dialogs.GenericAlertDialog;
 import my.logon.screen.enums.EnumDaNuOpt;
 import my.logon.screen.enums.EnumDialogConstraints;
 import my.logon.screen.enums.EnumRetur;
+import my.logon.screen.listeners.GenericDialogListener;
+import my.logon.screen.listeners.OperatiiReturListener;
+import my.logon.screen.model.OperatiiReturMarfa;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsGeneral;
 
 public class AfisareReturMarfa extends Activity implements OperatiiReturListener, GenericDialogListener {
 
@@ -312,14 +313,7 @@ public class AfisareReturMarfa extends Activity implements OperatiiReturListener
 	private void getArticoleComanda(String idComanda) {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("idComanda", idComanda);
-
-		String tipUser = UserInfo.getInstance().getTipUserSap();
-
-		if ((tipUser.equals("SD") && (stare == 0) || stare == 2) || tipUser.contains("AV"))
-			operatiiRetur.getArticoleComandaSalvata(params);
-		else
-			operatiiRetur.getArticoleComandaSalvataSap(params);
-
+		operatiiRetur.getArticoleComandaSalvata(params);
 	}
 
 	private void populateArticoleComanda(BeanComandaRetur comandaRetur) {
@@ -378,12 +372,9 @@ public class AfisareReturMarfa extends Activity implements OperatiiReturListener
 		case GET_COMENZI_SALVATE:
 			populateListComenzi(operatiiRetur.deserializeComenziSalvate(result));
 			break;
-
-		case GET_ARTICOLE_COMANDA_SAP:
 		case GET_ARTICOLE_COMANDA_SALVATA:
 			populateArticoleComanda(operatiiRetur.deserializeComandaSalvata(result));
 			break;
-
 		case OPEREAZA_COMANDA:
 			getListComenziRetur(intervalAfisare, stare);
 			break;

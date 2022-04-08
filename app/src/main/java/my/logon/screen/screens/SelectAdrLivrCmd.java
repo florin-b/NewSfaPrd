@@ -1,6 +1,5 @@
 /**
  * @author florinb
- *
  */
 package my.logon.screen.screens;
 
@@ -70,6 +69,7 @@ import my.logon.screen.enums.EnumJudete;
 import my.logon.screen.enums.EnumLocalitate;
 import my.logon.screen.enums.EnumOperatiiAdresa;
 import my.logon.screen.enums.EnumOperatiiObiective;
+import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.helpers.HelperAdreseLivrare;
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.AutocompleteDialogListener;
@@ -94,2084 +94,2121 @@ import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
 public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListener, OnItemClickListener, OperatiiAdresaListener, ObiectiveListener,
-		MapListener, AutocompleteDialogListener, AsyncTaskListener {
-
-	private Button saveAdrLivrBtn;
-	private EditText txtPers, txtTel, txtObservatii, txtValoareIncasare;
-
-	private static final String METHOD_NAME = "getClientJud";
-	int posJudetSel = 0;
-
-	private String[] tipPlataContract = { "LC - Limita credit" };
-	private String[] tipPlataClBlocat = { "N - Numerar in filiala", "OPA - OP avans", "R - ramburs" };
-	private String[] tipPlataRest = { "N - Numerar in filiala", "OPA - OP avans", "R - ramburs" };
-
-	private String[] tipTransport = { "TRAP - Transport Arabesque", "TCLI - Transport client", "TFRN - Transport furnizor" };
-
-	String[] tipResponsabil = { "AV - Agent vanzari", "SO - Sofer", "OF - Operator facturare" };
-
-	String[] docInsot = { "Factura", "Aviz de expeditie" };
-
-	public SimpleAdapter adapterJudete, adapterAdreseLivrare;
+        MapListener, AutocompleteDialogListener, AsyncTaskListener {
+
+    private Button saveAdrLivrBtn;
+    private EditText txtPers, txtTel, txtObservatii, txtValoareIncasare;
+
+    private static final String METHOD_NAME = "getClientJud";
+    int posJudetSel = 0;
+
+    private String[] tipPlataContract = {"LC - Limita credit", "N - Numerar in filiala", "OPA - OP avans", "R - ramburs"};
+    private String[] tipPlataClBlocat = {"OPA - OP avans", "R - ramburs", "N - Numerar in filiala"};
+    private String[] tipPlataRest = {"OPA - OP avans", "R - ramburs", "N - Numerar in filiala"};
+
+    private String[] tipTransport = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TFRN - Transport furnizor"};
+
+    String[] tipResponsabil = {"AV - Agent vanzari", "SO - Sofer", "OF - Operator facturare"};
+
+    String[] docInsot = {"Factura", "Aviz de expeditie"};
+
+    public SimpleAdapter adapterJudete, adapterAdreseLivrare;
 
-	private Spinner spinnerPlata, spinnerTransp, spinnerJudet, spinnerTermenPlata, spinnerAdreseLivrare, spinnerTipReducere, spinnerResponsabil;
-	private static ArrayList<HashMap<String, String>> listJudete = null, listAdreseLivrare = null;
-	private ArrayAdapter<String> adapterDataLivrare, adapterTermenPlata, adapterResponsabil;
-	private LinearLayout layoutAdrese, layoutAdr1, layoutAdr2, layoutValoareIncasare;
-	private String globalCodClient = "";
+    private Spinner spinnerPlata, spinnerTransp, spinnerJudet, spinnerTermenPlata, spinnerAdreseLivrare, spinnerTipReducere, spinnerResponsabil;
+    private static ArrayList<HashMap<String, String>> listJudete = null, listAdreseLivrare = null;
+    private ArrayAdapter<String> adapterDataLivrare, adapterTermenPlata, adapterResponsabil;
+    private LinearLayout layoutAdrese, layoutAdr1, layoutAdr2, layoutValoareIncasare;
+    private String globalCodClient = "";
 
-	private RadioButton radioLista, radioText, radioObiectiv;
-	private boolean adrNouaModifCmd = false;
-	private int selectedAddrModifCmd = -1;
-	private CheckBox checkMacara, chkbClientLaRaft;
-	private Spinner spinnerObiective;
-	private LinearLayout layoutObiective;
+    private RadioButton radioLista, radioText, radioObiectiv;
+    private boolean adrNouaModifCmd = false;
+    private int selectedAddrModifCmd = -1;
+    private CheckBox checkMacara, chkbClientLaRaft;
+    private Spinner spinnerObiective;
+    private LinearLayout layoutObiective;
 
-	private ListPopupWindow lpw;
-	private String[] listPersCont, listTel;
-	CheckBox checkModifValInc;
-	NumberFormat nf2;
-	private OperatiiAdresa operatiiAdresa;
-	private OperatiiObiective operatiiObiective;
-	private BeanObiectivDepartament obiectivSelectat;
-	private AutoCompleteTextView textLocalitate, textStrada;
-	private Button btnPozitieAdresa;
-	private EditText textNrStr;
-	private Spinner spinnerTonaj, spinnerIndoire;
-	private ArrayList<BeanAdresaLivrare> adreseList;
-	private LinearLayout layoutPrelucrare04;
+    private ListPopupWindow lpw;
+    private String[] listPersCont, listTel;
+    CheckBox checkModifValInc;
+    NumberFormat nf2;
+    private OperatiiAdresa operatiiAdresa;
+    private OperatiiObiective operatiiObiective;
+    private BeanObiectivDepartament obiectivSelectat;
+    private AutoCompleteTextView textLocalitate, textStrada;
+    private Button btnPozitieAdresa;
+    private EditText textNrStr;
+    private Spinner spinnerTonaj, spinnerIndoire;
+    private ArrayList<BeanAdresaLivrare> adreseList;
+    private LinearLayout layoutPrelucrare04;
 
-	private LinearLayout layoutHarta;
+    private LinearLayout layoutHarta;
 
-	private static final int LIST_LOCALITATI = 1;
-	private static final int LIST_ADRESE = 2;
-	private TextView textDataLivrare;
-	private Button btnDataLivrare;
-	private CheckBox checkFactPaleti;
-	private CheckBox chkCamionDescoperit;
-	private CheckBox checkObsSofer;
-	private TextView txtBlocScara;
-	private ArrayAdapter<String> adapterSpinnerTransp;
-	private List<String> listLocalitatiLivrare;
+    private static final int LIST_LOCALITATI = 1;
+    private static final int LIST_ADRESE = 2;
+    private TextView textDataLivrare;
+    private Button btnDataLivrare;
+    private CheckBox checkFactPaleti;
+    private CheckBox chkCamionDescoperit;
+    private CheckBox checkObsSofer;
+    private TextView txtBlocScara;
+    private ArrayAdapter<String> adapterSpinnerTransp;
+    private List<String> listLocalitatiLivrare;
 
-	private CheckBox checkFactura, checkAviz;
-	private BeanAdreseJudet listAdreseJudet;
-	private BeanAdresaLivrare adresaLivrareSelected;
+    private CheckBox checkFactura, checkAviz;
+    private BeanAdreseJudet listAdreseJudet;
+    private BeanAdresaLivrare adresaLivrareSelected;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectCustomSlowCalls()
-				.detectDiskReads()
-				.detectDiskWrites()
-				.detectNetwork()
-				.penaltyLog()
-				.penaltyFlashScreen()
-				.build());
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectCustomSlowCalls()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog()
+                .penaltyFlashScreen()
+                .build());
 
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-				.detectLeakedSqlLiteObjects()
-				.detectLeakedClosableObjects()
-				.penaltyLog()
-				.build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .build());
 
-		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 
-		setTheme(R.style.LRTheme);
-		setContentView(R.layout.selectadrlivrcmdheader);
+        setTheme(R.style.LRTheme);
+        setContentView(R.layout.selectadrlivrcmdheader);
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setTitle("Date livrare");
-		actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Date livrare");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-		operatiiAdresa = new OperatiiAdresaImpl(this);
-		operatiiAdresa.setOperatiiAdresaListener(this);
+        operatiiAdresa = new OperatiiAdresaImpl(this);
+        operatiiAdresa.setOperatiiAdresaListener(this);
 
-		Bundle bundle = getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
 
-		if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("ModificareComanda")) {
+        if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("ModificareComanda")) {
 
-			if (bundle.getString("tipPlataContract").equals("B") || bundle.getString("tipPlataContract").equals("C")) {
-				CreareComanda.tipPlataContract = bundle.getString("tipPlataContract");
-				DateLivrare.getInstance().setTipPlata("LC");
-			}
+            if ((Double.parseDouble(bundle.getString("limitaCredit")) > 1) && !bundle.getString("termenPlata").equals("C000")) {
+                CreareComanda.tipPlataContract = bundle.getString("tipPlataContract");
+                DateLivrare.getInstance().setTipPlata("LC");
+            }
 
-		}
+        }
 
-		this.saveAdrLivrBtn = (Button) findViewById(R.id.saveAdrLivrBtn);
-		addListenerSaveAdr();
+        this.saveAdrLivrBtn = (Button) findViewById(R.id.saveAdrLivrBtn);
+        addListenerSaveAdr();
 
-		this.layoutAdrese = (LinearLayout) findViewById(R.id.layoutListAdrese);
-		layoutAdrese.setVisibility(View.GONE);
+        this.layoutAdrese = (LinearLayout) findViewById(R.id.layoutListAdrese);
+        layoutAdrese.setVisibility(View.GONE);
 
-		this.layoutAdr1 = (LinearLayout) findViewById(R.id.layoutAdr1);
-		this.layoutAdr2 = (LinearLayout) findViewById(R.id.layoutAdr2);
+        this.layoutAdr1 = (LinearLayout) findViewById(R.id.layoutAdr1);
+        this.layoutAdr2 = (LinearLayout) findViewById(R.id.layoutAdr2);
 
-		layoutHarta = (LinearLayout) findViewById(R.id.layoutHarta);
-		layoutHarta.setVisibility(View.GONE);
+        layoutHarta = (LinearLayout) findViewById(R.id.layoutHarta);
+        layoutHarta.setVisibility(View.GONE);
 
-		textLocalitate = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocalitate);
-		textLocalitate.setVisibility(View.INVISIBLE);
+        textLocalitate = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocalitate);
+        textLocalitate.setVisibility(View.INVISIBLE);
 
-		textNrStr = (EditText) findViewById(R.id.textNrStr);
+        textNrStr = (EditText) findViewById(R.id.textNrStr);
 
-		btnPozitieAdresa = (Button) findViewById(R.id.btnPozitieAdresa);
-		setListnerBtnPozitieAdresa();
+        btnPozitieAdresa = (Button) findViewById(R.id.btnPozitieAdresa);
+        setListnerBtnPozitieAdresa();
 
-		textStrada = (AutoCompleteTextView) findViewById(R.id.autoCompleteStrada);
+        textStrada = (AutoCompleteTextView) findViewById(R.id.autoCompleteStrada);
 
-		txtPers = (EditText) findViewById(R.id.txtPersCont);
-		txtTel = (EditText) findViewById(R.id.txtTelefon);
+        txtPers = (EditText) findViewById(R.id.txtPersCont);
+        txtTel = (EditText) findViewById(R.id.txtTelefon);
 
-		listPersCont = DateLivrare.getInstance().getPersContact().split(":");
-		listTel = DateLivrare.getInstance().getNrTel().split(":");
+        listPersCont = DateLivrare.getInstance().getPersContact().split(":");
+        listTel = DateLivrare.getInstance().getNrTel().split(":");
 
-		lpw = new ListPopupWindow(this);
-		lpw.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listPersCont));
-		lpw.setAnchorView(txtPers);
-		lpw.setModal(true);
-		lpw.setOnItemClickListener(this);
+        lpw = new ListPopupWindow(this);
+        lpw.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listPersCont));
+        lpw.setAnchorView(txtPers);
+        lpw.setModal(true);
+        lpw.setOnItemClickListener(this);
 
-		txtPers.setText(listPersCont[0]);
-		txtPers.setOnTouchListener(this);
+        txtPers.setText(listPersCont[0]);
+        txtPers.setOnTouchListener(this);
 
-		layoutValoareIncasare = (LinearLayout) findViewById(R.id.layoutValoareIncasare);
-		layoutValoareIncasare.setVisibility(View.GONE);
+        layoutValoareIncasare = (LinearLayout) findViewById(R.id.layoutValoareIncasare);
+        layoutValoareIncasare.setVisibility(View.GONE);
 
-		txtValoareIncasare = (EditText) findViewById(R.id.txtValoareIncasare);
-		txtValoareIncasare.setFocusable(false);
+        txtValoareIncasare = (EditText) findViewById(R.id.txtValoareIncasare);
+        txtValoareIncasare.setFocusable(false);
 
-		checkModifValInc = (CheckBox) findViewById(R.id.checkboxModifValInc);
-		addListenerModifValInc();
+        checkModifValInc = (CheckBox) findViewById(R.id.checkboxModifValInc);
+        addListenerModifValInc();
 
-		nf2 = NumberFormat.getInstance();
-		nf2.setMinimumFractionDigits(2);
-		nf2.setMaximumFractionDigits(2);
+        nf2 = NumberFormat.getInstance();
+        nf2.setMinimumFractionDigits(2);
+        nf2.setMaximumFractionDigits(2);
 
-		if (DateLivrare.getInstance().isValIncModif()) {
-			txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
-			checkModifValInc.setChecked(true);
-		} else {
+        if (DateLivrare.getInstance().isValIncModif()) {
+            txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
+            checkModifValInc.setChecked(true);
+        } else {
 
-			double localValCmd = 0;
-			if (!CreareComanda.codClientVar.equals(""))
-				localValCmd = CreareComanda.totalComanda * Constants.TVA;
-			else
-				localValCmd = ModificareComanda.totalComanda * Constants.TVA;
+            double localValCmd = 0;
+            if (!CreareComanda.codClientVar.equals(""))
+                localValCmd = CreareComanda.totalComanda * Constants.TVA;
+            else
+                localValCmd = ModificareComanda.totalComanda * Constants.TVA;
 
-			txtValoareIncasare.setText(nf2.format(localValCmd));
+            txtValoareIncasare.setText(nf2.format(localValCmd));
 
-			checkModifValInc.setChecked(false);
-		}
+            checkModifValInc.setChecked(false);
+        }
 
-		txtTel.setText(listTel[0]);
+        txtTel.setText(listTel[0]);
 
-		checkObsSofer = (CheckBox) findViewById(R.id.chkObsSofer);
-		setListenerCheckObsSofer();
-		txtObservatii = (EditText) findViewById(R.id.txtObservatii);
-		if (DateLivrare.getInstance().getObsLivrare() != null && !DateLivrare.getInstance().getObsLivrare().trim().isEmpty()) {
-			txtObservatii.setText(DateLivrare.getInstance().getObsLivrare());
-			checkObsSofer.setChecked(true);
-		}
+        checkObsSofer = (CheckBox) findViewById(R.id.chkObsSofer);
+        setListenerCheckObsSofer();
+        txtObservatii = (EditText) findViewById(R.id.txtObservatii);
+        if (DateLivrare.getInstance().getObsLivrare() != null && !DateLivrare.getInstance().getObsLivrare().trim().isEmpty()) {
+            txtObservatii.setText(DateLivrare.getInstance().getObsLivrare());
+            checkObsSofer.setChecked(true);
+        }
 
-		chkbClientLaRaft = (CheckBox) findViewById(R.id.clientRaft);
-		addListenerClientLaRaft();
+        chkbClientLaRaft = (CheckBox) findViewById(R.id.clientRaft);
+        addListenerClientLaRaft();
 
-		CreareComanda.dateLivrare = "";
+        CreareComanda.dateLivrare = "";
 
-		spinnerResponsabil = (Spinner) findViewById(R.id.spinnerResponsabil);
-		adapterResponsabil = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipResponsabil);
-		adapterResponsabil.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		addListenerResponsabil();
-		spinnerResponsabil.setAdapter(adapterResponsabil);
+        spinnerResponsabil = (Spinner) findViewById(R.id.spinnerResponsabil);
+        adapterResponsabil = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipResponsabil);
+        adapterResponsabil.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        addListenerResponsabil();
+        spinnerResponsabil.setAdapter(adapterResponsabil);
 
-		for (int ii = 0; ii < adapterResponsabil.getCount(); ii++) {
-			if (adapterResponsabil.getItem(ii).toString().split("-")[0].trim().equals(DateLivrare.getInstance().getObsPlata())) {
-				spinnerResponsabil.setSelection(ii);
-				break;
-			}
-		}
+        for (int ii = 0; ii < adapterResponsabil.getCount(); ii++) {
+            if (adapterResponsabil.getItem(ii).toString().split("-")[0].trim().equals(DateLivrare.getInstance().getObsPlata())) {
+                spinnerResponsabil.setSelection(ii);
+                break;
+            }
+        }
 
-		spinnerPlata = (Spinner) findViewById(R.id.spinnerPlata);
+        spinnerPlata = (Spinner) findViewById(R.id.spinnerPlata);
 
-		ArrayAdapter<String> adapterSpinnerPlata;
+        ArrayAdapter<String> adapterSpinnerPlata;
 
-		if (DateLivrare.getInstance().isClientBlocat())
-			adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipPlataClBlocat);
-		else if (!CreareComanda.tipPlataContract.trim().isEmpty() || DateLivrare.getInstance().getTipPlata().equals("LC")) {
+        if (DateLivrare.getInstance().isClientBlocat())
+            adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipPlataClBlocat);
+        else if (!CreareComanda.tipPlataContract.trim().isEmpty() || DateLivrare.getInstance().getTipPlata().equals("LC")) {
 
-			if (!CreareComanda.tipPlataContract.trim().isEmpty()) {
-				((TextView) findViewById(R.id.tipPlataContract)).setText("Contract: " + CreareComanda.tipPlataContract);
-			}
-			adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipPlataContract);
-		} else
-			adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipPlataRest);
+            if (!CreareComanda.tipPlataContract.trim().isEmpty()) {
+                ((TextView) findViewById(R.id.tipPlataContract)).setText("Contract: " + CreareComanda.tipPlataContract);
+                DateLivrare.getInstance().setTipPlata("LC");
+            }
+            adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipPlataContract);
+        } else
+            adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipPlataRest);
 
-		adapterSpinnerPlata.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerPlata.setAdapter(adapterSpinnerPlata);
-		addListenerTipPlata();
+        if (isComandaDl()) {
+            List<String> metsPlata = new ArrayList<>();
 
-		if (!DateLivrare.getInstance().isClientBlocat()
-				&& (!CreareComanda.tipPlataContract.trim().isEmpty() || DateLivrare.getInstance().getTipPlata().equals("LC")))
-			spinnerPlata.setEnabled(false);
-		else
-			spinnerPlata.setEnabled(true);
+            for (int ii = 0; ii < adapterSpinnerPlata.getCount(); ii++)
+                if (!adapterSpinnerPlata.getItem(ii).toString().startsWith("R"))
+                    metsPlata.add(adapterSpinnerPlata.getItem(ii));
 
-		if (HelperAdreseLivrare.isConditiiCurierRapid()) {
+            adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, metsPlata.toArray(new String[0]));
 
-			if (HelperAdreseLivrare.getLocalitatiAcceptate() == null) {
-				OperatiiAdresaImpl opAdr = new OperatiiAdresaImpl(this);
-				opAdr.setOperatiiAdresaListener(this);
-				opAdr.getLocalitatiLivrareRapida();
-			}
+        }
 
-			tipTransport = HelperAdreseLivrare.adaugaTransportCurierRapid(tipTransport);
-		}
+        adapterSpinnerPlata.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPlata.setAdapter(adapterSpinnerPlata);
+        addListenerTipPlata();
 
-		spinnerTransp = (Spinner) findViewById(R.id.spinnerTransp);
-		adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransport);
-		adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerTransp.setAdapter(adapterSpinnerTransp);
-		addSpinnerTranspListener();
-		setTipTranspInfoAgent();
+        if (HelperAdreseLivrare.isConditiiCurierRapid()) {
 
-		spinnerJudet = (Spinner) findViewById(R.id.spinnerJudet);
-		spinnerJudet.setOnItemSelectedListener(new regionSelectedListener());
+            if (HelperAdreseLivrare.getLocalitatiAcceptate() == null) {
+                OperatiiAdresaImpl opAdr = new OperatiiAdresaImpl(this);
+                opAdr.setOperatiiAdresaListener(this);
+                opAdr.getLocalitatiLivrareRapida();
+            }
 
-		listJudete = new ArrayList<HashMap<String, String>>();
-		adapterJudete = new SimpleAdapter(this, listJudete, R.layout.rowlayoutjudete, new String[] { "numeJudet", "codJudet" }, new int[] {
-				R.id.textNumeJudet, R.id.textCodJudet });
+            tipTransport = HelperAdreseLivrare.adaugaTransportCurierRapid(tipTransport);
+        }
 
-		spinnerTermenPlata = (Spinner) findViewById(R.id.spinnerTermenPlata);
-		adapterTermenPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-		adapterTermenPlata.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerTermenPlata.setAdapter(adapterTermenPlata);
+        spinnerTransp = (Spinner) findViewById(R.id.spinnerTransp);
+        adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransport);
+        adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTransp.setAdapter(adapterSpinnerTransp);
+        addSpinnerTranspListener();
+        setTipTranspInfoAgent();
 
-		spinnerAdreseLivrare = (Spinner) findViewById(R.id.spinnerAdreseLivrare);
+        spinnerJudet = (Spinner) findViewById(R.id.spinnerJudet);
+        spinnerJudet.setOnItemSelectedListener(new regionSelectedListener());
 
-		setListenerSpinnerAdreseLivrare();
+        listJudete = new ArrayList<HashMap<String, String>>();
+        adapterJudete = new SimpleAdapter(this, listJudete, R.layout.rowlayoutjudete, new String[]{"numeJudet", "codJudet"}, new int[]{
+                R.id.textNumeJudet, R.id.textCodJudet});
 
-		listAdreseLivrare = new ArrayList<HashMap<String, String>>();
-		selectedAddrModifCmd = -1;
+        spinnerTermenPlata = (Spinner) findViewById(R.id.spinnerTermenPlata);
+        adapterTermenPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        adapterTermenPlata.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTermenPlata.setAdapter(adapterTermenPlata);
 
-		if (CreareComanda.termenPlata.trim().length() > 0) {
+        spinnerAdreseLivrare = (Spinner) findViewById(R.id.spinnerAdreseLivrare);
 
-			if (DateLivrare.getInstance().isClientBlocat()) {
-				adapterTermenPlata.add("C000");
-			} else {
-				String[] tokTermen = CreareComanda.termenPlata.split(";");
-				int nrLivr = 0;
-				for (nrLivr = 0; nrLivr < tokTermen.length; nrLivr++) {
-					adapterTermenPlata.add(tokTermen[nrLivr]);
-				}
-				spinnerTermenPlata.setSelection(nrLivr);
-			}
+        setListenerSpinnerAdreseLivrare();
 
-			globalCodClient = CreareComanda.codClientVar;
+        listAdreseLivrare = new ArrayList<HashMap<String, String>>();
+        selectedAddrModifCmd = -1;
 
-		} else {
+        if (CreareComanda.termenPlata.trim().length() > 0) {
 
-			if (!DateLivrare.getInstance().isClientBlocat() && DateLivrare.getInstance().getTermenPlata() != null
-					&& !DateLivrare.getInstance().getTermenPlata().isEmpty())
-				adapterTermenPlata.add(DateLivrare.getInstance().getTermenPlata());
-			else
-				adapterTermenPlata.add("C000");
+            if (DateLivrare.getInstance().isClientBlocat()) {
+                adapterTermenPlata.add("C000");
+            } else {
+                String[] tokTermen = CreareComanda.termenPlata.split(";");
+                int nrLivr = 0;
+                for (nrLivr = 0; nrLivr < tokTermen.length; nrLivr++) {
+                    adapterTermenPlata.add(tokTermen[nrLivr]);
+                }
+                spinnerTermenPlata.setSelection(nrLivr);
+            }
 
-			if (!ModificareComanda.codClientVar.equals("")) {
-				globalCodClient = ModificareComanda.codClientVar;
+            globalCodClient = CreareComanda.codClientVar;
 
-				LinearLayout layoutRaft = (LinearLayout) findViewById(R.id.layoutClientRaft);
-				layoutRaft.setVisibility(View.GONE);
+        } else {
 
-			}
+            if (!DateLivrare.getInstance().isClientBlocat() && DateLivrare.getInstance().getTermenPlata() != null
+                    && !DateLivrare.getInstance().getTermenPlata().isEmpty())
+                adapterTermenPlata.add(DateLivrare.getInstance().getTermenPlata());
+            else
+                adapterTermenPlata.add("C000");
 
-		}
+            if (!ModificareComanda.codClientVar.equals("")) {
+                globalCodClient = ModificareComanda.codClientVar;
 
-		spinnerTermenPlata.setEnabled(false);
+                LinearLayout layoutRaft = (LinearLayout) findViewById(R.id.layoutClientRaft);
+                layoutRaft.setVisibility(View.GONE);
 
-		performGetJudete();
+            }
 
-		int i = 0;
+        }
 
-		// document insotitor
+        performGetJudete();
 
-		checkFactura = (CheckBox) findViewById(R.id.checkFactura);
-		setListenerCheckFactura();
-		checkAviz = (CheckBox) findViewById(R.id.checkAviz);
-		setListenerCheckAviz();
+        int i = 0;
 
-		checkFactura.setChecked(false);
-		checkAviz.setChecked(false);
+        // document insotitor
 
-		if (DateLivrare.getInstance().getTipDocInsotitor().equals("1"))
-			checkFactura.setChecked(true);
-		else if (DateLivrare.getInstance().getTipDocInsotitor().equals("2"))
-			checkAviz.setChecked(true);
-		else if (DateLivrare.getInstance().getTipDocInsotitor().equals("3")) {
-			checkFactura.setChecked(true);
-			checkAviz.setChecked(true);
-		}
+        checkFactura = (CheckBox) findViewById(R.id.checkFactura);
+        setListenerCheckFactura();
+        checkAviz = (CheckBox) findViewById(R.id.checkAviz);
+        setListenerCheckAviz();
 
-		// sf. doc insot
+        checkFactura.setChecked(false);
+        checkAviz.setChecked(false);
 
-		// tip plata
-		for (i = 0; i < adapterSpinnerPlata.getCount(); i++) {
-			if (adapterSpinnerPlata.getItem(i).toString().split("-")[0].trim().equals(UtilsComenzi.setTipPlataClient(DateLivrare.getInstance().getTipPlata()))) {
-				spinnerPlata.setSelection(i);
-				break;
-			}
-		}
+        if (DateLivrare.getInstance().getTipDocInsotitor().equals("1"))
+            checkFactura.setChecked(true);
+        else if (DateLivrare.getInstance().getTipDocInsotitor().equals("2"))
+            checkAviz.setChecked(true);
+        else if (DateLivrare.getInstance().getTipDocInsotitor().equals("3")) {
+            checkFactura.setChecked(true);
+            checkAviz.setChecked(true);
+        }
 
-		spinnerTipReducere = (Spinner) findViewById(R.id.spinnerTipReducere);
-		ArrayAdapter<String> adapterTipReducere = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, UtilsGeneral.tipReducere);
-		adapterTipReducere.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerTipReducere.setAdapter(adapterTipReducere);
+        // sf. doc insot
 
-		// fact. red
-		if (DateLivrare.getInstance().getRedSeparat().equals("X")) {
-			spinnerTipReducere.setSelection(1); // 2 facturi
+        // tip plata
 
-		} else {
+        for (i = 0; i < adapterSpinnerPlata.getCount(); i++) {
+            if (adapterSpinnerPlata.getItem(i).toString().split("-")[0].trim().equals(UtilsComenzi.setTipPlataClient(DateLivrare.getInstance().getTipPlata()))) {
+                spinnerPlata.setSelection(i);
+                break;
+            }
+        }
 
-			if (DateLivrare.getInstance().getRedSeparat().equals("R")) {
-				spinnerTipReducere.setSelection(2); // 1 factura red. separat
-			} else {
-				spinnerTipReducere.setSelection(0); // 1 factura red in pret
-			}
 
-		}
+        spinnerTipReducere = (Spinner) findViewById(R.id.spinnerTipReducere);
+        ArrayAdapter<String> adapterTipReducere = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, UtilsGeneral.tipReducere);
+        adapterTipReducere.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTipReducere.setAdapter(adapterTipReducere);
 
-		if (CreareComanda.canalDistrib.equals("20"))
-			spinnerTipReducere.setEnabled(false);
-		else
-			spinnerTipReducere.setEnabled(true);
+        // fact. red
+        if (DateLivrare.getInstance().getRedSeparat().equals("X")) {
+            spinnerTipReducere.setSelection(1); // 2 facturi
 
-		// tip transport
-		for (i = 0; i < adapterSpinnerTransp.getCount(); i++) {
-			if (adapterSpinnerTransp.getItem(i).toString().substring(0, 4).equals(DateLivrare.getInstance().getTransport())) {
-				spinnerTransp.setSelection(i);
-				break;
-			}
-		}
+        } else {
 
-		checkMacara = (CheckBox) findViewById(R.id.checkMacara);
-		setMacaraVisible();
-		setListenerCheckMacara();
+            if (DateLivrare.getInstance().getRedSeparat().equals("R")) {
+                spinnerTipReducere.setSelection(2); // 1 factura red. separat
+            } else {
+                spinnerTipReducere.setSelection(0); // 1 factura red in pret
+            }
 
-		checkFactPaleti = (CheckBox) findViewById(R.id.chkFactPaleti);
-		checkFactPaleti.setChecked(DateLivrare.getInstance().isFactPaletSeparat());
+        }
 
-		chkCamionDescoperit = (CheckBox) findViewById(R.id.chkCamionDescoperit);
-		chkCamionDescoperit.setChecked(DateLivrare.getInstance().isCamionDescoperit());
+        if (CreareComanda.canalDistrib.equals("20"))
+            spinnerTipReducere.setEnabled(false);
+        else
+            spinnerTipReducere.setEnabled(true);
 
-		spinnerTonaj = (Spinner) findViewById(R.id.spinnerTonaj);
-		setupSpinnerTonaj();
+        // tip transport
+        for (i = 0; i < adapterSpinnerTransp.getCount(); i++) {
+            if (adapterSpinnerTransp.getItem(i).toString().substring(0, 4).equals(DateLivrare.getInstance().getTransport())) {
+                spinnerTransp.setSelection(i);
+                break;
+            }
+        }
 
-		spinnerIndoire = (Spinner) findViewById(R.id.spinnerIndoire);
-		setupSpinnerIndoire();
+        checkMacara = (CheckBox) findViewById(R.id.checkMacara);
+        setMacaraVisible();
+        setListenerCheckMacara();
 
-		layoutPrelucrare04 = (LinearLayout) findViewById(R.id.layoutIndoire);
-		layoutPrelucrare04.setVisibility(View.INVISIBLE);
+        checkFactPaleti = (CheckBox) findViewById(R.id.chkFactPaleti);
+        checkFactPaleti.setChecked(DateLivrare.getInstance().isFactPaletSeparat());
 
-		if (UtilsUser.isAgentOrSD() && UserInfo.getInstance().getCodDepart().startsWith("04"))
-			layoutPrelucrare04.setVisibility(View.VISIBLE);
+        chkCamionDescoperit = (CheckBox) findViewById(R.id.chkCamionDescoperit);
+        chkCamionDescoperit.setChecked(DateLivrare.getInstance().isCamionDescoperit());
 
-		if (UtilsUser.isKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK())
-			layoutPrelucrare04.setVisibility(View.VISIBLE);
+        spinnerTonaj = (Spinner) findViewById(R.id.spinnerTonaj);
+        setupSpinnerTonaj();
 
-		radioLista = (RadioButton) findViewById(R.id.radioLista);
-		addListenerRadioLista();
+        spinnerIndoire = (Spinner) findViewById(R.id.spinnerIndoire);
+        setupSpinnerIndoire();
 
-		radioText = (RadioButton) findViewById(R.id.radioText);
-		addListenerRadioText();
+        layoutPrelucrare04 = (LinearLayout) findViewById(R.id.layoutIndoire);
+        layoutPrelucrare04.setVisibility(View.INVISIBLE);
 
-		radioObiectiv = (RadioButton) findViewById(R.id.radioObiectiv);
-		addListenerRadioObiectiv();
+        if (UtilsUser.isAgentOrSD() && UserInfo.getInstance().getCodDepart().startsWith("04"))
+            layoutPrelucrare04.setVisibility(View.VISIBLE);
 
-		radioObiectiv.setVisibility(View.INVISIBLE);
+        if (UtilsUser.isKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK())
+            layoutPrelucrare04.setVisibility(View.VISIBLE);
 
-		spinnerObiective = (Spinner) findViewById(R.id.spinnerObiective);
-		setSpinnerObiectiveListener();
-		layoutObiective = (LinearLayout) findViewById(R.id.layoutObiective);
-		displayObiective(false);
+        radioLista = (RadioButton) findViewById(R.id.radioLista);
+        addListenerRadioLista();
 
-		layoutAdrese.setVisibility(View.VISIBLE);
-		layoutAdr1.setVisibility(View.GONE);
-		layoutAdr2.setVisibility(View.GONE);
+        radioText = (RadioButton) findViewById(R.id.radioText);
+        addListenerRadioText();
 
-		textDataLivrare = (TextView) findViewById(R.id.textDataLivrare);
+        radioObiectiv = (RadioButton) findViewById(R.id.radioObiectiv);
+        addListenerRadioObiectiv();
 
-		if (!DateLivrare.getInstance().getDataLivrare().isEmpty())
-			textDataLivrare.setText(DateLivrare.getInstance().getDataLivrare());
+        radioObiectiv.setVisibility(View.INVISIBLE);
 
-		txtBlocScara = (TextView) findViewById(R.id.txtBlocScara);
-		if (!DateLivrare.getInstance().getBlocScara().isEmpty())
-			txtBlocScara.setText(DateLivrare.getInstance().getBlocScara());
+        spinnerObiective = (Spinner) findViewById(R.id.spinnerObiective);
+        setSpinnerObiectiveListener();
+        layoutObiective = (LinearLayout) findViewById(R.id.layoutObiective);
+        displayObiective(false);
 
-		if (DateLivrare.getInstance().getDelegat() != null) {
-			((EditText) findViewById(R.id.txtNumeDelegat)).setText(DateLivrare.getInstance().getDelegat().getNume());
-			((EditText) findViewById(R.id.txtCIDelegat)).setText(DateLivrare.getInstance().getDelegat().getSerieNumarCI());
-			((EditText) findViewById(R.id.txtAutoDelegat)).setText(DateLivrare.getInstance().getDelegat().getNrAuto());
-		}
+        layoutAdrese.setVisibility(View.VISIBLE);
+        layoutAdr1.setVisibility(View.GONE);
+        layoutAdr2.setVisibility(View.GONE);
 
-		if (UtilsUser.isASDL() || UtilsUser.isOIVPD()) {
-			((LinearLayout) findViewById(R.id.layoutObsSofer)).setVisibility(View.INVISIBLE);
-			((LinearLayout) findViewById(R.id.layoutCamionDescoperit)).setVisibility(View.INVISIBLE);
-			spinnerTransp.setSelection(1);
+        textDataLivrare = (TextView) findViewById(R.id.textDataLivrare);
 
-			if (UtilsUser.isOIVPD())
-				spinnerTransp.setEnabled(false);
+        if (!DateLivrare.getInstance().getDataLivrare().isEmpty())
+            textDataLivrare.setText(DateLivrare.getInstance().getDataLivrare());
 
-			chkbClientLaRaft.setChecked(true);
-			chkbClientLaRaft.setEnabled(false);
+        txtBlocScara = (TextView) findViewById(R.id.txtBlocScara);
+        if (!DateLivrare.getInstance().getBlocScara().isEmpty())
+            txtBlocScara.setText(DateLivrare.getInstance().getBlocScara());
 
-		}
+        if (DateLivrare.getInstance().getDelegat() != null) {
+            ((EditText) findViewById(R.id.txtNumeDelegat)).setText(DateLivrare.getInstance().getDelegat().getNume());
+            ((EditText) findViewById(R.id.txtCIDelegat)).setText(DateLivrare.getInstance().getDelegat().getSerieNumarCI());
+            ((EditText) findViewById(R.id.txtAutoDelegat)).setText(DateLivrare.getInstance().getDelegat().getNrAuto());
+        }
 
-		btnDataLivrare = (Button) findViewById(R.id.btnDataLivrare);
-		addListenerDataLivrare();
+        if (UtilsUser.isASDL() || UtilsUser.isOIVPD()) {
+            ((LinearLayout) findViewById(R.id.layoutObsSofer)).setVisibility(View.INVISIBLE);
+            ((LinearLayout) findViewById(R.id.layoutCamionDescoperit)).setVisibility(View.INVISIBLE);
+            spinnerTransp.setSelection(1);
 
-		setLivrareCustodieLayout();
+            if (UtilsUser.isOIVPD())
+                spinnerTransp.setEnabled(false);
 
-		performGetAdreseLivrare();
+            chkbClientLaRaft.setChecked(true);
+            chkbClientLaRaft.setEnabled(false);
 
-		if (isComandaBV() && DateLivrare.getInstance().getTipPlata().substring(0, 1).equals("E")) {
-			checkAviz.setChecked(false);
-			checkAviz.setEnabled(false);
-		}
+        }
 
-		if (DateLivrare.getInstance().isAdrLivrNoua()) {
-			radioText.setChecked(true);
-			textLocalitate.setText(DateLivrare.getInstance().getOras());
-			textStrada.setText(DateLivrare.getInstance().getStrada());
+        btnDataLivrare = (Button) findViewById(R.id.btnDataLivrare);
+        addListenerDataLivrare();
 
-		}
+        setLivrareCustodieLayout();
 
-	}
+        performGetAdreseLivrare();
 
-	private boolean isComandaBV() {
+        if (isComandaBV() && DateLivrare.getInstance().getTipPlata().substring(0, 1).equals("E")) {
+            checkAviz.setChecked(false);
+            checkAviz.setEnabled(false);
+        }
 
-		boolean isBV90 = false;
+        if (DateLivrare.getInstance().isAdrLivrNoua()) {
+            radioText.setChecked(true);
+            textLocalitate.setText(DateLivrare.getInstance().getOras());
+            textStrada.setText(DateLivrare.getInstance().getStrada());
 
-		for (ArticolComanda articol : ListaArticoleComanda.getInstance().getListArticoleComanda()) {
-			if (articol.getFilialaSite() != null && articol.getFilialaSite().equals("BV90")) {
-				isBV90 = true;
-				break;
-			}
-		}
+        }
 
-		return isBV90;
-	}
+    }
 
-	private void setListenerCheckFactura() {
-		checkFactura.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    private void setTipPlataSelected(String tipPlata) {
 
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked)
-					checkAviz.setChecked(false);
-			}
-		});
-	}
+        for (int i = 0; i < spinnerPlata.getAdapter().getCount(); i++) {
+            if (spinnerPlata.getAdapter().getItem(i).toString().startsWith(tipPlata)) {
+                spinnerPlata.setSelection(i);
+                break;
+            }
+        }
 
-	private void setListenerCheckAviz() {
-		checkAviz.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    }
 
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked)
-					checkFactura.setChecked(false);
-			}
-		});
-	}
+    private boolean isComandaBV() {
 
-	private void setLivrareCustodieLayout() {
-		if (UtilsComenzi.isLivrareCustodie()) {
-			((LinearLayout) findViewById(R.id.layoutTipReducere)).setVisibility(View.GONE);
-			((LinearLayout) findViewById(R.id.layoutDocInsot)).setVisibility(View.GONE);
-			((LinearLayout) findViewById(R.id.layoutPlata)).setVisibility(View.GONE);
-			((LinearLayout) findViewById(R.id.layoutResponsabil)).setVisibility(View.GONE);
-			((LinearLayout) findViewById(R.id.layoutClientRaft)).setVisibility(View.GONE);
-			((LinearLayout) findViewById(R.id.layoutFactPaleti)).setVisibility(View.GONE);
-		} else {
-			((LinearLayout) findViewById(R.id.layoutTipReducere)).setVisibility(View.VISIBLE);
-			((LinearLayout) findViewById(R.id.layoutDocInsot)).setVisibility(View.VISIBLE);
-			((LinearLayout) findViewById(R.id.layoutPlata)).setVisibility(View.VISIBLE);
-			((LinearLayout) findViewById(R.id.layoutResponsabil)).setVisibility(View.VISIBLE);
-			((LinearLayout) findViewById(R.id.layoutClientRaft)).setVisibility(View.VISIBLE);
-			((LinearLayout) findViewById(R.id.layoutFactPaleti)).setVisibility(View.VISIBLE);
-		}
-	}
+        boolean isBV90 = false;
 
-	private void setTipTranspInfoAgent() {
-		if (UserInfo.getInstance().getTipUserSap().equals(Constants.tipInfoAv)) {
-			DateLivrare.getInstance().setTransport("TCLI");
-			spinnerTransp.setEnabled(false);
+        for (ArticolComanda articol : ListaArticoleComanda.getInstance().getListArticoleComanda()) {
+            if (articol.getFilialaSite() != null && articol.getFilialaSite().equals("BV90")) {
+                isBV90 = true;
+                break;
+            }
+        }
 
-		}
-	}
+        return isBV90;
+    }
 
-	private void addListenerDataLivrare() {
-		btnDataLivrare.setOnClickListener(new OnClickListener() {
+    private void setListenerCheckFactura() {
+        checkFactura.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			@Override
-			public void onClick(View v) {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    checkAviz.setChecked(false);
+            }
+        });
+    }
 
-				Locale.setDefault(new Locale("ro"));
+    private void setListenerCheckAviz() {
+        checkAviz.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-				int year = Calendar.getInstance().get(Calendar.YEAR);
-				int month = Calendar.getInstance().get(Calendar.MONTH);
-				int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-				SelectDateDialog datePickerDialog = new SelectDateDialog(SelectAdrLivrCmd.this, datePickerListener, year, month, day);
-				datePickerDialog.setTitle("Data livrare");
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    checkFactura.setChecked(false);
+            }
+        });
+    }
 
-				datePickerDialog.show();
+    private void setLivrareCustodieLayout() {
+        if (UtilsComenzi.isLivrareCustodie()) {
+            ((LinearLayout) findViewById(R.id.layoutTipReducere)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.layoutDocInsot)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.layoutPlata)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.layoutResponsabil)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.layoutClientRaft)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.layoutFactPaleti)).setVisibility(View.GONE);
+        } else {
+            ((LinearLayout) findViewById(R.id.layoutTipReducere)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.layoutDocInsot)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.layoutPlata)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.layoutResponsabil)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.layoutClientRaft)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.layoutFactPaleti)).setVisibility(View.VISIBLE);
+        }
+    }
 
-			}
-		});
-	}
+    private void setTipTranspInfoAgent() {
+        if (UserInfo.getInstance().getTipUserSap().equals(Constants.tipInfoAv)) {
+            DateLivrare.getInstance().setTransport("TCLI");
+            spinnerTransp.setEnabled(false);
 
-	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+        }
+    }
 
-		public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+    private void addListenerDataLivrare() {
+        btnDataLivrare.setOnClickListener(new OnClickListener() {
 
-			if (view.isShown()) {
+            @Override
+            public void onClick(View v) {
 
-				Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay);
+                Locale.setDefault(new Locale("ro"));
 
-				Calendar calendarNow = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
-						Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                int year = Calendar.getInstance().get(Calendar.YEAR);
+                int month = Calendar.getInstance().get(Calendar.MONTH);
+                int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                SelectDateDialog datePickerDialog = new SelectDateDialog(SelectAdrLivrCmd.this, datePickerListener, year, month, day);
+                datePickerDialog.setTitle("Data livrare");
 
-				int dayLivrare = calendar.get(Calendar.DAY_OF_WEEK);
-				int dayNow = calendarNow.get(Calendar.DAY_OF_WEEK);
+                datePickerDialog.show();
 
-				String tipTransp = spinnerTransp.getSelectedItem().toString();
+            }
+        });
+    }
 
-				if (tipTransp.toLowerCase().contains("trap")) {
-					if ((dayNow == 5 || dayNow == 6) && dayLivrare == 6) {
-						showDialogLivrareSambata(calendar);
-						setDataLivrare(calendar);
-					} else {
-						if (calendar.getTime().getTime() == calendarNow.getTime().getTime())
-							showDialogLivrareAstazi(calendar);
-						else
-							setDataLivrare(calendar);
-					}
-				} else
-					setDataLivrare(calendar);
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
-			}
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
-		}
-	};
+            if (view.isShown()) {
 
-	private void showDialogLivrareAstazi(final Calendar dataLivrare) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay);
 
-		builder.setTitle("Atentie!");
-		builder.setMessage("Ai solicitat livrare in cursul zilei de azi! Sigur este corect?");
-		builder.setCancelable(false);
+                Calendar calendarNow = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
+                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
-		builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                int dayLivrare = calendar.get(Calendar.DAY_OF_WEEK);
+                int dayNow = calendarNow.get(Calendar.DAY_OF_WEEK);
 
-			public void onClick(DialogInterface dialog, int which) {
+                String tipTransp = spinnerTransp.getSelectedItem().toString();
 
-				setDataLivrare(dataLivrare);
-				dialog.dismiss();
-			}
-		});
+                if (tipTransp.toLowerCase().contains("trap")) {
+                    if ((dayNow == 5 || dayNow == 6) && dayLivrare == 6) {
+                        showDialogLivrareSambata(calendar);
+                        setDataLivrare(calendar);
+                    } else {
+                        if (calendar.getTime().getTime() == calendarNow.getTime().getTime())
+                            showDialogLivrareAstazi(calendar);
+                        else
+                            setDataLivrare(calendar);
+                    }
+                } else
+                    setDataLivrare(calendar);
 
-		builder.setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+            }
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				btnDataLivrare.performClick();
-				dialog.dismiss();
-			}
-		});
+        }
+    };
 
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
+    private void showDialogLivrareAstazi(final Calendar dataLivrare) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-	private void setDataLivrare(Calendar dataLivrare) {
-		SimpleDateFormat displayFormat = new SimpleDateFormat("dd.MM.yyyy");
+        builder.setTitle("Atentie!");
+        builder.setMessage("Ai solicitat livrare in cursul zilei de azi! Sigur este corect?");
+        builder.setCancelable(false);
 
-		StatusIntervalLivrare statusInterval = UtilsDates.getStatusIntervalLivrare(dataLivrare.getTime());
+        builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
 
-		if (statusInterval.isValid()) {
-			textDataLivrare.setText(displayFormat.format(dataLivrare.getTime()));
-			DateLivrare.getInstance().setDataLivrare(displayFormat.format(dataLivrare.getTime()));
-		} else
-			Toast.makeText(getApplicationContext(), statusInterval.getMessage(), Toast.LENGTH_LONG).show();
+            public void onClick(DialogInterface dialog, int which) {
 
-	}
+                setDataLivrare(dataLivrare);
+                dialog.dismiss();
+            }
+        });
 
-	private void showDialogLivrareSambata(final Calendar dataLivrare) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNegativeButton("Nu", new DialogInterface.OnClickListener() {
 
-		builder.setTitle("Atentie!");
-		builder.setMessage("Clientul are program de lucru si sambata?");
-		builder.setCancelable(false);
-		builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                btnDataLivrare.performClick();
+                dialog.dismiss();
+            }
+        });
 
-			public void onClick(DialogInterface dialog, int which) {
-				DateLivrare.getInstance().setLivrareSambata("X");
-				dialog.dismiss();
-			}
-		});
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
-		builder.setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+    private void setDataLivrare(Calendar dataLivrare) {
+        SimpleDateFormat displayFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				DateLivrare.getInstance().setLivrareSambata("-");
-				dialog.dismiss();
+        StatusIntervalLivrare statusInterval = UtilsDates.getStatusIntervalLivrare(dataLivrare.getTime());
 
-			}
-		});
+        if (statusInterval.isValid()) {
+            textDataLivrare.setText(displayFormat.format(dataLivrare.getTime()));
+            DateLivrare.getInstance().setDataLivrare(displayFormat.format(dataLivrare.getTime()));
+        } else
+            Toast.makeText(getApplicationContext(), statusInterval.getMessage(), Toast.LENGTH_LONG).show();
 
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
+    }
 
-	private void addListenerClientLaRaft() {
+    private void showDialogLivrareSambata(final Calendar dataLivrare) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		chkbClientLaRaft.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        builder.setTitle("Atentie!");
+        builder.setMessage("Clientul are program de lucru si sambata?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(DialogInterface dialog, int which) {
+                DateLivrare.getInstance().setLivrareSambata("X");
+                dialog.dismiss();
+            }
+        });
 
-				if (isChecked) {
-					chkbClientLaRaft.setText("Da");
-				} else {
-					chkbClientLaRaft.setText("Nu");
-				}
+        builder.setNegativeButton("Nu", new DialogInterface.OnClickListener() {
 
-				DateLivrare.getInstance().setClientRaft(isChecked);
-			}
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DateLivrare.getInstance().setLivrareSambata("-");
+                dialog.dismiss();
 
-		});
+            }
+        });
 
-	}
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    private void addListenerClientLaRaft() {
 
-		try {
-			txtPers.setText(listPersCont[position]);
-			txtTel.setText(listTel[position]);
-			lpw.dismiss();
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-		}
-	}
+        chkbClientLaRaft.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-	public boolean onTouch(View v, MotionEvent event) {
-		final int DRAWABLE_RIGHT = 2;
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-		if (event.getAction() == MotionEvent.ACTION_UP) {
-			if (event.getX() >= (v.getWidth() - ((EditText) v).getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-				lpw.show();
-				return true;
-			}
-		}
-		return false;
-	}
+                if (isChecked) {
+                    chkbClientLaRaft.setText("Da");
+                } else {
+                    chkbClientLaRaft.setText("Nu");
+                }
 
-	private void setupSpinnerTonaj() {
+                DateLivrare.getInstance().setClientRaft(isChecked);
+            }
 
-		String[] tonajValues = { "Selectati tonajul", "3.5 T", "10 T", "Fara restrictie de tonaj" };
+        });
 
-		ArrayAdapter<String> adapterTonaj = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tonajValues);
-		adapterTonaj.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerTonaj.setAdapter(adapterTonaj);
+    }
 
-	}
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-	private void setupSpinnerIndoire() {
+        try {
+            txtPers.setText(listPersCont[position]);
+            txtTel.setText(listTel[position]);
+            lpw.dismiss();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
-		String[] indoireValues = { "Tip prelucrare fier-beton 6 m", "TAIERE", "INDOIRE" };
+    public boolean onTouch(View v, MotionEvent event) {
+        final int DRAWABLE_RIGHT = 2;
 
-		ArrayAdapter<String> adapterIndoire = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, indoireValues);
-		adapterIndoire.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerIndoire.setAdapter(adapterIndoire);
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (event.getX() >= (v.getWidth() - ((EditText) v).getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                lpw.show();
+                return true;
+            }
+        }
+        return false;
+    }
 
-	}
+    private void setupSpinnerTonaj() {
 
-	private void addSpinnerTranspListener() {
-		spinnerTransp.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				if (arg2 == 0) {
-					checkMacara.setChecked(DateLivrare.getInstance().isMasinaMacara());
-					setMacaraVisible();
-					spinnerTonaj.setVisibility(View.VISIBLE);
-					spinnerTonaj.setSelection(0);
-					setDateDelegatVisibility(false);
-				} else {
+        String[] tonajValues = {"Selectati tonajul", "3.5 T", "10 T", "Fara restrictie de tonaj"};
 
-					if (arg2 == 1)
-						setDateDelegatVisibility(true);
-					else
-						setDateDelegatVisibility(false);
+        ArrayAdapter<String> adapterTonaj = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tonajValues);
+        adapterTonaj.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTonaj.setAdapter(adapterTonaj);
 
-					checkMacara.setChecked(false);
-					checkMacara.setVisibility(View.INVISIBLE);
-					spinnerTonaj.setVisibility(View.INVISIBLE);
-				}
+    }
 
-			}
+    private void setupSpinnerIndoire() {
 
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-	}
+        String[] indoireValues = {"Tip prelucrare fier-beton 6 m", "TAIERE", "INDOIRE"};
 
-	private void setDateDelegatVisibility(boolean isVisible) {
-		if (isVisible) {
-			((LinearLayout) findViewById(R.id.layoutDelegat)).setVisibility(View.VISIBLE);
-		} else {
-			((LinearLayout) findViewById(R.id.layoutDelegat)).setVisibility(View.INVISIBLE);
-		}
-	}
+        ArrayAdapter<String> adapterIndoire = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, indoireValues);
+        adapterIndoire.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerIndoire.setAdapter(adapterIndoire);
 
-	private void setListenerCheckMacara() {
-		checkMacara.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				DateLivrare.getInstance().setMasinaMacara(isChecked);
-			}
-		});
-	}
+    }
 
-	private void setListenerCheckObsSofer() {
-		checkObsSofer.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    private void addSpinnerTranspListener() {
+        spinnerTransp.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if (arg2 == 0) {
+                    checkMacara.setChecked(DateLivrare.getInstance().isMasinaMacara());
+                    setMacaraVisible();
+                    spinnerTonaj.setVisibility(View.VISIBLE);
+                    spinnerTonaj.setSelection(0);
+                    setDateDelegatVisibility(false);
+                } else {
 
-				if (isChecked) {
-					txtObservatii.setVisibility(View.VISIBLE);
-					checkObsSofer.setText("Da");
-				} else {
-					checkObsSofer.setText("Nu");
-					txtObservatii.setText("");
-					txtObservatii.setVisibility(View.INVISIBLE);
-				}
+                    if (arg2 == 1)
+                        setDateDelegatVisibility(true);
+                    else
+                        setDateDelegatVisibility(false);
 
-			}
-		});
-	}
+                    checkMacara.setChecked(false);
+                    checkMacara.setVisibility(View.INVISIBLE);
+                    spinnerTonaj.setVisibility(View.INVISIBLE);
+                }
 
-	private void displayObiective(boolean isVisible) {
-		if (isVisible) {
-			layoutObiective.setVisibility(View.VISIBLE);
-		} else {
-			layoutObiective.setVisibility(View.INVISIBLE);
-		}
-	}
+            }
 
-	private void setSpinnerObiectiveListener() {
-		spinnerObiective.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+    }
 
-			public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-				if (pos > 0) {
-					radioObiectiv.setVisibility(View.VISIBLE);
-					radioObiectiv.setChecked(true);
-					obiectivSelectat = (BeanObiectivDepartament) parent.getAdapter().getItem(pos);
-					setAdresaLivrareFromObiectiv();
-				} else {
-					radioObiectiv.setVisibility(View.INVISIBLE);
-					radioLista.setChecked(true);
-					obiectivSelectat = null;
-				}
+    private void setDateDelegatVisibility(boolean isVisible) {
+        if (isVisible) {
+            ((LinearLayout) findViewById(R.id.layoutDelegat)).setVisibility(View.VISIBLE);
+        } else {
+            ((LinearLayout) findViewById(R.id.layoutDelegat)).setVisibility(View.INVISIBLE);
+        }
+    }
 
-			}
+    private void setListenerCheckMacara() {
+        checkMacara.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DateLivrare.getInstance().setMasinaMacara(isChecked);
+            }
+        });
+    }
 
-			public void onNothingSelected(AdapterView<?> arg0) {
-				return;
+    private void setListenerCheckObsSofer() {
+        checkObsSofer.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-			}
-		});
-	}
+                if (isChecked) {
+                    txtObservatii.setVisibility(View.VISIBLE);
+                    checkObsSofer.setText("Da");
+                } else {
+                    checkObsSofer.setText("Nu");
+                    txtObservatii.setText("");
+                    txtObservatii.setVisibility(View.INVISIBLE);
+                }
 
-	private void addListenerModifValInc() {
-		checkModifValInc.setOnClickListener(new OnClickListener() {
+            }
+        });
+    }
 
-			public void onClick(View v) {
+    private void displayObiective(boolean isVisible) {
+        if (isVisible) {
+            layoutObiective.setVisibility(View.VISIBLE);
+        } else {
+            layoutObiective.setVisibility(View.INVISIBLE);
+        }
+    }
 
-				if (checkModifValInc.isChecked()) {
-					DateLivrare.getInstance().setValIncModif(true);
-					txtValoareIncasare.setFocusableInTouchMode(true);
-					txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
+    private void setSpinnerObiectiveListener() {
+        spinnerObiective.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-				} else {
-					DateLivrare.getInstance().setValIncModif(false);
-					txtValoareIncasare.setFocusable(false);
+            public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+                if (pos > 0) {
+                    radioObiectiv.setVisibility(View.VISIBLE);
+                    radioObiectiv.setChecked(true);
+                    obiectivSelectat = (BeanObiectivDepartament) parent.getAdapter().getItem(pos);
+                    setAdresaLivrareFromObiectiv();
+                } else {
+                    radioObiectiv.setVisibility(View.INVISIBLE);
+                    radioLista.setChecked(true);
+                    obiectivSelectat = null;
+                }
 
-					double localValCmd = 0;
-					if (!CreareComanda.codClientVar.equals(""))
-						localValCmd = CreareComanda.totalComanda * Constants.TVA;
-					else
-						localValCmd = ModificareComanda.totalComanda * Constants.TVA;
+            }
 
-					txtValoareIncasare.setText(nf2.format(localValCmd));
+            public void onNothingSelected(AdapterView<?> arg0) {
+                return;
 
-				}
-			}
-		});
+            }
+        });
+    }
 
-	}
+    private void addListenerModifValInc() {
+        checkModifValInc.setOnClickListener(new OnClickListener() {
 
-	private void performGetJudete() {
+            public void onClick(View v) {
 
-		if (isComandaClp() || isComandaBV() || isComandaDl() || DateLivrare.getInstance().isClientFurnizor()) {
-			fillJudeteClient(EnumJudete.getRegionCodes());
+                if (checkModifValInc.isChecked()) {
+                    DateLivrare.getInstance().setValIncModif(true);
+                    txtValoareIncasare.setFocusableInTouchMode(true);
+                    txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
 
-		} else {
-			String unitLog = UserInfo.getInstance().getUnitLog();
+                } else {
+                    DateLivrare.getInstance().setValIncModif(false);
+                    txtValoareIncasare.setFocusable(false);
 
-			if (unitLog.equals("NN10"))
-				unitLog = "AG10";
+                    double localValCmd = 0;
+                    if (!CreareComanda.codClientVar.equals(""))
+                        localValCmd = CreareComanda.totalComanda * Constants.TVA;
+                    else
+                        localValCmd = ModificareComanda.totalComanda * Constants.TVA;
 
-			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("filiala", unitLog);
+                    txtValoareIncasare.setText(nf2.format(localValCmd));
 
-			AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
-			call.getCallResultsSyncActivity();
-		}
+                }
+            }
+        });
 
-	}
+    }
 
-	private boolean isComandaClp() {
-		return !DateLivrare.getInstance().getCodFilialaCLP().trim().isEmpty() && DateLivrare.getInstance().getCodFilialaCLP().trim().length() == 4;
-	}
+    private void performGetJudete() {
 
-	private boolean isComandaDl() {
-		return DateLivrare.getInstance().getFurnizorComanda() != null
-				&& !DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().isEmpty()
-				&& DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().length() > 4;
-	}
+        if (isComandaClp() || isComandaBV() || isComandaDl() || DateLivrare.getInstance().isClientFurnizor() || isLivrareCustodie()) {
+            fillJudeteClient(EnumJudete.getRegionCodes());
 
-	private void fillJudeteClient(String arrayJudete) {
+        } else {
+            String unitLog = UserInfo.getInstance().getUnitLog();
 
-		if (listJudete != null)
-			listJudete.clear();
+            if (unitLog.equals("NN10"))
+                unitLog = "AG10";
 
-		HashMap<String, String> temp;
-		String numeJudSel = "";
-		int i;
-		temp = new HashMap<String, String>();
-		temp.put("numeJudet", "Selectati judetul");
-		temp.put("codJudet", "");
-		listJudete.add(temp);
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("filiala", unitLog);
 
-		int nrJud = 0;
-		for (i = 0; i < UtilsGeneral.numeJudete.length; i++) {
+            AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
+            call.getCallResultsSyncActivity();
+        }
 
-			if (arrayJudete.contains(UtilsGeneral.codJudete[i])) {
-				temp = new HashMap<String, String>();
-				temp.put("numeJudet", UtilsGeneral.numeJudete[i]);
-				temp.put("codJudet", UtilsGeneral.codJudete[i]);
-				listJudete.add(temp);
+    }
 
-				nrJud++;
+    private boolean isComandaClp() {
+        return !DateLivrare.getInstance().getCodFilialaCLP().trim().isEmpty() && DateLivrare.getInstance().getCodFilialaCLP().trim().length() == 4;
+    }
 
-				if (DateLivrare.getInstance().getCodJudet().equals(UtilsGeneral.codJudete[i])) {
-					posJudetSel = nrJud;
-					numeJudSel = UtilsGeneral.numeJudete[i];
-				}
-			}
+    private boolean isComandaDl() {
+        return DateLivrare.getInstance().getFurnizorComanda() != null
+                && !DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().isEmpty()
+                && DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().length() > 4;
+    }
 
-		}
+    private boolean isLivrareCustodie() {
+        return DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.LIVRARE_CUSTODIE);
+    }
 
-		spinnerJudet.setAdapter(adapterJudete);
+    private void fillJudeteClient(String arrayJudete) {
 
-		if (posJudetSel > 0) {
-			DateLivrare.getInstance().setNumeJudet(numeJudSel);
-			spinnerJudet.setSelection(posJudetSel);
-		}
+        if (listJudete != null)
+            listJudete.clear();
 
-	}
+        HashMap<String, String> temp;
+        String numeJudSel = "";
+        int i;
+        temp = new HashMap<String, String>();
+        temp.put("numeJudet", "Selectati judetul");
+        temp.put("codJudet", "");
+        listJudete.add(temp);
 
-	private void addListenerTipPlata() {
-		spinnerPlata.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        int nrJud = 0;
+        for (i = 0; i < UtilsGeneral.numeJudete.length; i++) {
 
-				checkAviz.setEnabled(true);
-				spinnerResponsabil.setEnabled(true);
+            if (arrayJudete.contains(UtilsGeneral.codJudete[i])) {
+                temp = new HashMap<String, String>();
+                temp.put("numeJudet", UtilsGeneral.numeJudete[i]);
+                temp.put("codJudet", UtilsGeneral.codJudete[i]);
+                listJudete.add(temp);
 
-				if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("N")) {
+                nrJud++;
 
-					if (isComandaBV()) {
-						checkAviz.setEnabled(false);
-						checkAviz.setChecked(false);
-					}
-					spinnerResponsabil.setSelection(2);
-					spinnerResponsabil.setEnabled(false);
-				}
+                if (DateLivrare.getInstance().getCodJudet().equals(UtilsGeneral.codJudete[i])) {
+                    posJudetSel = nrJud;
+                    numeJudSel = UtilsGeneral.numeJudete[i];
+                }
+            }
 
-				if (pos == 0 || pos == 1 || pos == 2 || pos == 3) {
-					spinnerTermenPlata.setVisibility(View.VISIBLE);
-				}
+        }
 
-				if (pos == 2) {
-					Toast.makeText(getApplicationContext(), "Valoare maxima comanda pentru PJ: 5000 RON", Toast.LENGTH_SHORT).show();
-				}
+        spinnerJudet.setAdapter(adapterJudete);
 
-				if (pos == 2 && spinnerResponsabil.getSelectedItemPosition() == 1) {
-					layoutValoareIncasare.setVisibility(View.VISIBLE);
+        if (posJudetSel > 0) {
+            DateLivrare.getInstance().setNumeJudet(numeJudSel);
+            spinnerJudet.setSelection(posJudetSel);
+        }
 
-					if (DateLivrare.getInstance().isValIncModif()) {
-						txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
+    }
 
-					} else {
-						double localValCmd = 0;
-						if (!CreareComanda.codClientVar.equals("")) {
-							if (CreareComanda.canalDistrib.equals("10"))
-								localValCmd = CreareComanda.totalComanda * Constants.TVA;
-							else if (CreareComanda.canalDistrib.equals("20"))
-								localValCmd = CreareComanda.totalComanda;
-						} else
-							localValCmd = ModificareComanda.totalComanda * Constants.TVA;
+    private void addListenerTipPlata() {
+        spinnerPlata.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-						txtValoareIncasare.setText(nf2.format(localValCmd));
+                checkAviz.setEnabled(true);
+                spinnerResponsabil.setEnabled(true);
+                spinnerTermenPlata.setEnabled(true);
+                ((TextView) findViewById(R.id.tipPlataContract)).setVisibility(View.INVISIBLE);
 
-					}
+                if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("N") || spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("R")) {
 
-				} else {
-					layoutValoareIncasare.setVisibility(View.GONE);
-				}
-			}
+                    if (isComandaBV()) {
+                        checkAviz.setEnabled(false);
+                        checkAviz.setChecked(false);
+                    }
+                    spinnerResponsabil.setSelection(2);
+                    spinnerResponsabil.setEnabled(false);
+                    spinnerTermenPlata.setSelection(0);
+                    spinnerTermenPlata.setEnabled(false);
+                }
 
-			public void onNothingSelected(AdapterView<?> arg0) {
+                if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("R")) {
+                    spinnerResponsabil.setEnabled(true);
+                    spinnerResponsabil.setSelection(1);
+                }
 
-			}
+                if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("O")) {
+                    spinnerTermenPlata.setSelection(0);
+                    spinnerTermenPlata.setEnabled(false);
+                }
 
-		});
-	}
+                if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("L")) {
+                    spinnerTermenPlata.setSelection(adapterTermenPlata.getCount() - 1);
+                    ((TextView) findViewById(R.id.tipPlataContract)).setVisibility(View.VISIBLE);
+                }
 
-	private void addListenerResponsabil() {
-		spinnerResponsabil.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                if (pos == 0 || pos == 1 || pos == 2 || pos == 3) {
+                    spinnerTermenPlata.setVisibility(View.VISIBLE);
+                }
 
-				if (pos == 1 && spinnerPlata.getSelectedItemPosition() == 2) {
-					layoutValoareIncasare.setVisibility(View.VISIBLE);
 
-					if (DateLivrare.getInstance().isValIncModif()) {
-						txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
+                if (pos == 2 && spinnerResponsabil.getSelectedItemPosition() == 1) {
+                    layoutValoareIncasare.setVisibility(View.VISIBLE);
 
-					} else {
-						double localValCmd = 0;
-						if (!CreareComanda.codClientVar.equals("")) {
-							if (CreareComanda.canalDistrib.equals("10"))
-								localValCmd = CreareComanda.totalComanda * Constants.TVA;
-							else if (CreareComanda.canalDistrib.equals("20"))
-								localValCmd = CreareComanda.totalComanda;
-						} else
-							localValCmd = ModificareComanda.totalComanda * Constants.TVA;
+                    if (DateLivrare.getInstance().isValIncModif()) {
+                        txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
 
-						txtValoareIncasare.setText(nf2.format(localValCmd));
+                    } else {
+                        double localValCmd = 0;
+                        if (!CreareComanda.codClientVar.equals("")) {
+                            if (CreareComanda.canalDistrib.equals("10"))
+                                localValCmd = CreareComanda.totalComanda * Constants.TVA;
+                            else if (CreareComanda.canalDistrib.equals("20"))
+                                localValCmd = CreareComanda.totalComanda;
+                        } else
+                            localValCmd = ModificareComanda.totalComanda * Constants.TVA;
 
-					}
+                        txtValoareIncasare.setText(nf2.format(localValCmd));
 
-				} else {
-					layoutValoareIncasare.setVisibility(View.GONE);
-				}
+                    }
 
-			}
+                } else {
+                    layoutValoareIncasare.setVisibility(View.GONE);
+                }
+            }
 
-			public void onNothingSelected(AdapterView<?> arg0) {
+            public void onNothingSelected(AdapterView<?> arg0) {
 
-			}
+            }
 
-		});
-	}
+        });
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			finish();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+    private void addListenerResponsabil() {
+        spinnerResponsabil.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-	public void addListenerRadioLista() {
+                if (pos == 1 && spinnerPlata.getSelectedItemPosition() == 2) {
+                    layoutValoareIncasare.setVisibility(View.VISIBLE);
 
-		radioLista.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				clearAdresaLivrare();
+                    if (DateLivrare.getInstance().isValIncModif()) {
+                        txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
 
-			}
-		});
+                    } else {
+                        double localValCmd = 0;
+                        if (!CreareComanda.codClientVar.equals("")) {
+                            if (CreareComanda.canalDistrib.equals("10"))
+                                localValCmd = CreareComanda.totalComanda * Constants.TVA;
+                            else if (CreareComanda.canalDistrib.equals("20"))
+                                localValCmd = CreareComanda.totalComanda;
+                        } else
+                            localValCmd = ModificareComanda.totalComanda * Constants.TVA;
 
-		radioLista.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                        txtValoareIncasare.setText(nf2.format(localValCmd));
 
-			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+                    }
 
-				if (arg1) {
+                } else {
+                    layoutValoareIncasare.setVisibility(View.GONE);
+                }
 
-					layoutAdrese.setVisibility(View.VISIBLE);
-					layoutAdr1.setVisibility(View.GONE);
-					layoutAdr2.setVisibility(View.GONE);
-					layoutHarta.setVisibility(View.GONE);
+            }
 
-					if (adreseList == null || adreseList.isEmpty())
-						performGetAdreseLivrare();
-					else if (selectedAddrModifCmd != -1)
-						spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
+            public void onNothingSelected(AdapterView<?> arg0) {
 
-				}
+            }
 
-			}
-		});
-	}
+        });
+    }
 
-	public void addListenerRadioText() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-		radioText.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				clearAdresaLivrare();
-				spinnerTonaj.setEnabled(true);
-				spinnerTonaj.setSelection(0);
+    public void addListenerRadioLista() {
 
-			}
-		});
+        radioLista.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAdresaLivrare();
 
-		radioText.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            }
+        });
 
-			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+        radioLista.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-				if (arg1) {
-					layoutAdrese.setVisibility(View.GONE);
-					layoutAdr1.setVisibility(View.VISIBLE);
-					layoutAdr2.setVisibility(View.VISIBLE);
-					layoutHarta.setVisibility(View.VISIBLE);
+            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 
-				}
+                if (arg1) {
 
-			}
-		});
-	}
+                    layoutAdrese.setVisibility(View.VISIBLE);
+                    layoutAdr1.setVisibility(View.GONE);
+                    layoutAdr2.setVisibility(View.GONE);
+                    layoutHarta.setVisibility(View.GONE);
 
-	private void addListenerRadioObiectiv() {
+                    if (adreseList == null || adreseList.isEmpty())
+                        performGetAdreseLivrare();
+                    else if (selectedAddrModifCmd != -1)
+                        spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
 
-		radioObiectiv.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				clearAdresaLivrare();
-				spinnerTonaj.setEnabled(true);
-				spinnerTonaj.setSelection(0);
+                }
 
-			}
-		});
+            }
+        });
+    }
 
-		radioObiectiv.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    public void addListenerRadioText() {
 
-			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+        radioText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAdresaLivrare();
+                spinnerTonaj.setEnabled(true);
+                spinnerTonaj.setSelection(0);
 
-				if (arg1) {
-					layoutAdrese.setVisibility(View.GONE);
-					layoutAdr1.setVisibility(View.GONE);
-					layoutAdr2.setVisibility(View.GONE);
-					layoutHarta.setVisibility(View.GONE);
+            }
+        });
 
-				}
+        radioText.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			}
-		});
-	}
+            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 
-	protected void performGetAdreseLivrare() {
+                if (arg1) {
+                    layoutAdrese.setVisibility(View.GONE);
+                    layoutAdr1.setVisibility(View.VISIBLE);
+                    layoutAdr2.setVisibility(View.VISIBLE);
+                    layoutHarta.setVisibility(View.VISIBLE);
 
-		String filiala = "";
+                }
 
-		if (!isComandaClp() && !isComandaBV() && !isComandaDl() && !DateLivrare.getInstance().isClientFurnizor())
-			filiala = UserInfo.getInstance().getUnitLog();
+            }
+        });
+    }
 
-		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("codClient", globalCodClient);
-		params.put("filiala", filiala);
+    private void addListenerRadioObiectiv() {
 
-		operatiiAdresa.getAdreseLivrareClient(params);
+        radioObiectiv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAdresaLivrare();
+                spinnerTonaj.setEnabled(true);
+                spinnerTonaj.setSelection(0);
 
-	}
+            }
+        });
 
-	private void getObiectiveDepartament() {
-		operatiiObiective = new OperatiiObiective(this);
-		operatiiObiective.setObiectiveListener(this);
+        radioObiectiv.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-		HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
+            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 
-		params.put("filiala", UserInfo.getInstance().getUnitLog());
-		params.put("departament", UserInfo.getInstance().getCodDepart());
-		params.put("codClient", CreareComanda.codClientVar);
-		params.put("tipUser", UserInfo.getInstance().getTipUser());
-		params.put("codUser", UserInfo.getInstance().getCod());
+                if (arg1) {
+                    layoutAdrese.setVisibility(View.GONE);
+                    layoutAdr1.setVisibility(View.GONE);
+                    layoutAdr2.setVisibility(View.GONE);
+                    layoutHarta.setVisibility(View.GONE);
 
-		operatiiObiective.getObiectiveDepartament(params);
-	}
+                }
 
-	private void fillListAdrese(String adrese) {
+            }
+        });
+    }
 
-		HandleJSONData objClientList = new HandleJSONData(this, adrese);
-		adreseList = objClientList.decodeJSONAdresaLivrare();
+    protected void performGetAdreseLivrare() {
 
-		if (adreseList.size() > 0) {
+        String filiala = "";
 
-			AdapterAdreseLivrare adapterAdrese = new AdapterAdreseLivrare(this, adreseList);
-			spinnerAdreseLivrare.setAdapter(adapterAdrese);
+        if (!isComandaClp() && !isComandaBV() && !isComandaDl() && !DateLivrare.getInstance().isClientFurnizor())
+            filiala = UserInfo.getInstance().getUnitLog();
 
-			if (selectedAddrModifCmd != -1)
-				spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("codClient", globalCodClient);
+        params.put("filiala", filiala);
 
-			if (!ModificareComanda.selectedCmd.equals("")) {
-				if (!adrNouaModifCmd)
-					getCmdDateLivrare();
-				else
-					spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
-			}
+        operatiiAdresa.getAdreseLivrareClient(params);
 
-		}
+    }
 
-		if (UtilsUser.hasObiective() && CreareComanda.codClientVar.trim().length() > 0)
-			getObiectiveDepartament();
+    private void getObiectiveDepartament() {
+        operatiiObiective = new OperatiiObiective(this);
+        operatiiObiective.setObiectiveListener(this);
 
-	}
+        HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
 
-	private void getCmdDateLivrare() {
+        params.put("filiala", UserInfo.getInstance().getUnitLog());
+        params.put("departament", UserInfo.getInstance().getCodDepart());
+        params.put("codClient", CreareComanda.codClientVar);
+        params.put("tipUser", UserInfo.getInstance().getTipUser());
+        params.put("codUser", UserInfo.getInstance().getCod());
 
-		HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
-		params.put("idCmd", ModificareComanda.selectedCmd);
-		operatiiAdresa.getDateLivrare(params);
+        operatiiObiective.getObiectiveDepartament(params);
+    }
 
-	}
+    private void fillListAdrese(String adrese) {
 
-	@SuppressWarnings("unchecked")
-	private void fillDateLivrare(String dateLivrare) {
+        HandleJSONData objClientList = new HandleJSONData(this, adrese);
+        adreseList = objClientList.decodeJSONAdresaLivrare();
 
-		try {
-			// incarcare date livrare comanda modificata
-			String[] tokLivrare = dateLivrare.split("#");
-			HashMap<String, String> artMapLivr = null;
+        if (adreseList.size() > 0) {
 
-			// adresa de livrare
-			if (tokLivrare[13].equals("X")) // adresa noua
-			{
-				radioText.setChecked(true);
-				int nrJudete = listJudete.size(), j = 0;
-				String codJudet = "";
+            AdapterAdreseLivrare adapterAdrese = new AdapterAdreseLivrare(this, adreseList);
+            spinnerAdreseLivrare.setAdapter(adapterAdrese);
 
-				for (j = 0; j < nrJudete; j++) {
-					artMapLivr = (HashMap<String, String>) this.adapterJudete.getItem(j);
-					codJudet = artMapLivr.get("codJudet").toString();
+            if (selectedAddrModifCmd != -1)
+                spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
 
-					if (tokLivrare[8].equals(codJudet)) {
-						spinnerJudet.setSelection(j);
-						break;
-					}
+            if (!ModificareComanda.selectedCmd.equals("")) {
+                if (!adrNouaModifCmd)
+                    getCmdDateLivrare();
+                else
+                    spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
+            }
 
-				}
+        }
 
-				DateLivrare.getInstance().setOras(tokLivrare[7]);
+        if (UtilsUser.hasObiective() && CreareComanda.codClientVar.trim().length() > 0)
+            getObiectiveDepartament();
 
-				textLocalitate.setText(tokLivrare[7]);
+    }
 
-				textStrada.setText(tokLivrare[4]);
-				adrNouaModifCmd = true;
+    private void getCmdDateLivrare() {
 
-			} else {
-				radioLista.setChecked(true);
+        HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
+        params.put("idCmd", ModificareComanda.selectedCmd);
+        operatiiAdresa.getDateLivrare(params);
 
-				int nrAdrese = spinnerAdreseLivrare.getAdapter().getCount();
+    }
 
-				int j = 0;
-				String adr_number = "";
+    @SuppressWarnings("unchecked")
+    private void fillDateLivrare(String dateLivrare) {
 
-				for (j = 0; j < nrAdrese; j++) {
+        try {
+            // incarcare date livrare comanda modificata
+            String[] tokLivrare = dateLivrare.split("#");
+            HashMap<String, String> artMapLivr = null;
 
-					BeanAdresaLivrare adresaLivrare = (BeanAdresaLivrare) spinnerAdreseLivrare.getAdapter().getItem(j);
+            // adresa de livrare
+            if (tokLivrare[13].equals("X")) // adresa noua
+            {
+                radioText.setChecked(true);
+                int nrJudete = listJudete.size(), j = 0;
+                String codJudet = "";
 
-					adr_number = adresaLivrare.getCodAdresa();
+                for (j = 0; j < nrJudete; j++) {
+                    artMapLivr = (HashMap<String, String>) this.adapterJudete.getItem(j);
+                    codJudet = artMapLivr.get("codJudet").toString();
 
-					if (tokLivrare[15].equals(adr_number)) {
-						spinnerAdreseLivrare.setSelection(j);
-						selectedAddrModifCmd = j;
-						break;
-					}
+                    if (tokLivrare[8].equals(codJudet)) {
+                        spinnerJudet.setSelection(j);
+                        break;
+                    }
 
-				}
+                }
 
-			}
+                DateLivrare.getInstance().setOras(tokLivrare[7]);
 
-			// pers. contact
-			txtPers.setText(tokLivrare[2]);
+                textLocalitate.setText(tokLivrare[7]);
 
-			// telefon
-			txtTel.setText(tokLivrare[3]);
+                textStrada.setText(tokLivrare[4]);
+                adrNouaModifCmd = true;
 
-			// fact.red. separat
-			if (tokLivrare[6].equals("X"))
-				spinnerTipReducere.setSelection(1);
-			if (tokLivrare[6].equals("R"))
-				spinnerTipReducere.setSelection(2);
-			if (tokLivrare[6].equals(" "))
-				spinnerTipReducere.setSelection(0);
+            } else {
+                radioLista.setChecked(true);
 
-			// doc. insot
-			checkFactura.setChecked(false);
-			checkAviz.setChecked(false);
+                int nrAdrese = spinnerAdreseLivrare.getAdapter().getCount();
 
-			if (tokLivrare[12].equals("1"))
-				checkFactura.setChecked(true);
-			else if (tokLivrare[12].equals("2"))
-				checkAviz.setChecked(true);
-			else if (tokLivrare[12].equals("3")) {
-				checkFactura.setChecked(true);
-				checkAviz.setChecked(true);
-			}
+                int j = 0;
+                String adr_number = "";
 
-			// tip plata
-			if (tokLivrare[12].equals("B"))
-				spinnerPlata.setSelection(0);
-			if (tokLivrare[12].equals("C"))
-				spinnerPlata.setSelection(1);
-			if (tokLivrare[12].equals("E"))
-				spinnerPlata.setSelection(2);
-			if (tokLivrare[12].equals("O"))
-				spinnerPlata.setSelection(3);
+                for (j = 0; j < nrAdrese; j++) {
 
-			// termen plata
-			adapterTermenPlata.clear();
-			adapterTermenPlata.add("C000");
-			if (!ModificareComanda.codClientVar.equals("")) {
+                    BeanAdresaLivrare adresaLivrare = (BeanAdresaLivrare) spinnerAdreseLivrare.getAdapter().getItem(j);
 
-				if (!tokLivrare[9].equals("C000")) {
-					if (!DateLivrare.getInstance().getTermenPlata().trim().equals("")) {
-						adapterTermenPlata.add(DateLivrare.getInstance().getTermenPlata());
-						spinnerTermenPlata.setSelection(1);
-					}
-				}
-			}
+                    adr_number = adresaLivrare.getCodAdresa();
 
-			for (int ii = 0; ii < spinnerTransp.getAdapter().getCount(); ii++) {
-				if (spinnerTransp.getAdapter().getItem(ii).toString().toUpperCase().contains(tokLivrare[5])) {
-					spinnerTransp.setSelection(ii);
-					break;
-				}
-			}
+                    if (tokLivrare[15].equals(adr_number)) {
+                        spinnerAdreseLivrare.setSelection(j);
+                        selectedAddrModifCmd = j;
+                        break;
+                    }
 
-			// obs livrare
-			txtObservatii.setText(tokLivrare[10]);
+                }
 
-			DateLivrare.getInstance().setValoareIncasare(tokLivrare[16]);
+            }
 
-			double localValCmd = Double.parseDouble(DateLivrare.getInstance().getValoareIncasare());
+            // pers. contact
+            txtPers.setText(tokLivrare[2]);
 
-			if (tokLivrare[17].equals("X")) {
-				DateLivrare.getInstance().setValIncModif(true);
-				checkModifValInc.setChecked(true);
-			} else {
-				DateLivrare.getInstance().setValIncModif(false);
-				checkModifValInc.setChecked(false);
+            // telefon
+            txtTel.setText(tokLivrare[3]);
 
-				if (!CreareComanda.codClientVar.equals(""))
-					localValCmd = CreareComanda.totalComanda * Constants.TVA;
-				else
-					localValCmd = ModificareComanda.totalComanda * Constants.TVA;
+            // fact.red. separat
+            if (tokLivrare[6].equals("X"))
+                spinnerTipReducere.setSelection(1);
+            if (tokLivrare[6].equals("R"))
+                spinnerTipReducere.setSelection(2);
+            if (tokLivrare[6].equals(" "))
+                spinnerTipReducere.setSelection(0);
 
-			}
+            // doc. insot
+            checkFactura.setChecked(false);
+            checkAviz.setChecked(false);
 
-			txtValoareIncasare.setText(nf2.format(localValCmd));
+            if (tokLivrare[12].equals("1"))
+                checkFactura.setChecked(true);
+            else if (tokLivrare[12].equals("2"))
+                checkAviz.setChecked(true);
+            else if (tokLivrare[12].equals("3")) {
+                checkFactura.setChecked(true);
+                checkAviz.setChecked(true);
+            }
 
-			// obs. plata (responsabil livrare)
-			spinnerResponsabil.setSelection(0);
+            // tip plata
+            if (tokLivrare[12].equals("B"))
+                spinnerPlata.setSelection(0);
+            if (tokLivrare[12].equals("C"))
+                spinnerPlata.setSelection(1);
+            if (tokLivrare[12].equals("E"))
+                spinnerPlata.setSelection(2);
+            if (tokLivrare[12].equals("O"))
+                spinnerPlata.setSelection(3);
 
-			if (tokLivrare[14].equals("AV")) {
-				spinnerResponsabil.setSelection(0);
-			} else if (tokLivrare[14].equals("SO")) {
-				spinnerResponsabil.setSelection(1);
-			} else if (tokLivrare[14].equals("OC")) {
-				spinnerResponsabil.setSelection(2);
-			}
+            // termen plata
+            adapterTermenPlata.clear();
+            adapterTermenPlata.add("C000");
+            if (!ModificareComanda.codClientVar.equals("")) {
 
-			DateLivrare.getInstance().setPrelucrare(tokLivrare[18]);
-			for (int i = 0; i < spinnerIndoire.getCount(); i++)
-				if (spinnerIndoire.getItemAtPosition(i).toString().toUpperCase().contains(tokLivrare[18])) {
-					spinnerIndoire.setSelection(i);
-					break;
-				}
+                if (!tokLivrare[9].equals("C000")) {
+                    if (!DateLivrare.getInstance().getTermenPlata().trim().equals("")) {
+                        adapterTermenPlata.add(DateLivrare.getInstance().getTermenPlata());
+                        spinnerTermenPlata.setSelection(1);
+                    }
+                }
+            }
 
-			DateLivrare.getInstance().setClientRaft(tokLivrare[20].equals("X") ? true : false);
+            for (int ii = 0; ii < spinnerTransp.getAdapter().getCount(); ii++) {
+                if (spinnerTransp.getAdapter().getItem(ii).toString().toUpperCase().contains(tokLivrare[5])) {
+                    spinnerTransp.setSelection(ii);
+                    break;
+                }
+            }
 
-		} catch (Exception ex) {
-			Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
-		}
+            // obs livrare
+            txtObservatii.setText(tokLivrare[10]);
 
-	}
+            DateLivrare.getInstance().setValoareIncasare(tokLivrare[16]);
 
-	private void setSpinnerTonajValue(String tonaj) {
+            double localValCmd = Double.parseDouble(DateLivrare.getInstance().getValoareIncasare());
 
-		if (tonaj == null || tonaj.equals("0")) {
-			spinnerTonaj.setSelection(0);
-			spinnerTonaj.setEnabled(true);
-			return;
-		}
+            if (tokLivrare[17].equals("X")) {
+                DateLivrare.getInstance().setValIncModif(true);
+                checkModifValInc.setChecked(true);
+            } else {
+                DateLivrare.getInstance().setValIncModif(false);
+                checkModifValInc.setChecked(false);
 
-		DateLivrare.getInstance().setTonaj(tonaj);
+                if (!CreareComanda.codClientVar.equals(""))
+                    localValCmd = CreareComanda.totalComanda * Constants.TVA;
+                else
+                    localValCmd = ModificareComanda.totalComanda * Constants.TVA;
 
-		int pos = HelperAdreseLivrare.getTonajSpinnerPos(tonaj);
+            }
 
-		if (pos > 0) {
-			spinnerTonaj.setSelection(pos);
-			spinnerTonaj.setEnabled(false);
-		}
+            txtValoareIncasare.setText(nf2.format(localValCmd));
 
-	}
+            // obs. plata (responsabil livrare)
+            spinnerResponsabil.setSelection(0);
 
-	private void setMacaraVisible() {
+            if (tokLivrare[14].equals("AV")) {
+                spinnerResponsabil.setSelection(0);
+            } else if (tokLivrare[14].equals("SO")) {
+                spinnerResponsabil.setSelection(1);
+            } else if (tokLivrare[14].equals("OC")) {
+                spinnerResponsabil.setSelection(2);
+            }
 
-		checkMacara.setVisibility(View.INVISIBLE);
+            DateLivrare.getInstance().setPrelucrare(tokLivrare[18]);
+            for (int i = 0; i < spinnerIndoire.getCount(); i++)
+                if (spinnerIndoire.getItemAtPosition(i).toString().toUpperCase().contains(tokLivrare[18])) {
+                    spinnerIndoire.setSelection(i);
+                    break;
+                }
 
-	}
+            DateLivrare.getInstance().setClientRaft(tokLivrare[20].equals("X") ? true : false);
 
-	private boolean isArtException() {
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-		List<String> articoleExceptii = Exceptions.getExceptionsMacara(this);
-		List<ArticolComanda> articoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
+    }
 
-		for (String exceptie : articoleExceptii) {
+    private void setSpinnerTonajValue(String tonaj) {
 
-			for (ArticolComanda articol : articoleComanda) {
-				if (exceptie.equals(articol.getCodArticol()))
-					return true;
-			}
+        if (tonaj == null || tonaj.equals("0")) {
+            spinnerTonaj.setSelection(0);
+            spinnerTonaj.setEnabled(true);
+            return;
+        }
 
-		}
+        DateLivrare.getInstance().setTonaj(tonaj);
 
-		return false;
-	}
+        int pos = HelperAdreseLivrare.getTonajSpinnerPos(tonaj);
 
-	public class regionSelectedListener implements OnItemSelectedListener {
-		@SuppressWarnings("unchecked")
-		public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+        if (pos > 0) {
+            spinnerTonaj.setSelection(pos);
+            spinnerTonaj.setEnabled(false);
+        }
 
-			if (spinnerJudet.getSelectedItemPosition() > 0) {
+    }
 
-				HashMap<String, String> tempMap = (HashMap<String, String>) spinnerJudet.getSelectedItem();
-				DateLivrare.getInstance().setNumeJudet(tempMap.get("numeJudet"));
-				DateLivrare.getInstance().setCodJudet(tempMap.get("codJudet"));
+    private void setMacaraVisible() {
 
-				HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
-				params.put("codJudet", DateLivrare.getInstance().getCodJudet());
-				operatiiAdresa.getAdreseJudet(params, null);
+        checkMacara.setVisibility(View.INVISIBLE);
 
-			}
+    }
 
-		}
+    private boolean isArtException() {
 
-		public void onNothingSelected(AdapterView<?> parent) {
-			return;
-		}
-	}
+        List<String> articoleExceptii = Exceptions.getExceptionsMacara(this);
+        List<ArticolComanda> articoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
 
-	private void populateListLocalitati(BeanAdreseJudet listAdrese) {
+        for (String exceptie : articoleExceptii) {
 
-		listAdreseJudet = listAdrese;
+            for (ArticolComanda articol : articoleComanda) {
+                if (exceptie.equals(articol.getCodArticol()))
+                    return true;
+            }
 
-		textLocalitate.setVisibility(View.VISIBLE);
-		textLocalitate.setText(DateLivrare.getInstance().getOras());
+        }
 
-		String[] arrayLocalitati = listAdrese.getListStringLocalitati().toArray(new String[listAdrese.getListStringLocalitati().size()]);
-		ArrayAdapter<String> adapterLoc = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayLocalitati);
+        return false;
+    }
 
-		textLocalitate.setThreshold(0);
-		textLocalitate.setAdapter(adapterLoc);
+    public class regionSelectedListener implements OnItemSelectedListener {
+        @SuppressWarnings("unchecked")
+        public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
 
-		String[] arrayStrazi = listAdrese.getListStrazi().toArray(new String[listAdrese.getListStrazi().size()]);
-		ArrayAdapter<String> adapterStrazi = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayStrazi);
+            if (spinnerJudet.getSelectedItemPosition() > 0) {
 
-		textStrada.setThreshold(0);
-		textStrada.setAdapter(adapterStrazi);
+                HashMap<String, String> tempMap = (HashMap<String, String>) spinnerJudet.getSelectedItem();
+                DateLivrare.getInstance().setNumeJudet(tempMap.get("numeJudet"));
+                DateLivrare.getInstance().setCodJudet(tempMap.get("codJudet"));
 
-		listLocalitatiLivrare = listAdrese.getListStringLocalitati();
+                HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
+                params.put("codJudet", DateLivrare.getInstance().getCodJudet());
+                operatiiAdresa.getAdreseJudet(params, null);
 
-		setListenerTextLocalitate();
+            }
 
-	}
+        }
 
-	private void setListenerTextLocalitate() {
+        public void onNothingSelected(AdapterView<?> parent) {
+            return;
+        }
+    }
 
-		textLocalitate.addTextChangedListener(new TextWatcher() {
+    private void populateListLocalitati(BeanAdreseJudet listAdrese) {
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				DateLivrare.getInstance().setOras(textLocalitate.getText().toString().trim());
+        listAdreseJudet = listAdrese;
 
-			}
+        textLocalitate.setVisibility(View.VISIBLE);
+        textLocalitate.setText(DateLivrare.getInstance().getOras());
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        String[] arrayLocalitati = listAdrese.getListStringLocalitati().toArray(new String[listAdrese.getListStringLocalitati().size()]);
+        ArrayAdapter<String> adapterLoc = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayLocalitati);
 
-			}
+        textLocalitate.setThreshold(0);
+        textLocalitate.setAdapter(adapterLoc);
 
-			@Override
-			public void afterTextChanged(Editable s) {
+        String[] arrayStrazi = listAdrese.getListStrazi().toArray(new String[listAdrese.getListStrazi().size()]);
+        ArrayAdapter<String> adapterStrazi = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayStrazi);
 
-			}
-		});
+        textStrada.setThreshold(0);
+        textStrada.setAdapter(adapterStrazi);
 
-		textLocalitate.setOnFocusChangeListener(new OnFocusChangeListener() {
+        listLocalitatiLivrare = listAdrese.getListStringLocalitati();
 
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					textLocalitate.setText(textLocalitate.getText().toString().trim().toUpperCase());
-					verificaLocalitate("LIVRARE");
+        setListenerTextLocalitate();
 
-				}
+    }
 
-			}
-		});
+    private void setListenerTextLocalitate() {
 
-	}
+        textLocalitate.addTextChangedListener(new TextWatcher() {
 
-	private boolean verificaLocalitate(String tipLocalitate) {
-		boolean locExist = false;
-		List<String> listLocalitati = new ArrayList<String>();
-		String localitateCurenta = "";
-		String numeJudet = "";
-		EditText textLoc = null;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                DateLivrare.getInstance().setOras(textLocalitate.getText().toString().trim());
 
-		if (tipLocalitate.equals("LIVRARE")) {
-			textLoc = textLocalitate;
-			localitateCurenta = textLoc.getText().toString().trim();
-			listLocalitati = listLocalitatiLivrare;
+            }
 
-			@SuppressWarnings("unchecked")
-			HashMap<String, String> tempMap = (HashMap<String, String>) spinnerJudet.getSelectedItem();
-			numeJudet = tempMap.get("numeJudet");
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-		}
+            }
 
-		for (String localitate : listLocalitati) {
-			if (localitate.trim().equalsIgnoreCase(localitateCurenta)) {
-				locExist = true;
-				break;
-			}
+            @Override
+            public void afterTextChanged(Editable s) {
 
-		}
+            }
+        });
 
-		if (!locExist && !localitateCurenta.isEmpty()) {
-			String alert = "Localitatea " + localitateCurenta + " nu exista in judetul " + numeJudet + ". Completati alta localitate.";
-			Toast.makeText(getApplicationContext(), alert, Toast.LENGTH_LONG).show();
+        textLocalitate.setOnFocusChangeListener(new OnFocusChangeListener() {
 
-			textLoc.setText("");
-			textLoc.setFocusableInTouchMode(true);
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    textLocalitate.setText(textLocalitate.getText().toString().trim().toUpperCase());
+                    verificaLocalitate("LIVRARE");
 
-		}
+                }
 
-		return locExist;
-	}
+            }
+        });
 
-	private void displayObiectiveDepartament(List<BeanObiectivDepartament> obiectiveDepart) {
+    }
 
-		if (obiectiveDepart.size() > 0) {
+    private boolean verificaLocalitate(String tipLocalitate) {
+        boolean locExist = false;
+        List<String> listLocalitati = new ArrayList<String>();
+        String localitateCurenta = "";
+        String numeJudet = "";
+        EditText textLoc = null;
 
-			displayObiective(true);
+        if (tipLocalitate.equals("LIVRARE")) {
+            textLoc = textLocalitate;
+            localitateCurenta = textLoc.getText().toString().trim();
+            listLocalitati = listLocalitatiLivrare;
 
-			BeanObiectivDepartament dummyOb = new BeanObiectivDepartament();
+            @SuppressWarnings("unchecked")
+            HashMap<String, String> tempMap = (HashMap<String, String>) spinnerJudet.getSelectedItem();
+            numeJudet = tempMap.get("numeJudet");
 
-			dummyOb.setNume("Selectati un obiectiv");
-			dummyOb.setAdresa(" ");
-			dummyOb.setBeneficiar(" ");
-			dummyOb.setDataCreare(" ");
-			dummyOb.setId(" ");
+        }
 
-			obiectiveDepart.add(0, dummyOb);
+        for (String localitate : listLocalitati) {
+            if (localitate.trim().equalsIgnoreCase(localitateCurenta)) {
+                locExist = true;
+                break;
+            }
 
-			AdapterObiective adapterOb = new AdapterObiective(getApplicationContext(), obiectiveDepart);
-			spinnerObiective.setAdapter(adapterOb);
-		} else {
-			displayObiective(false);
-		}
+        }
 
-	}
+        if (!locExist && !localitateCurenta.isEmpty()) {
+            String alert = "Localitatea " + localitateCurenta + " nu exista in judetul " + numeJudet + ". Completati alta localitate.";
+            Toast.makeText(getApplicationContext(), alert, Toast.LENGTH_LONG).show();
 
-	private void setListnerBtnPozitieAdresa() {
-		btnPozitieAdresa.setOnClickListener(new OnClickListener() {
+            textLoc.setText("");
+            textLoc.setFocusableInTouchMode(true);
 
-			public void onClick(View v) {
+        }
 
-				FragmentManager fm = getSupportFragmentManager();
+        return locExist;
+    }
 
-				Address address = new Address();
+    private void displayObiectiveDepartament(List<BeanObiectivDepartament> obiectiveDepart) {
 
-				if (radioText.isChecked()) {
-					address.setCity(textLocalitate.getText().toString().trim());
-					address.setStreet(textStrada.getText().toString().trim());
-					address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
+        if (obiectiveDepart.size() > 0) {
 
-					if (!isAdresaComplet())
-						return;
+            displayObiective(true);
 
-					String nrStrada = " ";
+            BeanObiectivDepartament dummyOb = new BeanObiectivDepartament();
 
-					if (textNrStr.getText().toString().trim().length() > 0)
-						nrStrada = " nr " + textNrStr.getText().toString().trim();
+            dummyOb.setNume("Selectati un obiectiv");
+            dummyOb.setAdresa(" ");
+            dummyOb.setBeneficiar(" ");
+            dummyOb.setDataCreare(" ");
+            dummyOb.setId(" ");
 
-					DateLivrare.getInstance().setOras(address.getCity());
-					DateLivrare.getInstance().setStrada(address.getStreet() + nrStrada);
+            obiectiveDepart.add(0, dummyOb);
 
-				} else {
-					address.setCity(DateLivrare.getInstance().getOras());
-					address.setStreet(DateLivrare.getInstance().getStrada());
-					address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
-				}
+            AdapterObiective adapterOb = new AdapterObiective(getApplicationContext(), obiectiveDepart);
+            spinnerObiective.setAdapter(adapterOb);
+        } else {
+            displayObiective(false);
+        }
 
-				MapAddressDialog mapDialog = new MapAddressDialog(address, SelectAdrLivrCmd.this, fm);
-				mapDialog.setCoords(DateLivrare.getInstance().getCoordonateAdresa());
-				mapDialog.setMapListener(SelectAdrLivrCmd.this);
-				mapDialog.show();
-			}
-		});
-	}
+    }
 
-	private boolean isAdresaComplet() {
-		if (spinnerJudet.getSelectedItemPosition() == 0) {
-			Toast.makeText(this, "Selectati judetul", Toast.LENGTH_SHORT).show();
-			return false;
-		}
+    private void setListnerBtnPozitieAdresa() {
+        btnPozitieAdresa.setOnClickListener(new OnClickListener() {
 
-		if (textLocalitate.getText().toString().trim().equals("")) {
-			Toast.makeText(this, "Completati localitatea", Toast.LENGTH_SHORT).show();
-			return false;
-		}
+            public void onClick(View v) {
 
-		return true;
-	}
+                FragmentManager fm = getSupportFragmentManager();
 
-	public void addListenerSaveAdr() {
-		saveAdrLivrBtn.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+                Address address = new Address();
 
-				if (radioText.isChecked())
-					valideazaAdresaLivrare();
-				else
-					valideazaDateLivrare();
+                if (radioText.isChecked()) {
+                    address.setCity(textLocalitate.getText().toString().trim());
+                    address.setStreet(textStrada.getText().toString().trim());
+                    address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
 
-			}
-		});
+                    if (!isAdresaComplet())
+                        return;
 
-	}
+                    String nrStrada = " ";
 
-	private void valideazaDateLivrare() {
-		String adresa = "";
-		String pers = "";
-		String telefon = "";
-		String observatii = "", obsPlata = " ";
+                    if (textNrStr.getText().toString().trim().length() > 0)
+                        nrStrada = " nr " + textNrStr.getText().toString().trim();
 
-		DateLivrare dateLivrareInstance = DateLivrare.getInstance();
+                    DateLivrare.getInstance().setOras(address.getCity());
+                    DateLivrare.getInstance().setStrada(address.getStreet() + nrStrada);
 
-		if (layoutAdrese.getVisibility() == View.VISIBLE) {
+                } else {
+                    address.setCity(DateLivrare.getInstance().getOras());
+                    address.setStreet(DateLivrare.getInstance().getStrada());
+                    address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
+                }
 
-			if (listAdreseLivrare.size() > 0) {
-				BeanAdresaLivrare adresaLivrare = (BeanAdresaLivrare) spinnerAdreseLivrare.getSelectedItem();
-				setAdresaLivrareFromList(adresaLivrare);
+                MapAddressDialog mapDialog = new MapAddressDialog(address, SelectAdrLivrCmd.this, fm);
+                mapDialog.setCoords(DateLivrare.getInstance().getCoordonateAdresa());
+                mapDialog.setMapListener(SelectAdrLivrCmd.this);
+                mapDialog.show();
+            }
+        });
+    }
 
-			}
+    private boolean isAdresaComplet() {
+        if (spinnerJudet.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Selectati judetul", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-		} else {
+        if (textLocalitate.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "Completati localitatea", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-			verificaLocalitate("LIVRARE");
+        return true;
+    }
 
-			String nrStrada = "";
+    public void addListenerSaveAdr() {
+        saveAdrLivrBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
 
-			if (textNrStr.getText().toString().trim().length() > 0)
-				nrStrada = " NR " + textNrStr.getText().toString().trim();
+                if (radioText.isChecked())
+                    valideazaAdresaLivrare();
+                else
+                    valideazaDateLivrare();
 
-			dateLivrareInstance.setStrada(textStrada.getText().toString().trim() + nrStrada);
-			dateLivrareInstance.setAdrLivrNoua(true);
-			dateLivrareInstance.setAddrNumber(" ");
+            }
+        });
 
-		}
+    }
 
-		setAdresaLivrareFromObiectiv();
+    private void valideazaDateLivrare() {
+        String adresa = "";
+        String pers = "";
+        String telefon = "";
+        String observatii = "", obsPlata = " ";
 
-		pers = txtPers.getText().toString().trim();
-		telefon = txtTel.getText().toString().trim();
-		observatii = txtObservatii.getText().toString().trim();
-		obsPlata = spinnerResponsabil.getSelectedItem().toString().substring(0, 2);
+        DateLivrare dateLivrareInstance = DateLivrare.getInstance();
 
-		if (observatii.trim().length() == 0)
-			observatii = " ";
+        if (layoutAdrese.getVisibility() == View.VISIBLE) {
 
-		dateLivrareInstance.setPersContact(pers);
-		dateLivrareInstance.setNrTel(telefon);
+            if (listAdreseLivrare.size() > 0) {
+                BeanAdresaLivrare adresaLivrare = (BeanAdresaLivrare) spinnerAdreseLivrare.getSelectedItem();
+                setAdresaLivrareFromList(adresaLivrare);
 
-		if (DateLivrare.getInstance().getOras().trim().equals("")) {
-			Toast.makeText(getApplicationContext(), "Selectati localitatea!", Toast.LENGTH_LONG).show();
-			return;
-		}
+            }
 
-		if (dateLivrareInstance.getCodJudet().equals("")) {
-			Toast.makeText(getApplicationContext(), "Selectati judetul!", Toast.LENGTH_LONG).show();
-			return;
-		}
+        } else {
 
-		if (pers.equals("") || pers.equals("-")) {
-			Toast.makeText(getApplicationContext(), "Completati persoana de contact!", Toast.LENGTH_LONG).show();
-			return;
-		}
+            verificaLocalitate("LIVRARE");
 
-		if (telefon.equals("") || telefon.equals("-")) {
-			Toast.makeText(getApplicationContext(), "Completati nr. de telefon!", Toast.LENGTH_LONG).show();
-			return;
-		}
+            String nrStrada = "";
 
-		if (spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() == 0) {
-			Toast.makeText(getApplicationContext(), "Selectati tonajul!", Toast.LENGTH_LONG).show();
-			return;
-		}
+            if (textNrStr.getText().toString().trim().length() > 0)
+                nrStrada = " NR " + textNrStr.getText().toString().trim();
 
-		if (DateLivrare.getInstance().getDataLivrare().isEmpty()) {
-			Toast.makeText(getApplicationContext(), "Selectati data livrare!", Toast.LENGTH_LONG).show();
-			return;
-		}
+            dateLivrareInstance.setStrada(textStrada.getText().toString().trim() + nrStrada);
+            dateLivrareInstance.setAdrLivrNoua(true);
+            dateLivrareInstance.setAddrNumber(" ");
 
-		if (layoutValoareIncasare.getVisibility() == View.VISIBLE && txtValoareIncasare.getText().toString().equals("")) {
-			Toast.makeText(getApplicationContext(), "Completati valoarea incasarii!", Toast.LENGTH_LONG).show();
-			return;
-		}
+        }
 
-		dateLivrareInstance.setTipPlata(spinnerPlata.getSelectedItem().toString().substring(0, 1));
-		dateLivrareInstance.setTransport(spinnerTransp.getSelectedItem().toString().substring(0, 4));
+        setAdresaLivrareFromObiectiv();
 
-		if (dateLivrareInstance.getTransport().equalsIgnoreCase("TERR") && !HelperAdreseLivrare.isAdresaLivrareRapida()) {
-			Toast.makeText(getApplicationContext(), "In aceasta localitate nu se face livrare rapida.", Toast.LENGTH_LONG).show();
-			return;
-		}
+        pers = txtPers.getText().toString().trim();
+        telefon = txtTel.getText().toString().trim();
+        observatii = txtObservatii.getText().toString().trim();
+        obsPlata = spinnerResponsabil.getSelectedItem().toString().substring(0, 2);
 
-		if (!isAdresaCorecta()) {
-			Toast.makeText(getApplicationContext(), "Completati adresa corect sau pozitionati adresa pe harta.", Toast.LENGTH_LONG).show();
-			return;
-		}
+        if (observatii.trim().length() == 0)
+            observatii = " ";
 
-		if (DateLivrare.getInstance().getTransport().equals("TRAP") && isAdresaText()) {
-			valideazaTonajAdresaNoua();
+        dateLivrareInstance.setPersContact(pers);
+        dateLivrareInstance.setNrTel(telefon);
 
-		}
+        if (DateLivrare.getInstance().getOras().trim().equals("")) {
+            Toast.makeText(getApplicationContext(), "Selectati localitatea!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		String cantar = "NU";
-		dateLivrareInstance.setCantar("NU");
+        if (dateLivrareInstance.getCodJudet().equals("")) {
+            Toast.makeText(getApplicationContext(), "Selectati judetul!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		if (spinnerTipReducere.getSelectedItemPosition() == 0) {
-			dateLivrareInstance.setRedSeparat(" ");
-		}
+        if (pers.equals("") || pers.equals("-")) {
+            Toast.makeText(getApplicationContext(), "Completati persoana de contact!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		if (spinnerTipReducere.getSelectedItemPosition() == 1) {
-			dateLivrareInstance.setRedSeparat("X");
-		}
+        if (telefon.equals("") || telefon.equals("-")) {
+            Toast.makeText(getApplicationContext(), "Completati nr. de telefon!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		if (spinnerTipReducere.getSelectedItemPosition() == 2) {
-			dateLivrareInstance.setRedSeparat("R");
-		}
+        if (spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() == 0) {
+            Toast.makeText(getApplicationContext(), "Selectati tonajul!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		if (layoutValoareIncasare.getVisibility() == View.VISIBLE)
-			dateLivrareInstance.setValoareIncasare(txtValoareIncasare.getText().toString());
-		else
-			dateLivrareInstance.setValoareIncasare("0");
+        if (DateLivrare.getInstance().getDataLivrare().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Selectati data livrare!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		adresa = dateLivrareInstance.getNumeJudet() + " " + dateLivrareInstance.getOras() + " " + dateLivrareInstance.getStrada();
+        if (layoutValoareIncasare.getVisibility() == View.VISIBLE && txtValoareIncasare.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Completati valoarea incasarii!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		dateLivrareInstance.setDateLivrare(adresa + "#" + pers + "#" + telefon + "#" + cantar + "#" + dateLivrareInstance.getTipPlata() + "#"
-				+ dateLivrareInstance.getTransport() + "#" + dateLivrareInstance.getRedSeparat() + "#");
+        dateLivrareInstance.setTipPlata(spinnerPlata.getSelectedItem().toString().split("-")[0].trim());
+        dateLivrareInstance.setTransport(spinnerTransp.getSelectedItem().toString().substring(0, 4));
 
-		if (((LinearLayout) findViewById(R.id.layoutPlata)).getVisibility() == View.VISIBLE)
-			dateLivrareInstance.setTermenPlata(spinnerTermenPlata.getSelectedItem().toString());
+        if (dateLivrareInstance.getTransport().equalsIgnoreCase("TERR") && !HelperAdreseLivrare.isAdresaLivrareRapida()) {
+            Toast.makeText(getApplicationContext(), "In aceasta localitate nu se face livrare rapida.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		dateLivrareInstance.setObsLivrare(observatii.replace("#", "-").replace("@", "-"));
-		dateLivrareInstance.setObsPlata(obsPlata);
+        if (!isAdresaCorecta()) {
+            Toast.makeText(getApplicationContext(), "Completati adresa corect sau pozitionati adresa pe harta.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		String tipDocInsot = "";
-		if (checkFactura.isChecked() && checkAviz.isChecked())
-			tipDocInsot = "3";
-		else if (checkFactura.isChecked())
-			tipDocInsot = "1";
-		else if (checkAviz.isChecked())
-			tipDocInsot = "2";
+        if (DateLivrare.getInstance().getTransport().equals("TRAP") && isAdresaText()) {
+            valideazaTonajAdresaNoua();
 
-		dateLivrareInstance.setTipDocInsotitor(tipDocInsot);
+        }
 
-		if (dateLivrareInstance.getTipDocInsotitor().isEmpty()) {
-			Toast.makeText(getApplicationContext(), "Selectati documentul insotitor!", Toast.LENGTH_LONG).show();
-			return;
-		}
+        String cantar = "NU";
+        dateLivrareInstance.setCantar("NU");
 
-		if (isConditiiTonaj(spinnerTransp, spinnerTonaj)) {
-			dateLivrareInstance.setTonaj(HelperAdreseLivrare.getTonajSpinnerValue(spinnerTonaj.getSelectedItemPosition()));
-		} else
-			dateLivrareInstance.setTonaj("-1");
+        if (spinnerTipReducere.getSelectedItemPosition() == 0) {
+            dateLivrareInstance.setRedSeparat(" ");
+        }
 
-		if (spinnerIndoire.getVisibility() == View.VISIBLE && spinnerIndoire.getSelectedItemPosition() > 0) {
-			dateLivrareInstance.setPrelucrare(spinnerIndoire.getSelectedItem().toString());
-		} else
-			dateLivrareInstance.setPrelucrare("-1");
+        if (spinnerTipReducere.getSelectedItemPosition() == 1) {
+            dateLivrareInstance.setRedSeparat("X");
+        }
 
-		if (dateLivrareInstance.getOras().equalsIgnoreCase("bucuresti") || dateLivrareInstance.getOras().toLowerCase().contains("sector")) {
-			beans.LatLng coordAdresa = new beans.LatLng(dateLivrareInstance.getCoordonateAdresa().latitude,
-					dateLivrareInstance.getCoordonateAdresa().longitude);
-			EnumZona zona = ZoneBucuresti.getZonaBucuresti(coordAdresa);
+        if (spinnerTipReducere.getSelectedItemPosition() == 2) {
+            dateLivrareInstance.setRedSeparat("R");
+        }
 
-			dateLivrareInstance.setZonaBucuresti(zona);
-		} else
-			dateLivrareInstance.setZonaBucuresti(EnumZona.NEDEFINIT);
+        if (layoutValoareIncasare.getVisibility() == View.VISIBLE)
+            dateLivrareInstance.setValoareIncasare(txtValoareIncasare.getText().toString());
+        else
+            dateLivrareInstance.setValoareIncasare("0");
 
-		dateLivrareInstance.setFactPaletSeparat(checkFactPaleti.isChecked());
-		dateLivrareInstance.setCamionDescoperit(chkCamionDescoperit.isChecked());
-		dateLivrareInstance.setBlocScara(txtBlocScara.getText().toString().trim());
+        adresa = dateLivrareInstance.getNumeJudet() + " " + dateLivrareInstance.getOras() + " " + dateLivrareInstance.getStrada();
 
-		Delegat delegat = new Delegat();
+        dateLivrareInstance.setDateLivrare(adresa + "#" + pers + "#" + telefon + "#" + cantar + "#" + dateLivrareInstance.getTipPlata() + "#"
+                + dateLivrareInstance.getTransport() + "#" + dateLivrareInstance.getRedSeparat() + "#");
 
-		if (UserInfo.getInstance().getTipUserSap().equals("ASDL") && DateLivrare.getInstance().getTransport().equals("TCLI")) {
+        if (((LinearLayout) findViewById(R.id.layoutPlata)).getVisibility() == View.VISIBLE)
+            dateLivrareInstance.setTermenPlata(spinnerTermenPlata.getSelectedItem().toString());
 
-			if (((EditText) findViewById(R.id.txtNumeDelegat)).getText().toString().trim().isEmpty()) {
-				Toast.makeText(getApplicationContext(), "Completati numele delegatului.", Toast.LENGTH_LONG).show();
-				return;
-			}
+        dateLivrareInstance.setObsLivrare(observatii.replace("#", "-").replace("@", "-"));
+        dateLivrareInstance.setObsPlata(obsPlata);
 
-			if (((EditText) findViewById(R.id.txtCIDelegat)).getText().toString().trim().isEmpty()) {
-				Toast.makeText(getApplicationContext(), "Completati seria CI a delegatului.", Toast.LENGTH_LONG).show();
-				return;
-			}
+        String tipDocInsot = "";
+        if (checkFactura.isChecked() && checkAviz.isChecked())
+            tipDocInsot = "3";
+        else if (checkFactura.isChecked())
+            tipDocInsot = "1";
+        else if (checkAviz.isChecked())
+            tipDocInsot = "2";
 
-		}
+        dateLivrareInstance.setTipDocInsotitor(tipDocInsot);
 
-		if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
-			delegat.setNume(((EditText) findViewById(R.id.txtNumeDelegat)).getText().toString().trim());
-			delegat.setSerieNumarCI(((EditText) findViewById(R.id.txtCIDelegat)).getText().toString().trim());
-			delegat.setNrAuto(((EditText) findViewById(R.id.txtAutoDelegat)).getText().toString().trim());
-		}
+        if (dateLivrareInstance.getTipDocInsotitor().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Selectati documentul insotitor!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-		dateLivrareInstance.setDelegat(delegat);
+        if (isConditiiTonaj(spinnerTransp, spinnerTonaj)) {
+            dateLivrareInstance.setTonaj(HelperAdreseLivrare.getTonajSpinnerValue(spinnerTonaj.getSelectedItemPosition()));
+        } else
+            dateLivrareInstance.setTonaj("-1");
 
-		if (radioText.isChecked() && adresaNouaExista())
-			return;
+        if (spinnerIndoire.getVisibility() == View.VISIBLE && spinnerIndoire.getSelectedItemPosition() > 0) {
+            dateLivrareInstance.setPrelucrare(spinnerIndoire.getSelectedItem().toString());
+        } else
+            dateLivrareInstance.setPrelucrare("-1");
 
-		finish();
+        if (dateLivrareInstance.getOras().equalsIgnoreCase("bucuresti") || dateLivrareInstance.getOras().toLowerCase().contains("sector")) {
+            beans.LatLng coordAdresa = new beans.LatLng(dateLivrareInstance.getCoordonateAdresa().latitude,
+                    dateLivrareInstance.getCoordonateAdresa().longitude);
+            EnumZona zona = ZoneBucuresti.getZonaBucuresti(coordAdresa);
 
-	}
+            dateLivrareInstance.setZonaBucuresti(zona);
+        } else
+            dateLivrareInstance.setZonaBucuresti(EnumZona.NEDEFINIT);
 
-	private boolean isAdresaCorecta() {
-		if (DateLivrare.getInstance().getTransport().equals("TRAP"))
-			return isAdresaGoogleOk();
-		else
-			return true;
+        dateLivrareInstance.setFactPaletSeparat(checkFactPaleti.isChecked());
+        dateLivrareInstance.setCamionDescoperit(chkCamionDescoperit.isChecked());
+        dateLivrareInstance.setBlocScara(txtBlocScara.getText().toString().trim());
 
-	}
+        Delegat delegat = new Delegat();
 
-	private void valideazaTonajAdresaNoua() {
-		String tonajAdresaNoua = HelperAdreseLivrare.getTonajAdresaNoua(adreseList, DateLivrare.getInstance().getCoordonateAdresa());
+        if (UserInfo.getInstance().getTipUserSap().equals("ASDL") && DateLivrare.getInstance().getTransport().equals("TCLI")) {
 
-		String tonajExistent = HelperAdreseLivrare.getTonajSpinnerValue(spinnerTonaj.getSelectedItemPosition());
+            if (((EditText) findViewById(R.id.txtNumeDelegat)).getText().toString().trim().isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Completati numele delegatului.", Toast.LENGTH_LONG).show();
+                return;
+            }
 
-		if (!tonajAdresaNoua.equals("0"))
-			setSpinnerTonajValue(tonajAdresaNoua);
-		else {
-			setSpinnerTonajValue(tonajExistent);
-			spinnerTonaj.setEnabled(true);
-		}
+            if (((EditText) findViewById(R.id.txtCIDelegat)).getText().toString().trim().isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Completati seria CI a delegatului.", Toast.LENGTH_LONG).show();
+                return;
+            }
 
-		if (!tonajAdresaNoua.equals("0") && !tonajAdresaNoua.equals(tonajExistent))
-			Toast.makeText(getApplicationContext(), "Pentru aceasta zona tonajul a fost preluat din sistem.", Toast.LENGTH_LONG).show();
-	}
+        }
 
-	private boolean adresaNouaExista() {
+        if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
+            delegat.setNume(((EditText) findViewById(R.id.txtNumeDelegat)).getText().toString().trim());
+            delegat.setSerieNumarCI(((EditText) findViewById(R.id.txtCIDelegat)).getText().toString().trim());
+            delegat.setNrAuto(((EditText) findViewById(R.id.txtAutoDelegat)).getText().toString().trim());
+        }
 
-		int posAdresa = HelperAdreseLivrare.verificaDistantaAdresaNoua(adreseList, DateLivrare.getInstance().getCoordonateAdresa());
+        dateLivrareInstance.setDelegat(delegat);
 
-		int adresaExista = HelperAdreseLivrare.adresaExista(adreseList);
+        if (radioText.isChecked() && adresaNouaExista())
+            return;
 
-		if (adresaExista != -1) {
-			Toast.makeText(getApplicationContext(), "Aceasta adresa exista deja in lista de adrese.", Toast.LENGTH_LONG).show();
-			selectedAddrModifCmd = posAdresa != -1 ? posAdresa : adresaExista;
-			radioLista.setChecked(true);
-			spinnerAdreseLivrare.setSelection(posAdresa != -1 ? posAdresa : adresaExista);
-			return true;
-		} else if (posAdresa != -1) {
-			valideazaTonajAdresaNoua();
-			return false;
-		} else
-			return false;
+        finish();
 
-	}
+    }
 
-	private boolean isAdresaText() {
-		return radioText != null && radioText.isChecked();
-	}
+    private boolean isAdresaCorecta() {
+        if (DateLivrare.getInstance().getTransport().equals("TRAP"))
+            return isAdresaGoogleOk();
+        else
+            return true;
 
-	private boolean hasCoordinates() {
-		if (DateLivrare.getInstance().getCoordonateAdresa() == null)
-			return false;
-		else if (DateLivrare.getInstance().getCoordonateAdresa().latitude == 0)
-			return false;
+    }
 
-		return true;
-	}
+    private void valideazaTonajAdresaNoua() {
+        String tonajAdresaNoua = HelperAdreseLivrare.getTonajAdresaNoua(adreseList, DateLivrare.getInstance().getCoordonateAdresa());
 
-	private boolean isConditiiTonaj(Spinner spinnerTransp, Spinner spinnerTonaj) {
-		return spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() > 0;
+        String tonajExistent = HelperAdreseLivrare.getTonajSpinnerValue(spinnerTonaj.getSelectedItemPosition());
 
-	}
+        if (!tonajAdresaNoua.equals("0"))
+            setSpinnerTonajValue(tonajAdresaNoua);
+        else {
+            setSpinnerTonajValue(tonajExistent);
+            spinnerTonaj.setEnabled(true);
+        }
 
-	private boolean isAdresaGoogleOk() {
+        if (!tonajAdresaNoua.equals("0") && !tonajAdresaNoua.equals(tonajExistent))
+            Toast.makeText(getApplicationContext(), "Pentru aceasta zona tonajul a fost preluat din sistem.", Toast.LENGTH_LONG).show();
+    }
 
-		LatLng addressCoordinates = null;
-		boolean isAdresaOk = true;
+    private boolean adresaNouaExista() {
 
-		BeanLocalitate beanLocalitate = new BeanLocalitate();
+        int posAdresa = HelperAdreseLivrare.verificaDistantaAdresaNoua(adreseList, DateLivrare.getInstance().getCoordonateAdresa());
 
-		if (isAdresaText()) {
-			GeocodeAddress geoAddress = MapUtils.geocodeAddress(getAddressFromForm(), getApplicationContext());
-			DateLivrare.getInstance().setCoordonateAdresa(geoAddress.getCoordinates());
-			addressCoordinates = geoAddress.getCoordinates();
-			beanLocalitate = HelperAdreseLivrare.getDateLocalitate(listAdreseJudet.getListLocalitati(), DateLivrare.getInstance().getOras());
-			isAdresaOk = geoAddress.isAdresaValida();
+        int adresaExista = HelperAdreseLivrare.adresaExista(adreseList);
 
-		} else {
-			beanLocalitate.setOras(adresaLivrareSelected.isOras());
-			beanLocalitate.setRazaKm(adresaLivrareSelected.getRazaKm());
-			beanLocalitate.setCoordonate(adresaLivrareSelected.getCoordsCentru());
+        if (adresaExista != -1) {
+            Toast.makeText(getApplicationContext(), "Aceasta adresa exista deja in lista de adrese.", Toast.LENGTH_LONG).show();
+            selectedAddrModifCmd = posAdresa != -1 ? posAdresa : adresaExista;
+            radioLista.setChecked(true);
+            spinnerAdreseLivrare.setSelection(posAdresa != -1 ? posAdresa : adresaExista);
+            return true;
+        } else if (posAdresa != -1) {
+            valideazaTonajAdresaNoua();
+            return false;
+        } else
+            return false;
 
-			addressCoordinates = DateLivrare.getInstance().getCoordonateAdresa();
-		}
+    }
 
-		if (beanLocalitate.isOras()) {
-			isAdresaOk = HelperAdreseLivrare.isDistantaCentruOk(getApplicationContext(), beanLocalitate, addressCoordinates);
+    private boolean isAdresaText() {
+        return radioText != null && radioText.isChecked();
+    }
 
-		}
+    private boolean hasCoordinates() {
+        if (DateLivrare.getInstance().getCoordonateAdresa() == null)
+            return false;
+        else if (DateLivrare.getInstance().getCoordonateAdresa().latitude == 0)
+            return false;
 
-		return isAdresaOk;
+        return true;
+    }
 
-	}
+    private boolean isConditiiTonaj(Spinner spinnerTransp, Spinner spinnerTonaj) {
+        return spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() > 0;
 
-	private Address getAddressFromForm() {
-		Address address = new Address();
+    }
 
-		address.setCity(DateLivrare.getInstance().getOras());
-		address.setStreet(UtilsAddress.getStreetNoNumber(DateLivrare.getInstance().getStrada()));
-		address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
+    private boolean isAdresaGoogleOk() {
 
-		return address;
-	}
+        LatLng addressCoordinates = null;
+        boolean isAdresaOk = true;
 
-	private void setAdresaLivrareFromList(BeanAdresaLivrare adresaLivrare) {
+        BeanLocalitate beanLocalitate = new BeanLocalitate();
 
-		adresaLivrareSelected = adresaLivrare;
+        if (isAdresaText()) {
+            GeocodeAddress geoAddress = MapUtils.geocodeAddress(getAddressFromForm(), getApplicationContext());
+            DateLivrare.getInstance().setCoordonateAdresa(geoAddress.getCoordinates());
+            addressCoordinates = geoAddress.getCoordinates();
+            beanLocalitate = HelperAdreseLivrare.getDateLocalitate(listAdreseJudet.getListLocalitati(), DateLivrare.getInstance().getOras());
+            isAdresaOk = geoAddress.isAdresaValida();
 
-		DateLivrare.getInstance().setAddrNumber(adresaLivrare.getCodAdresa());
-		DateLivrare.getInstance().setNumeJudet(UtilsGeneral.getNumeJudet(adresaLivrare.getCodJudet()));
+        } else {
+            beanLocalitate.setOras(adresaLivrareSelected.isOras());
+            beanLocalitate.setRazaKm(adresaLivrareSelected.getRazaKm());
+            beanLocalitate.setCoordonate(adresaLivrareSelected.getCoordsCentru());
 
-		if (!adresaLivrare.getOras().trim().equals(""))
-			DateLivrare.getInstance().setOras(adresaLivrare.getOras());
-		else
-			DateLivrare.getInstance().setOras("-");
+            addressCoordinates = DateLivrare.getInstance().getCoordonateAdresa();
+        }
 
-		if (!adresaLivrare.getStrada().trim().equals("")) {
-			DateLivrare.getInstance().setStrada(adresaLivrare.getStrada() + " " + adresaLivrare.getNrStrada());
+        if (beanLocalitate.isOras()) {
+            isAdresaOk = HelperAdreseLivrare.isDistantaCentruOk(getApplicationContext(), beanLocalitate, addressCoordinates);
 
-		} else {
-			DateLivrare.getInstance().setStrada("-");
+        }
 
-		}
+        return isAdresaOk;
 
-		DateLivrare.getInstance().setCodJudet(adresaLivrare.getCodJudet());
-		DateLivrare.getInstance().setAdrLivrNoua(false);
+    }
 
-		String[] tokenCoords = adresaLivrare.getCoords().split(",");
+    private Address getAddressFromForm() {
+        Address address = new Address();
 
-		DateLivrare.getInstance().setCoordonateAdresa(new LatLng(Double.valueOf(tokenCoords[0]), Double.valueOf(tokenCoords[1])));
+        address.setCity(DateLivrare.getInstance().getOras());
+        address.setStreet(UtilsAddress.getStreetNoNumber(DateLivrare.getInstance().getStrada()));
+        address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
 
-		setSpinnerTonajValue(adresaLivrare.getTonaj());
+        return address;
+    }
 
-	}
+    private void setAdresaLivrareFromList(BeanAdresaLivrare adresaLivrare) {
 
-	private void setAdresaLivrare(Address address) {
+        adresaLivrareSelected = adresaLivrare;
 
-		textLocalitate.getText().clear();
-		textStrada.getText().clear();
-		textNrStr.getText().clear();
+        DateLivrare.getInstance().setAddrNumber(adresaLivrare.getCodAdresa());
+        DateLivrare.getInstance().setNumeJudet(UtilsGeneral.getNumeJudet(adresaLivrare.getCodJudet()));
 
-		int nrJudete = spinnerJudet.getAdapter().getCount();
+        if (!adresaLivrare.getOras().trim().equals(""))
+            DateLivrare.getInstance().setOras(adresaLivrare.getOras());
+        else
+            DateLivrare.getInstance().setOras("-");
 
-		for (int j = 0; j < nrJudete; j++) {
-			HashMap<String, String> artMapLivr = (HashMap<String, String>) this.adapterJudete.getItem(j);
-			String numeJudet = artMapLivr.get("numeJudet").toString();
+        if (!adresaLivrare.getStrada().trim().equals("")) {
+            DateLivrare.getInstance().setStrada(adresaLivrare.getStrada() + " " + adresaLivrare.getNrStrada());
 
-			if (address.getSector().equals(numeJudet)) {
-				spinnerJudet.setSelection(j);
-				break;
-			}
+        } else {
+            DateLivrare.getInstance().setStrada("-");
 
-		}
+        }
 
-		if (address.getCity() != null && !address.getCity().isEmpty())
-			textLocalitate.setText(address.getCity());
+        DateLivrare.getInstance().setCodJudet(adresaLivrare.getCodJudet());
+        DateLivrare.getInstance().setAdrLivrNoua(false);
 
-		if (address.getStreet() != null && !address.getStreet().isEmpty() && !address.getStreet().toUpperCase().contains("UNNAMED"))
-			textStrada.setText(address.getStreet().trim());
+        String[] tokenCoords = adresaLivrare.getCoords().split(",");
 
-		if (address.getNumber() != null && address.getNumber().length() > 0)
-			textNrStr.setText(address.getNumber());
+        DateLivrare.getInstance().setCoordonateAdresa(new LatLng(Double.valueOf(tokenCoords[0]), Double.valueOf(tokenCoords[1])));
 
-	}
+        setSpinnerTonajValue(adresaLivrare.getTonaj());
 
-	private void valideazaAdresaLivrare() {
+    }
 
-		HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
-		params.put("codJudet", DateLivrare.getInstance().getCodJudet());
-		params.put("localitate", DateLivrare.getInstance().getOras());
+    private void setAdresaLivrare(Address address) {
 
-		operatiiAdresa.isAdresaValida(params, EnumLocalitate.LOCALITATE_SEDIU);
+        textLocalitate.getText().clear();
+        textStrada.getText().clear();
+        textNrStr.getText().clear();
 
-	}
+        int nrJudete = spinnerJudet.getAdapter().getCount();
 
-	private void setListenerSpinnerAdreseLivrare() {
-		spinnerAdreseLivrare.setOnItemSelectedListener(new OnItemSelectedListener() {
+        for (int j = 0; j < nrJudete; j++) {
+            HashMap<String, String> artMapLivr = (HashMap<String, String>) this.adapterJudete.getItem(j);
+            String numeJudet = artMapLivr.get("numeJudet").toString();
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				BeanAdresaLivrare adresaLivrare = (BeanAdresaLivrare) spinnerAdreseLivrare.getAdapter().getItem(position);
-				setAdresaLivrareFromList(adresaLivrare);
+            if (address.getSector().equals(numeJudet)) {
+                spinnerJudet.setSelection(j);
+                break;
+            }
 
-			}
+        }
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
+        if (address.getCity() != null && !address.getCity().isEmpty())
+            textLocalitate.setText(address.getCity());
 
-			}
-		});
-	}
+        if (address.getStreet() != null && !address.getStreet().isEmpty() && !address.getStreet().toUpperCase().contains("UNNAMED"))
+            textStrada.setText(address.getStreet().trim());
 
-	private void clearAdresaLivrare() {
-		DateLivrare.getInstance().setOras("");
-		DateLivrare.getInstance().setStrada("");
-		DateLivrare.getInstance().setCodJudet("");
-		DateLivrare.getInstance().setCoordonateAdresa(null);
+        if (address.getNumber() != null && address.getNumber().length() > 0)
+            textNrStr.setText(address.getNumber());
 
-		spinnerJudet.setSelection(0);
-		textLocalitate.setText("");
-		textNrStr.setText("");
-		textStrada.setText("");
+    }
 
-	}
+    private void valideazaAdresaLivrare() {
 
-	private void setAdresaLivrareFromObiectiv() {
+        HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
+        params.put("codJudet", DateLivrare.getInstance().getCodJudet());
+        params.put("localitate", DateLivrare.getInstance().getOras());
 
-		if (radioObiectiv.getVisibility() == View.VISIBLE)
-			if (radioObiectiv.isChecked()) {
-				DateLivrare.getInstance().setAdresaObiectiv(true);
-			} else {
-				DateLivrare.getInstance().setAdresaObiectiv(false);
-			}
+        operatiiAdresa.isAdresaValida(params, EnumLocalitate.LOCALITATE_SEDIU);
 
-		if (spinnerObiective.getSelectedItemPosition() > 0) {
-			String[] arrObiectiv = obiectivSelectat.getAdresa().split("/");
+    }
 
-			DateLivrare.getInstance().setIdObiectiv(obiectivSelectat.getId());
+    private void setListenerSpinnerAdreseLivrare() {
+        spinnerAdreseLivrare.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			if (radioObiectiv.isChecked()) {
-				DateLivrare.getInstance().setCodJudet(arrObiectiv[0]);
-				DateLivrare.getInstance().setNumeJudet(UtilsGeneral.getNumeJudet(arrObiectiv[0]));
-				DateLivrare.getInstance().setOras(arrObiectiv[1]);
-				if (arrObiectiv.length == 3)
-					DateLivrare.getInstance().setStrada(arrObiectiv[2]);
-				else
-					DateLivrare.getInstance().setStrada("-");
-			}
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                BeanAdresaLivrare adresaLivrare = (BeanAdresaLivrare) spinnerAdreseLivrare.getAdapter().getItem(position);
+                setAdresaLivrareFromList(adresaLivrare);
 
-		}
+            }
 
-	}
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
 
-	@Override
-	public void onBackPressed() {
-		finish();
-		return;
-	}
+            }
+        });
+    }
 
-	private void valideazaAdresaResponse(String result) {
-		valideazaDateLivrare();
+    private void clearAdresaLivrare() {
+        DateLivrare.getInstance().setOras("");
+        DateLivrare.getInstance().setStrada("");
+        DateLivrare.getInstance().setCodJudet("");
+        DateLivrare.getInstance().setCoordonateAdresa(null);
 
-	}
+        spinnerJudet.setSelection(0);
+        textLocalitate.setText("");
+        textNrStr.setText("");
+        textStrada.setText("");
 
-	public void onTaskComplete(String methodName, Object result) {
-		if (methodName.equals(METHOD_NAME)) {
-			fillJudeteClient((String) result);
-		}
+    }
 
-	}
+    private void setAdresaLivrareFromObiectiv() {
 
-	public void operatiiAdresaComplete(EnumOperatiiAdresa numeComanda, Object result, EnumLocalitate tipLocalitate) {
+        if (radioObiectiv.getVisibility() == View.VISIBLE)
+            if (radioObiectiv.isChecked()) {
+                DateLivrare.getInstance().setAdresaObiectiv(true);
+            } else {
+                DateLivrare.getInstance().setAdresaObiectiv(false);
+            }
 
-		switch (numeComanda) {
-		case GET_ADRESE_JUDET:
-			populateListLocalitati(operatiiAdresa.deserializeListAdrese(result));
-			break;
-		case IS_ADRESA_VALIDA:
-			valideazaAdresaResponse((String) result);
-			break;
-		case GET_DATE_LIVRARE:
-			fillDateLivrare((String) result);
-			break;
-		case GET_ADRESE_LIVR_CLIENT:
-			fillListAdrese((String) result);
-			break;
-		case GET_LOCALITATI_LIVRARE_RAPIDA:
-			HelperAdreseLivrare.setLocalitatiAcceptate((String) result);
-			break;
-		default:
-			break;
-		}
+        if (spinnerObiective.getSelectedItemPosition() > 0) {
+            String[] arrObiectiv = obiectivSelectat.getAdresa().split("/");
 
-	}
+            DateLivrare.getInstance().setIdObiectiv(obiectivSelectat.getId());
 
-	public void operationObiectivComplete(EnumOperatiiObiective numeComanda, Object result) {
-		switch (numeComanda) {
-		case GET_OBIECTIVE_DEPARTAMENT:
-			displayObiectiveDepartament(operatiiObiective.deserializeObiectiveDepart((String) result));
-			break;
-		default:
-			break;
-		}
+            if (radioObiectiv.isChecked()) {
+                DateLivrare.getInstance().setCodJudet(arrObiectiv[0]);
+                DateLivrare.getInstance().setNumeJudet(UtilsGeneral.getNumeJudet(arrObiectiv[0]));
+                DateLivrare.getInstance().setOras(arrObiectiv[1]);
+                if (arrObiectiv.length == 3)
+                    DateLivrare.getInstance().setStrada(arrObiectiv[2]);
+                else
+                    DateLivrare.getInstance().setStrada("-");
+            }
 
-	}
+        }
 
-	@Override
-	public void addressSelected(LatLng coord, android.location.Address address) {
-		DateLivrare.getInstance().setCoordonateAdresa(coord);
-		setAdresaLivrare(MapUtils.getAddress(address));
-		valideazaTonajAdresaNoua();
+    }
 
-	}
+    @Override
+    public void onBackPressed() {
+        finish();
+        return;
+    }
 
-	@Override
-	public void selectionComplete(String selectedItem, int actionId) {
+    private void valideazaAdresaResponse(String result) {
+        valideazaDateLivrare();
 
-		switch (actionId) {
-		case LIST_LOCALITATI:
-			textLocalitate.setText(selectedItem);
-			break;
-		case LIST_ADRESE:
-			textStrada.setText(selectedItem);
-			break;
-		default:
-			break;
-		}
+    }
 
-	}
+    public void onTaskComplete(String methodName, Object result) {
+        if (methodName.equals(METHOD_NAME)) {
+            fillJudeteClient((String) result);
+        }
+
+    }
+
+    public void operatiiAdresaComplete(EnumOperatiiAdresa numeComanda, Object result, EnumLocalitate tipLocalitate) {
+
+        switch (numeComanda) {
+            case GET_ADRESE_JUDET:
+                populateListLocalitati(operatiiAdresa.deserializeListAdrese(result));
+                break;
+            case IS_ADRESA_VALIDA:
+                valideazaAdresaResponse((String) result);
+                break;
+            case GET_DATE_LIVRARE:
+                fillDateLivrare((String) result);
+                break;
+            case GET_ADRESE_LIVR_CLIENT:
+                fillListAdrese((String) result);
+                break;
+            case GET_LOCALITATI_LIVRARE_RAPIDA:
+                HelperAdreseLivrare.setLocalitatiAcceptate((String) result);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void operationObiectivComplete(EnumOperatiiObiective numeComanda, Object result) {
+        switch (numeComanda) {
+            case GET_OBIECTIVE_DEPARTAMENT:
+                displayObiectiveDepartament(operatiiObiective.deserializeObiectiveDepart((String) result));
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    @Override
+    public void addressSelected(LatLng coord, android.location.Address address) {
+        DateLivrare.getInstance().setCoordonateAdresa(coord);
+        setAdresaLivrare(MapUtils.getAddress(address));
+        valideazaTonajAdresaNoua();
+
+    }
+
+    @Override
+    public void selectionComplete(String selectedItem, int actionId) {
+
+        switch (actionId) {
+            case LIST_LOCALITATI:
+                textLocalitate.setText(selectedItem);
+                break;
+            case LIST_ADRESE:
+                textStrada.setText(selectedItem);
+                break;
+            default:
+                break;
+        }
+
+    }
 
 }

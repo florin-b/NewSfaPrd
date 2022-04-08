@@ -19,7 +19,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -236,8 +235,7 @@ public class LogonScreen extends Activity implements AsyncTaskListener {
 	}
 
 	private String getDeviceId() {
-		TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-		return tm.getDeviceId();
+		return Build.VERSION.RELEASE;
 	}	
 	
 	private String GetLocalIpAddress() {

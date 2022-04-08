@@ -121,7 +121,7 @@
                 android:layout_gravity="right|bottom"
                 android:layout_weight="0.25" />
 
-             <my.logon.screen.MySwitch
+             <my.logon.screen.screens.MySwitch
                 android:id="@+id/switchLogon"
                 style="@style/mySwitchStyle"
                 android:layout_width="0dip"

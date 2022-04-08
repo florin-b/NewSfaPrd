@@ -5,7 +5,10 @@
 package my.logon.screen.model;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+
+import my.logon.screen.beans.BeanCablu05;
 
 public class ArticolComanda implements Comparable<ArticolComanda> {
 
@@ -88,6 +91,8 @@ public class ArticolComanda implements Comparable<ArticolComanda> {
 	private double valT1;	
 	
 	private double pretFaraTva;
+
+	private List<BeanCablu05> listCabluri;
 
 	public int getNrCrt() {
 		return nrCrt;
@@ -622,8 +627,16 @@ public class ArticolComanda implements Comparable<ArticolComanda> {
 
 	public void setPretFaraTva(double pretFaraTva) {
 		this.pretFaraTva = pretFaraTva;
-	}	
-	
+	}
+
+	public List<BeanCablu05> getListCabluri() {
+		return listCabluri;
+	}
+
+	public void setListCabluri(List<BeanCablu05> listCabluri) {
+		this.listCabluri = listCabluri;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

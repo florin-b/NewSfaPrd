@@ -63,6 +63,7 @@ public class DateLivrareAfisare {
 	private double marjaBrutaCantProc = 0;
 	private String refClient;
 	private boolean isClientBlocat;
+	private double limitaCredit = 0;
 
 	public DateLivrareAfisare() {
 
@@ -548,5 +549,13 @@ public class DateLivrareAfisare {
 
 	public void setClientBlocat(boolean isClientBlocat) {
 		this.isClientBlocat = isClientBlocat;
+	}
+
+	public double getLimitaCredit() {
+		return limitaCredit;
+	}
+
+	public void setLimitaCredit(double limitaCredit) {
+		this.limitaCredit = limitaCredit;
 	}
 }
