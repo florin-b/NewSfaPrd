@@ -1054,7 +1054,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                 }
 
 
-                if (pos == 2 && spinnerResponsabil.getSelectedItemPosition() == 1) {
+                if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("R") && spinnerResponsabil.getSelectedItemPosition() == 1) {
                     layoutValoareIncasare.setVisibility(View.VISIBLE);
 
                     if (DateLivrare.getInstance().isValIncModif()) {
@@ -1090,7 +1090,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         spinnerResponsabil.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-                if (pos == 1 && spinnerPlata.getSelectedItemPosition() == 2) {
+                if (pos == 1 && spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("R")) {
                     layoutValoareIncasare.setVisibility(View.VISIBLE);
 
                     if (DateLivrare.getInstance().isValIncModif()) {

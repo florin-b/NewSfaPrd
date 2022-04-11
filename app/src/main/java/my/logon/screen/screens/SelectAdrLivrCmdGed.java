@@ -96,16 +96,16 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     private static final String METHOD_NAME = "getClientJud";
 
-    String[] tipTransport = {"TRAP - Transport Arabesque", "TCLI - Transport client"};
+    String[] tipTransport = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TFRN - Transport furnizor"};
 
-    String[] tipTransportIP = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TERT - Transport tert"};
+    String[] tipTransportIP = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TERT - Transport tert", "TFRN - Transport furnizor"};
 
-    String[] tipTransportOnline = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TERT - Transport tert"};
+    String[] tipTransportOnline = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TERT - Transport tert", "TFRN - Transport furnizor"};
 
     String[] docInsot = {"Factura", "Aviz de expeditie"};
 
     private String[] tipPlataContract = {"LC - Limita credit", "N - Numerar in filiala", "OPA - OP avans", "R - ramburs"};
-    private String[] tipPlataClBlocatIP = {"N - Numerar in filiala"};
+    private String[] tipPlataClBlocatIP = {"N - Numerar in filiala",  "OPA - OP avans", "R - ramburs"};
     private String[] tipPlataClBlocatNonIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
     private String[] tipPlataRestIP = {"N - Numerar in filiala", "OPA - OP avans"};
     private String[] tipPlataRestNonIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
@@ -1130,6 +1130,11 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 }
 
                 if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("O")) {
+                    spinnerTermenPlata.setSelection(0);
+                    spinnerTermenPlata.setEnabled(false);
+                }
+
+                if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("C")) {
                     spinnerTermenPlata.setSelection(0);
                     spinnerTermenPlata.setEnabled(false);
                 }

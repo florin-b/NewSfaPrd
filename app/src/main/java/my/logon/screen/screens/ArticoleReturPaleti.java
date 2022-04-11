@@ -1,28 +1,9 @@
 package my.logon.screen.screens;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import my.logon.screen.listeners.ListaArtReturListener;
-import my.logon.screen.listeners.OperatiiReturListener;
-import my.logon.screen.model.OperatiiReturMarfa;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.MapUtils;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
-import my.logon.screen.adapters.ArticoleReturAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +19,20 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.ArticoleReturAdapter;
 import my.logon.screen.beans.Address;
 import my.logon.screen.beans.BeanArticolRetur;
 import my.logon.screen.beans.BeanComandaRetur;
@@ -45,6 +40,13 @@ import my.logon.screen.enums.EnumRetur;
 import my.logon.screen.enums.EnumTipClientIP;
 import my.logon.screen.enums.EnumTipComanda;
 import my.logon.screen.enums.EnumTipRetur;
+import my.logon.screen.listeners.ListaArtReturListener;
+import my.logon.screen.listeners.OperatiiReturListener;
+import my.logon.screen.model.OperatiiReturMarfa;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.MapUtils;
+import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class ArticoleReturPaleti extends Fragment implements ListaArtReturListener, OperatiiReturListener {
 
@@ -130,6 +132,8 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
 
 		if (isTipTranspPretPaleti() && DateLivrareReturPaleti.tipClientIP != null && DateLivrareReturPaleti.tipClientIP == EnumTipClientIP.NONCONSTR)
 			return true;
+		else if (isTipTranspPretPaleti() && DateLivrareReturPaleti.tipClientIP != null && DateLivrareReturPaleti.tipClientIP == EnumTipClientIP.CONSTR)
+			return false;
 		else
 			return isTipTranspPretPaleti() && (UtilsUser.isCV() || DateLivrareReturPaleti.tipCmdRetur == EnumTipComanda.GED);
 
