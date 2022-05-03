@@ -4,24 +4,6 @@
  */
 package my.logon.screen.screens;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.CautaClientDialogListener;
-import my.logon.screen.listeners.DatePersListener;
-import my.logon.screen.listeners.OperatiiClientListener;
-import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.InfoStrings;
-import my.logon.screen.model.ListaArticoleComandaGed;
-import my.logon.screen.model.OperatiiClient;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.UtilsCheck;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
-import my.logon.screen.adapters.CautareClientiAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -45,6 +27,14 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.CautareClientiAdapter;
 import my.logon.screen.beans.BeanClient;
 import my.logon.screen.beans.BeanDatePersonale;
 import my.logon.screen.beans.DetaliiClient;
@@ -55,6 +45,17 @@ import my.logon.screen.dialogs.CautaClientDialog;
 import my.logon.screen.dialogs.DatePersClientDialog;
 import my.logon.screen.enums.EnumClienti;
 import my.logon.screen.enums.TipCmdGed;
+import my.logon.screen.listeners.CautaClientDialogListener;
+import my.logon.screen.listeners.DatePersListener;
+import my.logon.screen.listeners.OperatiiClientListener;
+import my.logon.screen.model.DateLivrare;
+import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ListaArticoleComandaGed;
+import my.logon.screen.model.OperatiiClient;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsCheck;
+import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class SelectClientCmdGed extends Activity implements OperatiiClientListener, CautaClientDialogListener, DatePersListener {
 
@@ -742,7 +743,9 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 		FurnizorComanda furnizorComanda = null;
 
-		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.DISPOZITIE_LIVRARE) {
+		boolean localIsCmdACZC = DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_COMANDA;
+
+		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.DISPOZITIE_LIVRARE || DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_COMANDA) {
 			furnizorComanda = DateLivrare.getInstance().getFurnizorComanda();
 		}
 
@@ -757,6 +760,9 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		if (furnizorComanda != null) {
 			DateLivrare.getInstance().setFurnizorComanda(furnizorComanda);
 			DateLivrare.getInstance().setTipComandaGed(TipCmdGed.DISPOZITIE_LIVRARE);
+
+			if (localIsCmdACZC)
+				DateLivrare.getInstance().setTipComandaGed(TipCmdGed.ARTICOLE_COMANDA);
 		}
 
 	}

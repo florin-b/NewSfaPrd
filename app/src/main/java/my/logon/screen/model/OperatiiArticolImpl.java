@@ -152,6 +152,12 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		this.params = params;
 		performOperation();
 	}
+
+	public void getArticoleACZC(HashMap<String, String> params) {
+		numeComanda = EnumArticoleDAO.GET_ARTICOLE_ACZC;
+		this.params = params;
+		performOperation();
+	}
 	
 	@Override
 	public Object getDepartBV90(String codArticol) {

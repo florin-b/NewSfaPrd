@@ -1098,11 +1098,18 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 	}
 
 	protected void performGetArticole() {
-		if (DateLivrare.getInstance().getFurnizorComanda() != null && !DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().trim().isEmpty()) {
+		if (isComandaDL() && DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_LIVRARE) {
 			performGetArticoleFurnizor();
-		} else {
+		} else if (isComandaDL() && DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_COMANDA)
+			getArticoleACZC();
+		else {
 			performGetArticoleDistributie();
 		}
+
+	}
+
+	private void getArticoleACZC() {
+		performGetArticoleFurnizor();
 	}
 
 	protected void performGetArticoleDistributie() {
@@ -1168,6 +1175,13 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 		params.put("furnizor", DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa());
 		params.put("codDepart", selectedDepartamentAgent);
 		params.put("codUser", UserInfo.getInstance().getCod());
+		params.put("filiala", UserInfo.getInstance().getUnitLog());
+
+		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_COMANDA)
+			params.put("aczc", "true");
+		else
+			params.put("aczc", "false");
+
 
 		opArticol.getArticoleFurnizor(params);
 	}
@@ -2129,6 +2143,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 		switch (methodName) {
 		case GET_ARTICOLE_DISTRIBUTIE:
 			case GET_ARTICOLE_FURNIZOR:
+			case GET_ARTICOLE_ACZC:
 			populateListViewArticol(opArticol.deserializeArticoleVanzare((String) result));
 			break;
 		case GET_STOC_DEPOZIT:

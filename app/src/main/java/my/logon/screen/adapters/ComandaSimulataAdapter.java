@@ -77,14 +77,8 @@ public class ComandaSimulataAdapter extends BaseAdapter {
 				viewHolder.textAprobata.setText("In curs de aprobare");
 		}
 
-		if (comanda.getCodStare().equals("21")) {
-			viewHolder.textValAvans.setText("Avans: " + String.valueOf(comanda.getAvans()));
-			viewHolder.textValAvans.setVisibility(View.VISIBLE);
-			viewHolder.textMonedaAvans.setVisibility(View.VISIBLE);
-		} else {
-			viewHolder.textValAvans.setVisibility(View.INVISIBLE);
-			viewHolder.textMonedaAvans.setVisibility(View.INVISIBLE);
-		}
+		viewHolder.textValAvans.setText("Avans: " + String.valueOf(comanda.getAvans()));
+
 
 		return convertView;
 	}

@@ -1,14 +1,5 @@
 package my.logon.screen.dialogs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import my.logon.screen.listeners.ComenziDAOListener;
-import my.logon.screen.listeners.TipCmdGedListener;
-import my.logon.screen.model.ComenziDAO;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.UtilsUser;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -20,8 +11,18 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import my.logon.screen.R;
 import my.logon.screen.enums.EnumComenziDAO;
 import my.logon.screen.enums.TipCmdGed;
+import my.logon.screen.listeners.ComenziDAOListener;
+import my.logon.screen.listeners.TipCmdGedListener;
+import my.logon.screen.model.ComenziDAO;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsUser;
 
 public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 
@@ -65,6 +66,7 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 		final RadioButton radioAmob = (RadioButton) findViewById(R.id.radioAmob);
 		final RadioButton radioCLP = (RadioButton) findViewById(R.id.radioCLP);
 		final RadioButton radioDL = (RadioButton) findViewById(R.id.radioDL);
+		final RadioButton radioACZC = (RadioButton) findViewById(R.id.radioACZC);
 
 		if (UtilsUser.isUserIP())
 			radioCLP.setVisibility(View.INVISIBLE);
@@ -91,6 +93,8 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 					tipComanda = TipCmdGed.COMANDA_VANZARE;
 				else if (radioDL.isChecked())
 					tipComanda = TipCmdGed.DISPOZITIE_LIVRARE;
+				else if (radioACZC.isChecked())
+					tipComanda = TipCmdGed.ARTICOLE_COMANDA;
 				else if (radioAmob.isChecked()) {
 					tipComanda = TipCmdGed.COMANDA_AMOB;
 					if (idComanda.equals("-1"))
@@ -158,6 +162,18 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 			public void onClick(View v) {
 				spinnerComenziAmob.setVisibility(View.VISIBLE);
 				getComenziAMOB();
+
+			}
+
+		});
+
+		radioACZC.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				spinnerComenziAmob.setVisibility(View.INVISIBLE);
+				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				textInfoClp.setVisibility(View.INVISIBLE);
 
 			}
 

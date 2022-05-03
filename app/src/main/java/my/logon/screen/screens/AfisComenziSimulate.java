@@ -439,7 +439,13 @@ public class AfisComenziSimulate extends Activity implements AsyncTaskListener, 
 		try {
 			Date dataComanda = new SimpleDateFormat("dd-MMM-yy", Locale.US).parse(comandaCurenta.getData());
 			int nrZile = UtilsDates.dateDiffDays(dataComanda, new Date());
-			if (nrZile > 14)
+
+			int termenScadentZile = 14;
+
+			if (comandaCurenta.getAvans() > 0)
+				termenScadentZile = 30;
+
+			if (nrZile > termenScadentZile)
 				isVeche = true;
 
 		} catch (ParseException e) {
@@ -464,7 +470,7 @@ public class AfisComenziSimulate extends Activity implements AsyncTaskListener, 
 	}
 
 	private boolean isCmdAvansOK(BeanComandaSimulata comanda, boolean allStock) {
-		return (comanda.getCodStare().equals("41") || comanda.getCodStare().equals("21")) && comanda.isAprobata() && comanda.getAvans() > 0 && allStock;
+		return (comanda.getCodStare().equals("41") || comanda.getCodStare().equals("21")) && comanda.isAprobata() && allStock;
 	}
 
 	public void addListenerCreazaCmdSimBtn() {

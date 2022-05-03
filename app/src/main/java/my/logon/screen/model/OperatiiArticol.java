@@ -75,4 +75,6 @@ public interface OperatiiArticol {
 	public ArrayList<BeanCablu05> deserializeCabluri05(String listArticole);
 
 	public String serializeCabluri05(List<BeanCablu05> listCabluri);
+
+	public void getArticoleACZC(HashMap<String, String> params);
 }

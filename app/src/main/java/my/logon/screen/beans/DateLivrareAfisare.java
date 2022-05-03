@@ -64,6 +64,7 @@ public class DateLivrareAfisare {
 	private String refClient;
 	private boolean isClientBlocat;
 	private double limitaCredit = 0;
+	private String nrCmdClp;
 
 	public DateLivrareAfisare() {
 
@@ -557,5 +558,13 @@ public class DateLivrareAfisare {
 
 	public void setLimitaCredit(double limitaCredit) {
 		this.limitaCredit = limitaCredit;
+	}
+
+	public String getNrCmdClp() {
+		return nrCmdClp;
+	}
+
+	public void setNrCmdClp(String nrCmdClp) {
+		this.nrCmdClp = nrCmdClp;
 	}
 }

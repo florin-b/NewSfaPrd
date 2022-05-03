@@ -1,23 +1,7 @@
 /**
  * @author florinb
- * 
  */
 package my.logon.screen.screens;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import my.logon.screen.listeners.ComenziDAOListener;
-import my.logon.screen.model.ComenziDAO;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.UtilsDates;
-import my.logon.screen.adapters.ArticolModificareAdapter;
-import my.logon.screen.adapters.ComandaModificareAdapter;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -30,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -37,12 +22,28 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.ArticolModifDataLivrAdapter;
+import my.logon.screen.adapters.ComandaModificareAdapter;
 import my.logon.screen.beans.BeanArticoleAfisare;
 import my.logon.screen.beans.BeanComandaCreata;
 import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.StatusIntervalLivrare;
 import my.logon.screen.dialogs.SelectDateDialog;
 import my.logon.screen.enums.EnumComenziDAO;
+import my.logon.screen.listeners.ComenziDAOListener;
+import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ComenziDAO;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsDates;
 
 public class ModificareDataLivrare extends Activity implements ComenziDAOListener {
 
@@ -67,6 +68,12 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 
 	private List<BeanComandaCreata> listComenzi;
 	private BeanComandaCreata comandaSelectata;
+	private LinearLayout livrPartLayout, livrPartLayout1;
+	private String[] livrPartOpt = {"Selectati una din optiunile:", "Livrare partiala",
+			"Livrare finala"};
+	private Spinner spinnerLivrPart;
+	private StatusIntervalLivrare statusInterval;
+	private boolean isLivrPartACZC;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +92,14 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		spinnerComenzi = (Spinner) findViewById(R.id.spinnerComenzi);
+
+
+		livrPartLayout = (LinearLayout) findViewById(R.id.livrPartLayout);
+		livrPartLayout1 = (LinearLayout) findViewById(R.id.livrPartLayout1);
+		spinnerLivrPart = (Spinner) findViewById(R.id.spinnerLivrPart);
+		ArrayAdapter livrPartAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, livrPartOpt);
+		spinnerLivrPart.setAdapter(livrPartAdapter);
+		setSpinnerLivrPartListener();
 
 		spinnerComenzi.setVisibility(View.INVISIBLE);
 		addSpinnerListener();
@@ -119,19 +134,19 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 
 		switch (item.getItemId()) {
 
-		case android.R.id.home:
+			case android.R.id.home:
 
-			clearAllData();
-			UserInfo.getInstance().setParentScreen("");
-			Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+				clearAllData();
+				UserInfo.getInstance().setParentScreen("");
+				Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
 
-			startActivity(nextScreen);
+				startActivity(nextScreen);
 
-			finish();
+				finish();
 
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 
 	}
@@ -188,7 +203,10 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 			@Override
 			public void onClick(View v) {
 
-				setCmdDataLivrare();
+				if (isLivrPartACZC && spinnerLivrPart.getSelectedItemPosition() == 0)
+					Toast.makeText(getApplicationContext(), "Selectati tipul de livrare.", Toast.LENGTH_LONG).show();
+				else
+					setCmdDataLivrare();
 
 			}
 		});
@@ -199,11 +217,22 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 
 		String[] dataLivrare = textDataLivrare.getText().toString().split("\\-");
 
+		String strLivrFinala = " ";
+
+		if (isLivrPartACZC) {
+			if (spinnerLivrPart.getSelectedItem().toString().contains("finala"))
+				strLivrFinala = "X";
+		}
+
+
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("idComanda", selectedCmd);
 		params.put("dataLivrare", dataLivrare[2] + "-" + dataLivrare[1] + "-" + dataLivrare[0]);
+		params.put("livrareFinala", strLivrFinala);
 
 		operatiiComenzi.setCmdVanzDataLivrare(params);
+
+
 	}
 
 	private void operatieLivrareStatus(String result) {
@@ -220,7 +249,7 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 				SimpleDateFormat displayFormat = new SimpleDateFormat("dd-MM-yyyy");
 				Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay);
 
-				StatusIntervalLivrare statusInterval = UtilsDates.getStatusIntervalLivrare(calendar.getTime());
+				statusInterval = UtilsDates.getStatusIntervalLivrare(calendar.getTime());
 
 				if (statusInterval.isValid()) {
 					textDataLivrare.setText(displayFormat.format(calendar.getTime()));
@@ -231,6 +260,53 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 
 		}
 	};
+
+	private void setSpinnerLivrPartListener() {
+		spinnerLivrPart.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+				if (statusInterval != null && statusInterval.isValid() && position > 0)
+					btnSalveaza.setVisibility(View.VISIBLE);
+				else
+					btnSalveaza.setVisibility(View.INVISIBLE);
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
+		});
+	}
+
+
+	private boolean isCmdACZCToSave() {
+		if (!comandaSelectata.isComandaACZC())
+			return true;
+		else if (isLivrPartACZC && spinnerLivrPart.getSelectedItemPosition() == 0)
+			return false;
+
+		return true;
+
+	}
+
+	private void verificaLivrareACZC(List<ArticolComanda> listArticole) {
+
+		isLivrPartACZC = false;
+
+		for (ArticolComanda articol : listArticole) {
+
+			if (articol.getCantitate() != articol.getAczcDeLivrat()) {
+				isLivrPartACZC = true;
+				break;
+			}
+
+		}
+
+
+	}
 
 	private void clearAllData() {
 
@@ -257,6 +333,9 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 				comandaSelectata = listComenzi.get(position);
 				getArticoleComanda(listComenzi.get(position).getId());
 				selectedCmd = listComenzi.get(position).getCmdSap();
+				statusInterval = null;
+				btnSalveaza.setVisibility(View.INVISIBLE);
+				isLivrPartACZC = false;
 
 			}
 
@@ -264,6 +343,19 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 
 			}
 		});
+	}
+
+
+	private void setLivrPartVisibility(boolean isVisible) {
+
+		if (isVisible) {
+			livrPartLayout.setVisibility(View.VISIBLE);
+			livrPartLayout1.setVisibility(View.VISIBLE);
+			spinnerLivrPart.setSelection(0);
+		} else {
+			livrPartLayout.setVisibility(View.GONE);
+			livrPartLayout1.setVisibility(View.GONE);
+		}
 	}
 
 	private void getArticoleComanda(String idComanda) {
@@ -298,13 +390,18 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 
 	private void afiseazaArticoleComanda(BeanArticoleAfisare articoleComanda) {
 
-		ArticolModificareAdapter adapterArticole = new ArticolModificareAdapter(this, articoleComanda.getListArticole(), articoleComanda
-				.getConditii().getArticole(), comandaSelectata);
+		ArticolModifDataLivrAdapter adapterArticole = new ArticolModifDataLivrAdapter(this, articoleComanda.getListArticole(), articoleComanda.getConditii()
+				.getArticole(), comandaSelectata);
 
 		textDataLivrare.setText(articoleComanda.getDateLivrare().getDataLivrare().replace(".", "-"));
 
 		listViewArticole.setAdapter(adapterArticole);
 		listViewArticole.setVisibility(View.VISIBLE);
+
+		if (comandaSelectata.isComandaACZC())
+			verificaLivrareACZC(articoleComanda.getListArticole());
+
+		setLivrPartVisibility(isLivrPartACZC);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -312,19 +409,19 @@ public class ModificareDataLivrare extends Activity implements ComenziDAOListene
 	public void operationComenziComplete(EnumComenziDAO methodName, Object result) {
 		switch (methodName) {
 
-		case SET_CMD_VANZ_DATA_LIVRARE:
-			operatieLivrareStatus((String) result);
-			break;
-		case GET_LIST_COMENZI:
-			this.listComenzi = (List<BeanComandaCreata>) result;
-			afiseazaListaComenzi(this.listComenzi);
-			break;
-		case GET_ARTICOLE_COMANDA_JSON:
-			afiseazaArticoleComanda(operatiiComenzi.deserializeArticoleComanda((String) result));
-			break;
+			case SET_CMD_VANZ_DATA_LIVRARE:
+				operatieLivrareStatus((String) result);
+				break;
+			case GET_LIST_COMENZI:
+				this.listComenzi = (List<BeanComandaCreata>) result;
+				afiseazaListaComenzi(this.listComenzi);
+				break;
+			case GET_ARTICOLE_COMANDA_JSON:
+				afiseazaArticoleComanda(operatiiComenzi.deserializeArticoleComanda((String) result));
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 	}

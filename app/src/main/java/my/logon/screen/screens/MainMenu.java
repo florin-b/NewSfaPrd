@@ -1275,7 +1275,7 @@ public class MainMenu extends Activity {
 			// cereri comenzi retur -> SD
 			if (UserInfo.getInstance().getTipAcces().equals("10")) {
 
-				this.aprobRetur = (Button) gridview.findViewById(getBtnPosByName("Stare retur paleti"));
+				this.aprobRetur = (Button) gridview.findViewById(getBtnPosByName("Stare retur"));
 
 				if (tipRes[5].equals("1")) {
 					this.aprobRetur.startAnimation(animation);

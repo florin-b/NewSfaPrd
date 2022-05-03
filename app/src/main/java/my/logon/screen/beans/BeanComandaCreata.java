@@ -43,6 +43,7 @@ public class BeanComandaCreata {
 	private double bazaSalariala;
 	private EnumTipClientIP tipClientInstPublica;
 	private boolean isAprobDistrib;
+	private boolean isComandaACZC;
 	
 	public BeanComandaCreata() {
 
@@ -351,5 +352,12 @@ public class BeanComandaCreata {
 	public void setAprobDistrib(boolean isAprobDistrib) {
 		this.isAprobDistrib = isAprobDistrib;
 	}
-	
+
+	public boolean isComandaACZC() {
+		return isComandaACZC;
+	}
+
+	public void setComandaACZC(boolean comandaACZC) {
+		isComandaACZC = comandaACZC;
+	}
 }

@@ -405,7 +405,7 @@ public class ArticoleReturComanda extends Fragment implements ListaArtReturListe
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setMessage(
-				"\nPentru acest motiv de retur livrarea trebuia facuta cu cel mult 2 zile in urma. \nAceasta comanda s-a livrat in data de "
+				"\nPentru acest motiv de retur livrarea trebuia facuta cu cel mult 30 zile in urma. \nAceasta comanda s-a livrat in data de "
 						+ UtilsDates.formatDateFromSap(DateLivrareReturComanda.dataLivrareComanda) + ".\n").setCancelable(false)
 				.setPositiveButton("Inchide", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {

@@ -95,28 +95,6 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
-                        android:text="Motiv" />
-
-                    <Spinner
-                        android:id="@+id/spinnerMotivRetur"
-                        android:layout_width="0dp"
-                        android:layout_height="45dip"
-                        android:layout_gravity="left|bottom"
-                        android:layout_weight="0.75"
-                        android:gravity="left" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dip"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/dateLivrareDlLabel"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
                         android:text="Persoana contact" />
 
                     <EditText

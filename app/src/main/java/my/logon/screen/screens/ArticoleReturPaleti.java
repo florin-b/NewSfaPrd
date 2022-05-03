@@ -228,11 +228,6 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
 			return false;
 		}
 
-		if (DateLivrareReturPaleti.motivRetur.length() == 0) {
-			Toast.makeText(getActivity(), "Selectati motivul de retur", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-
 		if (DateLivrareReturPaleti.adresaCodJudet.length() == 0) {
 			Toast.makeText(getActivity(), "Selectati judetul", Toast.LENGTH_SHORT).show();
 			return false;
@@ -324,7 +319,7 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
 		comandaRetur.setTipTransport(DateLivrareReturPaleti.tipTransport);
 		comandaRetur.setCodAgent(UserInfo.getInstance().getCod());
 		comandaRetur.setTipAgent(UserInfo.getInstance().getTipUser());
-		comandaRetur.setMotivRespingere(DateLivrareReturPaleti.motivRetur);
+		comandaRetur.setMotivRespingere(" ");
 		comandaRetur.setNumePersContact(DateLivrareReturPaleti.numePersContact);
 		comandaRetur.setTelPersContact(DateLivrareReturPaleti.telPersContact);
 		comandaRetur.setAdresaCodJudet(DateLivrareReturPaleti.adresaCodJudet);

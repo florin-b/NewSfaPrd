@@ -1,30 +1,29 @@
 package my.logon.screen.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.OperatiiReturListener;
-import my.logon.screen.screens.AsyncTaskWSCall;
+import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.content.Context;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import my.logon.screen.beans.BeanAdresaLivrare;
 import my.logon.screen.beans.BeanArticolRetur;
-
 import my.logon.screen.beans.BeanComandaRetur;
 import my.logon.screen.beans.BeanComandaReturAfis;
 import my.logon.screen.beans.BeanDocumentRetur;
 import my.logon.screen.beans.BeanPersoanaContact;
 import my.logon.screen.beans.PozaArticol;
 import my.logon.screen.enums.EnumRetur;
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.OperatiiReturListener;
+import my.logon.screen.screens.AsyncTaskWSCall;
 
 public class OperatiiReturMarfa implements AsyncTaskListener {
 
@@ -118,7 +117,7 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 					docRetur.setData(jsonObj.getString("data"));
 					docRetur.setTipTransport(jsonObj.getString("tipTransport"));
 					docRetur.setDataLivrare(jsonObj.getString("dataLivrare"));
-					
+					docRetur.setCmdACZC(Boolean.parseBoolean(jsonObj.getString("isCmdACZC")));
 					
 					JSONObject objectExtra = new JSONObject(jsonObj.getString("extraDate"));
 					

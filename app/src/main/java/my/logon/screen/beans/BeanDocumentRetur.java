@@ -2,9 +2,6 @@ package my.logon.screen.beans;
 
 import java.util.List;
 
-import my.logon.screen.beans.BeanAdresaLivrare;
-import my.logon.screen.beans.BeanPersoanaContact;
-
 public class BeanDocumentRetur {
 	private String numar;
 	private String data;
@@ -12,6 +9,7 @@ public class BeanDocumentRetur {
 	private String dataLivrare;
 	private List<BeanAdresaLivrare> listAdrese;
 	private List<BeanPersoanaContact> listPersoane;
+	private boolean isCmdACZC;
 
 	public BeanDocumentRetur() {
 
@@ -64,7 +62,12 @@ public class BeanDocumentRetur {
 	public void setListPersoane(List<BeanPersoanaContact> listPersoane) {
 		this.listPersoane = listPersoane;
 	}
-	
-	
 
+	public boolean isCmdACZC() {
+		return isCmdACZC;
+	}
+
+	public void setCmdACZC(boolean cmdACZC) {
+		isCmdACZC = cmdACZC;
+	}
 }

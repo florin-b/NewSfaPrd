@@ -173,6 +173,10 @@ public class ReturComanda extends FragmentActivity implements ClientReturListene
 		dateLivrareReturComanda.setTipTransportComanda(documentRetur.getTipTransport());
 		dateLivrareReturComanda.setDataLivrareComanda(documentRetur.getDataLivrare());
 
+		if (documentRetur.isCmdACZC()) {
+			Toast.makeText(getApplicationContext(), "Comanda AC/ZC. Trebuie sa existe un proces verbal de angajament semnat de client.", Toast.LENGTH_LONG).show();
+		}
+
 		this.nrDocument = documentRetur.getNumar();
 		this.docSelected = documentRetur;
 		HashMap<String, String> params = UtilsGeneral.newHashMapInstance();

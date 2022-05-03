@@ -57,6 +57,18 @@
             </RadioButton>
 
             <RadioButton
+                android:id="@+id/radioACZC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dip"
+                android:checked="false"
+                android:text="Articole la comanda"
+                android:textColor="@color/detColor1"
+                android:textSize="17sp"
+                android:typeface="sans" >
+            </RadioButton>
+
+            <RadioButton
                 android:id="@+id/radioCLP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,6 +92,16 @@
             android:gravity="left"
             android:visibility="invisible" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dip"
+        android:textColor="@color/detColor1"
+        android:textSize="17sp"
+        android:typeface="sans"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="match_parent"

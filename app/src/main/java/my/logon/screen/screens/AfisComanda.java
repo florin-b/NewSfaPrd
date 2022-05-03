@@ -686,6 +686,12 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 		} else
 			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.GONE);
 
+		if (!dateLivrare.getNrCmdClp().trim().isEmpty()) {
+			((LinearLayout) findViewById(R.id.layoutNrCmdClp)).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.textNrCmdClp)).setText(dateLivrare.getNrCmdClp());
+		} else
+			((LinearLayout) findViewById(R.id.layoutNrCmdClp)).setVisibility(View.GONE);
+
 		ArticolAfisAdapter adapter = new ArticolAfisAdapter(this, listArticole);
 		listViewArticole.setAdapter(adapter);
 
