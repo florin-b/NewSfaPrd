@@ -9,5 +9,8 @@ public class Constants {
 	public final static String tipSuperAv = "ASDL";
 	public final static String tipInfoAv = "INFO";
 	public final static String CMD_SIM_CONDITII = "41";
+	public final static int NR_FILIALE_MATHAUS = 2;
+	public final static int NR_ARTICOLE_MATHAUS_PAGINA = 10;
+
 
 }

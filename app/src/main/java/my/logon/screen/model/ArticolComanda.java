@@ -8,702 +8,721 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import my.logon.screen.beans.ArticolMathaus;
 import my.logon.screen.beans.BeanCablu05;
 
 public class ArticolComanda implements Comparable<ArticolComanda> {
 
-	protected int nrCrt;
-	protected String numeArticol;
-	protected String codArticol;
-	protected String depozit;
-	protected double cantitate;
-	protected String um;
-	protected double pret;
-	protected String moneda;
-	protected double procent;
-	protected String observatii;
-	protected boolean conditie;
-	protected int promotie;
-	protected double procentFact;
-	protected double pretUnit;
-	protected double discClient;
-	protected String tipAlert;
-	protected double procAprob;
-	protected double multiplu;
-	protected String infoArticol;
-	protected double cantUmb;
-	protected String Umb;
-	protected String alteValori;
-	protected String depart;
-	protected String tipArt;
-	protected double taxaVerde;
-	protected double pretUnitarPonderat;
-	protected double pretUnitarClient;
-	private String unitLogAlt;
-	private String status;
-	private double cmp;
-	private String addCond;
-
-	private double pretUnitarGed;
-	private double marjaClient;
-	private double marjaCorectata;
-	private double reducerePonderata;
-	private double marjaGed;
-	private String tipAlertPret;
-	private double adaosMinimArticol;
-	private double adaosClientCorectat;
-	private double adaosMinimAcceptat;
-	private int ponderare;
-
-	private double discountAg;
-	private double discountSd;
-	private double discountDv;
-	private String permitSubCmp;
-
-	private double coefCorectie;
-
-	private double pretMediu;
-	private double adaosMediu;
-	private String unitMasPretMediu;
-	private String departSintetic;
-
-	private boolean hasConditii;
-	private boolean isRespins;
-
-	protected double deficit;
-
-	private double valTransport;
-	private double procTransport;
-
-	private String departAprob;
-
-	private boolean umPalet;
-
-	private String filialaSite;
-
-	private String istoricPret;
-
-	private String vechime;
-	private String categorie;
-	private double lungime;
-	
-	private double procT1;
-	private double valT1;	
-	
-	private double pretFaraTva;
-
-	private double aczcDeLivrat;
-	private double aczcLivrat;
-
-	private List<BeanCablu05> listCabluri;
-
-	public int getNrCrt() {
-		return nrCrt;
-	}
-
-	public String getNumeArticol() {
-		return numeArticol;
-	}
-
-	public String getCodArticol() {
-		return codArticol;
-	}
-
-	public String getDepozit() {
-		return depozit;
-	}
-
-	public double getCantitate() {
-		return cantitate;
-	}
+    protected int nrCrt;
+    protected String numeArticol;
+    protected String codArticol;
+    protected String depozit;
+    protected double cantitate;
+    protected String um;
+    protected double pret;
+    protected String moneda;
+    protected double procent;
+    protected String observatii;
+    protected boolean conditie;
+    protected int promotie;
+    protected double procentFact;
+    protected double pretUnit;
+    protected double discClient;
+    protected String tipAlert;
+    protected double procAprob;
+    protected double multiplu;
+    protected String infoArticol;
+    protected double cantUmb;
+    protected String Umb;
+    protected String alteValori;
+    protected String depart;
+    protected String tipArt;
+    protected double taxaVerde;
+    protected double pretUnitarPonderat;
+    protected double pretUnitarClient;
+    private String unitLogAlt;
+    private String status;
+    private double cmp;
+    private String addCond;
+
+    private double pretUnitarGed;
+    private double marjaClient;
+    private double marjaCorectata;
+    private double reducerePonderata;
+    private double marjaGed;
+    private String tipAlertPret;
+    private double adaosMinimArticol;
+    private double adaosClientCorectat;
+    private double adaosMinimAcceptat;
+    private int ponderare;
+
+    private double discountAg;
+    private double discountSd;
+    private double discountDv;
+    private String permitSubCmp;
+
+    private double coefCorectie;
+
+    private double pretMediu;
+    private double adaosMediu;
+    private String unitMasPretMediu;
+    private String departSintetic;
+
+    private boolean hasConditii;
+    private boolean isRespins;
+
+    protected double deficit;
+
+    private double valTransport;
+    private double procTransport;
+
+    private String departAprob;
+
+    private boolean umPalet;
+
+    private String filialaSite;
+
+    private String istoricPret;
+
+    private String vechime;
+    private String categorie;
+    private double lungime;
+
+    private double procT1;
+    private double valT1;
+
+    private double pretFaraTva;
+
+    private double aczcDeLivrat;
+    private double aczcLivrat;
+    private ArticolMathaus articolMathaus;
+    private List<BeanCablu05> listCabluri;
+
+    private String tipTransport;
+
+    public int getNrCrt() {
+        return nrCrt;
+    }
+
+    public String getNumeArticol() {
+        return numeArticol;
+    }
+
+    public String getCodArticol() {
+        return codArticol;
+    }
+
+    public String getDepozit() {
+        return depozit;
+    }
+
+    public double getCantitate() {
+        return cantitate;
+    }
+
+    public String getUm() {
+        return um;
+    }
+
+    public double getPret() {
+        return pret;
+    }
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public double getProcent() {
+        return procent;
+    }
+
+    public String getObservatii() {
+        return observatii;
+    }
+
+    public boolean getConditie() {
+        return conditie;
+    }
+
+    public int getPromotie() {
+        return promotie;
+    }
+
+    public double getProcentFact() {
+        return procentFact;
+    }
+
+    public double getPretUnit() {
+        return pretUnit;
+    }
+
+    public double getDiscClient() {
+        return discClient;
+    }
+
+    public String getTipAlert() {
+        if (tipAlert == null)
+            return " ";
+        return tipAlert;
+    }
+
+    public double getProcAprob() {
+        return procAprob;
+    }
+
+    public double getMultiplu() {
+        return multiplu;
+    }
+
+    public String getInfoArticol() {
+        return infoArticol;
+    }
+
+    public double getCantUmb() {
+        return cantUmb;
+    }
+
+    public String getUmb() {
+        return Umb;
+    }
+
+    public String getAlteValori() {
+        return alteValori;
+    }
+
+    public String getDepart() {
+        return depart;
+    }
+
+    public String getTipArt() {
+        return tipArt;
+    }
+
+    public void setNrCrt(int nrCrt) {
+        this.nrCrt = nrCrt;
+    }
+
+    public void setNumeArticol(String numeArticol) {
+        this.numeArticol = numeArticol;
+    }
+
+    public void setCodArticol(String codArticol) {
+        this.codArticol = codArticol;
+    }
+
+    public void setDepozit(String depozit) {
+        this.depozit = depozit;
+    }
+
+    public void setCantitate(double cantitate) {
+        this.cantitate = cantitate;
+    }
+
+    public void setUm(String um) {
+        this.um = um;
+    }
+
+    public void setPret(double pret) {
+        this.pret = pret;
+    }
+
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
+    }
+
+    public void setProcent(double procent) {
+        this.procent = procent;
+    }
+
+    public void setObservatii(String observatii) {
+        this.observatii = observatii;
+    }
+
+    public void setConditie(boolean conditie) {
+        this.conditie = conditie;
+    }
+
+    public void setPromotie(int promotie) {
+        this.promotie = promotie;
+    }
+
+    public void setProcentFact(double procentFact) {
+        this.procentFact = procentFact;
+    }
+
+    public void setPretUnit(double pretUnit) {
+        this.pretUnit = pretUnit;
+    }
 
-	public String getUm() {
-		return um;
-	}
+    public void setDiscClient(double discClient) {
+        this.discClient = discClient;
+    }
 
-	public double getPret() {
-		return pret;
-	}
+    public void setTipAlert(String tipAlert) {
+        this.tipAlert = tipAlert;
+    }
 
-	public String getMoneda() {
-		return moneda;
-	}
+    public void setProcAprob(double procAprob) {
+        this.procAprob = procAprob;
+    }
 
-	public double getProcent() {
-		return procent;
-	}
+    public void setMultiplu(double multiplu) {
+        this.multiplu = multiplu;
+    }
 
-	public String getObservatii() {
-		return observatii;
-	}
+    public void setInfoArticol(String infoArticol) {
+        this.infoArticol = infoArticol;
+    }
 
-	public boolean getConditie() {
-		return conditie;
-	}
+    public void setCantUmb(double cantUmb) {
+        this.cantUmb = cantUmb;
+    }
 
-	public int getPromotie() {
-		return promotie;
-	}
+    public void setUmb(String Umb) {
+        this.Umb = Umb;
+    }
 
-	public double getProcentFact() {
-		return procentFact;
-	}
+    public void setAlteValori(String alteValori) {
+        this.alteValori = alteValori;
+    }
 
-	public double getPretUnit() {
-		return pretUnit;
-	}
+    public void setDepart(String depart) {
+        this.depart = depart;
+    }
 
-	public double getDiscClient() {
-		return discClient;
-	}
+    public void setTipArt(String tipArt) {
+        this.tipArt = tipArt;
+    }
 
-	public String getTipAlert() {
-		if (tipAlert == null)
-			return " ";
-		return tipAlert;
-	}
-
-	public double getProcAprob() {
-		return procAprob;
-	}
-
-	public double getMultiplu() {
-		return multiplu;
-	}
-
-	public String getInfoArticol() {
-		return infoArticol;
-	}
-
-	public double getCantUmb() {
-		return cantUmb;
-	}
-
-	public String getUmb() {
-		return Umb;
-	}
-
-	public String getAlteValori() {
-		return alteValori;
-	}
-
-	public String getDepart() {
-		return depart;
-	}
-
-	public String getTipArt() {
-		return tipArt;
-	}
-
-	public void setNrCrt(int nrCrt) {
-		this.nrCrt = nrCrt;
-	}
-
-	public void setNumeArticol(String numeArticol) {
-		this.numeArticol = numeArticol;
-	}
-
-	public void setCodArticol(String codArticol) {
-		this.codArticol = codArticol;
-	}
-
-	public void setDepozit(String depozit) {
-		this.depozit = depozit;
-	}
-
-	public void setCantitate(double cantitate) {
-		this.cantitate = cantitate;
-	}
-
-	public void setUm(String um) {
-		this.um = um;
-	}
-
-	public void setPret(double pret) {
-		this.pret = pret;
-	}
-
-	public void setMoneda(String moneda) {
-		this.moneda = moneda;
-	}
-
-	public void setProcent(double procent) {
-		this.procent = procent;
-	}
-
-	public void setObservatii(String observatii) {
-		this.observatii = observatii;
-	}
-
-	public void setConditie(boolean conditie) {
-		this.conditie = conditie;
-	}
-
-	public void setPromotie(int promotie) {
-		this.promotie = promotie;
-	}
-
-	public void setProcentFact(double procentFact) {
-		this.procentFact = procentFact;
-	}
-
-	public void setPretUnit(double pretUnit) {
-		this.pretUnit = pretUnit;
-	}
+    public double getTaxaVerde() {
+        return taxaVerde;
+    }
 
-	public void setDiscClient(double discClient) {
-		this.discClient = discClient;
-	}
+    public void setTaxaVerde(double taxaVerde) {
+        this.taxaVerde = taxaVerde;
+    }
 
-	public void setTipAlert(String tipAlert) {
-		this.tipAlert = tipAlert;
-	}
+    public double getPretUnitarPonderat() {
+        return pretUnitarPonderat;
+    }
 
-	public void setProcAprob(double procAprob) {
-		this.procAprob = procAprob;
-	}
+    public void setPretUnitarPonderat(double pretUnitarPonderat) {
+        this.pretUnitarPonderat = pretUnitarPonderat;
+    }
 
-	public void setMultiplu(double multiplu) {
-		this.multiplu = multiplu;
-	}
+    public double getPretUnitarClient() {
+        return pretUnitarClient;
+    }
 
-	public void setInfoArticol(String infoArticol) {
-		this.infoArticol = infoArticol;
-	}
+    public void setPretUnitarClient(double pretUnitarClient) {
+        this.pretUnitarClient = pretUnitarClient;
+    }
 
-	public void setCantUmb(double cantUmb) {
-		this.cantUmb = cantUmb;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setUmb(String Umb) {
-		this.Umb = Umb;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public void setAlteValori(String alteValori) {
-		this.alteValori = alteValori;
-	}
+    public String getUnitLogAlt() {
+        return unitLogAlt;
+    }
 
-	public void setDepart(String depart) {
-		this.depart = depart;
-	}
+    public void setUnitLogAlt(String unitLogAlt) {
+        this.unitLogAlt = unitLogAlt;
+    }
 
-	public void setTipArt(String tipArt) {
-		this.tipArt = tipArt;
-	}
+    public double getCmp() {
+        return cmp;
+    }
 
-	public double getTaxaVerde() {
-		return taxaVerde;
-	}
+    public void setCmp(double cmpArt) {
+        this.cmp = cmpArt;
+    }
 
-	public void setTaxaVerde(double taxaVerde) {
-		this.taxaVerde = taxaVerde;
-	}
+    public String getAddCond() {
+        return addCond;
+    }
 
-	public double getPretUnitarPonderat() {
-		return pretUnitarPonderat;
-	}
+    public void setAddCond(String addCond) {
+        this.addCond = addCond;
+    }
 
-	public void setPretUnitarPonderat(double pretUnitarPonderat) {
-		this.pretUnitarPonderat = pretUnitarPonderat;
-	}
+    public int compareTo(ArticolComanda compareArtCom) {
 
-	public double getPretUnitarClient() {
-		return pretUnitarClient;
-	}
+        String comparaDepart = (compareArtCom).getDepart();
+        return this.depart.compareTo(comparaDepart);
 
-	public void setPretUnitarClient(double pretUnitarClient) {
-		this.pretUnitarClient = pretUnitarClient;
-	}
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public double getPretUnitarGed() {
+        return pretUnitarGed;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setPretUnitarGed(double pretUnitarGed) {
+        this.pretUnitarGed = pretUnitarGed;
+    }
 
-	public String getUnitLogAlt() {
-		return unitLogAlt;
-	}
+    public double getMarjaClient() {
+        return marjaClient;
+    }
 
-	public void setUnitLogAlt(String unitLogAlt) {
-		this.unitLogAlt = unitLogAlt;
-	}
+    public void setMarjaClient(double marjaClient) {
+        this.marjaClient = marjaClient;
+    }
 
-	public double getCmp() {
-		return cmp;
-	}
+    public double getMarjaCorectata() {
+        return marjaCorectata;
+    }
 
-	public void setCmp(double cmpArt) {
-		this.cmp = cmpArt;
-	}
+    public void setMarjaCorectata(double marjaCorectata) {
+        this.marjaCorectata = marjaCorectata;
+    }
 
-	public String getAddCond() {
-		return addCond;
-	}
+    public double getReducerePonderata() {
+        return reducerePonderata;
+    }
 
-	public void setAddCond(String addCond) {
-		this.addCond = addCond;
-	}
+    public void setReducerePonderata(double reducerePonderata) {
+        this.reducerePonderata = reducerePonderata;
+    }
 
-	public int compareTo(ArticolComanda compareArtCom) {
+    public double getMarjaGed() {
+        return marjaGed;
+    }
 
-		String comparaDepart = (compareArtCom).getDepart();
-		return this.depart.compareTo(comparaDepart);
+    public void setMarjaGed(double marjaGed) {
+        this.marjaGed = marjaGed;
+    }
 
-	}
+    public String getTipAlertPret() {
+        return tipAlertPret;
+    }
 
-	public double getPretUnitarGed() {
-		return pretUnitarGed;
-	}
+    public void setTipAlertPret(String tipAlertPret) {
+        this.tipAlertPret = tipAlertPret;
+    }
 
-	public void setPretUnitarGed(double pretUnitarGed) {
-		this.pretUnitarGed = pretUnitarGed;
-	}
+    public double getAdaosMinimArticol() {
+        return adaosMinimArticol;
+    }
 
-	public double getMarjaClient() {
-		return marjaClient;
-	}
+    public void setAdaosMinimArticol(double adaosMinimArticol) {
+        this.adaosMinimArticol = adaosMinimArticol;
+    }
 
-	public void setMarjaClient(double marjaClient) {
-		this.marjaClient = marjaClient;
-	}
+    public double getAdaosClientCorectat() {
+        return adaosClientCorectat;
+    }
 
-	public double getMarjaCorectata() {
-		return marjaCorectata;
-	}
+    public void setAdaosClientCorectat(double adaosClientCorectat) {
+        this.adaosClientCorectat = adaosClientCorectat;
+    }
 
-	public void setMarjaCorectata(double marjaCorectata) {
-		this.marjaCorectata = marjaCorectata;
-	}
+    public double getAdaosMinimAcceptat() {
+        return adaosMinimAcceptat;
+    }
 
-	public double getReducerePonderata() {
-		return reducerePonderata;
-	}
+    public void setAdaosMinimAcceptat(double adaosMinimAcceptat) {
+        this.adaosMinimAcceptat = adaosMinimAcceptat;
+    }
 
-	public void setReducerePonderata(double reducerePonderata) {
-		this.reducerePonderata = reducerePonderata;
-	}
+    public int getPonderare() {
+        return ponderare;
+    }
 
-	public double getMarjaGed() {
-		return marjaGed;
-	}
+    public void setPonderare(int ponderare) {
+        this.ponderare = ponderare;
+    }
 
-	public void setMarjaGed(double marjaGed) {
-		this.marjaGed = marjaGed;
-	}
+    public double getDiscountAg() {
+        return discountAg;
+    }
 
-	public String getTipAlertPret() {
-		return tipAlertPret;
-	}
+    public void setDiscountAg(double discountAg) {
+        this.discountAg = discountAg;
+    }
 
-	public void setTipAlertPret(String tipAlertPret) {
-		this.tipAlertPret = tipAlertPret;
-	}
+    public double getDiscountSd() {
+        return discountSd;
+    }
 
-	public double getAdaosMinimArticol() {
-		return adaosMinimArticol;
-	}
+    public void setDiscountSd(double discountSd) {
+        this.discountSd = discountSd;
+    }
 
-	public void setAdaosMinimArticol(double adaosMinimArticol) {
-		this.adaosMinimArticol = adaosMinimArticol;
-	}
+    public double getDiscountDv() {
+        return discountDv;
+    }
 
-	public double getAdaosClientCorectat() {
-		return adaosClientCorectat;
-	}
+    public void setDiscountDv(double discountDv) {
+        this.discountDv = discountDv;
+    }
 
-	public void setAdaosClientCorectat(double adaosClientCorectat) {
-		this.adaosClientCorectat = adaosClientCorectat;
-	}
+    public String getPermitSubCmp() {
+        return permitSubCmp;
+    }
 
-	public double getAdaosMinimAcceptat() {
-		return adaosMinimAcceptat;
-	}
+    public void setPermitSubCmp(String permitSubCmp) {
+        this.permitSubCmp = permitSubCmp;
+    }
 
-	public void setAdaosMinimAcceptat(double adaosMinimAcceptat) {
-		this.adaosMinimAcceptat = adaosMinimAcceptat;
-	}
+    public double getCoefCorectie() {
+        return coefCorectie;
+    }
 
-	public int getPonderare() {
-		return ponderare;
-	}
+    public double getPretMediu() {
+        return pretMediu;
+    }
 
-	public void setPonderare(int ponderare) {
-		this.ponderare = ponderare;
-	}
+    public void setPretMediu(double pretMediu) {
+        this.pretMediu = pretMediu;
+    }
 
-	public double getDiscountAg() {
-		return discountAg;
-	}
+    public double getAdaosMediu() {
+        return adaosMediu;
+    }
 
-	public void setDiscountAg(double discountAg) {
-		this.discountAg = discountAg;
-	}
+    public void setAdaosMediu(double adaosMediu) {
+        this.adaosMediu = adaosMediu;
+    }
 
-	public double getDiscountSd() {
-		return discountSd;
-	}
+    public String getUnitMasPretMediu() {
+        return unitMasPretMediu;
+    }
 
-	public void setDiscountSd(double discountSd) {
-		this.discountSd = discountSd;
-	}
+    public void setUnitMasPretMediu(String unitMasPretMediu) {
+        this.unitMasPretMediu = unitMasPretMediu;
+    }
 
-	public double getDiscountDv() {
-		return discountDv;
-	}
+    public void setCoefCorectie(double coefCorectie) {
+        this.coefCorectie = coefCorectie;
+    }
 
-	public void setDiscountDv(double discountDv) {
-		this.discountDv = discountDv;
-	}
+    public String getDepartSintetic() {
+        return departSintetic;
+    }
 
-	public String getPermitSubCmp() {
-		return permitSubCmp;
-	}
+    public void setDepartSintetic(String departSintetic) {
+        this.departSintetic = departSintetic;
+    }
 
-	public void setPermitSubCmp(String permitSubCmp) {
-		this.permitSubCmp = permitSubCmp;
-	}
+    public boolean hasConditii() {
+        return hasConditii;
+    }
 
-	public double getCoefCorectie() {
-		return coefCorectie;
-	}
+    public void setConditii(boolean isConditieAcceptata) {
+        this.hasConditii = isConditieAcceptata;
+    }
 
-	public double getPretMediu() {
-		return pretMediu;
-	}
+    public boolean isRespins() {
+        return isRespins;
+    }
 
-	public void setPretMediu(double pretMediu) {
-		this.pretMediu = pretMediu;
-	}
+    public void setRespins(boolean isRespins) {
+        this.isRespins = isRespins;
+    }
 
-	public double getAdaosMediu() {
-		return adaosMediu;
-	}
+    public double getDeficit() {
+        return deficit;
+    }
 
-	public void setAdaosMediu(double adaosMediu) {
-		this.adaosMediu = adaosMediu;
-	}
+    public void setDeficit(double deficit) {
+        this.deficit = deficit;
+    }
 
-	public String getUnitMasPretMediu() {
-		return unitMasPretMediu;
-	}
+    public double getValTransport() {
+        return valTransport;
+    }
 
-	public void setUnitMasPretMediu(String unitMasPretMediu) {
-		this.unitMasPretMediu = unitMasPretMediu;
-	}
+    public void setValTransport(double valTransport) {
+        this.valTransport = valTransport;
+    }
 
-	public void setCoefCorectie(double coefCorectie) {
-		this.coefCorectie = coefCorectie;
-	}
+    public double getProcTransport() {
+        return procTransport;
+    }
 
-	public String getDepartSintetic() {
-		return departSintetic;
-	}
+    public void setProcTransport(double procTransport) {
+        this.procTransport = procTransport;
+    }
 
-	public void setDepartSintetic(String departSintetic) {
-		this.departSintetic = departSintetic;
-	}
+    public String getDepartAprob() {
+        return departAprob;
+    }
 
-	public boolean hasConditii() {
-		return hasConditii;
-	}
+    public void setDepartAprob(String departAprob) {
+        this.departAprob = departAprob;
+    }
 
-	public void setConditii(boolean isConditieAcceptata) {
-		this.hasConditii = isConditieAcceptata;
-	}
+    public boolean isUmPalet() {
+        return umPalet;
+    }
 
-	public boolean isRespins() {
-		return isRespins;
-	}
+    public void setUmPalet(boolean umPalet) {
+        this.umPalet = umPalet;
+    }
 
-	public void setRespins(boolean isRespins) {
-		this.isRespins = isRespins;
-	}
+    public String getFilialaSite() {
+        return filialaSite;
+    }
 
-	public double getDeficit() {
-		return deficit;
-	}
+    public void setFilialaSite(String filialaSite) {
+        this.filialaSite = filialaSite;
+    }
 
-	public void setDeficit(double deficit) {
-		this.deficit = deficit;
-	}
+    public String getIstoricPret() {
+        if (istoricPret == null)
+            return " ";
 
-	public double getValTransport() {
-		return valTransport;
-	}
+        if (istoricPret.isEmpty())
+            return " ";
 
-	public void setValTransport(double valTransport) {
-		this.valTransport = valTransport;
-	}
-
-	public double getProcTransport() {
-		return procTransport;
-	}
-
-	public void setProcTransport(double procTransport) {
-		this.procTransport = procTransport;
-	}
-
-	public String getDepartAprob() {
-		return departAprob;
-	}
-
-	public void setDepartAprob(String departAprob) {
-		this.departAprob = departAprob;
-	}
-
-	public boolean isUmPalet() {
-		return umPalet;
-	}
-
-	public void setUmPalet(boolean umPalet) {
-		this.umPalet = umPalet;
-	}
-
-	public String getFilialaSite() {
-		return filialaSite;
-	}
-
-	public void setFilialaSite(String filialaSite) {
-		this.filialaSite = filialaSite;
-	}
-
-	public String getIstoricPret() {
-		if (istoricPret == null)
-			return " ";
-
-		if (istoricPret.isEmpty())
-			return " ";
-
-		return istoricPret;
-	}
-
-	public void setIstoricPret(String istoricPret) {
-		this.istoricPret = istoricPret;
-	}
-
-	public String getVechime() {
-		return vechime;
-	}
-
-	public void setVechime(String vechime) {
-		this.vechime = vechime;
-	}
-
-	public String getCategorie() {
-		return categorie;
-	}
-
-	public void setCategorie(String categorie) {
-		this.categorie = categorie;
-	}
-
-	public double getLungime() {
-		return lungime;
-	}
-
-	public void setLungime(double lungime) {
-		this.lungime = lungime;
-	}
-
-	public double getProcT1() {
-		return procT1;
-	}
-
-	public void setProcT1(double procT1) {
-		this.procT1 = procT1;
-	}
-
-	public double getValT1() {
-		return valT1;
-	}
-
-	public void setValT1(double valT1) {
-		this.valT1 = valT1;
-	}	
-	
-	public double getPretFaraTva() {
-		return pretFaraTva;
-	}
-
-	public void setPretFaraTva(double pretFaraTva) {
-		this.pretFaraTva = pretFaraTva;
-	}
-
-	public List<BeanCablu05> getListCabluri() {
-		return listCabluri;
-	}
-
-	public void setListCabluri(List<BeanCablu05> listCabluri) {
-		this.listCabluri = listCabluri;
-	}
-
-	public double getAczcDeLivrat() {
-		return aczcDeLivrat;
-	}
-
-	public void setAczcDeLivrat(double aczcDeLivrat) {
-		this.aczcDeLivrat = aczcDeLivrat;
-	}
-
-	public double getAczcLivrat() {
-		return aczcLivrat;
-	}
-
-	public void setAczcLivrat(double aczcLivrat) {
-		this.aczcLivrat = aczcLivrat;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codArticol == null) ? 0 : codArticol.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ArticolComanda other = (ArticolComanda) obj;
-		if (codArticol == null) {
-			if (other.codArticol != null)
-				return false;
-		} else if (!codArticol.equals(other.codArticol))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "ArticolComanda [nrCrt=" + nrCrt + ", numeArticol=" + numeArticol + ", codArticol=" + codArticol + ", depozit=" + depozit
-				+ ", cantitate=" + cantitate + ", um=" + um + ", pret=" + pret + "]";
-	}
-
-	public static Comparator<ArticolComanda> DepartComparator = new Comparator<ArticolComanda>() {
-
-		public int compare(ArticolComanda depart1, ArticolComanda depart2) {
-
-			String departName1 = "";
-			String departName2 = "";
-
-			if (depart1 != null)
-				departName1 = depart1.getDepart().toUpperCase(Locale.getDefault());
-
-			if (depart2 != null)
-				departName2 = depart2.getDepart().toUpperCase(Locale.getDefault());
-
-			return departName2.compareTo(departName1);
-
-		}
-
-	};
+        return istoricPret;
+    }
+
+    public void setIstoricPret(String istoricPret) {
+        this.istoricPret = istoricPret;
+    }
+
+    public String getVechime() {
+        return vechime;
+    }
+
+    public void setVechime(String vechime) {
+        this.vechime = vechime;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
+    public double getLungime() {
+        return lungime;
+    }
+
+    public void setLungime(double lungime) {
+        this.lungime = lungime;
+    }
+
+    public double getProcT1() {
+        return procT1;
+    }
+
+    public void setProcT1(double procT1) {
+        this.procT1 = procT1;
+    }
+
+    public double getValT1() {
+        return valT1;
+    }
+
+    public void setValT1(double valT1) {
+        this.valT1 = valT1;
+    }
+
+    public double getPretFaraTva() {
+        return pretFaraTva;
+    }
+
+    public void setPretFaraTva(double pretFaraTva) {
+        this.pretFaraTva = pretFaraTva;
+    }
+
+    public List<BeanCablu05> getListCabluri() {
+        return listCabluri;
+    }
+
+    public void setListCabluri(List<BeanCablu05> listCabluri) {
+        this.listCabluri = listCabluri;
+    }
+
+    public double getAczcDeLivrat() {
+        return aczcDeLivrat;
+    }
+
+    public void setAczcDeLivrat(double aczcDeLivrat) {
+        this.aczcDeLivrat = aczcDeLivrat;
+    }
+
+    public double getAczcLivrat() {
+        return aczcLivrat;
+    }
+
+    public void setAczcLivrat(double aczcLivrat) {
+        this.aczcLivrat = aczcLivrat;
+    }
+
+    public String getTipTransport() {
+        return tipTransport;
+    }
+
+    public void setTipTransport(String tipTransport) {
+        this.tipTransport = tipTransport;
+    }
+
+    public ArticolMathaus getArticolMathaus() {
+        return articolMathaus;
+    }
+
+    public void setArticolMathaus(ArticolMathaus articolMathaus) {
+        this.articolMathaus = articolMathaus;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((codArticol == null) ? 0 : codArticol.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ArticolComanda other = (ArticolComanda) obj;
+        if (codArticol == null) {
+            if (other.codArticol != null)
+                return false;
+        } else if (!codArticol.equals(other.codArticol))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ArticolComanda [nrCrt=" + nrCrt + ", numeArticol=" + numeArticol + ", codArticol=" + codArticol + ", depozit=" + depozit
+                + ", cantitate=" + cantitate + ", um=" + um + ", pret=" + pret + "]";
+    }
+
+    public static Comparator<ArticolComanda> DepartComparator = new Comparator<ArticolComanda>() {
+
+        public int compare(ArticolComanda depart1, ArticolComanda depart2) {
+
+            String departName1 = "";
+            String departName2 = "";
+
+            if (depart1 != null)
+                departName1 = depart1.getDepart().toUpperCase(Locale.getDefault());
+
+            if (depart2 != null)
+                departName2 = depart2.getDepart().toUpperCase(Locale.getDefault());
+
+            return departName2.compareTo(departName1);
+
+        }
+
+    };
 
 }

@@ -175,11 +175,11 @@ public class MainMenu extends Activity {
 	public int[] btnImageINFO = new int[] { R.drawable.id_icon, R.drawable.blue_basket_icon, R.drawable.preview_icon, R.drawable.stoc_icon,
 			R.drawable.dollar_icon, R.drawable.despre_icon, R.drawable.exit_icon };
 
-	public String[] btnNamesCVR = { "Utilizator", "Creare comanda", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate",
+	public String[] btnNamesCVR = { "Utilizator",  "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate",
 			"Creare CLP", "Afisare CLP", "Retur paleti", "Stare retur","Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari", "Neincasate",
 			"Stocuri", "Preturi", "Stare comenzi", "Info client", "Delegatii", "Despre", "Iesire" };
 
-	public int[] btnImageCVR = new int[] { R.drawable.id_icon, R.drawable.new_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon,
+	public int[] btnImageCVR = new int[] { R.drawable.id_icon,  R.drawable.blue_basket_icon, R.drawable.modif_icon,
 			R.drawable.preview_icon, R.drawable.simulate, R.drawable.clp, R.drawable.afis_clp, R.drawable.retur_marfa, R.drawable.status_retur_48,
 			R.drawable.retur_comanda, R.drawable.colosseum, R.drawable.data_icon, R.drawable.vanzari, R.drawable.neincasate, R.drawable.stoc_icon, R.drawable.dollar_icon,
 			R.drawable.status, R.drawable.client_info, R.drawable.blank, R.drawable.despre_icon, R.drawable.exit_icon };

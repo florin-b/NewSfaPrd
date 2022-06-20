@@ -6,7 +6,10 @@ package my.logon.screen.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 import enums.EnumZona;
+import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.FurnizorComanda;
@@ -84,6 +87,8 @@ public class DateLivrare {
 	private ObiectivConsilier obiectivConsilier;
 	private String refClient;
 	private TipCmdGed tipComandaGed = TipCmdGed.COMANDA_VANZARE;
+	private String filialeExtraMathaus = "";
+	private List<CostTransportMathaus> costTransportMathaus;
 	private boolean isClientBlocat;
 	private double limitaCredit;
 	
@@ -642,6 +647,22 @@ public class DateLivrare {
 		this.limitaCredit = limitaCredit;
 	}
 
+	public String getFilialeExtraMathaus() {
+		return filialeExtraMathaus;
+	}
+
+	public void setFilialeExtraMathaus(String filialeExtraMathaus) {
+		this.filialeExtraMathaus = filialeExtraMathaus;
+	}
+
+	public List<CostTransportMathaus> getCostTransportMathaus() {
+		return costTransportMathaus;
+	}
+
+	public void setCostTransportMathaus(List<CostTransportMathaus> costTransportMathaus) {
+		this.costTransportMathaus = costTransportMathaus;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -697,6 +718,8 @@ public class DateLivrare {
 		tipComandaGed = TipCmdGed.COMANDA_VANZARE;
 		isClientBlocat = false;
 		limitaCredit = 0;
+		filialeExtraMathaus = "";
+		costTransportMathaus = null;
 
 	}
 

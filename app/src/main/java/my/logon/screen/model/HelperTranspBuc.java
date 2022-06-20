@@ -11,14 +11,16 @@ public class HelperTranspBuc {
 
 		eliminaCostTransportZoneBuc(listArticole);
 
+
 		if (zonaBuc == EnumZona.ZONA_A || zonaBuc == EnumZona.ZONA_B1 || zonaBuc == EnumZona.ZONA_B2) {
-			ArticolComanda articolTransport = generateArticolTransport(zonaBuc);
+			String filialaArt = getFilialaArt(listArticole);
+			ArticolComanda articolTransport = generateArticolTransport(zonaBuc, filialaArt);
 			listArticole.add(articolTransport);
 		}
 
 	}
 
-	private static ArticolComanda generateArticolTransport(EnumZona zonaBuc) {
+	private static ArticolComanda generateArticolTransport(EnumZona zonaBuc, String filialaArt) {
 
 		ArticolComanda articolComanda = new ArticolComanda();
 
@@ -56,6 +58,7 @@ public class HelperTranspBuc {
 		articolComanda.setTipArt("");
 		articolComanda.setDepart(codDepart);
 		articolComanda.setDepartSintetic(codDepart);
+		articolComanda.setFilialaSite(filialaArt);
 
 		return articolComanda;
 
@@ -200,15 +203,31 @@ public class HelperTranspBuc {
 	}
 
 	public static void eliminaCostTransportZoneBuc(List<ArticolComanda> listArticole) {
-		ArticolComanda articolTransportA = generateArticolTransport(EnumZona.ZONA_A);
+		ArticolComanda articolTransportA = generateArticolTransport(EnumZona.ZONA_A, "");
 
 		if (listArticole.contains(articolTransportA))
 			listArticole.remove(articolTransportA);
 
-		ArticolComanda articolTransportB = generateArticolTransport(EnumZona.ZONA_B1);
+		ArticolComanda articolTransportB = generateArticolTransport(EnumZona.ZONA_B1, "");
 
 		if (listArticole.contains(articolTransportB))
 			listArticole.remove(articolTransportB);
+
+	}
+
+	private static String getFilialaArt(List<ArticolComanda> listArticole) {
+
+		String filialaArt = UserInfo.getInstance().getUnitLog();
+
+		for (ArticolComanda articol : listArticole) {
+			if (articol.getFilialaSite() != null && !articol.getFilialaSite().isEmpty()) {
+				filialaArt = articol.getFilialaSite();
+				break;
+			}
+
+		}
+
+		return filialaArt;
 
 	}
 

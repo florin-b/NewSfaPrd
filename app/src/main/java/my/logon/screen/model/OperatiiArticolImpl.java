@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import my.logon.screen.beans.AntetCmdMathaus;
 import my.logon.screen.beans.ArticolCant;
 import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.beans.BeanArticolSimulat;
@@ -20,6 +21,10 @@ import my.logon.screen.beans.BeanArticolStoc;
 import my.logon.screen.beans.BeanCablu05;
 import my.logon.screen.beans.BeanGreutateArticol;
 import my.logon.screen.beans.BeanParametruPretGed;
+import my.logon.screen.beans.ComandaMathaus;
+import my.logon.screen.beans.CostTransportMathaus;
+import my.logon.screen.beans.DateArticolMathaus;
+import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumUnitMas;
@@ -139,6 +144,19 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		numeComanda = EnumArticoleDAO.GET_STOC_CUSTODIE;
 		this.params = params;
 		performOperation();
+	}
+
+	public void getStocMathaus(HashMap<String, String> params) {
+		numeComanda = EnumArticoleDAO.GET_STOC_MATHAUS;
+		this.params = params;
+		performOperation();
+	}
+
+	public void getInfoPretMathaus(HashMap<String, String> params) {
+		numeComanda = EnumArticoleDAO.GET_INFOPRET_MATHAUS;
+		this.params = params;
+		performOperation();
+
 	}
 
 	public void getArticoleCant(HashMap<String, String> params) {
@@ -420,6 +438,152 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
 		return jsonArray.toString();
 	}
+
+	public String serializeCostTransportMathaus(List<CostTransportMathaus> costTransport) {
+
+		JSONArray jsonArray = new JSONArray();
+
+		try {
+
+			for (CostTransportMathaus cost : costTransport) {
+
+				JSONObject object = new JSONObject();
+				object.put("filiala", cost.getFiliala());
+				object.put("tipTransp", cost.getTipTransp());
+				object.put("valTransp", cost.getValTransp());
+				object.put("codArtTransp", cost.getCodArtTransp());
+				jsonArray.put(object);
+
+			}
+		} catch (JSONException e) {
+
+			e.printStackTrace();
+		}
+
+		return jsonArray.toString();
+
+	}
+
+	public LivrareMathaus deserializeLivrareMathaus(String result) {
+
+		LivrareMathaus livrareMathaus = new LivrareMathaus();
+
+		try {
+
+			JSONObject jsonObject = new JSONObject((String) result);
+
+			livrareMathaus.setComandaMathaus(deserializeStocMathaus(jsonObject.getString("comandaMathaus")));
+
+			List<CostTransportMathaus> listCostTransport = new ArrayList<CostTransportMathaus>();
+
+			JSONArray jsonArrayTransp = new JSONArray(jsonObject.getString("costTransport"));
+
+			for (int i = 0; i < jsonArrayTransp.length(); i++) {
+
+				JSONObject transpObject = jsonArrayTransp.getJSONObject(i);
+
+				CostTransportMathaus cost = new CostTransportMathaus();
+				cost.setFiliala(transpObject.getString("filiala"));
+				cost.setTipTransp(transpObject.getString("tipTransp"));
+				cost.setValTransp(transpObject.getString("valTransp").equals("null") ? "0" : transpObject.getString("valTransp"));
+				cost.setCodArtTransp(transpObject.getString("codArtTransp").equals("null") ? "0" : transpObject.getString("codArtTransp"));
+				listCostTransport.add(cost);
+
+			}
+
+			livrareMathaus.setCostTransport(listCostTransport);
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return livrareMathaus;
+	}
+
+	public ComandaMathaus deserializeStocMathaus(String result) {
+
+		ComandaMathaus comandaMathaus = new ComandaMathaus();
+		List<DateArticolMathaus> listArticole = new ArrayList<DateArticolMathaus>();
+
+		try {
+
+			JSONObject jsonObject = new JSONObject((String) result);
+			comandaMathaus.setSellingPlant(jsonObject.getString("sellingPlant"));
+
+			JSONArray jsonArrayLoc = new JSONArray(jsonObject.getString("deliveryEntryDataList"));
+
+			for (int i = 0; i < jsonArrayLoc.length(); i++) {
+
+				JSONObject articolObject = jsonArrayLoc.getJSONObject(i);
+
+				DateArticolMathaus articol = new DateArticolMathaus();
+				articol.setDeliveryWarehouse(articolObject.getString("deliveryWarehouse"));
+				articol.setProductCode(articolObject.getString("productCode"));
+				articol.setQuantity(Double.parseDouble(articolObject.getString("quantity")));
+				articol.setUnit(articolObject.getString("unit"));
+
+				listArticole.add(articol);
+			}
+
+			comandaMathaus.setDeliveryEntryDataList(listArticole);
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return comandaMathaus;
+	}
+
+	public String serializeAntetCmdMathaus(AntetCmdMathaus antetComanda) {
+
+		JSONObject jsonAntet = new JSONObject();
+
+		try {
+			jsonAntet.put("localitate", antetComanda.getLocalitate());
+			jsonAntet.put("codJudet", antetComanda.getCodJudet());
+			jsonAntet.put("codClient", antetComanda.getCodClient());
+			jsonAntet.put("tipPers", antetComanda.getTipPers());
+			jsonAntet.put("depart", antetComanda.getDepart());
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonAntet.toString();
+
+	}
+
+	public String serializeComandaMathaus(ComandaMathaus comandaMathaus) {
+
+		JSONArray jsonArray = new JSONArray();
+		JSONObject jsonObject = null;
+		JSONObject jsonComanda = new JSONObject();
+
+		try {
+
+			jsonComanda.put("sellingPlant", comandaMathaus.getSellingPlant());
+
+			for (DateArticolMathaus articol : comandaMathaus.getDeliveryEntryDataList()) {
+				jsonObject = new JSONObject();
+				jsonObject.put("productCode", articol.getProductCode());
+				jsonObject.put("quantity", articol.getQuantity());
+				jsonObject.put("unit", articol.getUnit());
+				jsonObject.put("valPoz", String.valueOf(articol.getValPoz()));
+				jsonObject.put("tip2", articol.getTip2());
+				jsonArray.put(jsonObject);
+			}
+
+			jsonComanda.put("deliveryEntryDataList", jsonArray);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonComanda.toString();
+
+	}
+
+
 
 	@Override
 	public String serializeListArtSim(List<BeanArticolSimulat> listArticole) {

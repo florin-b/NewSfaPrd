@@ -175,6 +175,11 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
 	}
 
+	public void getLivrariMathaus(HashMap<String, String> params) {
+		numeComanda = EnumComenziDAO.GET_LIVRARI_MATHAUS;
+		performOperation(params);
+	}
+
 	private void performOperation(HashMap<String, String> params) {
 		AsyncTaskListener contextListener = (AsyncTaskListener) ComenziDAO.this;
 		AsyncTaskWSCall call = new AsyncTaskWSCall(context, contextListener, numeComanda.getComanda(), params);

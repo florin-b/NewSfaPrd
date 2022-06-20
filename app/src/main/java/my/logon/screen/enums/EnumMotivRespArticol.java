@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum EnumMotivRespArticol {
-	M900("1", "Lipsuri"), M901("2", "Deteriorate"), M902("3", "Incurcate"), M903("4", "Viciu furnizor"), M904("5", "Caracteristici site diferite"), M905(
-			"6", "Exceptie DZ");
+	M900("1", "Lipsuri"), M901("2", "Deteriorate"), M902("3", "Incurcate"), M903("4", "Viciu furnizor - lipsuri"), M904("5", "Caracteristici site diferite"), M905(
+			"6", "Exceptie DZ"), M906("7", "Viciu furnizor - deteriorate");
 
 	private String cod;
 	private String nume;

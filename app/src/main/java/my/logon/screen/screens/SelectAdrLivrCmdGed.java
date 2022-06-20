@@ -108,7 +108,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private String[] tipPlataContract = {"LC - Limita credit", "N - Numerar in filiala", "OPA - OP avans", "R - ramburs"};
     private String[] tipPlataClBlocatIP = {"N - Numerar in filiala",  "OPA - OP avans", "R - ramburs"};
     private String[] tipPlataClBlocatNonIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
-    private String[] tipPlataRestIP = {"N - Numerar in filiala", "OPA - OP avans"};
+    private String[] tipPlataRestIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
     private String[] tipPlataRestNonIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
     private String[] tipPlataDL = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans"};
 
@@ -279,6 +279,16 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransportIP);
             else {
                 adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransport);
+            }
+
+            if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_COMANDA)) {
+                List<String> itemsTransp = new ArrayList<>();
+                for (int ii = 0; ii < adapterSpinnerTransp.getCount(); ii++) {
+                    if (!adapterSpinnerTransp.getItem(ii).startsWith("TFRN")) {
+                        itemsTransp.add( (String) adapterSpinnerTransp.getItem(ii));
+                    }
+                }
+                adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemsTransp);
             }
 
             if (DateLivrare.getInstance().isClientBlocat()) {

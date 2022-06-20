@@ -100,14 +100,29 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal" >
 
-        <ListView
-            android:id="@android:id/list"
+        <include
+            android:id="@+id/layout_articol_mathaus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="0.40"
-            android:choiceMode="singleChoice"
-            android:drawSelectorOnTop="false" />
+            android:layout_weight="0.5"
+            layout="@layout/layout_articol_mathaus"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layout_list_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4" >
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.40"
+                android:choiceMode="singleChoice"
+                android:drawSelectorOnTop="false" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/resLayout"

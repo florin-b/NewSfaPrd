@@ -285,6 +285,27 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layoutFilialaClp"
+                        style="@style/dateLivrareDlLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            style="@style/dateLivrareDlLabel"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:text="Filiala clp " />
+
+                        <TextView
+                            android:id="@+id/textFilialaClp"
+                            style="@style/dateLivrareDlValori"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/layoutNrCmdClp"
                         style="@style/dateLivrareDlLayout"
                         android:layout_width="match_parent"

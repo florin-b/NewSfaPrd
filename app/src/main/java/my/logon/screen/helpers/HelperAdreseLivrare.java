@@ -51,6 +51,13 @@ public class HelperAdreseLivrare {
 
 	}
 
+	public static String[] eliminaElement(String[] arrayElem, String element) {
+		List<String> listArray = new ArrayList<>(Arrays.asList(arrayElem));
+		listArray.removeIf(item -> item.startsWith(element));
+
+		return listArray.stream().toArray(n -> new String[n]);
+	}
+
 	public static boolean isAdresaLivrareRapida() {
 		return localitatiAcceptate.toUpperCase().contains(DateLivrare.getInstance().getOras().toUpperCase());
 	}

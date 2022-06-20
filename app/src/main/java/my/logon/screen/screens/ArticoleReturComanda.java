@@ -387,7 +387,7 @@ public class ArticoleReturComanda extends Fragment implements ListaArtReturListe
 
 			String codMotiv = EnumMotivRespArticol.getCodRetur(spinnerMotivRetur.getSelectedItem().toString());
 
-			if (dateDiff > 30 && !codMotiv.equals("4")) {
+			if (dateDiff > 30 && !codMotiv.equals("4") && !codMotiv.equals("7")) {
 				showInfoMotivReturDialog();
 				return false;
 			}

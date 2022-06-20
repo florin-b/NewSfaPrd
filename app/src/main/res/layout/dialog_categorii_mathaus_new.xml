@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.4"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/spinnerCategorii"
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutSubcategorii"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"></LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_tip_art"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginTop="20dip"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dip"
+                android:text="Articole"
+                android:textColor="#616a6b"
+                android:textSize="17sp" />
+
+            <RadioButton
+                android:id="@+id/radio_site"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dip"
+                android:checked="true"
+                android:text="Site"
+                android:textColor="#616a6b" />
+
+            <RadioButton
+                android:id="@+id/radio_nd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ND"
+                android:textColor="#616a6b" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/textCodArticol"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:inputType="text" />
+
+            <RadioGroup
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_cod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Cod" />
+
+                <RadioButton
+                    android:id="@+id/radio_nume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nume" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnCauta"
+                style="@style/ok_button"
+                android:layout_width="0dip"
+                android:layout_height="40dip"
+                android:layout_gravity="right"
+                android:layout_marginRight="5dip"
+                android:layout_marginBottom="5dip"
+                android:layout_weight="0.1"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="40dip"
+                android:paddingRight="40dip"
+                android:text="Cauta" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/gridItems"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="10dip"
+            android:layout_weight="0.5"
+            android:columnWidth="320dp"
+            android:fadeScrollbars="false"
+            android:gravity="center"
+            android:horizontalSpacing="5dp"
+            android:numColumns="auto_fit"
+            android:scrollbarFadeDuration="0"
+            android:scrollbars="vertical"
+            android:smoothScrollbar="true"
+            android:stretchMode="spacingWidthUniform"
+            android:verticalSpacing="10dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutPagination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnFirst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:cropToPadding="false"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/gofirst"
+                android:visibility="invisible"></ImageButton>
+
+            <ImageButton
+                android:id="@+id/btnPrev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:cropToPadding="false"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/goback"
+                android:visibility="invisible"></ImageButton>
+
+            <TextView
+                android:id="@+id/textNrPagini"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:textSize="17sp"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:cropToPadding="false"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/forward"
+                android:visibility="invisible"></ImageButton>
+
+            <ImageButton
+                android:id="@+id/btnLast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:cropToPadding="false"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/golast"
+                android:visibility="invisible"></ImageButton>
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="40dip"
+                android:layout_weight="0.3" />
+
+            <Button
+                android:id="@+id/btnOk"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:layout_gravity="right"
+                android:layout_marginRight="5dip"
+                android:layout_marginBottom="5dip"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="40dip"
+                android:paddingRight="40dip"
+                android:text="Inchide" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

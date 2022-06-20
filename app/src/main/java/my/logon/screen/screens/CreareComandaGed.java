@@ -1332,7 +1332,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
 		HelperCostDescarcare.eliminaCostDescarcare(ListaArticoleComandaGed.getInstance().getListArticoleComanda());
 
-		if ((DateLivrare.getInstance().getTransport().equalsIgnoreCase("TRAP") || DateLivrare.getInstance().getTransport().equalsIgnoreCase("TCLI"))
+		if ((DateLivrare.getInstance().getTransport().equalsIgnoreCase("TRAP") || DateLivrare.getInstance().getTransport().equalsIgnoreCase("TCLI") ||
+				DateLivrare.getInstance().getTransport().equalsIgnoreCase("TFRN") || DateLivrare.getInstance().getTransport().equalsIgnoreCase("TERT"))
 				&& !isExceptieComandaIP() && !UtilsUser.isAV_SD_01() && !isComandaPaletiCVO()) {
 
 			String codFurnizor = " ";
@@ -1399,7 +1400,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 		verificaPaletiComanda(costDescarcare.getArticolePaleti());
 
 		if (!costDescarcare.getArticolePaleti().isEmpty()) {
-			costDescarcare.getArticoleDescarcare().get(0).setCantitate(0);
+
+			for (int ii = 0; ii < costDescarcare.getArticoleDescarcare().size(); ii++)
+				costDescarcare.getArticoleDescarcare().get(ii).setCantitate(0);
 
 			int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.65);
 			int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
@@ -2406,7 +2409,10 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
 		String depozitPalet = HelperCostDescarcare.getDepozitPalet(ListaArticoleComandaGed.getInstance().getListArticoleComanda(),
 				articolPalet.getCodArticol());
-		ArticolComanda articol = HelperCostDescarcare.getArticolPalet(articolPalet, depozitPalet);
+
+		String unitlogPalet = HelperCostDescarcare.getUnitlogPalet(ListaArticoleComandaGed.getInstance().getListArticoleComanda(), articolPalet.getCodArticol());
+
+		ArticolComanda articol = HelperCostDescarcare.getArticolPalet(articolPalet, depozitPalet, unitlogPalet);
 		ListaArticoleComandaGed.getInstance().addArticolComanda(articol);
 		adapter.notifyDataSetChanged();
 

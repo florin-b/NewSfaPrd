@@ -337,6 +337,9 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             tipTransport = HelperAdreseLivrare.adaugaTransportCurierRapid(tipTransport);
         }
 
+        if (isComandaACZC())
+            tipTransport = HelperAdreseLivrare.eliminaElement(tipTransport, "TFRN");
+
         spinnerTransp = (Spinner) findViewById(R.id.spinnerTransp);
         adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransport);
         adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -972,6 +975,10 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         return DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.LIVRARE_CUSTODIE);
     }
 
+    private boolean isComandaACZC(){
+        return DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_COMANDA);
+    }
+
     private void fillJudeteClient(String arrayJudete) {
 
         if (listJudete != null)
@@ -1538,6 +1545,14 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
         setListenerTextLocalitate();
 
+        getFilialaLivrareMathaus();
+
+    }
+
+    private void getFilialaLivrareMathaus() {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("codJudet", DateLivrare.getInstance().getCodJudet());
+        operatiiAdresa.getFilialaLivrareMathaus(params);
     }
 
     private void setListenerTextLocalitate() {
@@ -2034,6 +2049,8 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
         setSpinnerTonajValue(adresaLivrare.getTonaj());
 
+        getFilialaLivrareMathaus();
+
     }
 
     private void setAdresaLivrare(Address address) {
@@ -2169,6 +2186,10 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                 break;
             case GET_LOCALITATI_LIVRARE_RAPIDA:
                 HelperAdreseLivrare.setLocalitatiAcceptate((String) result);
+                break;
+            case GET_FILIALA_MATHAUS:
+                CreareComanda.filialaLivrareMathaus = ((String) result).split(",")[0];
+                CreareComanda.filialeArondateMathaus = (String) result;
                 break;
             default:
                 break;
