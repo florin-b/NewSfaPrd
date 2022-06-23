@@ -467,12 +467,6 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
             clearCautaView();
             tipAfisArticole = AfisArtMathaus.CATEGORIE;
 
-            /*
-             * if (!this.categorieCurenta.equals("0")) // diverse
-             * radioTipArt.setVisibility(View.VISIBLE); else
-             * radioTipArt.setVisibility(View.INVISIBLE);
-             */
-
             getArticole(categorie.getCodHybris(), paginaCurenta);
 
         }

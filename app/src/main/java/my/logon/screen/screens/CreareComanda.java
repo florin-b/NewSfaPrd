@@ -55,6 +55,7 @@ import my.logon.screen.adapters.ArticoleCreareAdapter;
 import my.logon.screen.beans.AntetCmdMathaus;
 import my.logon.screen.beans.ArticolCalculDesc;
 import my.logon.screen.beans.ArticolPalet;
+import my.logon.screen.beans.ArticolTaxaVerde;
 import my.logon.screen.beans.BeanArticolStoc;
 import my.logon.screen.beans.ComandaMathaus;
 import my.logon.screen.beans.CostDescarcare;
@@ -368,7 +369,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
             case 0:
                 if (nrArticole == 0) {
-
                     showTipComandaDialog();
                 } else {
                     Toast.makeText(getApplicationContext(), "Stergeti mai intai toate articolele!", Toast.LENGTH_SHORT).show();
@@ -991,13 +991,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                             return;
                         }
 
-                        articoleFinaleStr = prepareArtForDelivery();
-
-                        if (articoleFinaleStr.equals("")) {
-                            Toast.makeText(getApplicationContext(), "Eroare salvare, repetati comanda!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
                         String cmdSAP = "-1"; // se foloseste doar la modificare
                         // comanda
 
@@ -1289,6 +1282,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             String tipTranspTaxaVerde = "";
 
             List<ArticolComanda> listaArticole = ListaArticoleComanda.getInstance().getListArticoleComanda();
+            List<ArticolTaxaVerde> listArticoleTVerde = new ArrayList<>();
 
             // sortare articole dupa departament
             Collections.sort(listaArticole, ArticolComanda.DepartComparator);
@@ -1319,14 +1313,13 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                         valCondPret = Double.valueOf(tokPret[1].replace(',', '.').trim());
                         if (valCondPret != 0) {
                             if (tokPret[0].toUpperCase(Locale.getDefault()).contains("VERDE")) {
-                                dblLocalTaxaVerde += valCondPret;
-
-                                if (valCondPret > 0) {
-                                    filialaTaxaVerde = articol.getFilialaSite();
-                                    depozitTaxaVerde = articol.getDepozit();
-                                    departTaxaVerde = articol.getDepart();
-                                    tipTranspTaxaVerde = articol.getTipTransport();
-                                }
+                                ArticolTaxaVerde artVerde = new ArticolTaxaVerde();
+                                artVerde.setValoare(valCondPret);
+                                artVerde.setFiliala(articol.getFilialaSite());
+                                artVerde.setDepozit(articol.getDepozit());
+                                artVerde.setDepart(articol.getDepart());
+                                artVerde.setTipTransp(articol.getTipTransport());
+                                listArticoleTVerde.add(artVerde);
                             }
 
                         }
@@ -1421,35 +1414,35 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
             // adaugare material taxa verde
             if (CreareComanda.canalDistrib.equals("10")) {
-                if (dblLocalTaxaVerde > 0) {
 
-                    ArticolComanda articolCmd = new ArticolComanda();
-                    articolCmd.setCodArticol("000000000000000000");
-                    articolCmd.setCantitate(1.0);
-                    articolCmd.setDepozit(depozitTaxaVerde);
-                    articolCmd.setPretUnit(dblLocalTaxaVerde);
-                    articolCmd.setProcent(0);
-                    articolCmd.setUm("BUC");
-                    articolCmd.setProcentFact(0);
-                    articolCmd.setConditie(false);
-                    articolCmd.setDiscClient(0);
-                    articolCmd.setProcAprob(0);
-                    articolCmd.setMultiplu(1);
-                    articolCmd.setPret(dblLocalTaxaVerde);
-                    articolCmd.setInfoArticol(" ");
-                    articolCmd.setCantUmb(1);
-                    articolCmd.setUmb("BUC");
-                    articolCmd.setDepart(departTaxaVerde);
-                    articolCmd.setObservatii("");
-                    articolCmd.setIstoricPret("");
-                    articolCmd.setTipTransport(tipTranspTaxaVerde);
-                    articolCmd.setFilialaSite(filialaTaxaVerde);
-                    listArticole.add(articolCmd);
+                if (!listArticoleTVerde.isEmpty()) {
 
-                    retVal += "000000000000000000" + "#" + "1" + "#" + " " + "#" + String.valueOf(dblLocalTaxaVerde) + "#" + "0" + "#" + "BUC" + "#"
-                            + "0" + "#" + " " + "#" + "0" + "#" + "0" + "#" + "1" + "#" + String.valueOf(dblLocalTaxaVerde) + "#" + " " + "#" + "1"
-                            + "#" + "BUC" + "@";
+                    List<ArticolTaxaVerde> articoleVerde = HelperCreareComanda.getArticoleTVerde(listArticoleTVerde);
 
+                    for (ArticolTaxaVerde artVerde : articoleVerde){
+                        ArticolComanda articolCmd = new ArticolComanda();
+                        articolCmd.setCodArticol("000000000000000000");
+                        articolCmd.setCantitate(1.0);
+                        articolCmd.setDepozit(artVerde.getDepozit());
+                        articolCmd.setPretUnit(artVerde.getValoare());
+                        articolCmd.setProcent(0);
+                        articolCmd.setUm("BUC");
+                        articolCmd.setProcentFact(0);
+                        articolCmd.setConditie(false);
+                        articolCmd.setDiscClient(0);
+                        articolCmd.setProcAprob(0);
+                        articolCmd.setMultiplu(1);
+                        articolCmd.setPret(artVerde.getValoare());
+                        articolCmd.setInfoArticol(" ");
+                        articolCmd.setCantUmb(1);
+                        articolCmd.setUmb("BUC");
+                        articolCmd.setDepart(artVerde.getDepart());
+                        articolCmd.setObservatii("");
+                        articolCmd.setIstoricPret("");
+                        articolCmd.setTipTransport(artVerde.getTipTransp());
+                        articolCmd.setFilialaSite(artVerde.getFiliala());
+                        listArticole.add(articolCmd);
+                    }
                 }
             }
 

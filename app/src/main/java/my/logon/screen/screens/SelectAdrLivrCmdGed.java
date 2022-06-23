@@ -1048,7 +1048,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private void performGetJudete() {
 
         if (UtilsUser.isUserSite() || CreareComandaGed.tipClient.equals("IP") || !DateLivrare.getInstance().getCodJudet().isEmpty() || isComandaClp()
-                || UtilsUser.isUserIP()) {
+                || isComandaDl()  || UtilsUser.isUserIP()) {
             fillJudeteClient(EnumJudete.getRegionCodes());
 
         } else {

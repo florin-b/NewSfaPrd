@@ -2468,12 +2468,9 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
             case GET_STOC_DEPOZIT:
                 listArtStoc((String) result);
                 break;
-
             case GET_PRET:
                 listArtPret((String) result);
                 break;
-
-
             case GET_ARTICOLE_STATISTIC:
                 ((TextView) findViewById(R.id.textAfisStatistic)).setVisibility(View.VISIBLE);
                 listArticoleStatistic = opArticol.deserializeArticoleVanzare((String) result);
