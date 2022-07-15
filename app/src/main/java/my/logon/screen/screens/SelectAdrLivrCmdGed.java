@@ -1167,7 +1167,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
                 }
 
-                if (rawTipPlataStr.toLowerCase().contains("numerar")) {
+                if (rawTipPlataStr.toLowerCase().contains("numerar") || rawTipPlataStr.toLowerCase().contains("ramburs")) {
                     checkAviz.setChecked(false);
                     checkAviz.setEnabled(false);
                 } else

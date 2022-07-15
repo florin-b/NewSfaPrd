@@ -942,22 +942,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     }
 
     private void performGetJudete() {
-
-        if (isComandaClp() || isComandaBV() || isComandaDl() || DateLivrare.getInstance().isClientFurnizor() || isLivrareCustodie()) {
-            fillJudeteClient(EnumJudete.getRegionCodes());
-
-        } else {
-            String unitLog = UserInfo.getInstance().getUnitLog();
-
-            if (unitLog.equals("NN10"))
-                unitLog = "AG10";
-
-            HashMap<String, String> params = new HashMap<String, String>();
-            params.put("filiala", unitLog);
-
-            AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
-            call.getCallResultsSyncActivity();
-        }
+        fillJudeteClient(EnumJudete.getRegionCodes());
 
     }
 

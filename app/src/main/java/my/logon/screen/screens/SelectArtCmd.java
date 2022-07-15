@@ -359,8 +359,17 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         if (isLivrareCustodie())
             return;
 
+        List<String> departamenteComanda = DepartamentAgent.getDepartamenteAgent();
+
+        if (isComandaDL())
+            departamenteComanda.remove("Mathaus");
+        else if (!CreareComanda.filialeArondateMathaus.contains(UserInfo.getInstance().getUnitLog())) {
+            departamenteComanda.clear();
+            departamenteComanda.add("Mathaus");
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item,
-                DepartamentAgent.getDepartamenteAgent());
+                departamenteComanda);
 
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.spinner_layout, null);

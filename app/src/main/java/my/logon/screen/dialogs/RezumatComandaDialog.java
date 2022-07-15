@@ -170,4 +170,47 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
 	}
 
+	@Override
+	public void adaugaArticol(ArticolComanda articolComanda) {
+
+		List<ArticolComanda> listArticoleComanda;
+		if (canalDistrib.equals("10"))
+			listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
+		else
+			listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleComanda();
+
+		listArticoleComanda.add(articolComanda);
+
+		if (listener != null)
+			listener.comandaEliminata();
+
+
+	}
+
+	@Override
+	public void eliminaArticol(ArticolComanda articolComanda) {
+
+		List<ArticolComanda> listArticoleComanda;
+		if (canalDistrib.equals("10"))
+			listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
+		else
+			listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleComanda();
+
+		Iterator<ArticolComanda> listIterator = listArticoleComanda.iterator();
+
+		while (listIterator.hasNext()) {
+			ArticolComanda articol = listIterator.next();
+
+			if (articol.getCodArticol().equals(articolComanda.getCodArticol())) {
+				listIterator.remove();
+				break;
+			}
+		}
+
+		if (listener != null)
+			listener.comandaEliminata();
+
+
+	}
+
 }

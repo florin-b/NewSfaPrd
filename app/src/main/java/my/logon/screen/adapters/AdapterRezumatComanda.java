@@ -37,6 +37,7 @@ public class AdapterRezumatComanda extends BaseAdapter {
     private String[] tipTransportArray = {"TRAP", "TCLI"};
     private String tipTransportCmd;
     private String filialeArondate;
+    private ArticolComanda articolTransport;
 
     public AdapterRezumatComanda(Context context, List<RezumatComanda> listComenzi, List<CostTransportMathaus> costTransport, String tipTransportCmd, String filialeArondate) {
         this.context = context;
@@ -101,6 +102,10 @@ public class AdapterRezumatComanda extends BaseAdapter {
             viewHolder.tipTransport.setVisibility(View.GONE);
             viewHolder.spinnerTransport.setVisibility(View.VISIBLE);
 
+            String tipTransSelected = getTransportArticole(rezumat);
+            if (tipTransSelected != null && !tipTransSelected.trim().isEmpty())
+                tipTranspArt = tipTransSelected;
+
             if (tipTranspArt.equals("TRAP"))
                 viewHolder.spinnerTransport.setSelection(0);
             else if (tipTranspArt.equals("TCLI")) {
@@ -112,16 +117,31 @@ public class AdapterRezumatComanda extends BaseAdapter {
             setTransportArticole(rezumat, tipTranspArt);
         }
 
-        viewHolder.spinnerTransport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        setListenerSpinnerTransport(viewHolder.spinnerTransport, rezumat, viewHolder);
+        setListenerEliminaBtn(viewHolder.stergeComandaBtn, position);
+
+        return convertView;
+
+    }
+
+    private void setListenerSpinnerTransport(Spinner spinnerTransport, RezumatComanda rezumat, ViewHolder viewHolder) {
+
+        spinnerTransport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tipTransportSelected = (String) parent.getAdapter().getItem(position);
                 setTransportArticole(rezumat, tipTransportSelected);
 
-                if (tipTransportSelected.equals("TCLI"))
+                if (tipTransportSelected.equals("TCLI")) {
+                    eliminaArticolTransport(rezumat, viewHolder);
                     viewHolder.textTransport.setVisibility(View.INVISIBLE);
-                else
+                } else {
                     viewHolder.textTransport.setVisibility(View.VISIBLE);
+                    adaugaArticolTransport(rezumat);
+                }
+
+
             }
 
             @Override
@@ -129,10 +149,52 @@ public class AdapterRezumatComanda extends BaseAdapter {
 
             }
         });
+    }
 
-        setListenerEliminaBtn(viewHolder.stergeComandaBtn, position);
 
-        return convertView;
+    private void eliminaArticolTransport(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
+
+        Iterator<ArticolComanda> artIterator = rezumatComanda.getListArticole().iterator();
+
+        while (artIterator.hasNext()) {
+
+            ArticolComanda artCom = artIterator.next();
+
+            if (isArtTransp(artCom.getNumeArticol())) {
+                articolTransport = artCom;
+                artIterator.remove();
+
+                if (listener != null)
+                    listener.eliminaArticol(articolTransport);
+
+                break;
+            }
+
+        }
+
+    }
+
+
+    private boolean isArtTransp(String numeArticol) {
+        return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
+    }
+
+    private void adaugaArticolTransport(RezumatComanda rezumatComanda) {
+
+        boolean artTransp = false;
+
+        for (ArticolComanda art : rezumatComanda.getListArticole()) {
+            if (isArtTransp(art.getNumeArticol()))
+                artTransp = true;
+        }
+
+        if (!artTransp && articolTransport != null) {
+            rezumatComanda.getListArticole().add(articolTransport);
+
+            if (listener != null)
+                listener.adaugaArticol(articolTransport);
+        }
+
 
     }
 
@@ -145,6 +207,17 @@ public class AdapterRezumatComanda extends BaseAdapter {
             }
 
         }
+
+    }
+
+    private String getTransportArticole(RezumatComanda rezumatComanda) {
+
+        for (ArticolComanda art : rezumatComanda.getListArticole()) {
+            if (art.getTipTransport() != null)
+                return art.getTipTransport();
+        }
+
+        return null;
 
     }
 
