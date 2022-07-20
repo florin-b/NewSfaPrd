@@ -363,9 +363,17 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
         if (isComandaDL())
             departamenteComanda.remove("Mathaus");
-        else if (!CreareComanda.filialeArondateMathaus.contains(UserInfo.getInstance().getUnitLog())) {
-            departamenteComanda.clear();
-            departamenteComanda.add("Mathaus");
+        else if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_VANZARE || DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_LIVRARE) {
+
+            if (!CreareComanda.filialeArondateMathaus.contains(UserInfo.getInstance().getUnitLog())) {
+                departamenteComanda.clear();
+                departamenteComanda.add("Mathaus");
+                DateLivrare.getInstance().setTipComandaDistrib(TipCmdDistrib.COMANDA_LIVRARE);
+                DateLivrare.getInstance().setCodFilialaCLP(CreareComanda.filialaLivrareMathaus);
+            }else {
+                DateLivrare.getInstance().setTipComandaDistrib(TipCmdDistrib.COMANDA_VANZARE);
+                DateLivrare.getInstance().setCodFilialaCLP("");
+            }
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item,
@@ -554,7 +562,11 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                 listUmVanz.add(tempUmVanz);
                 spinnerUnitMas.setAdapter(adapterUmVanz);
 
-                params.put("filiala", CreareComanda.filialaAlternativa);
+                String filialaStocMathaus = CreareComanda.filialaAlternativa;
+                if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_LIVRARE)
+                    filialaStocMathaus = DateLivrare.getInstance().getCodFilialaCLP();
+
+                params.put("filiala", filialaStocMathaus);
                 params.put("codArticol", codArticol);
                 params.put("um", umVanz);
 
@@ -571,8 +583,10 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         String strStoc = dateArticol.getQuantity() + "#" + dateArticol.getUnit() + "#1#";
         strStoc = dateArticol.getQuantity() + "#" + dateArticol.getUnit() + "#1#";
 
-        if (dateArticol.getQuantity() > 0)
+        if (dateArticol.getQuantity() > 0) {
             listArtStoc(strStoc);
+            articolMathaus.setTip2("S");
+        }
         else {
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");

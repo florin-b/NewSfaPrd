@@ -114,6 +114,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
     private TextView textClient, textTotalCmd, textTipPlata, textAdrLivr, labelTotal, textCursValut;
     private TextView textPersContact, textTelefon, textCantar, textTransport, textNrFact, textLimCrd, textRestCrd, textPondereB, textTaxaVerde;
 
+
     private int listViewSelPos = -1;
 
     private static ArrayList<HashMap<String, String>> arrayListArticole = new ArrayList<HashMap<String, String>>();
@@ -1029,7 +1030,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                                 + UserInfo.getInstance().getUserSite() + "#" + userSiteMail + "#" + isValIncModif + "#" + codJ + "#" + adrLivrareGED
                                 + "@" + articoleFinaleStr;
 
-                        // Comanda comanda = new Comanda();
+
                         comandaFinala.setCodClient(codClientVar);
                         comandaFinala.setComandaBlocata(comandaBlocata);
                         comandaFinala.setNrCmdSap(cmdSAP);
@@ -1043,7 +1044,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                         comandaFinala.setAdresaLivrareGed(adrLivrareGED);
 
                         comandaJson = serializeComanda(comandaFinala);
-                        articoleFinaleStr = serializedResult;
+
 
                         valideazaFinal();
 
@@ -1226,6 +1227,9 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
     private void performSaveCmd() {
         try {
+
+            comandaFinala.setComandaBlocata(comandaBlocata);
+            comandaJson = serializeComanda(comandaFinala);
 
             String tipUser = "AV";
             HashMap<String, String> params = new HashMap<String, String>();
@@ -1734,7 +1738,12 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
         List<ArticolComanda> articoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
         ComandaMathaus comandaMathaus = new ComandaMathaus();
-        comandaMathaus.setSellingPlant(CreareComanda.filialaLivrareMathaus);
+
+        String filialaLivrareMathaus = CreareComanda.filialaAlternativa;
+        if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_LIVRARE)
+            filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
+
+        comandaMathaus.setSellingPlant(filialaLivrareMathaus);
         List<DateArticolMathaus> listArticoleMat = new ArrayList<DateArticolMathaus>();
 
         String codDepartLivr = UserInfo.getInstance().getCodDepart();
