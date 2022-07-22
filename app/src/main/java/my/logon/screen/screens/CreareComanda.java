@@ -997,14 +997,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
                         String alerteKA = globalAlertSDKA + "!" + globalAlertDVKA;
 
-                        // aprobare adr. livrare noua doar pentru agenti
-                        if (!UserInfo.getInstance().getTipAcces().equals("27")) {
-                            if (dateLivrareInstance.isAdrLivrNoua())
-                                comandaBlocata = "1";
-                        }
-
-                        if (CreareComanda.tipComanda.equals("S"))
-                            comandaBlocata = "21";
 
                         String localRedSeparat = dateLivrareInstance.getRedSeparat();
 
@@ -1225,11 +1217,21 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         return globalSubCmp.equals("1") && !UserInfo.getInstance().getCodDepart().equals("07") && !UserInfo.getInstance().getCodDepart().equals("04");
     }
 
+    private void verificaStareComanda() {
+
+        if (!UserInfo.getInstance().getTipAcces().equals("27")) {
+            if (DateLivrare.getInstance().isAdrLivrNoua())
+                comandaBlocata = "1";
+        }
+
+        comandaFinala.setComandaBlocata(comandaBlocata);
+        comandaJson = serializeComanda(comandaFinala);
+    }
+
     private void performSaveCmd() {
         try {
 
-            comandaFinala.setComandaBlocata(comandaBlocata);
-            comandaJson = serializeComanda(comandaFinala);
+            verificaStareComanda();
 
             String tipUser = "AV";
             HashMap<String, String> params = new HashMap<String, String>();
