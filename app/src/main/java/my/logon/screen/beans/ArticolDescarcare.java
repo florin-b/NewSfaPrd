@@ -7,6 +7,7 @@ public class ArticolDescarcare {
 	private double valoare;
 	private double cantitate;
 	private double valoareMin;
+	private String filiala;
 
 	public String getCod() {
 		return cod;
@@ -47,7 +48,12 @@ public class ArticolDescarcare {
 	public void setValoareMin(double valoareMin) {
 		this.valoareMin = valoareMin;
 	}
-	
-	
 
+	public String getFiliala() {
+		return filiala;
+	}
+
+	public void setFiliala(String filiala) {
+		this.filiala = filiala;
+	}
 }

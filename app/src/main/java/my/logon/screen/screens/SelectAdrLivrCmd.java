@@ -195,8 +195,11 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("ModificareComanda")) {
 
             if ((Double.parseDouble(bundle.getString("limitaCredit")) > 1) && !bundle.getString("termenPlata").equals("C000")) {
-                CreareComanda.tipPlataContract = bundle.getString("tipPlataContract");
-                DateLivrare.getInstance().setTipPlata("LC");
+
+                if (!DateLivrare.getInstance().getTipPlata().equals("N") && !DateLivrare.getInstance().getTipPlata().equals("R")) {
+                    CreareComanda.tipPlataContract = bundle.getString("tipPlataContract");
+                    DateLivrare.getInstance().setTipPlata("LC");
+                }
             }
 
         }
@@ -304,8 +307,11 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         else if (!CreareComanda.tipPlataContract.trim().isEmpty() || DateLivrare.getInstance().getTipPlata().equals("LC")) {
 
             if (!CreareComanda.tipPlataContract.trim().isEmpty()) {
-                ((TextView) findViewById(R.id.tipPlataContract)).setText("Contract: " + CreareComanda.tipPlataContract);
-                DateLivrare.getInstance().setTipPlata("LC");
+
+                if (!DateLivrare.getInstance().getTipPlata().equals("N") && !DateLivrare.getInstance().getTipPlata().equals("R")) {
+                    ((TextView) findViewById(R.id.tipPlataContract)).setText("Contract: " + CreareComanda.tipPlataContract);
+                    DateLivrare.getInstance().setTipPlata("LC");
+                }
             }
             adapterSpinnerPlata = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipPlataContract);
         } else

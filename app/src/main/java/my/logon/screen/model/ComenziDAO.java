@@ -23,6 +23,7 @@ import my.logon.screen.beans.BeanComandaDeschisa;
 import my.logon.screen.beans.BeanConditii;
 import my.logon.screen.beans.BeanConditiiArticole;
 import my.logon.screen.beans.BeanConditiiHeader;
+import my.logon.screen.beans.ComandaCalculDescarcare;
 import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.FurnizorComanda;
@@ -177,6 +178,17 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
 	public void getLivrariMathaus(HashMap<String, String> params) {
 		numeComanda = EnumComenziDAO.GET_LIVRARI_MATHAUS;
+		performOperation(params);
+	}
+
+	public void getCostMacaraComenzi(HashMap<String, String> params) {
+		numeComanda = EnumComenziDAO.GET_COST_MACARA_COMENZI;
+		performOperation(params);
+
+	}
+
+	public void getTotalComenziNumerar(HashMap<String, String> params) {
+		numeComanda = EnumComenziDAO.GET_TOTAL_COMENZI_NUMERAR;
 		performOperation(params);
 	}
 
@@ -388,6 +400,12 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 					dateLivrare.setNrCmdClp(jsonLivrare.getString("nrCmdClp"));
 				else
 					dateLivrare.setNrCmdClp("");
+
+				if (jsonLivrare.has("marjaBruta"))
+					dateLivrare.setMarjaBruta(Double.valueOf(jsonLivrare.getString("marjaBruta")));
+
+				if (jsonLivrare.has("procMarjaBruta"))
+					dateLivrare.setProcMarjaBruta(Double.valueOf(jsonLivrare.getString("procMarjaBruta")));
 
 				JSONArray jsonArticole = jsonObject.getJSONArray("articoleComanda");
 				String tipAlert, subCmp;
@@ -711,6 +729,26 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
 		return jsonArrayArt.toString();
 	}
+
+	public String serializeCalcComenziMacara(List<ComandaCalculDescarcare> listComenzi) {
+
+		JSONArray jsonArrayCom = new JSONArray();
+
+		try {
+			for (ComandaCalculDescarcare comanda : listComenzi) {
+				JSONObject jsonObjCom = new JSONObject();
+				jsonObjCom.put("filiala", comanda.getFiliala());
+				jsonObjCom.put("listArticole", serializeArtCalcMacara(comanda.getListArticole()));
+				jsonArrayCom.put(jsonObjCom);
+
+			}
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return jsonArrayCom.toString();
+	}
+
 
 	public List<BeanComandaCreata> getComenziDivizie(String divizie) {
 		CriteriulDivizie criteriu = new CriteriulDivizie();

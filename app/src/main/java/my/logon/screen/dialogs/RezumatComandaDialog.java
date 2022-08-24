@@ -201,7 +201,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 		while (listIterator.hasNext()) {
 			ArticolComanda articol = listIterator.next();
 
-			if (articol.getCodArticol().equals(articolComanda.getCodArticol())) {
+			if (articol.getCodArticol().equals(articolComanda.getCodArticol()) && articol.getFilialaSite().equals(articolComanda.getFilialaSite())) {
 				listIterator.remove();
 				break;
 			}

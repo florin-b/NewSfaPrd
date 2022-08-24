@@ -39,8 +39,8 @@ public class HelperTranspBuc {
 		articolComanda.setNumeArticol(numeArticol);
 		articolComanda.setCantitate(1);
 		articolComanda.setCantUmb(1);
-		articolComanda.setPretUnit(10);
-		articolComanda.setPret(10);
+		articolComanda.setPretUnit(20);
+		articolComanda.setPret(20);
 		articolComanda.setProcent(0);
 		articolComanda.setUm("BUC");
 		articolComanda.setUmb("BUC");

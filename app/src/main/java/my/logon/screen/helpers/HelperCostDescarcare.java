@@ -12,13 +12,15 @@ import my.logon.screen.beans.ArticolCalculDesc;
 import my.logon.screen.beans.ArticolDescarcare;
 import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.beans.BeanArticolRetur;
+import my.logon.screen.beans.ComandaCalculDescarcare;
 import my.logon.screen.beans.CostDescarcare;
+import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.model.ArticolComanda;
 
 public class HelperCostDescarcare {
 
 	public static List<ArticolComanda> getArticoleDescarcare(CostDescarcare costDescarcare, double valoareCost, String filiala,
-			List<ArticolComanda> articoleComanda) {
+															 List<ArticolComanda> articoleComanda) {
 
 		double procentReducere = valoareCost / costDescarcare.getValoareDescarcare();
 
@@ -61,6 +63,51 @@ public class HelperCostDescarcare {
 
 	}
 
+
+	public static List<ArticolComanda> getArticoleDescarcareDistrib(CostDescarcare costDescarcare, double valoareCost,
+																	List<ArticolComanda> articoleComanda) {
+
+		double procentReducere = valoareCost / costDescarcare.getValoareDescarcare();
+
+		List<ArticolComanda> listArticole = new ArrayList<ArticolComanda>();
+
+		for (ArticolDescarcare artDesc : costDescarcare.getArticoleDescarcare()) {
+			ArticolComanda articolComanda = new ArticolComanda();
+
+			articolComanda.setCodArticol(artDesc.getCod());
+			articolComanda.setNumeArticol("PREST.SERV.DESCARCARE PALET DIV " + artDesc.getDepart());
+			articolComanda.setCantitate(artDesc.getCantitate());
+			articolComanda.setCantUmb(artDesc.getCantitate());
+			articolComanda.setPretUnit(artDesc.getValoare() * procentReducere);
+			articolComanda.setPret(artDesc.getValoare() * procentReducere * artDesc.getCantitate());
+			articolComanda.setPretUnitarClient(artDesc.getValoare() * procentReducere);
+			articolComanda.setPretUnitarGed(artDesc.getValoare() * procentReducere);
+			articolComanda.setProcent(0);
+			articolComanda.setUm("BUC");
+			articolComanda.setUmb("BUC");
+			articolComanda.setDiscClient(0);
+			articolComanda.setProcentFact(0);
+			articolComanda.setMultiplu(1);
+			articolComanda.setConditie(false);
+			articolComanda.setProcAprob(0);
+			articolComanda.setInfoArticol(" ");
+			articolComanda.setObservatii("");
+			articolComanda.setDepartAprob("");
+			articolComanda.setIstoricPret("");
+			articolComanda.setAlteValori("");
+			articolComanda.setDepozit(getDepozitDescarcare(artDesc.getDepart(), articoleComanda));
+			articolComanda.setTipArt("");
+			articolComanda.setDepart(artDesc.getDepart());
+			articolComanda.setDepartSintetic(artDesc.getDepart());
+			articolComanda.setFilialaSite(artDesc.getFiliala());
+
+			listArticole.add(articolComanda);
+		}
+
+		return listArticole;
+
+	}
+
 	private static String getDepozitDescarcare(String depart, List<ArticolComanda> articoleComanda) {
 		if (depart.substring(0, 2).equals("11"))
 			return getDepozitComandaGed(articoleComanda);
@@ -76,6 +123,7 @@ public class HelperCostDescarcare {
 				depozit = articol.getDepozit();
 				break;
 			}
+
 		}
 
 		return depozit;
@@ -132,6 +180,21 @@ public class HelperCostDescarcare {
 
 	}
 
+	public static void eliminaPaleti(List<ArticolComanda> listArticole) {
+
+		Iterator<ArticolComanda> iterator = listArticole.iterator();
+
+		while (iterator.hasNext()) {
+
+			ArticolComanda articol = iterator.next();
+
+			if (articol.isUmPalet())
+				iterator.remove();
+
+		}
+
+	}
+
 	public static List<ArticolCalculDesc> getDateCalculDescarcare(List<ArticolComanda> listArticole) {
 
 		List<ArticolCalculDesc> articoleCalcul = new ArrayList<ArticolCalculDesc>();
@@ -146,6 +209,33 @@ public class HelperCostDescarcare {
 		}
 
 		return articoleCalcul;
+
+	}
+
+
+	public static List<ComandaCalculDescarcare> getComenziCalculDescarcare(List<RezumatComanda> listComenziRezumat) {
+		List<ComandaCalculDescarcare> listComenzi = new ArrayList<>();
+
+		for (RezumatComanda rezumatComanda : listComenziRezumat) {
+
+			ComandaCalculDescarcare comandaCalculDescarcare = new ComandaCalculDescarcare();
+			comandaCalculDescarcare.setFiliala(rezumatComanda.getFilialaLivrare());
+
+			List<ArticolCalculDesc> articoleCalcul = new ArrayList<ArticolCalculDesc>();
+			for (ArticolComanda artCmd : rezumatComanda.getListArticole()) {
+				ArticolCalculDesc articol = new ArticolCalculDesc();
+				articol.setCod(artCmd.getCodArticol());
+				articol.setCant(artCmd.getCantUmb());
+				articol.setUm(artCmd.getUmb());
+				articol.setDepoz(artCmd.getDepozit());
+				articoleCalcul.add(articol);
+			}
+
+			comandaCalculDescarcare.setListArticole(articoleCalcul);
+			listComenzi.add(comandaCalculDescarcare);
+		}
+
+		return listComenzi;
 
 	}
 
@@ -167,6 +257,75 @@ public class HelperCostDescarcare {
 
 		return articoleCalcul;
 
+	}
+
+	public static CostDescarcare deserializeCostComenziMacara(String dateCost){
+		CostDescarcare costDescarcare =new CostDescarcare();
+
+		List<ArticolDescarcare> listArticole = new ArrayList<ArticolDescarcare>();
+		List<ArticolPalet> listPaleti = new ArrayList<ArticolPalet>();
+
+		try{
+			JSONArray jsonObject = new JSONArray(dateCost);
+
+			for (int i = 0; i < jsonObject.length(); i++) {
+				JSONObject comandaObject = jsonObject.getJSONObject(i);
+
+				if (Boolean.valueOf(comandaObject.getString("sePermite"))){
+					costDescarcare.setSePermite(true);
+
+					JSONArray jsonArray = new JSONArray(comandaObject.getString("articoleDescarcare"));
+
+					for (int ii = 0; ii < jsonArray.length(); ii++) {
+						ArticolDescarcare articol = new ArticolDescarcare();
+
+						JSONObject object = jsonArray.getJSONObject(ii);
+
+						articol.setCod(object.getString("cod"));
+						articol.setDepart(object.getString("depart"));
+						articol.setValoare(Double.valueOf(object.getString("valoare")));
+						articol.setCantitate(Double.valueOf(object.getString("cantitate")));
+						articol.setValoareMin(Double.valueOf(object.getString("valoareMin")));
+						articol.setFiliala(comandaObject.getString("filiala"));
+						listArticole.add(articol);
+
+					}
+
+					JSONArray jsonPaleti = new JSONArray(comandaObject.getString("articolePaleti"));
+
+					for (int j = 0; j < jsonPaleti.length(); j++) {
+						ArticolPalet articol = new ArticolPalet();
+
+						JSONObject object = jsonPaleti.getJSONObject(j);
+
+						articol.setCodPalet(object.getString("codPalet"));
+						articol.setNumePalet(object.getString("numePalet"));
+						articol.setDepart(object.getString("depart"));
+						articol.setCantitate(Integer.valueOf(object.getString("cantitate")));
+						articol.setPretUnit(Double.valueOf(object.getString("pretUnit")));
+						articol.setFurnizor(object.getString("furnizor"));
+						articol.setCodArticol(object.getString("codArticol"));
+						articol.setNumeArticol(object.getString("numeArticol"));
+						articol.setCantArticol(object.getString("cantArticol"));
+						articol.setUmArticol(object.getString("umArticol"));
+						articol.setFiliala(comandaObject.getString("filiala"));
+
+						listPaleti.add(articol);
+
+					}
+
+				}
+
+			}
+
+		} catch (JSONException e) {
+
+		}
+
+		costDescarcare.setArticoleDescarcare(listArticole);
+		costDescarcare.setArticolePaleti(listPaleti);
+
+		return costDescarcare;
 	}
 
 	public static CostDescarcare deserializeCostMacara(String dateCost) {
@@ -255,5 +414,8 @@ public class HelperCostDescarcare {
 
 		return unitLog;
 	}
+
+
+
 
 }

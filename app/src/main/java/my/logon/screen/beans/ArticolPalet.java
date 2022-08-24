@@ -13,6 +13,7 @@ public class ArticolPalet {
 	private String cantArticol;
 	private String umArticol;
 	private boolean adaugat;
+	private String filiala;
 
 	
 
@@ -105,7 +106,12 @@ public class ArticolPalet {
 	public void setCantArticol(String cantArticol) {
 		this.cantArticol = cantArticol;
 	}
-	
-	
 
+	public String getFiliala() {
+		return filiala;
+	}
+
+	public void setFiliala(String filiala) {
+		this.filiala = filiala;
+	}
 }

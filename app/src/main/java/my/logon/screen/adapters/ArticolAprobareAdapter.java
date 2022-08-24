@@ -212,10 +212,6 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 
 			valoriComanda.setTotal(art.getPret() + valoriComanda.getTotal());
 
-			if (art.getCmp() > 0) {
-				marja = (art.getPretUnit() - art.getCmp()) * Double.valueOf(art.getCantUmb());
-				valoriComanda.setMarja(marja + valoriComanda.getMarja());
-			}
 		}
 
 		return valoriComanda;

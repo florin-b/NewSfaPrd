@@ -1,9 +1,13 @@
 package my.logon.screen.helpers;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import my.logon.screen.beans.CostTransportMathaus;
+import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
@@ -95,6 +99,41 @@ public class HelperMathaus {
 			return "MAV1";
 		else
 			return depart.substring(0, 2) + "V1";
+	}
+
+	public static List<RezumatComanda> getRezumatComanda(List<ArticolComanda> listArticole) {
+
+		Set<String> filiale = getFilialeComanda(listArticole);
+
+		List<RezumatComanda> listComenzi = new ArrayList<RezumatComanda>();
+
+		for (String filiala : filiale) {
+
+			RezumatComanda rezumat = new RezumatComanda();
+			rezumat.setFilialaLivrare(filiala);
+			List<ArticolComanda> listArtComanda = new ArrayList<ArticolComanda>();
+
+			for (ArticolComanda articol : listArticole) {
+				if (articol.getFilialaSite().equals(filiala)) {
+					listArtComanda.add(articol);
+				}
+			}
+
+			rezumat.setListArticole(listArtComanda);
+			listComenzi.add(rezumat);
+		}
+
+		return listComenzi;
+	}
+
+	private static Set<String> getFilialeComanda(List<ArticolComanda> listArticole) {
+
+		Set<String> filiale = new HashSet<String>();
+		for (final ArticolComanda articol : listArticole) {
+			filiale.add(articol.getFilialaSite());
+		}
+		return filiale;
+
 	}
 
 }
