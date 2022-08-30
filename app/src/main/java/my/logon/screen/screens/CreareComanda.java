@@ -1789,20 +1789,27 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
     }
 
+    private boolean isComandaDL_TRAP() {
+        return tipComandaDistributie.equals(TipCmdDistrib.DISPOZITIE_LIVRARE) && DateLivrare.getInstance().getTransport().equals("TRAP");
+    }
+
     private void setLivrariMathaus(String result) {
 
         livrareMathaus = opArticol.deserializeLivrareMathaus(result);
 
-        DateLivrare.getInstance().setCostTransportMathaus(livrareMathaus.getCostTransport());
+        if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE) || isComandaDL_TRAP())
+            DateLivrare.getInstance().setCostTransportMathaus(livrareMathaus.getCostTransport());
 
         List<DateArticolMathaus> articoleMathaus = livrareMathaus.getComandaMathaus().getDeliveryEntryDataList();
-
         List<ArticolComanda> articoleComandaDistrib = ListaArticoleComanda.getInstance().getListArticoleComanda();
 
         String codArticolComanda;
         for (ArticolComanda articolComanda : articoleComandaDistrib) {
 
             articolComanda.setTipTransport(null);
+
+            if (tipComandaDistributie.equals(TipCmdDistrib.DISPOZITIE_LIVRARE))
+                articolComanda.setTipTransport(DateLivrare.getInstance().getTransport());
 
             if (articolComanda.getArticolMathaus() == null)
                 continue;
@@ -1816,6 +1823,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
                 if (codArticolComanda.equals(articolMathaus.getProductCode())) {
                     articolComanda.setFilialaSite(articolMathaus.getDeliveryWarehouse());
+                    articolComanda.setDepozit(articolMathaus.getDepozit());
                     break;
                 }
 
@@ -1823,14 +1831,15 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
         }
 
-        HelperMathaus.adaugaArticolTransport(livrareMathaus.getCostTransport(), "10");
+        if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE) || isComandaDL_TRAP())
+            HelperMathaus.adaugaArticolTransport(livrareMathaus.getCostTransport(), "10");
 
         prepareArtForDelivery();
         articoleFinaleStr = serializedResult;
 
-        if (!saveComandaMathaus)
+        if (!saveComandaMathaus) {
             verificaPretMacaraRezumat();
-        else
+        } else
             performSaveCmd();
 
     }

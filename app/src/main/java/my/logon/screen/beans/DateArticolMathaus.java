@@ -8,6 +8,7 @@ public class DateArticolMathaus {
 	private String unit;
 	private double valPoz;
 	private String tip2;
+	private String depozit;
 
 	public String getDeliveryWarehouse() {
 		return deliveryWarehouse;
@@ -57,4 +58,11 @@ public class DateArticolMathaus {
 		this.tip2 = tip2;
 	}
 
+	public String getDepozit() {
+		return depozit;
+	}
+
+	public void setDepozit(String depozit) {
+		this.depozit = depozit;
+	}
 }

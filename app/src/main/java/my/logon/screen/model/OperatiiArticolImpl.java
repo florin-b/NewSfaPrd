@@ -524,6 +524,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				articol.setProductCode(articolObject.getString("productCode"));
 				articol.setQuantity(Double.parseDouble(articolObject.getString("quantity")));
 				articol.setUnit(articolObject.getString("unit"));
+				articol.setDepozit(articolObject.getString("depozit"));
 
 				listArticole.add(articol);
 			}

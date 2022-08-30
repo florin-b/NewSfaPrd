@@ -94,7 +94,6 @@ public class DepartamentAgent {
 					depart.add(depKA.getNume());
 			}
 		}
-
 		else if (isAG()) {
 			depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
@@ -108,9 +107,10 @@ public class DepartamentAgent {
 				}
 			}
 			depart.add(EnumDepartExtra.getNumeDepart("11"));
-			depart.add("Mathaus");
+
 		}
 
+		depart.add("Mathaus");
 		return depart;
 	}
 
