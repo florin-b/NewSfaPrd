@@ -490,6 +490,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				cost.setTipTransp(transpObject.getString("tipTransp"));
 				cost.setValTransp(transpObject.getString("valTransp").equals("null") ? "0" : transpObject.getString("valTransp"));
 				cost.setCodArtTransp(transpObject.getString("codArtTransp").equals("null") ? "0" : transpObject.getString("codArtTransp"));
+				cost.setDepart(transpObject.getString("depart"));
 				listCostTransport.add(cost);
 
 			}

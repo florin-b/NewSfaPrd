@@ -25,11 +25,11 @@ import my.logon.screen.model.UserInfo;
 public class UtilsGeneral {
 
 	public static String[] numeFiliale = { "Andronache", "Bacau", "Baia-Mare", "Brasov", "Buzau", "Constanta", "Cluj", "Craiova", "Focsani",
-			"Galati", "Glina", "Hunedoara", "Iasi", "Militari", "Oradea", "Otopeni", "Piatra-Neamt", "Pitesti", "Ploiesti", "Sibiu", "Timisoara",
+			"Galati", "Glina", "Hunedoara", "Iasi", "Militari", "Oradea", "Otopeni", "Piatra-Neamt", "Pitesti", "Ploiesti", "Sibiu", "Suceava","Timisoara",
 			"Tg. Mures" };
 
 	public static String[] codFiliale = { "BU13", "BC10", "MM10", "BV10", "BZ10", "CT10", "CJ10", "DJ10", "VN10", "GL10", "BU10", "HD10", "IS10",
-			"BU11", "BH10", "BU12", "NT10", "AG10", "PH10", "SB10", "TM10", "MS10" };
+			"BU11", "BH10", "BU12", "NT10", "AG10", "PH10", "SB10", "SV10", "TM10", "MS10" };
 
 	public static String[] numeDivizii = { "Lemnoase", "Feronerie", "Parchet", "Materiale grele", "Electrice", "Gips", "Chimice", "Instalatii",
 			"Hidroizolatii" };
@@ -545,6 +545,9 @@ public class UtilsGeneral {
 
 		if (numeFiliala.equals("SIBIU"))
 			fl = "SB10";
+
+		if (numeFiliala.equals("SUCEAVA"))
+			fl = "SV10";
 
 		if (numeFiliala.equals("DEVA"))
 			fl = "HD10";

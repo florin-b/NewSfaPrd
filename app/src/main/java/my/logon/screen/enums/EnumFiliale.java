@@ -8,7 +8,7 @@ public enum EnumFiliale {
 	ARGES("Arges", "AG10"), ANDRONACHE("Andronache", "BU13"), BACAU("Bacau", "BC10"), BIHOR("Bihor", "BH10"), BUZAU("Buzau", "BZ10"), GLINA("Glina", "BU10"), MILITARI(
 			"Militari", "BU11"), OTOPENI("Otopeni", "BU12"), BRASOV("Brasov", "BV10"), CLUJ("Cluj", "CJ10"), CONSTANTA("Constanta", "CT10"), DOLJ("Dolj",
 			"DJ10"), GALATI("Galati", "GL10"), HUNEDOARA("Hunedoara", "HD10"), IASI("Iasi", "IS10"), MARAMURES("Maramures", "MM10"), MURES("Mures", "MS10"), PIATRA_NEAMT(
-			"Neamt", "NT10"), PRAHOVA("Prahova", "PH10"), SIBIU("Sibiu", "SB10"),TIMISOARA("Timisoara", "TM10"), VRANCEA("Vrancea", "VN10");
+			"Neamt", "NT10"), PRAHOVA("Prahova", "PH10"), SIBIU("Sibiu", "SB10"),SUCEAVA("Suceava", "SV10"),TIMISOARA("Timisoara", "TM10"), VRANCEA("Vrancea", "VN10");
 
 	private String nume;
 	private String cod;

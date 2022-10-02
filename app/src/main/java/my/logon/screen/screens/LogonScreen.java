@@ -391,6 +391,9 @@ public class LogonScreen extends Activity implements AsyncTaskListener {
 		if (numeFiliala.equals("SIBIU"))
 			fl = "SB10";
 
+		if (numeFiliala.equals("SUCEAVA"))
+			fl = "SV10";
+
 		if (numeFiliala.equals("DEVA"))
 			fl = "HD10";
 

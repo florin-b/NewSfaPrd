@@ -28,7 +28,7 @@ public class HelperMathaus {
 
 			for (ArticolComanda articol : listArticoleComanda) {
 
-				if (cost.getFiliala().equals(articol.getFilialaSite()) && !cost.getValTransp().equals("0")) {
+				if (cost.getFiliala().equals(articol.getFilialaSite()) && !cost.getValTransp().equals("0") && cost.getDepart().equals(articol.getDepart())) {
 					listArticoleComanda.add(genereazaArticolTransport(articol, cost));
 					break;
 				}

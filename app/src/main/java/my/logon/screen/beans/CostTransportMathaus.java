@@ -6,6 +6,7 @@ public class CostTransportMathaus {
 	private String tipTransp;
 	private String valTransp;
 	private String codArtTransp;
+	private String depart;
 
 	public String getFiliala() {
 		return filiala;
@@ -37,6 +38,14 @@ public class CostTransportMathaus {
 
 	public void setCodArtTransp(String codArtTransp) {
 		this.codArtTransp = codArtTransp;
+	}
+
+	public String getDepart() {
+		return depart;
+	}
+
+	public void setDepart(String depart) {
+		this.depart = depart;
 	}
 
 	@Override

@@ -611,15 +611,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
     private void CreateMenu(Menu menu) {
 
-        if (isUserExceptie() && DateLivrare.getInstance().getTipComandaDistrib() != TipCmdDistrib.COMANDA_LIVRARE && !isLivrareCustodie()) {
-            MenuItem mnu1 = menu.add(0, 0, 0, "Filiala");
-            {
-                mnu1.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-                populateListViewArticol(new ArrayList<ArticolDB>());
-
-            }
-        }
-
         if ((UtilsUser.isAgentOrSD() || UtilsUser.isOIVPD()) && DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_VANZARE) {
             MenuItem mnu2 = menu.add(0, 1, 1, "Tip cautare");
             {
