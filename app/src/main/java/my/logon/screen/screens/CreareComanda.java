@@ -1811,6 +1811,9 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             if (tipComandaDistributie.equals(TipCmdDistrib.DISPOZITIE_LIVRARE))
                 articolComanda.setTipTransport(DateLivrare.getInstance().getTransport());
 
+            if (tipComandaDistributie.equals(TipCmdDistrib.COMANDA_LIVRARE) && articolComanda.getArticolMathaus() == null)
+                articolComanda.setFilialaSite(DateLivrare.getInstance().getCodFilialaCLP());
+
             if (articolComanda.getArticolMathaus() == null)
                 continue;
 

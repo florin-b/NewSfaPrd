@@ -363,7 +363,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
         if (isComandaDL())
             departamenteComanda.remove("Mathaus");
-        else if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_VANZARE || DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_LIVRARE) {
+        else if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_VANZARE) {
 
             if (!CreareComanda.filialeArondateMathaus.contains(UserInfo.getInstance().getUnitLog())) {
                 departamenteComanda.clear();

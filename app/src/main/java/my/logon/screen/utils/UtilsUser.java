@@ -1,18 +1,18 @@
 package my.logon.screen.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import my.logon.screen.model.Constants;
-import my.logon.screen.model.UserInfo;
+import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.content.Context;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
+
+import my.logon.screen.model.Constants;
+import my.logon.screen.model.UserInfo;
 
 public class UtilsUser {
 
@@ -65,7 +65,7 @@ public class UtilsUser {
 	}
 
 	public static boolean isUserSDKA() {
-		return UserInfo.getInstance().getTipUserSap().equals("SDKA");
+		return UserInfo.getInstance().getTipUserSap().equals("SDKA") || UserInfo.getInstance().getTipUser().equals("SK");
 	}
 
 	public static boolean isAgentOrSD() {

@@ -1019,6 +1019,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                 spinnerResponsabil.setEnabled(true);
                 spinnerTermenPlata.setEnabled(true);
                 ((TextView) findViewById(R.id.tipPlataContract)).setVisibility(View.INVISIBLE);
+                String rawTipPlataStr = spinnerPlata.getSelectedItem().toString();
 
                 if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("N") || spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("R")) {
 
@@ -1071,6 +1072,12 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                         txtValoareIncasare.setText(nf2.format(localValCmd));
 
                     }
+
+                    if (rawTipPlataStr.toLowerCase().contains("ramburs")) {
+                        checkAviz.setChecked(false);
+                        checkAviz.setEnabled(false);
+                    } else
+                        checkAviz.setEnabled(true);
 
                 } else {
                     layoutValoareIncasare.setVisibility(View.GONE);

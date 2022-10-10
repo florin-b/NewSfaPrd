@@ -235,7 +235,7 @@ public class HelperTranspBuc {
 		String codDepart = "";
 		if (UtilsUser.isAgentOrSD())
 			codDepart = UserInfo.getInstance().getCodDepart();
-		else if (UtilsUser.isKA())
+		else if (UtilsUser.isKA() || UtilsUser.isUserSDKA())
 			codDepart = "01";
 
 		if (UtilsUser.isUserKA() || UtilsUser.isUserSK() || UtilsUser.isInfoUser() || UtilsUser.isSMR() || UtilsUser.isCVR() || UtilsUser.isSSCM()
