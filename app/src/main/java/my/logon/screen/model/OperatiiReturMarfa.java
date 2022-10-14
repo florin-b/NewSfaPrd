@@ -19,6 +19,7 @@ import my.logon.screen.beans.BeanComandaRetur;
 import my.logon.screen.beans.BeanComandaReturAfis;
 import my.logon.screen.beans.BeanDocumentRetur;
 import my.logon.screen.beans.BeanPersoanaContact;
+import my.logon.screen.beans.BeanStatusComandaRetur;
 import my.logon.screen.beans.PozaArticol;
 import my.logon.screen.enums.EnumRetur;
 import my.logon.screen.listeners.AsyncTaskListener;
@@ -324,6 +325,7 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 				comandaRetur.setTelPersContact(jsonObject.getString("telPersContact"));
 
 				comandaRetur.setArrayListArticole(deserializeListArticole(jsonObject.getString("listaArticole")));
+				comandaRetur.setListStariDoc(deserializeListaStatusRetur(jsonObject.getString("listStari")));
 
 			}
 
@@ -333,6 +335,30 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 		}
 
 		return comandaRetur;
+	}
+
+	public List<BeanStatusComandaRetur> deserializeListaStatusRetur(String serializedResult) {
+		BeanStatusComandaRetur statusComandaRetur = null;
+		List<BeanStatusComandaRetur> listStatus = new ArrayList<>();
+		try {
+			Object json = new JSONTokener(serializedResult).nextValue();
+
+			if (json instanceof JSONArray) {
+				JSONArray jsonObject = new JSONArray(serializedResult);
+				for (int i=0;i<jsonObject.length();i++) {
+					JSONObject statusReturObject = jsonObject.getJSONObject(i);
+					statusComandaRetur = new BeanStatusComandaRetur();
+					statusComandaRetur.setNrDocument(statusReturObject.getString("nrDocument"));
+					statusComandaRetur.setStare(statusReturObject.getString("stare"));
+
+					listStatus.add(statusComandaRetur);
+				}
+			}
+		}
+		catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+		return listStatus;
 	}
 
 	public List<BeanComandaReturAfis> deserializeComenziSalvate(Object objList) {

@@ -1825,8 +1825,13 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             for (DateArticolMathaus articolMathaus : articoleMathaus) {
 
                 if (codArticolComanda.equals(articolMathaus.getProductCode())) {
-                    articolComanda.setFilialaSite(articolMathaus.getDeliveryWarehouse());
-                    articolComanda.setDepozit(articolMathaus.getDepozit());
+                    if (articolComanda.getFilialaSite().equals("BV90")) {
+                        articolComanda.setDepozit(articolComanda.getDepart() + "V1");
+                    }
+                    else {
+                        articolComanda.setFilialaSite(articolMathaus.getDeliveryWarehouse());
+                        articolComanda.setDepozit(articolMathaus.getDepozit());
+                    }
                     break;
                 }
 
@@ -1876,6 +1881,9 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                 dateArticol.setTip2(artCmd.getArticolMathaus().getTip2());
             else
                 dateArticol.setTip2("");
+
+            if (artCmd.getFilialaSite().equals("BV90"))
+                dateArticol.setUlStoc("BV90");
 
             listArticoleMat.add(dateArticol);
 

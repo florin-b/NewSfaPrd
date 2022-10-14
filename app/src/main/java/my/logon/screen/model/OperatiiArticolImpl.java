@@ -575,6 +575,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				jsonObject.put("unit", articol.getUnit());
 				jsonObject.put("valPoz", String.valueOf(articol.getValPoz()));
 				jsonObject.put("tip2", articol.getTip2());
+				jsonObject.put("ulStoc", articol.getUlStoc());
 				jsonArray.put(jsonObject);
 			}
 

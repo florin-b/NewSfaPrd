@@ -13,7 +13,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:layout_weight="0.64"
+        android:layout_weight="0.55"
         android:orientation="vertical" >
 
         <Spinner
@@ -40,7 +40,7 @@
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_gravity="top|left"
-        android:layout_weight="0.36"
+        android:layout_weight="0.45"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -220,6 +220,27 @@
 
                     <TextView
                         android:id="@+id/textTransport"
+                        style="@style/dateLivrareDlValori"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    style="@style/dateLivrareDlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/dateLivrareDlLabel"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:text="Status:" />
+
+                    <TextView
+                        android:id="@+id/textStatus"
                         style="@style/dateLivrareDlValori"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"

@@ -1,106 +1,112 @@
 package my.logon.screen.beans;
 
 public class ArticolMathaus extends ArticolDB {
-	private String cod;
-	private String nume;
-	private String adresaImg;
-	private String adresaImgMare;
-	private String descriere;
-	private String catMathaus;
-	private String pretUnitar;
-	private boolean isLocal;
-	private boolean isArticolSite;
-	private String tip1;
-	private String tip2;
+    private String cod;
+    private String nume;
+    private String adresaImg;
+    private String adresaImgMare;
+    private String descriere;
+    private String catMathaus;
+    private String pretUnitar;
+    private boolean isLocal;
+    private boolean isArticolSite;
+    private String tip1;
+    private String tip2;
+    private String planificator;
 
-	public String getCod() {
-		return cod;
-	}
+    public String getCod() {
+        return cod;
+    }
 
-	public void setCod(String cod) {
-		this.cod = cod;
-	}
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
 
-	public String getNume() {
-		return nume;
-	}
+    public String getNume() {
+        return nume;
+    }
 
-	public void setNume(String nume) {
-		this.nume = nume;
-	}
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
 
-	public String getAdresaImg() {
-		return adresaImg;
-	}
+    public String getAdresaImg() {
+        return adresaImg;
+    }
 
-	public void setAdresaImg(String adresaImg) {
-		this.adresaImg = adresaImg;
-	}
+    public void setAdresaImg(String adresaImg) {
+        this.adresaImg = adresaImg;
+    }
 
-	public String getAdresaImgMare() {
-		return adresaImgMare;
-	}
+    public String getAdresaImgMare() {
+        return adresaImgMare;
+    }
 
-	public void setAdresaImgMare(String adresaImgMare) {
-		this.adresaImgMare = adresaImgMare;
-	}
+    public void setAdresaImgMare(String adresaImgMare) {
+        this.adresaImgMare = adresaImgMare;
+    }
 
-	public String getDescriere() {
-		return descriere;
-	}
+    public String getDescriere() {
+        return descriere;
+    }
 
-	public void setDescriere(String descriere) {
-		this.descriere = descriere;
-	}
+    public void setDescriere(String descriere) {
+        this.descriere = descriere;
+    }
 
-	public String getCatMathaus() {
-		return catMathaus;
-	}
+    public String getCatMathaus() {
+        return catMathaus;
+    }
 
-	public void setCatMathaus(String catMathaus) {
-		this.catMathaus = catMathaus;
-	}
+    public void setCatMathaus(String catMathaus) {
+        this.catMathaus = catMathaus;
+    }
 
-	public String getPretUnitar() {
-		return pretUnitar;
-	}
+    public String getPretUnitar() {
+        return pretUnitar;
+    }
 
-	public void setPretUnitar(String pretUnitar) {
-		this.pretUnitar = pretUnitar;
-	}
+    public void setPretUnitar(String pretUnitar) {
+        this.pretUnitar = pretUnitar;
+    }
 
-	public boolean isLocal() {
-		return isLocal;
-	}
+    public boolean isLocal() {
+        return isLocal;
+    }
 
-	public void setLocal(boolean isLocal) {
-		this.isLocal = isLocal;
-	}
+    public void setLocal(boolean isLocal) {
+        this.isLocal = isLocal;
+    }
 
-	public boolean isArticolSite() {
-		return isArticolSite;
-	}
+    public boolean isArticolSite() {
+        return isArticolSite;
+    }
 
-	public void setArticolSite(boolean isArticolSite) {
-		this.isArticolSite = isArticolSite;
-	}
+    public void setArticolSite(boolean isArticolSite) {
+        this.isArticolSite = isArticolSite;
+    }
 
-	public String getTip1() {
-		return tip1;
-	}
+    public String getTip1() {
+        return tip1;
+    }
 
-	public void setTip1(String tip1) {
-		this.tip1 = tip1;
-	}
+    public void setTip1(String tip1) {
+        this.tip1 = tip1;
+    }
 
-	public String getTip2() {
-		return tip2;
-	}
+    public String getTip2() {
+        return tip2;
+    }
 
-	public void setTip2(String tip2) {
-		this.tip2 = tip2;
-	}
+    public void setTip2(String tip2) {
+        this.tip2 = tip2;
+    }
 
-	
-	
+    public String getPlanificator() {
+        return planificator;
+    }
+
+    public void setPlanificator(String planificator) {
+        this.planificator = planificator;
+    }
 }

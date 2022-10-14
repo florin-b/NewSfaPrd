@@ -134,6 +134,7 @@ public class OperatiiMathaus implements AsyncTaskListener {
 					
 					articol.setTip1(catObject.getString("tip1"));
 					articol.setTip2(catObject.getString("tip2"));
+					articol.setPlanificator(catObject.getString("planificator"));
 
 					objectsList.add(articol);
 
