@@ -372,7 +372,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                 departamenteComanda.add("Mathaus");
                 DateLivrare.getInstance().setTipComandaDistrib(TipCmdDistrib.COMANDA_LIVRARE);
                 DateLivrare.getInstance().setCodFilialaCLP(CreareComanda.filialaLivrareMathaus);
-            }else {
+            } else {
                 DateLivrare.getInstance().setTipComandaDistrib(TipCmdDistrib.COMANDA_VANZARE);
                 DateLivrare.getInstance().setCodFilialaCLP("");
             }
@@ -588,8 +588,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         if (dateArticol.getQuantity() > 0) {
             listArtStoc(strStoc);
             articolMathaus.setTip2("S");
-        }
-        else {
+        } else {
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");
             performListArtStoc();
@@ -2491,7 +2490,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
     private boolean isCondArtStocBV90() {
 
-        return articolMathaus != null && articolMathaus.getPlanificator() != null && articolMathaus.getPlanificator().equals("ND") &&
+        return articolMathaus != null &&
                 (articolMathaus.getDepart().equals(("01")) || articolMathaus.getDepart().equals(("02")) || articolMathaus.getDepart().equals("05)"));
 
     }
@@ -2558,9 +2557,9 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
             case GET_ARTICOLE_CANT:
                 showArticoleCantDialog((String) result);
                 break;
-			case GET_STOC_MATHAUS:
-				listStocMathaus(result);
-				break;
+            case GET_STOC_MATHAUS:
+                listStocMathaus(result);
+                break;
             case GET_CABLURI_05:
                 afisCabluri05(opArticol.deserializeCabluri05((String) result));
             default:
