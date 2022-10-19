@@ -78,7 +78,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
-            android:layout_weight="0.2"
+            android:layout_weight="0.15"
             android:gravity="left"
             android:textColor="@color/rowColor1"
             android:textSize="17sp"
@@ -133,12 +133,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="0.2"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="0.15"
             android:gravity="left"
             android:textColor="@color/rowColor1"
             android:textSize="17sp"
             android:typeface="sans" />
+
+
+
+        <ImageButton
+            android:id="@+id/btnPretTransport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="right"
+            android:src="@drawable/modify_30" />
 
 
         <TextView

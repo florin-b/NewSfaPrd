@@ -46,7 +46,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
 		setContentView(R.layout.rezumat_comanda_dialog);
 		setTitle("Rezumat comanda");
-		setCancelable(true);
+		setCancelable(false);
 
 		setupLayout();
 
