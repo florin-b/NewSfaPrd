@@ -26,6 +26,7 @@ import my.logon.screen.dialogs.ModifPretTranspDialog;
 import my.logon.screen.listeners.ModifPretTransportListener;
 import my.logon.screen.listeners.RezumatListener;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.UserInfo;
 
 public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTransportListener {
@@ -38,10 +39,12 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private RezumatListener listener;
     private List<CostTransportMathaus> costTransport;
     private String[] tipTransportArray = {"TRAP", "TCLI"};
+    private String[] tipTransportTertArray = {"TERT", "TCLI"};
     private String tipTransportCmd;
     private String filialeArondate;
     private ArticolComanda articolTransport;
-    private ViewHolder myViewHolder;
+
+    private List<ArticolComanda> listArticoleTransport;
 
     public AdapterRezumatComanda(Context context, List<RezumatComanda> listComenzi, List<CostTransportMathaus> costTransport, String tipTransportCmd, String filialeArondate) {
         this.context = context;
@@ -49,6 +52,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         this.costTransport = costTransport;
         this.tipTransportCmd = tipTransportCmd;
         this.filialeArondate = filialeArondate;
+        listArticoleTransport = new ArrayList<>();
         clearTransportArticol(listComenzi);
 
     }
@@ -91,7 +95,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        myViewHolder = viewHolder;
+
 
         RezumatComanda rezumat = getItem(position);
 
@@ -102,36 +106,70 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         viewHolder.tipTransport.setText(getTipTransport(rezumat.getFilialaLivrare()));
 
 
-        if (articolTransport == null)
+        if (getArticolTransport(rezumat.getFilialaLivrare()) == null) {
             viewHolder.textTransport.setText("Val. transp: " + getCostTransport(rezumat.getFilialaLivrare()));
 
-        viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
+            viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
 
-        ArrayAdapter<String> adapterSpinnerTransp = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, tipTransportArray);
-        adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        viewHolder.spinnerTransport.setAdapter(adapterSpinnerTransp);
 
-        String tipTranspArt = getTipTransport(rezumat.getFilialaLivrare());
+            String tipTranspArt = getTipTransport(rezumat.getFilialaLivrare());
 
-        if (filialeArondate.contains(rezumat.getFilialaLivrare())) {
-            viewHolder.tipTransport.setVisibility(View.GONE);
-            viewHolder.spinnerTransport.setVisibility(View.VISIBLE);
-            viewHolder.btnPretTransport.setVisibility(View.VISIBLE);
+            if (filialeArondate.contains(rezumat.getFilialaLivrare()) || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
 
-            String tipTransSelected = getTransportArticole(rezumat);
-            if (tipTransSelected != null && !tipTransSelected.trim().isEmpty())
-                tipTranspArt = tipTransSelected;
+                ArrayAdapter<String> adapterSpinnerTransp = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, tipTransportArray);
+                adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                viewHolder.spinnerTransport.setAdapter(adapterSpinnerTransp);
 
-            if (tipTranspArt.equals("TRAP"))
-                viewHolder.spinnerTransport.setSelection(0);
-            else if (tipTranspArt.equals("TCLI")) {
-                viewHolder.spinnerTransport.setSelection(1);
+                viewHolder.tipTransport.setVisibility(View.GONE);
+                viewHolder.spinnerTransport.setVisibility(View.VISIBLE);
+                viewHolder.btnPretTransport.setVisibility(View.VISIBLE);
+
+                String tipTransSelected = getTransportArticole(rezumat);
+
+
+                if (tipTransSelected != null && !tipTransSelected.trim().isEmpty())
+                    tipTranspArt = tipTransSelected;
+
+                if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+                    tipTranspArt = "TCLI";
+
+                if (tipTranspArt.equals("TCLI"))
+                    viewHolder.spinnerTransport.setSelection(1);
+                else if (tipTranspArt.equals("TRAP"))
+                    viewHolder.spinnerTransport.setSelection(0);
+
+
+            } else {
+
+                if (isCondTranspTertBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
+
+                    viewHolder.tipTransport.setVisibility(View.GONE);
+                    viewHolder.spinnerTransport.setVisibility(View.VISIBLE);
+                    viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
+
+                    ArrayAdapter<String> adapterSpinnerTransp = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, tipTransportTertArray);
+                    adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    viewHolder.spinnerTransport.setAdapter(adapterSpinnerTransp);
+
+                    String tipTransSelected = getTransportArticole(rezumat);
+                    if (tipTransSelected != null && !tipTransSelected.trim().isEmpty())
+                        tipTranspArt = tipTransSelected;
+
+                    if (tipTranspArt.equals("TCLI"))
+                        viewHolder.spinnerTransport.setSelection(1);
+                    else if (tipTranspArt.equals("TERT"))
+                        viewHolder.spinnerTransport.setSelection(0);
+
+
+                } else {
+                    viewHolder.spinnerTransport.setVisibility(View.GONE);
+                    viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
+                    viewHolder.tipTransport.setVisibility(View.VISIBLE);
+                    setTransportArticole(rezumat, tipTranspArt);
+                }
+
             }
-        } else {
-            viewHolder.spinnerTransport.setVisibility(View.GONE);
-            viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
-            viewHolder.tipTransport.setVisibility(View.VISIBLE);
-            setTransportArticole(rezumat, tipTranspArt);
+
         }
 
         setListenerSpinnerTransport(viewHolder.spinnerTransport, rezumat, viewHolder);
@@ -142,6 +180,17 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
     }
 
+
+    private boolean isCondTranspTrapBV90(String filialaLivrat, String tipTransport) {
+       return UserInfo.getInstance().getUnitLog().equals("BV10") && filialaLivrat.equals("BV90") && tipTransport.equals("TRAP");
+
+    }
+
+
+    private boolean isCondTranspTertBV90(String filialaLivrat, String tipTransport) {
+        return UserInfo.getInstance().getUnitLog().equals("BV10") && filialaLivrat.equals("BV90") && tipTransport.equals("TERT");
+
+    }
 
     private void schimbaPretTransport(RezumatComanda rezumat, String valTransport) {
 
@@ -202,7 +251,10 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                     viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
                 } else {
                     viewHolder.textTransport.setVisibility(View.VISIBLE);
-                    viewHolder.btnPretTransport.setVisibility(View.VISIBLE);
+
+                    if (tipTransportSelected.equals("TRAP"))
+                        viewHolder.btnPretTransport.setVisibility(View.VISIBLE);
+
                     adaugaArticolTransport(rezumat, viewHolder);
                 }
 
@@ -225,8 +277,11 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
             ArticolComanda artCom = artIterator.next();
 
             if (isArtTransp(artCom.getNumeArticol())) {
+
                 articolTransport = artCom;
+                adaugaTransportLista(articolTransport);
                 artIterator.remove();
+                calculeazaTotalComanda(rezumatComanda, viewHolder);
                 notifyDataSetChanged();
 
                 if (listener != null)
@@ -237,6 +292,13 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
         }
 
+
+    }
+
+
+    private void calculeazaTotalComanda(RezumatComanda rezumat, ViewHolder viewHolder){
+        getNumeArticole(rezumat);
+        viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
 
     }
 
@@ -254,9 +316,13 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 artTransp = true;
         }
 
+        articolTransport = getArticolTransport(rezumatComanda.getFilialaLivrare());
+
         if (!artTransp && articolTransport != null) {
+
             rezumatComanda.getListArticole().add(articolTransport);
             viewHolder.textTransport.setText("Val. transp: " + articolTransport.getPret());
+            calculeazaTotalComanda(rezumatComanda, viewHolder);
             notifyDataSetChanged();
 
             if (listener != null)
@@ -439,6 +505,47 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         }
 
         return str.toString();
+
+    }
+
+    private void adaugaTransportLista(ArticolComanda articolTransport) {
+
+        if (listArticoleTransport == null || listArticoleTransport.isEmpty())
+            listArticoleTransport.add(articolTransport);
+        else {
+
+            boolean artExista = false;
+
+            for (ArticolComanda artTransport : listArticoleTransport) {
+
+                if (artTransport.getFilialaSite().equals(articolTransport.getFilialaSite()))
+                    artExista = true;
+
+            }
+
+            if (!artExista) {
+                listArticoleTransport.add(articolTransport);
+            }
+
+        }
+    }
+
+    private ArticolComanda getArticolTransport(String filiala) {
+
+        ArticolComanda articolTransport;
+        if (listArticoleTransport == null)
+            return null;
+        else {
+            for (ArticolComanda artTransport : listArticoleTransport) {
+                if (artTransport.getFilialaSite().equals(filiala)) {
+                    return artTransport;
+
+                }
+            }
+
+            return null;
+        }
+
 
     }
 

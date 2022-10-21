@@ -76,7 +76,7 @@ public class ModifPretTranspDialog extends Dialog {
         if (pretTransport.trim().isEmpty())
             return false;
 
-        if (Double.valueOf(pretTransport) > 5000)
+        if (Double.valueOf(pretTransport) > 9999)
             return false;
 
         return Double.valueOf(pretTransport) >= Double.valueOf(pretMinTransport);
