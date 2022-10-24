@@ -1797,7 +1797,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
         livrareMathaus = opArticol.deserializeLivrareMathaus(result);
 
-        if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE) || isComandaDL_TRAP())
+        if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE)  || DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_LIVRARE) || isComandaDL_TRAP())
             DateLivrare.getInstance().setCostTransportMathaus(livrareMathaus.getCostTransport());
 
         List<DateArticolMathaus> articoleMathaus = livrareMathaus.getComandaMathaus().getDeliveryEntryDataList();
@@ -1839,7 +1839,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
         }
 
-        if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE) || isComandaDL_TRAP())
+        if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE) || DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_LIVRARE) || isComandaDL_TRAP())
             HelperMathaus.adaugaArticolTransport(livrareMathaus.getCostTransport(), "10");
 
         prepareArtForDelivery();
