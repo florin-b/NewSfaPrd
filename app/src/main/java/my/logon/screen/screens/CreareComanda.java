@@ -2410,7 +2410,12 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         ArticolComanda articol = HelperCostDescarcare.getArticolPalet(articolPalet, depozitPalet, unitlogPalet);
         ListaArticoleComanda.getInstance().addArticolComanda(articol);
 
-        costDescarcare.getArticoleDescarcare().get(0).setCantitate(costDescarcare.getArticoleDescarcare().get(0).getCantitate() + articol.getCantitate());
+
+        for (int ii=0;ii<costDescarcare.getArticoleDescarcare().size();ii++){
+            if (costDescarcare.getArticoleDescarcare().get(ii).getFiliala().equals(articolPalet.getFiliala())) {
+                costDescarcare.getArticoleDescarcare().get(ii).setCantitate(costDescarcare.getArticoleDescarcare().get(ii).getCantitate() + articol.getCantitate());
+            }
+        }
 
         ArticoleCreareAdapter adapterArticole = new ArticoleCreareAdapter(new ArrayList<ArticolComanda>(), this);
         adapterArticole.setListArticole(ListaArticoleComanda.getInstance().getListArticoleComanda());
