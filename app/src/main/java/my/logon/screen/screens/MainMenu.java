@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -1067,11 +1069,15 @@ public class MainMenu extends Activity {
 			// sf. bd
 
 			// start install
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/download/" + "LiteSFA.apk")),
-					"application/vnd.android.package-archive");
+
+			File toInstall = new File(Environment.getExternalStorageDirectory() + "/download/" + "LiteSFA.apk");
+			Uri apkUri = FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", toInstall);
+			Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+			intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+			intent.setData(apkUri);
 			startActivity(intent);
 			finish();
+
 		} else {
 			Toast toast = Toast.makeText(getApplicationContext(), "Fisier corupt, repetati operatiunea!", Toast.LENGTH_SHORT);
 			toast.show();
