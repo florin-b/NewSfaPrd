@@ -39,6 +39,25 @@ public class HelperMathaus {
 
 	}
 
+	public static void adaugaArticolTransportModificare(List<CostTransportMathaus> costTransport, List<ArticolComanda> listArticoleComanda) {
+
+		eliminaCostTransport(listArticoleComanda, costTransport);
+
+		for (CostTransportMathaus cost : costTransport) {
+
+			for (ArticolComanda articol : listArticoleComanda) {
+
+				if (!cost.getValTransp().equals("0") && cost.getDepart().equals(articol.getDepart())) {
+					listArticoleComanda.add(genereazaArticolTransport(articol, cost));
+					break;
+				}
+
+			}
+
+		}
+
+	}
+
 	public static void eliminaCostTransport(List<ArticolComanda> listArticole, List<CostTransportMathaus> costTransport) {
 
 		Iterator<ArticolComanda> iterator = listArticole.iterator();
@@ -49,7 +68,7 @@ public class HelperMathaus {
 
 				ArticolComanda articol = iterator.next();
 
-				if (cost.getCodArtTransp().replaceAll("^0+", "").equals(articol.getCodArticol().replaceAll("^0+", ""))) {
+				if (cost.getCodArtTransp().replaceAll("^0+", "").equals(articol.getCodArticol().replaceAll("^0+", "")) && !articol.getNumeArticol().equals("Taxa verde")) {
 					iterator.remove();
 				}
 

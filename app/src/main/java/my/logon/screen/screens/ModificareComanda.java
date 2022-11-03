@@ -53,6 +53,7 @@ import my.logon.screen.R;
 import my.logon.screen.adapters.ArticolModificareAdapter;
 import my.logon.screen.adapters.ArticolePretTransport;
 import my.logon.screen.adapters.ComandaModificareAdapter;
+import my.logon.screen.beans.AntetCmdMathaus;
 import my.logon.screen.beans.ArticolCalculDesc;
 import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.beans.BeanArticoleAfisare;
@@ -60,19 +61,26 @@ import my.logon.screen.beans.BeanComandaCreata;
 import my.logon.screen.beans.BeanConditii;
 import my.logon.screen.beans.BeanConditiiArticole;
 import my.logon.screen.beans.BeanConditiiHeader;
+import my.logon.screen.beans.ComandaMathaus;
 import my.logon.screen.beans.CostDescarcare;
+import my.logon.screen.beans.CostTransportMathaus;
+import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.DateLivrareAfisare;
+import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.dialogs.AprobariDialog;
 import my.logon.screen.dialogs.CostMacaraDialog;
 import my.logon.screen.dialogs.CostPaletiDialog;
+import my.logon.screen.dialogs.TranspModifCmdDialog;
 import my.logon.screen.enums.EnumComenziDAO;
 import my.logon.screen.enums.EnumPaleti;
 import my.logon.screen.enums.EnumTipClientIP;
 import my.logon.screen.helpers.HelperCostDescarcare;
+import my.logon.screen.helpers.HelperMathaus;
 import my.logon.screen.listeners.ArticolModificareListener;
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.ComenziDAOListener;
 import my.logon.screen.listeners.CostMacaraListener;
+import my.logon.screen.listeners.ModifCmdTranspListener;
 import my.logon.screen.listeners.PaletiListener;
 import my.logon.screen.model.AlgoritmComandaGed;
 import my.logon.screen.model.ArticolComanda;
@@ -93,7 +101,7 @@ import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
 public class ModificareComanda extends Activity implements AsyncTaskListener, ComenziDAOListener, ArticolModificareListener, Observer,
-        CostMacaraListener, PaletiListener {
+        CostMacaraListener, PaletiListener, ModifCmdTranspListener {
 
     Button quitBtn, stocBtn, clientBtn, articoleBtn, livrareBtn, salveazaComandaBtn, stergeComandaBtn, btnCommentariiCond, aprobareBtn;
     String filiala = "", nume = "", cod = "", globalSubCmp = "0";
@@ -695,7 +703,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                             } else
                                 getTotalComenziNumerar();
                         } else
-                            verificaPretMacara();
+                            verificaPretTransport();
 
                     }
                 });
@@ -706,6 +714,98 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             }
 
         }
+    }
+
+
+    private void verificaPretTransport() {
+        if (isConditiiComandaTransp()) {
+
+            List<ArticolComanda> articoleComanda = listArticoleComanda;
+            ComandaMathaus comandaMathaus = new ComandaMathaus();
+
+            String filialaLivrareMathaus = CreareComanda.filialaAlternativa;
+
+            if (isComandaClpDistrib())
+                filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
+
+            comandaMathaus.setSellingPlant(filialaLivrareMathaus);
+            List<DateArticolMathaus> listArticoleMat = new ArrayList<DateArticolMathaus>();
+
+            String codDepartLivr = UserInfo.getInstance().getCodDepart();
+            if (UserInfo.getInstance().getTipUserSap().contains("KA"))
+                codDepartLivr = "10";
+
+            for (ArticolComanda artCmd : articoleComanda) {
+
+                DateArticolMathaus dateArticol = new DateArticolMathaus();
+                dateArticol.setProductCode(artCmd.getCodArticol());
+                dateArticol.setQuantity(artCmd.getCantitate());
+                dateArticol.setUnit(artCmd.getUm());
+                dateArticol.setValPoz(artCmd.getPret());
+
+                dateArticol.setTip2("");
+
+                if (artCmd.getFilialaSite() != null && artCmd.getFilialaSite().equals("BV90"))
+                    dateArticol.setUlStoc("BV90");
+
+                listArticoleMat.add(dateArticol);
+
+            }
+
+            comandaMathaus.setDeliveryEntryDataList(listArticoleMat);
+
+            AntetCmdMathaus antetComanda = new AntetCmdMathaus();
+            antetComanda.setLocalitate(DateLivrare.getInstance().getOras());
+
+            antetComanda.setCodJudet(DateLivrare.getInstance().getCodJudet());
+            antetComanda.setCodClient(comandaFinala.getCodClient());
+            antetComanda.setTipPers(UserInfo.getInstance().getTipUserSap());
+            antetComanda.setDepart(codDepartLivr);
+
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("antetComanda", new OperatiiArticolImpl(this).serializeAntetCmdMathaus(antetComanda));
+            params.put("comandaMathaus", new OperatiiArticolImpl(this).serializeComandaMathaus(comandaMathaus));
+
+            operatiiComenzi.getLivrariMathaus(params);
+
+        } else {
+            verificaPretMacara();
+        }
+    }
+
+    private boolean isComandaClpDistrib() {
+        return !DateLivrare.getInstance().getTipPersAgent().equals("CV") && !DateLivrare.getInstance().getCodFilialaCLP().trim().isEmpty()
+                && DateLivrare.getInstance().getCodFilialaCLP().trim().length() == 4;
+    }
+
+    private boolean isConditiiComandaTransp() {
+        return (DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT")) && !DateLivrare.getInstance().getTipPersAgent().equals("CV");
+
+    }
+
+    private void adaugaPretTransport(String pretTransport) {
+
+        LivrareMathaus livrareMathaus = new OperatiiArticolImpl(this).deserializeLivrareMathaus(pretTransport);
+        DateLivrare.getInstance().setCostTransportMathaus(livrareMathaus.getCostTransport());
+
+        HelperMathaus.adaugaArticolTransportModificare(livrareMathaus.getCostTransport(), listArticoleComanda);
+        adapterArticole.notifyDataSetChanged();
+
+        TranspModifCmdDialog dialog = new TranspModifCmdDialog(livrareMathaus.getCostTransport(), this);
+        dialog.setTranspModifCmdListener(this);
+        dialog.show();
+    }
+
+    @Override
+    public void pretTranspModificat(List<CostTransportMathaus> listCostTransport) {
+        HelperMathaus.adaugaArticolTransportModificare(listCostTransport, listArticoleComanda);
+        adapterArticole.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void pretTranspSalvat() {
+        performSaveCmd();
     }
 
     private void getTotalComenziNumerar() {
@@ -1943,6 +2043,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                 break;
             case GET_TOTAL_COMENZI_NUMERAR:
                 afisTotalComenziNumerar((String) result);
+                break;
+            case GET_LIVRARI_MATHAUS:
+                adaugaPretTransport((String) result);
                 break;
             default:
                 break;

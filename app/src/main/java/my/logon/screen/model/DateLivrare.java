@@ -91,6 +91,7 @@ public class DateLivrare {
 	private List<CostTransportMathaus> costTransportMathaus;
 	private boolean isClientBlocat;
 	private double limitaCredit;
+	private String tipPersAgent;
 	
 	private DateLivrareAfisare dateLivrareAfisare;
 
@@ -152,6 +153,7 @@ public class DateLivrare {
 		this.delegat = dateLivrareAfisare.getDelegat();
 		this.refClient = dateLivrareAfisare.getRefClient();
 		this.limitaCredit = dateLivrareAfisare.getLimitaCredit();
+		this.tipPersAgent = dateLivrareAfisare.getTipPersAgent();
 	}
 
 	public boolean isClientRaft() {
@@ -663,6 +665,14 @@ public class DateLivrare {
 		this.costTransportMathaus = costTransportMathaus;
 	}
 
+	public String getTipPersAgent() {
+		return tipPersAgent;
+	}
+
+	public void setTipPersAgent(String tipPersAgent) {
+		this.tipPersAgent = tipPersAgent;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -720,6 +730,7 @@ public class DateLivrare {
 		limitaCredit = 0;
 		filialeExtraMathaus = "";
 		costTransportMathaus = null;
+		tipPersAgent = "";
 
 	}
 

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dip"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Valoarea transportului este "
+            android:textColor="@color/cmpColor1"
+            android:textSize="18sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textValTransp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:textColor="@color/cmpColor1"
+            android:textSize="18sp"
+            android:typeface="sans" />
+
+        <ImageButton
+            android:id="@+id/btnPretTransport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dip"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/modify_30" />
+
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:background="@drawable/cancel_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Revenire" />
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btnSave"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:background="@drawable/ok_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Continua" />
+    </LinearLayout>
+
+</LinearLayout>
