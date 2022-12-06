@@ -492,6 +492,9 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 					if (articolObject.has("aczcLivrat"))
 						articol.setAczcLivrat(Double.valueOf(articolObject.getString("aczcLivrat")));
 
+					if (articolObject.has("greutate"))
+						articol.setGreutate(Double.valueOf(articolObject.getString("greutate")));
+
 					listArticole.add(articol);
 
 				}

@@ -78,6 +78,7 @@ import my.logon.screen.helpers.HelperCreareComanda;
 import my.logon.screen.helpers.HelperDialog;
 import my.logon.screen.listeners.ArtComplDialogListener;
 import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.CnpDialogListener;
 import my.logon.screen.listeners.ComenziDAOListener;
 import my.logon.screen.listeners.CostMacaraListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
@@ -89,6 +90,7 @@ import my.logon.screen.model.AlgoritmComandaGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.Comanda;
 import my.logon.screen.model.ComenziDAO;
+import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.InfoStrings;
 import my.logon.screen.model.ListaArticoleComandaGed;
@@ -102,7 +104,7 @@ import my.logon.screen.utils.UtilsComenziGed;
 import my.logon.screen.utils.UtilsUser;
 
 public class CreareComandaGed extends Activity implements AsyncTaskListener, ArtComplDialogListener, Observer, OperatiiArticolListener,
-        ValoareNegociataDialogListener, PaletAlertListener, ComenziDAOListener, CostMacaraListener, TipCmdGedListener, PaletiListener {
+        ValoareNegociataDialogListener, PaletAlertListener, ComenziDAOListener, CostMacaraListener, TipCmdGedListener, PaletiListener, CnpDialogListener {
 
     Button stocBtn, clientBtn, articoleBtn, livrareBtn, saveCmdBtn, slideButtonCmd, valTranspBtn, debugBtn;
     String filiala = "", nume = "", cod = "";
@@ -1163,6 +1165,11 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                                 return true;
                             }
 
+                            if (isConditiiSolicitCnp() && CreareComandaGed.cnpClient.trim().length() == 0) {
+                                showCnpDialog();
+                                return true;
+                            }
+
                             if (existaArticole() && !textAdrLivr.getText().toString().equals("")) {
 
                                 mProgress.setVisibility(View.VISIBLE);
@@ -1194,6 +1201,36 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     }
 
+
+
+    private boolean isConditiiSolicitCnp() {
+
+        if (!DateLivrare.getInstance().getTipPersClient().equals("PF"))
+            return false;
+
+        double valGreutateCmd = 0;
+        double valFTvaCmd = 0;
+
+        for (ArticolComanda articol : ListaArticoleComandaGed.getInstance().getListArticoleComanda()) {
+            if (articol.getGreutate() > 0) {
+                valGreutateCmd += articol.getGreutate();
+                valFTvaCmd += (articol.getPretFaraTva() * articol.getCantitate()) / articol.getMultiplu();
+            }
+        }
+
+        if (valGreutateCmd > Constants.MAX_GREUTATE_CNP || valFTvaCmd >= Constants.MAX_VALOARE_CNP)
+            return true;
+
+        return false;
+
+    }
+
+    private void showCnpDialog() {
+        CnpDialog dialog = new CnpDialog(this);
+        dialog.setCnpListener(CreareComandaGed.this);
+        dialog.show();
+    }
+
     private boolean isComandaACZC() {
         return DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_COMANDA;
     }
@@ -1203,6 +1240,14 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 && (DateLivrare.getInstance().getTipPlata().equals("E") || DateLivrare.getInstance().getTipPlata().equals("E1")
                 || DateLivrare.getInstance().getTipPlata().equals("N") || DateLivrare.getInstance().getTipPlata().equals("R"))
                 ;
+    }
+
+    @Override
+    public void cnpSaved(String cnp) {
+        CreareComandaGed.cnpClient = cnp;
+        mProgress.setProgress(50);
+        myTimer = new Timer();
+        myTimer.schedule(new UpdateProgress(), 40, 15);
     }
 
     class UpdateProgress extends TimerTask {
@@ -1696,6 +1741,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 obj.put("procTransport", listArticole.get(i).getProcTransport());
                 obj.put("depart", listArticole.get(i).getDepart());
                 obj.put("listCabluri", new OperatiiArticolImpl(this).serializeCabluri05(listArticole.get(i).getListCabluri()));
+                obj.put("greutate", listArticole.get(i).getGreutate());
 
                 myArray.put(obj);
 

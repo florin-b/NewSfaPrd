@@ -668,6 +668,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				pretArticol.setErrMsg(jsonObject.getString("errMsg"));
 				pretArticol.setProcReducereCmp(Double.valueOf(jsonObject.getString("procReducereCmp")));
 				pretArticol.setPretFaraTva(Double.valueOf(jsonObject.getString("pretFaraTva")));
+				pretArticol.setGreutate(Double.valueOf(jsonObject.getString("greutate")));
 
 			}
 

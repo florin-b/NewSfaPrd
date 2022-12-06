@@ -1416,6 +1416,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 						articol.setFilialaSite(CreareComandaGed.filialaAlternativa);
 						articol.setLungime(articolDBSelected.getLungime());
 						articol.setListCabluri(listCabluri);
+						articol.setPretFaraTva(selectedArticol.getPretFaraTva());
+						articol.setGreutate(selectedArticol.getGreutate());
 
 						if (procRedFin > 0)
 							articol.setIstoricPret(selectedArticol.getIstoricPret());

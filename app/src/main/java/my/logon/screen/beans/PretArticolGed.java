@@ -31,6 +31,7 @@ public class PretArticolGed {
 	private String errMsg;
 	private double procReducereCmp;
 	private double pretFaraTva;
+	private double greutate;
 
 	public String getPret() {
 		return pret;
@@ -264,4 +265,11 @@ public class PretArticolGed {
 		this.pretFaraTva = pretFaraTva;
 	}
 
+	public double getGreutate() {
+		return greutate;
+	}
+
+	public void setGreutate(double greutate) {
+		this.greutate = greutate;
+	}
 }
