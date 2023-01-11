@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.listeners.ComandaMathausListener;
 import my.logon.screen.listeners.RezumatListener;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
 
@@ -34,8 +36,11 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 	private List<CostTransportMathaus> costTransport;
 	private String tipTransport;
 	private String filialeArondate;
+	private LinearLayout layoutInfo;
+	private Button btnAdresaLivrare;
+	private boolean selectTransp;
 
-	public RezumatComandaDialog(Context context, List<ArticolComanda> listArticole, String canal, List<CostTransportMathaus> costTransport, String tipTransport, String filialeArondate) {
+	public RezumatComandaDialog(Context context, List<ArticolComanda> listArticole, String canal, List<CostTransportMathaus> costTransport, String tipTransport, String filialeArondate, boolean selectTransp) {
 		super(context);
 		this.context = context;
 		this.listArticole = listArticole;
@@ -43,6 +48,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 		this.costTransport = costTransport;
 		this.tipTransport = tipTransport;
 		this.filialeArondate = filialeArondate;
+		this.selectTransp = selectTransp;
 
 		setContentView(R.layout.rezumat_comanda_dialog);
 		setTitle("Rezumat comanda");
@@ -56,9 +62,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
 		listViewComenzi = (ListView) findViewById(R.id.listComenzi);
 
-
-
-		AdapterRezumatComanda adapterRezumat = new AdapterRezumatComanda(context, getRezumatComanda(), costTransport, tipTransport, filialeArondate);
+		AdapterRezumatComanda adapterRezumat = new AdapterRezumatComanda(context, getRezumatComanda(), costTransport, tipTransport, filialeArondate, selectTransp);
 		adapterRezumat.setRezumatListener(this);
 		listViewComenzi.setAdapter(adapterRezumat);
 
@@ -66,6 +70,10 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 		setListenerBtnCancel();
 		btnOkComanda = (Button) findViewById(R.id.btnOkComanda);
 		setListenerComandaSalvata();
+
+		layoutInfo = (LinearLayout) findViewById(R.id.layoutInfo);
+		btnAdresaLivrare = (Button) findViewById(R.id.btnAdresaLivrare);
+		setListenerAdresaLivrare();
 
 	}
 
@@ -93,6 +101,16 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 					dismiss();
 				}
 
+			}
+		});
+	}
+
+	private void setListenerAdresaLivrare() {
+		btnAdresaLivrare.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				listener.redirectDateLivrare();
+				dismiss();
 			}
 		});
 	}
@@ -207,10 +225,37 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 			}
 		}
 
+
 		if (listener != null)
 			listener.comandaEliminata();
 
+	}
+
+	private boolean isCom1() {
+
+		for (ArticolComanda articol : listArticole) {
+			if (articol.getTipTransport() != null && articol.getTipTransport().equals("TRAP"))
+				return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public void setStareRezumat(String codStare, String filialaLivrare) {
+
+		if (DateLivrare.getInstance().getFilialaLivrareTCLI() == null || DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty())
+			return;
+
+		if ((codStare.equals("0") && !isCom1()) || !selectTransp) {
+			btnOkComanda.setVisibility(View.VISIBLE);
+			layoutInfo.setVisibility(View.INVISIBLE);
+		} else {
+			btnOkComanda.setVisibility(View.INVISIBLE);
+			layoutInfo.setVisibility(View.VISIBLE);
+		}
 
 	}
+
 
 }

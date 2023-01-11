@@ -21,6 +21,7 @@ import my.logon.screen.enums.EnumTipAlert;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.UserInfo;
+import my.logon.screen.screens.CreareComanda;
 
 public class UtilsGeneral {
 
@@ -619,6 +620,25 @@ public class UtilsGeneral {
 		filialeMathaus.add("GL10");
 
 		return filialeMathaus;
-	}	
+	}
+
+	public static String getUnitLogDistrib(String unitLog) {
+		return unitLog.substring(0, 2) + "1" + unitLog.substring(3, 4);
+	}
+
+	public static boolean isUlDistrib(String unitLog) {
+		return unitLog.substring(2, 3).equals("1");
+	}
+
+	public static boolean isFilMareLivrTCLIDistrib() {
+
+		String filialaLivrare = "";
+		if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE))
+			filialaLivrare = CreareComanda.filialaAlternativa;
+		else if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_LIVRARE))
+			filialaLivrare = DateLivrare.getInstance().getCodFilialaCLP();
+
+		return filialaLivrare.equals("IS10") || filialaLivrare.equals("AG10") || filialaLivrare.equals("BU10");
+	}
 	
 }

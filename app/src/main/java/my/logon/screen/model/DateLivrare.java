@@ -14,6 +14,7 @@ import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.FurnizorComanda;
 import my.logon.screen.beans.ObiectivConsilier;
+import my.logon.screen.beans.TranspComenzi;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
 
@@ -73,7 +74,7 @@ public class DateLivrare {
 	private EnumZona zonaBucuresti;
 	private String codMeserias = "";
 	private boolean isClientFurnizor;
-	
+
 	private boolean isFactPaletSeparat = false;
 	private FurnizorComanda furnizorComanda;
 	private TipCmdDistrib tipComandaDistrib = TipCmdDistrib.COMANDA_VANZARE;
@@ -91,8 +92,12 @@ public class DateLivrare {
 	private List<CostTransportMathaus> costTransportMathaus;
 	private boolean isClientBlocat;
 	private double limitaCredit;
+	private String prelucrareLemn;
 	private String tipPersAgent;
-	
+	private String filialaLivrareTCLI;
+	private List<TranspComenzi> transpComenzi;
+	private String filialaPlata;
+
 	private DateLivrareAfisare dateLivrareAfisare;
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
@@ -154,6 +159,7 @@ public class DateLivrare {
 		this.refClient = dateLivrareAfisare.getRefClient();
 		this.limitaCredit = dateLivrareAfisare.getLimitaCredit();
 		this.tipPersAgent = dateLivrareAfisare.getTipPersAgent();
+		this.filialaPlata = dateLivrareAfisare.getFilialaPlata();
 	}
 
 	public boolean isClientRaft() {
@@ -528,7 +534,7 @@ public class DateLivrare {
 	public void setClientFurnizor(boolean isClientFurnizor) {
 		this.isClientFurnizor = isClientFurnizor;
 	}
-	
+
 	public boolean isFactPaletSeparat() {
 		return isFactPaletSeparat;
 	}
@@ -560,7 +566,7 @@ public class DateLivrare {
 	public void setCamionDescoperit(boolean isCamionDescoperit) {
 		this.isCamionDescoperit = isCamionDescoperit;
 	}
-	
+
 	public String getDiviziiClient() {
 		return diviziiClient;
 	}
@@ -568,23 +574,23 @@ public class DateLivrare {
 	public void setDiviziiClient(String diviziiClient) {
 		this.diviziiClient = diviziiClient;
 	}
-	
+
 	public String getProgramLivrare() {
 		return programLivrare;
 	}
 
 	public void setProgramLivrare(String programLivrare) {
 		this.programLivrare = programLivrare;
-	}	
-	
+	}
+
 	public String getLivrareSambata() {
 		return livrareSambata;
 	}
 
 	public void setLivrareSambata(String livrareSambata) {
 		this.livrareSambata = livrareSambata;
-	}	
-	
+	}
+
 	public String getBlocScara() {
 		return blocScara;
 	}
@@ -592,61 +598,45 @@ public class DateLivrare {
 	public void setBlocScara(String blocScara) {
 		this.blocScara = blocScara;
 	}
-	
+
 	public String getCodFilialaCLP() {
 		return codFilialaCLP;
 	}
 
 	public void setCodFilialaCLP(String codFilialaCLP) {
 		this.codFilialaCLP = codFilialaCLP;
-	}	
-	
+	}
+
 	public Delegat getDelegat() {
 		return delegat;
 	}
 
 	public void setDelegat(Delegat delegat) {
 		this.delegat = delegat;
-	}	
-	
+	}
+
 	public ObiectivConsilier getObiectivConsilier() {
 		return obiectivConsilier;
 	}
 
 	public void setObiectivConsilier(ObiectivConsilier obiectivConsilier) {
 		this.obiectivConsilier = obiectivConsilier;
-	}	
-	
+	}
+
 	public String getRefClient() {
 		return refClient;
 	}
 
 	public void setRefClient(String refClient) {
 		this.refClient = refClient;
-	}	
-	
+	}
+
 	public TipCmdGed getTipComandaGed() {
 		return tipComandaGed;
 	}
 
 	public void setTipComandaGed(TipCmdGed tipComandaGed) {
 		this.tipComandaGed = tipComandaGed;
-	}
-	
-	public boolean isClientBlocat() {
-		return isClientBlocat;
-	}
-
-	public void setClientBlocat(boolean isClientBlocat) {
-		this.isClientBlocat = isClientBlocat;
-	}
-
-	public double getLimitaCredit() {
-		return limitaCredit;
-	}
-
-	public void setLimitaCredit(double limitaCredit) {
-		this.limitaCredit = limitaCredit;
 	}
 
 	public String getFilialeExtraMathaus() {
@@ -665,12 +655,60 @@ public class DateLivrare {
 		this.costTransportMathaus = costTransportMathaus;
 	}
 
+	public boolean isClientBlocat() {
+		return isClientBlocat;
+	}
+
+	public void setClientBlocat(boolean isClientBlocat) {
+		this.isClientBlocat = isClientBlocat;
+	}
+
+	public double getLimitaCredit() {
+		return limitaCredit;
+	}
+
+	public void setLimitaCredit(double limitaCredit) {
+		this.limitaCredit = limitaCredit;
+	}
+
+	public String getPrelucrareLemn() {
+		return prelucrareLemn;
+	}
+
+	public void setPrelucrareLemn(String prelucrareLemn) {
+		this.prelucrareLemn = prelucrareLemn;
+	}
+
 	public String getTipPersAgent() {
 		return tipPersAgent;
 	}
 
 	public void setTipPersAgent(String tipPersAgent) {
 		this.tipPersAgent = tipPersAgent;
+	}
+
+	public String getFilialaLivrareTCLI() {
+		return filialaLivrareTCLI;
+	}
+
+	public void setFilialaLivrareTCLI(String filialaLivrareTCLI) {
+		this.filialaLivrareTCLI = filialaLivrareTCLI;
+	}
+
+	public List<TranspComenzi> getTranspComenzi() {
+		return transpComenzi;
+	}
+
+	public void setTranspComenzi(List<TranspComenzi> transpComenzi) {
+		this.transpComenzi = transpComenzi;
+	}
+
+	public String getFilialaPlata() {
+		return filialaPlata;
+	}
+
+	public void setFilialaPlata(String filialaPlata) {
+		this.filialaPlata = filialaPlata;
 	}
 
 	public void resetAll() {
@@ -726,11 +764,15 @@ public class DateLivrare {
 		obiectivConsilier = null;
 		refClient = "";
 		tipComandaGed = TipCmdGed.COMANDA_VANZARE;
-		isClientBlocat = false;
-		limitaCredit = 0;
 		filialeExtraMathaus = "";
 		costTransportMathaus = null;
+		isClientBlocat = false;
+		limitaCredit = 0;
+		prelucrareLemn = "";
 		tipPersAgent = "";
+		filialaLivrareTCLI = "";
+		transpComenzi = null;
+		filialaPlata = "";
 
 	}
 

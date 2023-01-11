@@ -33,4 +33,6 @@ public interface OperatiiAdresa {
 	
 	public void getFilialaLivrareMathaus(HashMap<String, String> params);
 
+	public void getAdresaFiliala(HashMap<String, String> params);
+
 }

@@ -4,25 +4,6 @@
  */
 package my.logon.screen.screens;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.OperatiiArticolListener;
-import my.logon.screen.listeners.PreturiListener;
-import my.logon.screen.model.Constants;
-import my.logon.screen.model.InfoStrings;
-import my.logon.screen.model.OperatiiArticol;
-import my.logon.screen.model.OperatiiArticolFactory;
-import my.logon.screen.model.Preturi;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.DepartamentAgent;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
-import my.logon.screen.adapters.CautareArticoleAdapter;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -48,9 +29,29 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.CautareArticoleAdapter;
 import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.OperatiiArticolListener;
+import my.logon.screen.listeners.PreturiListener;
+import my.logon.screen.model.Constants;
+import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.OperatiiArticol;
+import my.logon.screen.model.OperatiiArticolFactory;
+import my.logon.screen.model.Preturi;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.DepartamentAgent;
+import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickListener, OperatiiArticolListener, PreturiListener {
 
@@ -263,7 +264,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 		temp.put("codFiliala", "BU13");
 		listFiliale.add(temp);
 
-		if (UserInfo.getInstance().getCodDepart().equals("05")) {
+		if (UserInfo.getInstance().getCodDepart().equals("05") || UserInfo.getInstance().getCodDepart().equals("01") || UserInfo.getInstance().getCodDepart().equals("02")) {
 			temp = new HashMap<String, String>();
 			temp.put("numeFiliala", "BRASOV CENTRAL");
 			temp.put("codFiliala", "BV90");

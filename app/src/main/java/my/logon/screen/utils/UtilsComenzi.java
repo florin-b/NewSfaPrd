@@ -118,4 +118,8 @@ public class UtilsComenzi {
 		return tipPlataClient;
 	}
 
+	public static boolean isComandaClp() {
+		return !DateLivrare.getInstance().getCodFilialaCLP().trim().isEmpty() && DateLivrare.getInstance().getCodFilialaCLP().trim().length() == 4;
+	}
+
 }

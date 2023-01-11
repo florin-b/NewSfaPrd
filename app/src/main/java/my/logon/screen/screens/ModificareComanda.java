@@ -1401,6 +1401,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             obj.put("ciDelegat", DateLivrare.getInstance().getDelegat().getSerieNumarCI());
             obj.put("autoDelegat", DateLivrare.getInstance().getDelegat().getNrAuto());
             obj.put("refClient", DateLivrare.getInstance().getRefClient());
+            obj.put("filialaPlata", DateLivrare.getInstance().getFilialaPlata());
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();

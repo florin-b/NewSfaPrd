@@ -1,21 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Transport"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Spinner
+                    android:id="@+id/spinnerTransp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.1"
+                    android:gravity="left" />
+
+                <CheckBox
+                    android:id="@+id/checkMacara"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="20dip"
+                    android:layout_weight="0.15"
+                    android:text="Camion cu macara" />
+
+                <Spinner
+                    android:id="@+id/spinnerTonaj"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.1"
+                    android:gravity="left" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutFilLivrare"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Filiala livrare"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Spinner
+                    android:id="@+id/spinnerFiliale"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.3"
+                    android:gravity="left" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutRadioAdrese"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -25,7 +105,7 @@
                     android:id="@+id/radioAdresa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radioLista"
@@ -63,7 +143,7 @@
                 android:id="@+id/layoutListAdrese"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -94,7 +174,7 @@
                 android:id="@+id/layoutAdr1"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -143,7 +223,7 @@
                 android:id="@+id/layoutAdr2"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -194,9 +274,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutBlocScara"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -227,7 +308,7 @@
                 android:id="@+id/layoutHarta"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -261,7 +342,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -292,7 +373,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -323,7 +404,7 @@
                 android:id="@+id/layoutTipReducere"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -351,7 +432,7 @@
                 android:id="@+id/layoutDocInsot"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -389,7 +470,7 @@
                 android:id="@+id/layoutPlata"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -414,8 +495,8 @@
                     android:id="@+id/tipPlataContract"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
                     android:gravity="center"
                     android:textSize="16sp" />
 
@@ -430,10 +511,55 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutFilialaPlata"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Plata in filiala"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <RadioGroup
+                    android:id="@+id/radioFilialaPlata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioPlataFilialaAg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/labelColor"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioPlataFilialaLivrare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:textColor="@color/labelColor"
+                        android:textSize="17sp" />
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/layoutResponsabil"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -459,7 +585,7 @@
                 android:id="@+id/layoutValoareIncasare"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -495,54 +621,11 @@
                     android:text="Modifica" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dip"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|left"
-                    android:gravity="left"
-                    android:paddingLeft="5dip"
-                    android:text="Transport"
-                    android:textColor="@color/labelColor"
-                    android:textSize="17sp"
-                    android:typeface="serif" />
-
-                <Spinner
-                    android:id="@+id/spinnerTransp"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_weight="0.1"
-                    android:gravity="left" />
-
-                <CheckBox
-                    android:id="@+id/checkMacara"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="20dip"
-                    android:layout_weight="0.15"
-                    android:text="Camion cu macara" />
-
-                <Spinner
-                    android:id="@+id/spinnerTonaj"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginRight="180dip"
-                    android:layout_weight="0.1"
-                    android:gravity="left" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -588,7 +671,7 @@
                 android:id="@+id/layoutObsSofer"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -629,7 +712,7 @@
                 android:id="@+id/layoutFactPaleti"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -655,7 +738,7 @@
                 android:id="@+id/layoutCamionDescoperit"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -681,7 +764,7 @@
                 android:id="@+id/layoutClientRaft"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -706,7 +789,7 @@
                 android:id="@+id/layoutIndoire"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -725,20 +808,29 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="left|bottom"
                     android:layout_marginRight="180dip"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.13"
+                    android:gravity="left" />
+
+                <Spinner
+                    android:id="@+id/spinnerDebitare"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.13"
                     android:gravity="left" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.1" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layoutDelegat"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -817,7 +909,7 @@
                 android:id="@+id/layoutObiective"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"
@@ -843,7 +935,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <View
                     android:layout_width="0dp"

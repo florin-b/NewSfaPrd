@@ -1,26 +1,26 @@
 package my.logon.screen.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.OperatiiAdresaListener;
-import my.logon.screen.screens.AsyncTaskWSCall;
+import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import my.logon.screen.utils.UtilsFormatting;
-import android.content.Context;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import my.logon.screen.beans.BeanAdreseJudet;
 import my.logon.screen.beans.BeanDateLivrareClient;
 import my.logon.screen.beans.BeanLocalitate;
 import my.logon.screen.enums.EnumLocalitate;
 import my.logon.screen.enums.EnumOperatiiAdresa;
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.OperatiiAdresaListener;
+import my.logon.screen.screens.AsyncTaskWSCall;
+import my.logon.screen.utils.UtilsFormatting;
 
 public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 
@@ -93,6 +93,13 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 	public void getFilialaLivrareMathaus(HashMap<String, String> params) {
 		this.params = params;
 		numeComanda = EnumOperatiiAdresa.GET_FILIALA_MATHAUS;
+		performOperation();
+
+	}
+
+	public void getAdresaFiliala(HashMap<String, String> params) {
+		this.params = params;
+		numeComanda = EnumOperatiiAdresa.GET_ADRESA_FILIALA;
 		performOperation();
 
 	}

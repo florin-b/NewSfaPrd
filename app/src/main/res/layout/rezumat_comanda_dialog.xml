@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layoutPaleti"
@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:layout_weight="0.7"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/listComenzi"
@@ -24,11 +24,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCancelComanda"
@@ -58,6 +58,42 @@
             android:paddingLeft="40dip"
             android:paddingRight="40dip"
             android:text="Continua" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="left"
+            android:text="Completeaza adresa de livrare."
+            android:textColor="#A66D33"
+            android:textSize="17sp"
+            />
+
+        <Button
+            android:id="@+id/btnAdresaLivrare"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/cancel_button_style"
+            android:paddingLeft="40dip"
+            android:paddingRight="40dip"
+            android:text="Mergi la adresa de livrare" />
     </LinearLayout>
 
 </LinearLayout>

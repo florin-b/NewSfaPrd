@@ -7,6 +7,8 @@ public class AntetCmdMathaus {
 	private String codClient;
 	private String tipPers;
 	private String depart;
+	public String codPers;
+	public String tipTransp;
 
 	public String getLocalitate() {
 		return localitate;
@@ -48,4 +50,19 @@ public class AntetCmdMathaus {
 		this.depart = depart;
 	}
 
+	public String getCodPers() {
+		return codPers;
+	}
+
+	public void setCodPers(String codPers) {
+		this.codPers = codPers;
+	}
+
+	public String getTipTransp() {
+		return tipTransp;
+	}
+
+	public void setTipTransp(String tipTransp) {
+		this.tipTransp = tipTransp;
+	}
 }
