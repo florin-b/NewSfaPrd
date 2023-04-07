@@ -88,7 +88,7 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 		numeComanda = EnumOperatiiAdresa.GET_DATE_LIVRARE_CLIENT;
 		performOperation();
 
-	}	
+	}
 	
 	public void getFilialaLivrareMathaus(HashMap<String, String> params) {
 		this.params = params;
@@ -103,7 +103,7 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 		performOperation();
 
 	}
-	
+
 	public List<String> deserializeListLocalitati(Object resultList) {
 
 		List<String> listLocalitati = new ArrayList<String>();
@@ -137,6 +137,7 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 			JSONArray jsonArrayLoc = new JSONArray(jsonObject.getString("listLocalitati"));
 
 			for (int i = 0; i < jsonArrayLoc.length(); i++) {
+
 				JSONObject articolObject = jsonArrayLoc.getJSONObject(i);
 
 				BeanLocalitate loc = new BeanLocalitate();
@@ -187,9 +188,8 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
 		}
 		return dateLivrare;
-	}	
-	
-	
+	}
+
 	public void setOperatiiAdresaListener(OperatiiAdresaListener listener) {
 		this.listener = listener;
 	}

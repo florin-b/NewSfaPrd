@@ -68,7 +68,7 @@ import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
 public class AfisComanda extends Activity implements CustomSpinnerListener, OperatiiAgentListener, IntervalDialogListener, ClientDialogListener,
-		ComenziDAOListener, DivizieDialogListener {
+        ComenziDAOListener, DivizieDialogListener {
 
 	Button quitBtn, cmdBtn, slideButtonCmdAfis;
 	String filiala = "", nume = "", cod = "", codAgent = "";
@@ -182,8 +182,8 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 
 		spinnerListener.setListener(this);
 
-		adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" }, new int[] {
-				R.id.textNumeAgent, R.id.textCodAgent });
+		adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" }, new int[] { R.id.textNumeAgent,
+				R.id.textCodAgent });
 
 		listViewArticole = (ListView) findViewById(R.id.listArt);
 
@@ -241,7 +241,7 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 			setUpDirectorLayoutOptions();
 		}
 
-		if (isSefDepart() || UtilsUser.isSDIP()) {
+		if (isSefDepart()) {
 			performGetAgenti();
 
 		}
@@ -362,6 +362,8 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 
 		if (!isDirectorDistrib())
 			selectedCodDepart = UserInfo.getInstance().getCodDepart();
+		
+		
 
 		// dka
 		if (UserInfo.getInstance().getTipAcces().equals("35") || UserInfo.getInstance().getTipAcces().equals("32")) {
@@ -383,14 +385,14 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 		if (UserInfo.getInstance().getTipAcces().equals("39")) {
 
 			selectedCodDepart = "11";
-			tipAgent = "SDCVA";
 
-		}
+			if (UserInfo.getInstance().getTipUserSap().equals("SDIP")) {
+				tipAgent = "SDIP";
+				selectedFiliala = UserInfo.getInstance().getInitUnitLog();
+			} else {
 
-		if (UserInfo.getInstance().getTipUserSap().equals("SDIP")) {
-			selectedCodDepart = "11";
-			tipAgent = "SDIP";
-			selectedFiliala = UserInfo.getInstance().getInitUnitLog();
+				tipAgent = "SDCVA";
+			}
 		}
 
 		agent.getListaAgenti(selectedFiliala, selectedCodDepart, this, true, tipAgent);
@@ -414,8 +416,8 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 		spinnerTipUser.setVisibility(View.VISIBLE);
 		ArrayList<HashMap<String, String>> listTipUsers = new ArrayList<HashMap<String, String>>();
 
-		SimpleAdapter adapterTypes = new SimpleAdapter(this, listTipUsers, R.layout.generic_rowlayout, new String[] { "stringName", "stringId" },
-				new int[] { R.id.textName, R.id.textId });
+		SimpleAdapter adapterTypes = new SimpleAdapter(this, listTipUsers, R.layout.generic_rowlayout, new String[] { "stringName", "stringId" }, new int[] {
+				R.id.textName, R.id.textId });
 
 		HashMap<String, String> temp;
 
@@ -516,8 +518,8 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 
 		spinnerAgentiAfisCmd.setVisibility(View.VISIBLE);
 
-		adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" }, new int[] {
-				R.id.textNumeAgent, R.id.textCodAgent });
+		adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" }, new int[] { R.id.textNumeAgent,
+				R.id.textCodAgent });
 		spinnerAgentiAfisCmd.setAdapter(adapterAgenti);
 
 		if (listAgenti.size() > 0) {
@@ -592,9 +594,6 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 			{
 				tipUser = "SDCVA";
 				paramDepart = "11";
-			}
-			
-			if (UtilsUser.isSDIP()){
 				codSD = UserInfo.getInstance().getCod();
 			}
 
@@ -672,19 +671,37 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 		textTransport.setText(UtilsGeneral.getDescTipTransport(dateLivrare.getTransport()));
 		textDataLivrare.setText(dateLivrare.getDataLivrare());
 		textCantar.setText(dateLivrare.getCantar().equals("1") ? "Cu cantarire" : "Fara cantarire");
-		textOras.setText(dateLivrare.getOras());
-		textJudet.setText(InfoStrings.numeJudet(dateLivrare.getCodJudet()));
-		textAdrLivr.setText(dateLivrare.getDateLivrare());
+		//textOras.setText(dateLivrare.getOras());
+		//textJudet.setText(InfoStrings.numeJudet(dateLivrare.getCodJudet()));
+		//textAdrLivr.setText(dateLivrare.getDateLivrare());
 		textPersContact.setText(dateLivrare.getPersContact());
 		textTelefon.setText(dateLivrare.getNrTel());
 		textObsLivrare.setText(dateLivrare.getObsLivrare());
-		
+
+		if (!dateLivrare.getCodJudetD().trim().isEmpty()) {
+			textOras.setText(dateLivrare.getOrasD());
+			textJudet.setText(InfoStrings.numeJudet(dateLivrare.getCodJudetD()));
+			textAdrLivr.setText(dateLivrare.getAdresaD());
+
+			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.textAdrLivrare)).setText("jud. " + InfoStrings.numeJudet(dateLivrare.getCodJudet()) + ", loc. "
+					+ dateLivrare.getOras() + ", " + dateLivrare.getDateLivrare());
+		} else {
+			textOras.setText(dateLivrare.getOras());
+			textJudet.setText(InfoStrings.numeJudet(dateLivrare.getCodJudet()));
+			textAdrLivr.setText(dateLivrare.getDateLivrare());
+			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.GONE);
+		}
+
+		/*
 		if (!dateLivrare.getCodJudetD().trim().isEmpty()) {
 			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.VISIBLE);
 			((TextView) findViewById(R.id.textAdrLivrare)).setText("jud. " + InfoStrings.numeJudet(dateLivrare.getCodJudetD()) + ", loc. "
 					+ dateLivrare.getOrasD() + ", " + dateLivrare.getAdresaD());
 		} else
 			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.GONE);
+
+		 */
 
 		if (!dateLivrare.getNrCmdClp().trim().isEmpty() || dateLivrare.getCodFilialaCLP().length() == 4) {
 			((LinearLayout) findViewById(R.id.layoutNrCmdClp)).setVisibility(View.VISIBLE);

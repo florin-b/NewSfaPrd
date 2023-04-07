@@ -3,10 +3,10 @@ package my.logon.screen.model;
 import java.util.HashMap;
 import java.util.List;
 
-import my.logon.screen.listeners.OperatiiAdresaListener;
 import my.logon.screen.beans.BeanAdreseJudet;
 import my.logon.screen.beans.BeanDateLivrareClient;
 import my.logon.screen.enums.EnumLocalitate;
+import my.logon.screen.listeners.OperatiiAdresaListener;
 
 public interface OperatiiAdresa {
 	public void getLocalitatiJudet(HashMap<String, String> params, EnumLocalitate tipLocalitate);

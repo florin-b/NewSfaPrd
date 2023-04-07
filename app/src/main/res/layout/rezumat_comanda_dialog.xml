@@ -81,7 +81,7 @@
             android:text="Completeaza adresa de livrare."
             android:textColor="#A66D33"
             android:textSize="17sp"
-            />
+             />
 
         <Button
             android:id="@+id/btnAdresaLivrare"

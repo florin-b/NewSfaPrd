@@ -7,6 +7,7 @@ import java.util.List;
 import my.logon.screen.beans.AntetCmdMathaus;
 import my.logon.screen.beans.ArticolCant;
 import my.logon.screen.beans.ArticolDB;
+import my.logon.screen.beans.BeanArticolCautare;
 import my.logon.screen.beans.BeanArticolSimulat;
 import my.logon.screen.beans.BeanArticolStoc;
 import my.logon.screen.beans.BeanCablu05;
@@ -18,81 +19,85 @@ import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.listeners.OperatiiArticolListener;
 
-
 public interface OperatiiArticol {
-    public void getPret(HashMap<String, String> params);
+	public void getPret(HashMap<String, String> params);
 
-    public void getPretGed(HashMap<String, String> params);
+	public void getPretGed(HashMap<String, String> params);
 
-    public void getPretGedJson(HashMap<String, String> params);
+	public void getPretGedJson(HashMap<String, String> params);
 
-    public void getStocDepozit(HashMap<String, String> params);
+	public void getStocDepozit(HashMap<String, String> params);
 
-    public void getFactorConversie(HashMap<String, String> params);
+	public void getStocDisponibil(HashMap<String, String> params);
 
-    public void setListener(OperatiiArticolListener listener);
+	public void getFactorConversie(HashMap<String, String> params);
 
-    public void getArticoleDistributie(HashMap<String, String> params);
+	public void setListener(OperatiiArticolListener listener);
 
-    public ArrayList<ArticolDB> deserializeArticoleVanzare(String serializedListArticole);
+	public void getArticoleDistributie(HashMap<String, String> params);
 
-    public PretArticolGed deserializePretGed(Object result);
+	public ArrayList<ArticolDB> deserializeArticoleVanzare(String serializedListArticole);
 
-    public void getArticoleComplementare(List<ArticolComanda> listaArticole);
+	public PretArticolGed deserializePretGed(Object result);
 
-    public void getArticoleFurnizor(HashMap<String, String> params);
+	public void getArticoleComplementare(List<ArticolComanda> listaArticole);
 
-    public void getSinteticeDistributie(HashMap<String, String> params);
+	public void getArticoleFurnizor(HashMap<String, String> params);
 
-    public void getNivel1Distributie(HashMap<String, String> params);
+	public void getSinteticeDistributie(HashMap<String, String> params);
 
-    public String serializeParamPretGed(BeanParametruPretGed param);
+	public void getNivel1Distributie(HashMap<String, String> params);
 
-    public String serializeArticolePretTransport(List<ArticolComanda> listArticole);
+	public String serializeParamPretGed(BeanParametruPretGed param);
 
-    public BeanGreutateArticol deserializeGreutateArticol(Object result);
+	public String serializeArticolePretTransport(List<ArticolComanda> listArticole);
 
-    public Object getDepartBV90(String codArticol);
+	public BeanGreutateArticol deserializeGreutateArticol(Object result);
 
-    public void getStocArticole(HashMap<String, String> params);
+	public Object getDepartBV90(String codArticol);
 
-    public String serializeListArtStoc(List<BeanArticolStoc> listArticole);
+	public void getStocArticole(HashMap<String, String> params);
 
-    public String serializeListArtSim(List<BeanArticolSimulat> listArticole);
+	public String serializeListArtStoc(List<BeanArticolStoc> listArticole);
 
-    public List<BeanArticolStoc> derializeListArtStoc(String listArticole);
+	public String serializeListArtSim(List<BeanArticolSimulat> listArticole);
 
-    public void getCodBare(HashMap<String, String> params);
+	public List<BeanArticolStoc> derializeListArtStoc(String listArticole);
 
-    public void getArticoleStatistic(HashMap<String, String> params);
+	public void getCodBare(HashMap<String, String> params);
 
-    public void getStocCustodie(HashMap<String, String> params);
+	public void getArticoleStatistic(HashMap<String, String> params);
 
-    public void getArticoleCustodie(HashMap<String, String> params);
+	public void getStocCustodie(HashMap<String, String> params);
 
-    public void getArticoleCant(HashMap<String, String> params);
+	public void getArticoleCustodie(HashMap<String, String> params);
 
-    public ArrayList<ArticolCant> deserializeArticoleCant(String listArticole);
+	public void getStocMathaus(HashMap<String, String> params);
 
-    public void getCabluri05(HashMap<String, String> params);
+	public void getInfoPretMathaus(HashMap<String, String> params);
 
-    public ArrayList<BeanCablu05> deserializeCabluri05(String listArticole);
+	public void getArticoleCant(HashMap<String, String> params);
 
-    public String serializeCabluri05(List<BeanCablu05> listCabluri);
+	public ArrayList<ArticolCant> deserializeArticoleCant(String listArticole);
 
-    public void getArticoleACZC(HashMap<String, String> params);
+	public ComandaMathaus deserializeStocMathaus(String result);
+	
+	public LivrareMathaus deserializeLivrareMathaus(String result);
 
-    public void getStocMathaus(HashMap<String, String> params);
+	public String serializeComandaMathaus(ComandaMathaus comandaMathaus);
+	
+	public String serializeAntetCmdMathaus(AntetCmdMathaus antetcmdMathaus);
 
-    public void getInfoPretMathaus(HashMap<String, String> params);
+	public void getCabluri05(HashMap<String, String> params);
+	
+	public ArrayList<BeanCablu05> deserializeCabluri05(String listArticole);
+	
+	public String serializeCabluri05(List<BeanCablu05> listCabluri);
+	
+	public String serializeCostTransportMathaus(List<CostTransportMathaus> costTransport);
 
-    public ComandaMathaus deserializeStocMathaus(String result);
+	public void getArticoleACZC(HashMap<String, String> params);
 
-    public LivrareMathaus deserializeLivrareMathaus(String result);
+	public ArrayList<BeanArticolCautare> deserializeArtRecom(String serListArticole) ;
 
-    public String serializeComandaMathaus(ComandaMathaus comandaMathaus);
-
-    public String serializeAntetCmdMathaus(AntetCmdMathaus antetcmdMathaus);
-
-    public String serializeCostTransportMathaus(List<CostTransportMathaus> costTransport);
 }

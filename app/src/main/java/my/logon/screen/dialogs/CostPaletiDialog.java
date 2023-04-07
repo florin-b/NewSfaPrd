@@ -1,12 +1,5 @@
 package my.logon.screen.dialogs;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.List;
-
-import my.logon.screen.listeners.PaletiListener;
-import my.logon.screen.R;
-import my.logon.screen.adapters.AdapterPaleti;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -21,8 +14,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.List;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.AdapterPaleti;
 import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.enums.EnumPaleti;
+import my.logon.screen.listeners.PaletiListener;
 
 public class CostPaletiDialog extends Dialog {
 
@@ -48,7 +50,7 @@ public class CostPaletiDialog extends Dialog {
 
 		setContentView(R.layout.select_paleti_dialog);
 		setTitle("Adaugare paleti");
-		setCancelable(true);
+		setCancelable(false);
 
 		setUpLayout();
 
@@ -83,8 +85,6 @@ public class CostPaletiDialog extends Dialog {
 		addBtnAcceptaListener();
 
 		btnRenuntaPaleti = (Button) findViewById(R.id.btnCancelPalet);
-
-		// if (!tipTransport.equals("TCLI"))
 		btnRenuntaPaleti.setVisibility(View.INVISIBLE);
 
 		addBtnRespingeListener();
@@ -164,7 +164,7 @@ public class CostPaletiDialog extends Dialog {
 
 			public void onClick(View v) {
 
-				if (listener != null) {
+				if (listener != null && verificaNrPaleti()) {
 
 					for (ArticolPalet palet : listPaleti)
 						listener.paletiStatus(EnumPaleti.ACCEPTA, palet);
@@ -176,6 +176,25 @@ public class CostPaletiDialog extends Dialog {
 
 			}
 		});
+	}
+
+	private boolean verificaNrPaleti(){
+
+		if (tipTransport.equals("TCLI"))
+			return true;
+
+		int nrPaleti = 0;
+
+		for (ArticolPalet palet : listPaleti)
+			nrPaleti += palet.getCantitate();
+
+		if (nrPaleti > 0)
+			return true;
+		else {
+			Toast.makeText(context, "Adaugati cel putin un palet.", Toast.LENGTH_LONG).show();
+			return false;
+		}
+
 	}
 
 	private void addBtnRespingeListener() {

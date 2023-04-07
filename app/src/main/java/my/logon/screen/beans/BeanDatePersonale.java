@@ -12,6 +12,7 @@ public class BeanDatePersonale {
 	private List<String> termenPlata;
 	private boolean clientBlocat;
 	private String tipPlata;
+	private String codClient;
 
 	public String getCnp() {
 		return cnp;
@@ -75,6 +76,14 @@ public class BeanDatePersonale {
 
 	public void setTipPlata(String tipPlata) {
 		this.tipPlata = tipPlata;
+	}
+
+	public String getCodClient() {
+		return codClient;
+	}
+
+	public void setCodClient(String codClient) {
+		this.codClient = codClient;
 	}
 
 	@Override

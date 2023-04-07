@@ -1,5 +1,6 @@
 package my.logon.screen.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 import enums.EnumZona;
@@ -260,6 +261,18 @@ public class HelperTranspBuc {
 			return true;
 		else
 			return dateLivrare.isMasinaMacara() && (zona == EnumZona.ZONA_B1 || zona == EnumZona.ZONA_B2);
+	}
+
+	public static boolean isTranspZonaBuc(String codArticol){
+
+		List<String> departamente = Arrays.asList("01","02","03","040","041","05","06","07","08","09");
+
+		for (String codDepart: departamente){
+			if (codArticol.equals(transportZonaA(codDepart)) || codArticol.equals(transportZonaB(codDepart)))
+				return true;
+		}
+
+		return false;
 	}
 
 }

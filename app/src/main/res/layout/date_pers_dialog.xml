@@ -9,12 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dip"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_margin="10dip"
+            android:gravity="right"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
+            android:text="Adresa de facturare/Sediul social"
+            android:typeface="serif" />
 
         <ListView
             android:id="@+id/listDatePersonale"
             android:layout_width="match_parent"
-            android:layout_height="300dip" />
+            android:layout_height="300dp" />
     </LinearLayout>
 
     <LinearLayout

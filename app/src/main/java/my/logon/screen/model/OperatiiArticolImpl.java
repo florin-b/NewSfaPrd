@@ -16,6 +16,7 @@ import java.util.List;
 import my.logon.screen.beans.AntetCmdMathaus;
 import my.logon.screen.beans.ArticolCant;
 import my.logon.screen.beans.ArticolDB;
+import my.logon.screen.beans.BeanArticolCautare;
 import my.logon.screen.beans.BeanArticolSimulat;
 import my.logon.screen.beans.BeanArticolStoc;
 import my.logon.screen.beans.BeanCablu05;
@@ -32,7 +33,6 @@ import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.screens.AsyncTaskWSCall;
 import my.logon.screen.utils.UtilsGeneral;
-
 
 public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
@@ -64,6 +64,13 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
 	}
 
+	public void getInfoPretMathaus(HashMap<String, String> params) {
+		numeComanda = EnumArticoleDAO.GET_INFOPRET_MATHAUS;
+		this.params = params;
+		performOperation();
+
+	}
+
 	public void getFactorConversie(HashMap<String, String> params) {
 		numeComanda = EnumArticoleDAO.GET_FACTOR_CONVERSIE;
 		this.params = params;
@@ -72,6 +79,12 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
 	public void getStocDepozit(HashMap<String, String> params) {
 		numeComanda = EnumArticoleDAO.GET_STOC_DEPOZIT;
+		this.params = params;
+		performOperation();
+	}
+
+	public void getStocDisponibil(HashMap<String, String> params) {
+		numeComanda = EnumArticoleDAO.GET_STOC_DISPONIBIL;
 		this.params = params;
 		performOperation();
 	}
@@ -138,8 +151,8 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		this.params = params;
 		performOperation();
 
-	}		
-	
+	}
+
 	public void getStocCustodie(HashMap<String, String> params) {
 		numeComanda = EnumArticoleDAO.GET_STOC_CUSTODIE;
 		this.params = params;
@@ -150,13 +163,6 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		numeComanda = EnumArticoleDAO.GET_STOC_MATHAUS;
 		this.params = params;
 		performOperation();
-	}
-
-	public void getInfoPretMathaus(HashMap<String, String> params) {
-		numeComanda = EnumArticoleDAO.GET_INFOPRET_MATHAUS;
-		this.params = params;
-		performOperation();
-
 	}
 
 	public void getArticoleCant(HashMap<String, String> params) {
@@ -176,7 +182,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		this.params = params;
 		performOperation();
 	}
-	
+
 	@Override
 	public Object getDepartBV90(String codArticol) {
 		numeComanda = EnumArticoleDAO.GET_DEP_BV90;
@@ -187,6 +193,11 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
 		Object obj = call.getCallResultsSync();
 		return obj;
+	}
+
+	private void performOperationSync() {
+		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
+		call.getCallResultsSync();
 	}
 
 	private void performOperation() {
@@ -219,6 +230,30 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		}
 
 		return listCabluri;
+	}
+
+
+	public ArrayList<BeanArticolCautare> deserializeArtRecom(String serListArticole) {
+
+		ArrayList<BeanArticolCautare> listArtRecom = new ArrayList<BeanArticolCautare>();
+
+		try {
+
+			JSONArray jsonArray = new JSONArray(serListArticole);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject articolObject = jsonArray.getJSONObject(i);
+				BeanArticolCautare artRecom = new BeanArticolCautare();
+				artRecom.setCod(articolObject.getString("cod"));
+				artRecom.setNume(articolObject.getString("nume"));
+				listArtRecom.add(artRecom);
+			}
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return listArtRecom;
 	}
 
 	public ArrayList<BeanCablu05> deserializeCantCabluri05(String serListArticole) {
@@ -467,6 +502,208 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
 	}
 
+	@Override
+	public String serializeListArtSim(List<BeanArticolSimulat> listArticole) {
+
+		JSONArray jsonArray = new JSONArray();
+		JSONObject object = null;
+
+		Iterator<BeanArticolSimulat> iterator = listArticole.iterator();
+
+		while (iterator.hasNext()) {
+			BeanArticolSimulat articol = iterator.next();
+
+			object = new JSONObject();
+			try {
+				object.put("cod", articol.getCod());
+				object.put("depozit", articol.getDepozit());
+				object.put("depart", articol.getDepart());
+				object.put("unitLog", articol.getUnitLog());
+				object.put("um", articol.getUm());
+
+				jsonArray.put(object);
+
+			} catch (JSONException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+
+		return jsonArray.toString();
+	}
+
+	public void deserializeListArtStoc(String listArticole) {
+		// Object json = new JSONTokener(serializedListArticole).nextValue();
+
+	}
+
+	public PretArticolGed deserializePretGed(Object result) {
+		PretArticolGed pretArticol = new PretArticolGed();
+
+		try {
+
+			JSONObject jsonObject = new JSONObject((String) result);
+
+			if (jsonObject instanceof JSONObject) {
+				pretArticol.setPret(jsonObject.getString("pret"));
+				pretArticol.setUm(jsonObject.getString("um"));
+				pretArticol.setFaraDiscount(jsonObject.getString("faraDiscount"));
+				pretArticol.setCodArticolPromo(jsonObject.getString("codArticolPromo"));
+				pretArticol.setCantitateArticolPromo(jsonObject.getString("cantitateArticolPromo"));
+				pretArticol.setPretArticolPromo(jsonObject.getString("pretArticolPromo"));
+				pretArticol.setUmArticolPromo(jsonObject.getString("umArticolPromo"));
+				pretArticol.setPretLista(jsonObject.getString("pretLista"));
+				pretArticol.setCantitate(jsonObject.getString("cantitate"));
+				pretArticol.setConditiiPret(jsonObject.getString("conditiiPret"));
+				pretArticol.setMultiplu(jsonObject.getString("multiplu"));
+				pretArticol.setCantitateUmBaza(jsonObject.getString("cantitateUmBaza"));
+				pretArticol.setUmBaza(jsonObject.getString("umBaza"));
+				pretArticol.setCmp(jsonObject.getString("cmp"));
+				pretArticol.setPretMediu(jsonObject.getString("pretMediu"));
+				pretArticol.setAdaosMediu(jsonObject.getString("adaosMediu"));
+				pretArticol.setUmPretMediu(jsonObject.getString("umPretMediu"));
+				pretArticol.setCoefCorectie(Double.valueOf(jsonObject.getString("coefCorectie") != "null" ? jsonObject.getString("coefCorectie") : "0"));
+				pretArticol.setProcTransport(Double.valueOf(jsonObject.getString("procTransport") != "null" ? jsonObject.getString("procTransport") : "0"));
+				pretArticol.setDiscMaxAV(Double.valueOf(jsonObject.getString("discMaxAV") != "null" ? jsonObject.getString("discMaxAV") : "0"));
+				pretArticol.setDiscMaxSD(Double.valueOf(jsonObject.getString("discMaxSD") != "null" ? jsonObject.getString("discMaxSD") : "0"));
+				pretArticol.setDiscMaxDV(Double.valueOf(jsonObject.getString("discMaxDV") != "null" ? jsonObject.getString("discMaxDV") : "0"));
+				pretArticol.setDiscMaxKA(Double.valueOf(jsonObject.getString("discMaxKA") != "null" ? jsonObject.getString("discMaxKA") : "0"));
+				pretArticol.setImpachetare(jsonObject.getString("impachetare"));
+				pretArticol.setIstoricPret(jsonObject.getString("istoricPret"));
+				pretArticol.setValTrap(Double.valueOf(jsonObject.getString("valTrap")));
+				pretArticol.setErrMsg(jsonObject.getString("errMsg"));
+				pretArticol.setProcReducereCmp(Double.valueOf(jsonObject.getString("procReducereCmp")));
+				pretArticol.setPretFaraTva(Double.valueOf(jsonObject.getString("pretFaraTva")));
+				pretArticol.setDataExp(jsonObject.getString("dataExp"));
+				pretArticol.setGreutate(Double.valueOf(jsonObject.getString("greutate")));
+				pretArticol.setArticoleRecomandate(deserializeArtRecom(jsonObject.getString("articoleRecomandate")));
+
+			}
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return pretArticol;
+	}
+
+	public void onTaskComplete(String methodName, Object result) {
+		if (listener != null) {
+			listener.operationComplete(numeComanda, result);
+		}
+	}
+
+	public void setListener(OperatiiArticolListener listener) {
+		this.listener = listener;
+	}
+
+	public BeanGreutateArticol deserializeGreutateArticol(Object result) {
+
+		BeanGreutateArticol greutateArticol = new BeanGreutateArticol();
+
+		try {
+			JSONObject jsonObject = new JSONObject((String) result);
+
+			if (jsonObject instanceof JSONObject) {
+				greutateArticol.setCodArticol(jsonObject.getString("codArticol"));
+				greutateArticol.setGreutate(Double.valueOf(jsonObject.getString("greutate")));
+				greutateArticol.setUnitMas(EnumUnitMas.valueOf(jsonObject.getString("um")));
+				greutateArticol.setUnitMasCantiate(jsonObject.getString("umCantitate"));
+
+			}
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return greutateArticol;
+	}
+
+	public List<BeanArticolStoc> derializeListArtStoc(String serializedResult) {
+
+		List<BeanArticolStoc> listArticole = new ArrayList<BeanArticolStoc>();
+
+		try {
+			Object jsonObject = new JSONTokener(serializedResult).nextValue();
+
+			if (jsonObject instanceof JSONArray) {
+				JSONArray jsonArray = new JSONArray(serializedResult);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject articolObject = jsonArray.getJSONObject(i);
+
+					BeanArticolStoc articol = new BeanArticolStoc();
+
+					articol.setCod(articolObject.getString("cod"));
+
+					articol.setDepozit(articolObject.getString("depozit"));
+					articol.setDepart(articolObject.getString("depart"));
+					articol.setUnitLog(articolObject.getString("unitLog"));
+					articol.setStoc(Double.valueOf(articolObject.getString("stoc")));
+
+					listArticole.add(articol);
+
+				}
+
+			}
+
+		} catch (JSONException e) {
+
+			e.printStackTrace();
+		}
+
+		return listArticole;
+	}
+
+	public ArrayList<ArticolCant> deserializeArticoleCant(String listArticoleSer) {
+		ArticolCant articol = null;
+		ArrayList<ArticolCant> listArticole = new ArrayList<ArticolCant>();
+
+		try {
+			Object json = new JSONTokener(listArticoleSer).nextValue();
+
+			if (json instanceof JSONArray) {
+
+				JSONArray jsonArray = new JSONArray(listArticoleSer);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject articolObject = jsonArray.getJSONObject(i);
+
+					articol = new ArticolCant();
+
+					articol.setCod(articolObject.getString("cod"));
+					articol.setNume(articolObject.getString("denumire"));
+					articol.setSintetic(articolObject.getString("sintetic"));
+					articol.setDimensiuni(articolObject.getString("dimensiuni"));
+					articol.setCaract(articolObject.getString("caract"));
+					articol.setStoc(articolObject.getString("stoc"));
+					articol.setUmVanz(articolObject.getString("um"));
+					articol.setTipCant(articolObject.getString("tipCant"));
+					articol.setUlStoc(articolObject.getString("ulStoc"));
+					articol.setNivel1(articolObject.getString("nivel1"));
+					articol.setUmVanz(articolObject.getString("umVanz"));
+					articol.setUmVanz10(articolObject.getString("umVanz10"));
+					articol.setDepart(articolObject.getString("depart"));
+					articol.setDepartAprob(articolObject.getString("departAprob"));
+					articol.setTipAB(articolObject.getString("tipAB"));
+					articol.setUmPalet(articolObject.getString("umPalet").equals("1") ? true : false);
+					articol.setCategorie(articolObject.getString("categorie"));
+					articol.setLungime(Double.valueOf(articolObject.getString("lungime")));
+					articol.setDepozit(articolObject.getString("depozit"));
+					listArticole.add(articol);
+
+				}
+			}
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return listArticole;
+
+	}
+
 	public LivrareMathaus deserializeLivrareMathaus(String result) {
 
 		LivrareMathaus livrareMathaus = new LivrareMathaus();
@@ -549,6 +786,8 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 			jsonAntet.put("codClient", antetComanda.getCodClient());
 			jsonAntet.put("tipPers", antetComanda.getTipPers());
 			jsonAntet.put("depart", antetComanda.getDepart());
+			jsonAntet.put("codPers", antetComanda.getCodPers());
+			jsonAntet.put("tipTransp", antetComanda.getTipTransp());
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -576,6 +815,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				jsonObject.put("valPoz", String.valueOf(articol.getValPoz()));
 				jsonObject.put("tip2", articol.getTip2());
 				jsonObject.put("ulStoc", articol.getUlStoc());
+				jsonObject.put("depozit", articol.getDepozit());
 				jsonArray.put(jsonObject);
 			}
 
@@ -586,213 +826,6 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		}
 
 		return jsonComanda.toString();
-
-	}
-
-
-
-	@Override
-	public String serializeListArtSim(List<BeanArticolSimulat> listArticole) {
-
-		JSONArray jsonArray = new JSONArray();
-		JSONObject object = null;
-
-		Iterator<BeanArticolSimulat> iterator = listArticole.iterator();
-
-		while (iterator.hasNext()) {
-			BeanArticolSimulat articol = iterator.next();
-
-			object = new JSONObject();
-			try {
-				object.put("cod", articol.getCod());
-				object.put("depozit", articol.getDepozit());
-				object.put("depart", articol.getDepart());
-				object.put("unitLog", articol.getUnitLog());
-				object.put("um", articol.getUm());
-
-				jsonArray.put(object);
-
-			} catch (JSONException e) {
-
-				e.printStackTrace();
-			}
-
-		}
-
-		return jsonArray.toString();
-	}	
-	
-	
-	
-	public void deserializeListArtStoc(String listArticole) {
-		// Object json = new JSONTokener(serializedListArticole).nextValue();
-
-	}
-
-	public PretArticolGed deserializePretGed(Object result) {
-		PretArticolGed pretArticol = new PretArticolGed();
-
-		try {
-
-			JSONObject jsonObject = new JSONObject((String) result);
-
-			if (jsonObject instanceof JSONObject) {
-				pretArticol.setPret(jsonObject.getString("pret"));
-				pretArticol.setUm(jsonObject.getString("um"));
-				pretArticol.setFaraDiscount(jsonObject.getString("faraDiscount"));
-				pretArticol.setCodArticolPromo(jsonObject.getString("codArticolPromo"));
-				pretArticol.setCantitateArticolPromo(jsonObject.getString("cantitateArticolPromo"));
-				pretArticol.setPretArticolPromo(jsonObject.getString("pretArticolPromo"));
-				pretArticol.setUmArticolPromo(jsonObject.getString("umArticolPromo"));
-				pretArticol.setPretLista(jsonObject.getString("pretLista"));
-				pretArticol.setCantitate(jsonObject.getString("cantitate"));
-				pretArticol.setConditiiPret(jsonObject.getString("conditiiPret"));
-				pretArticol.setMultiplu(jsonObject.getString("multiplu"));
-				pretArticol.setCantitateUmBaza(jsonObject.getString("cantitateUmBaza"));
-				pretArticol.setUmBaza(jsonObject.getString("umBaza"));
-				pretArticol.setCmp(jsonObject.getString("cmp"));
-				pretArticol.setPretMediu(jsonObject.getString("pretMediu"));
-				pretArticol.setAdaosMediu(jsonObject.getString("adaosMediu"));
-				pretArticol.setUmPretMediu(jsonObject.getString("umPretMediu"));
-				pretArticol.setCoefCorectie(Double.valueOf(jsonObject.getString("coefCorectie") != "null" ? jsonObject.getString("coefCorectie")
-						: "0"));
-				pretArticol.setProcTransport(Double.valueOf(jsonObject.getString("procTransport") != "null" ? jsonObject.getString("procTransport")
-						: "0"));
-				pretArticol.setDiscMaxAV(Double.valueOf(jsonObject.getString("discMaxAV") != "null" ? jsonObject.getString("discMaxAV") : "0"));
-				pretArticol.setDiscMaxSD(Double.valueOf(jsonObject.getString("discMaxSD") != "null" ? jsonObject.getString("discMaxSD") : "0"));
-				pretArticol.setDiscMaxDV(Double.valueOf(jsonObject.getString("discMaxDV") != "null" ? jsonObject.getString("discMaxDV") : "0"));
-				pretArticol.setDiscMaxKA(Double.valueOf(jsonObject.getString("discMaxKA") != "null" ? jsonObject.getString("discMaxKA") : "0"));
-				pretArticol.setImpachetare(jsonObject.getString("impachetare"));
-				pretArticol.setIstoricPret(jsonObject.getString("istoricPret"));
-				pretArticol.setValTrap(Double.valueOf(jsonObject.getString("valTrap")));
-				pretArticol.setErrMsg(jsonObject.getString("errMsg"));
-				pretArticol.setProcReducereCmp(Double.valueOf(jsonObject.getString("procReducereCmp")));
-				pretArticol.setPretFaraTva(Double.valueOf(jsonObject.getString("pretFaraTva")));
-				pretArticol.setGreutate(Double.valueOf(jsonObject.getString("greutate")));
-
-			}
-
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
-
-		return pretArticol;
-	}
-
-	public void onTaskComplete(String methodName, Object result) {
-		if (listener != null) {
-			listener.operationComplete(numeComanda, result);
-		}
-	}
-
-	public void setListener(OperatiiArticolListener listener) {
-		this.listener = listener;
-	}
-
-	public BeanGreutateArticol deserializeGreutateArticol(Object result) {
-
-		BeanGreutateArticol greutateArticol = new BeanGreutateArticol();
-
-		try {
-			JSONObject jsonObject = new JSONObject((String) result);
-
-			if (jsonObject instanceof JSONObject) {
-				greutateArticol.setCodArticol(jsonObject.getString("codArticol"));
-				greutateArticol.setGreutate(Double.valueOf(jsonObject.getString("greutate")));
-				greutateArticol.setUnitMas(EnumUnitMas.valueOf(jsonObject.getString("um")));
-				greutateArticol.setUnitMasCantiate(jsonObject.getString("umCantitate"));
-
-			}
-
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
-
-		return greutateArticol;
-	}
-
-	public List<BeanArticolStoc> derializeListArtStoc(String serializedResult) {
-
-		List<BeanArticolStoc> listArticole = new ArrayList<BeanArticolStoc>();
-
-		try {
-			Object jsonObject = new JSONTokener(serializedResult).nextValue();
-
-			if (jsonObject instanceof JSONArray) {
-				JSONArray jsonArray = new JSONArray(serializedResult);
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					JSONObject articolObject = jsonArray.getJSONObject(i);
-
-					BeanArticolStoc articol = new BeanArticolStoc();
-
-					articol.setCod(articolObject.getString("cod"));
-
-					articol.setDepozit(articolObject.getString("depozit"));
-					articol.setDepart(articolObject.getString("depart"));
-					articol.setUnitLog(articolObject.getString("unitLog"));
-					articol.setStoc(Double.valueOf(articolObject.getString("stoc")));
-
-					listArticole.add(articol);
-
-				}
-
-			}
-
-		} catch (JSONException e) {
-
-			e.printStackTrace();
-		}
-
-		return listArticole;
-	}
-	
-	
-	public ArrayList<ArticolCant> deserializeArticoleCant(String listArticoleSer) {
-		ArticolCant articol = null;
-		ArrayList<ArticolCant> listArticole = new ArrayList<ArticolCant>();
-
-		try {
-			Object json = new JSONTokener(listArticoleSer).nextValue();
-
-			if (json instanceof JSONArray) {
-
-				JSONArray jsonArray = new JSONArray(listArticoleSer);
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					JSONObject articolObject = jsonArray.getJSONObject(i);
-
-					articol = new ArticolCant();
-					
-					articol.setCod(articolObject.getString("cod"));
-					articol.setNume(articolObject.getString("denumire"));
-					articol.setSintetic(articolObject.getString("sintetic"));
-					articol.setDimensiuni(articolObject.getString("dimensiuni"));
-					articol.setCaract(articolObject.getString("caract"));
-					articol.setStoc(articolObject.getString("stoc"));
-					articol.setUmVanz(articolObject.getString("um"));
-					articol.setTipCant(articolObject.getString("tipCant"));
-					articol.setUlStoc(articolObject.getString("ulStoc"));
-					articol.setNivel1(articolObject.getString("nivel1"));
-					articol.setUmVanz(articolObject.getString("umVanz"));
-					articol.setUmVanz10(articolObject.getString("umVanz10"));
-					articol.setDepart(articolObject.getString("depart"));
-					articol.setDepartAprob(articolObject.getString("departAprob"));
-					articol.setTipAB(articolObject.getString("tipAB"));
-					articol.setUmPalet(articolObject.getString("umPalet").equals("1") ? true : false);
-					articol.setCategorie(articolObject.getString("categorie"));
-					articol.setLungime(Double.valueOf(articolObject.getString("lungime")));
-					articol.setDepozit(articolObject.getString("depozit"));
-					listArticole.add(articol);
-
-				}
-			}
-
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
-
-		return listArticole;
 
 	}
 

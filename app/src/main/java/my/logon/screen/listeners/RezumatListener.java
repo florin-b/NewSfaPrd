@@ -9,4 +9,5 @@ public interface RezumatListener {
 	void adaugaArticol(ArticolComanda articolComanda);
 	void eliminaArticol(ArticolComanda articolComanda);
 	void setStareRezumat(String codStare, String fliala);
+
 }

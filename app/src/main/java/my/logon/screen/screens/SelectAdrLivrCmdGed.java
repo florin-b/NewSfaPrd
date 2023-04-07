@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
@@ -35,6 +36,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -64,6 +67,8 @@ import my.logon.screen.dialogs.CautaObiectivDialog;
 import my.logon.screen.dialogs.MapAddressDialog;
 import my.logon.screen.dialogs.SelectDateDialog;
 import my.logon.screen.enums.EnumClienti;
+import my.logon.screen.enums.EnumFiliale;
+import my.logon.screen.enums.EnumFilialeLivrare;
 import my.logon.screen.enums.EnumJudete;
 import my.logon.screen.enums.EnumLocalitate;
 import my.logon.screen.enums.EnumOperatiiAdresa;
@@ -74,6 +79,7 @@ import my.logon.screen.listeners.CautaObiectivListener;
 import my.logon.screen.listeners.MapListener;
 import my.logon.screen.listeners.OperatiiAdresaListener;
 import my.logon.screen.listeners.OperatiiClientListener;
+import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.OperatiiAdresa;
@@ -97,16 +103,12 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     private static final String METHOD_NAME = "getClientJud";
 
-    String[] tipTransport = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TFRN - Transport furnizor"};
-
-    String[] tipTransportIP = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TERT - Transport tert", "TFRN - Transport furnizor"};
-
-    String[] tipTransportOnline = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TERT - Transport tert", "TFRN - Transport furnizor"};
+    String[] tipTransport = {"TRAP - Transport Arabesque", "TCLI - Transport client"};
 
     String[] docInsot = {"Factura", "Aviz de expeditie"};
 
     private String[] tipPlataContract = {"LC - Limita credit", "N - Numerar in filiala", "OPA - OP avans", "R - ramburs"};
-    private String[] tipPlataClBlocatIP = {"N - Numerar in filiala",  "OPA - OP avans", "R - ramburs"};
+    private String[] tipPlataClBlocatIP = {"N - Numerar in filiala", "OPA - OP avans", "R - ramburs"};
     private String[] tipPlataClBlocatNonIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
     private String[] tipPlataRestIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
     private String[] tipPlataRestNonIP = {"C - Card bancar", "N - Numerar in filiala", "OPA - OP avans", "R - Ramburs"};
@@ -117,7 +119,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private Spinner spinnerPlata, spinnerTransp, spinnerJudet, spinnerTermenPlata, spinnerJudetLivrare;
     private static ArrayList<HashMap<String, String>> listJudete = null, listJudeteLivrare = null;
     private ArrayAdapter<String> adapterTermenPlata;
-    private LinearLayout layoutAdr1, layoutAdr2, layoutMail;
+    private LinearLayout layoutAdr1, layoutAdr2, layoutAdr3, layoutMail;
 
     int posJudetSel = 0;
     private NumberFormat nf;
@@ -158,11 +160,14 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private CheckBox checkFactura, checkAviz;
     private BeanAdreseJudet listAdreseJudet, listAlteAdrese;
 
+    private Spinner spinnerDebitare;
+    private Spinner spinnerFilialeTCLI;
+    private boolean isAdresaLivrareTCLI;
+
+    private ActivityResultLauncher<Intent> startActivityForResult;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectCustomSlowCalls()
                 .detectDiskReads()
@@ -177,15 +182,16 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 .detectLeakedClosableObjects()
                 .penaltyLog()
                 .build());
-
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-
-        setTheme(R.style.LRTheme);
-        setContentView(R.layout.selectadrlivrcmd_ged_header);
-
+        super.onCreate(savedInstanceState);
         try {
 
+            Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+
+            setTheme(R.style.LRTheme);
+            setContentView(R.layout.selectadrlivrcmd_ged_header);
+
             ActionBar actionBar = getActionBar();
+
             actionBar.setTitle("Date livrare");
             actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -198,9 +204,9 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             this.layoutAdr1 = (LinearLayout) findViewById(R.id.layoutAdr1);
             this.layoutAdr2 = (LinearLayout) findViewById(R.id.layoutAdr2);
+            this.layoutAdr3 = (LinearLayout) findViewById(R.id.layoutAdr3);
 
             textLocalitate = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocalitate);
-
             textNrStr = (EditText) findViewById(R.id.textNrStr);
 
             btnPozitieAdresa = (Button) findViewById(R.id.btnPozitieAdresa);
@@ -272,20 +278,21 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             setTipTransportOptions();
 
-            if (UserInfo.getInstance().getUserSite().equals("X") || UtilsUser.isConsWood() || isComandaClp()) {
-                adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransportOnline);
-
-            } else if (UtilsUser.isUserIP())
-                adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransportIP);
-            else {
-                adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransport);
+            if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.DISPOZITIE_LIVRARE)) {
+                List<String> arrlist
+                        = new ArrayList<>(
+                        Arrays.asList(tipTransport));
+                arrlist.add("TFRN - Transport furnizor");
+                tipTransport = arrlist.toArray(tipTransport);
             }
+
+            adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransport);
 
             if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_COMANDA)) {
                 List<String> itemsTransp = new ArrayList<>();
                 for (int ii = 0; ii < adapterSpinnerTransp.getCount(); ii++) {
                     if (!adapterSpinnerTransp.getItem(ii).startsWith("TFRN")) {
-                        itemsTransp.add( (String) adapterSpinnerTransp.getItem(ii));
+                        itemsTransp.add((String) adapterSpinnerTransp.getItem(ii));
                     }
                 }
                 adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemsTransp);
@@ -344,13 +351,21 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             spinnerIndoire = (Spinner) findViewById(R.id.spinnerIndoire);
             setupSpinnerIndoire();
 
+            spinnerDebitare = (Spinner) findViewById(R.id.spinnerDebitare);
+            setupSpinnerDebitare();
+
             spinnerTransp = (Spinner) findViewById(R.id.spinnerTransp);
             spinnerTonaj = (Spinner) findViewById(R.id.spinnerTonaj);
             setupSpinnerTonaj();
 
             adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTransp.setAdapter(adapterSpinnerTransp);
+            spinnerFilialeTCLI = (Spinner) findViewById(R.id.spinnerFiliale);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item, EnumFilialeLivrare.getFiliale());
+            spinnerFilialeTCLI.setAdapter(adapter);
+            setSpinnerFilialeTCLIListener();
             addListenerTipTransport();
+            setFilialaLivrareTCLI();
 
             spinnerJudet = (Spinner) findViewById(R.id.spinnerJudet);
             spinnerJudet.setOnItemSelectedListener(new regionSelectedListener());
@@ -391,7 +406,9 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
 
             addListenerTermenPlata();
+
             addAdresaLivrare();
+
             int i = 0;
 
             // document insotitor
@@ -412,8 +429,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             for (i = 0; i < adapterSpinnerPlata.getCount(); i++) {
 
-                strTipPlata = adapterSpinnerPlata.getItem(i).toString().substring(0, adapterSpinnerPlata.getItem(i).toString().indexOf("-") - 1)
-                        .trim();
+                strTipPlata = adapterSpinnerPlata.getItem(i).toString().substring(0, adapterSpinnerPlata.getItem(i).toString().indexOf("-") - 1).trim();
 
                 if (strTipPlata.equals(UtilsComenzi.setTipPlataClient(dateLivrareInstance.getTipPlata()))) {
                     spinnerPlata.setSelection(i);
@@ -432,8 +448,8 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             layoutAdr1.setVisibility(View.VISIBLE);
             layoutAdr2.setVisibility(View.VISIBLE);
+            layoutAdr3.setVisibility(View.VISIBLE);
 
-            performGetJudete();
 
             radioListAdrese = (RadioButton) findViewById(R.id.radioListAdrese);
             radioTextAdrese = (RadioButton) findViewById(R.id.radioTextAdrese);
@@ -508,13 +524,53 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 }
             }
 
+
+            startActivityForResult = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == 1) {
+                            DateLivrare.getInstance().setCoordonateAdresa(result.getData().getParcelableExtra("coord"));
+                            setAdresaLivrare(MapUtils.getAddress(result.getData().getParcelableExtra("address")));
+                        }
+                    }
+            );
+
             if (UtilsUser.isCGED() || UtilsUser.isSSCM() || CreareComandaGed.tipClient.equals("IP")) {
                 getDateLivrareClient();
             }
 
+            isAdresaLivrareTCLI = false;
+            if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("CreareComandaGed")) {
+                if (bundle.getString("adrLivrareTCLI") != null && bundle.getString("adrLivrareTCLI").equals(("true"))) {
+                    isAdresaLivrareTCLI = true;
+                    ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.GONE);
+                    spinnerTonaj.setVisibility(View.VISIBLE);
+                    spinnerTransp.setSelection(0);
+                    spinnerTransp.setSelection(0);
+                    clearAdresaLivrare();
+                    performGetJudete();
+                }
+            }
+
+            if (DateLivrare.getInstance().getTransport().trim().isEmpty() || DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT") || DateLivrare.getInstance().getTransport().equals("TFRN"))
+                performGetJudete();
+
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    private void clearAdresaLivrare() {
+        DateLivrare.getInstance().setOras("");
+        DateLivrare.getInstance().setStrada("");
+        DateLivrare.getInstance().setCodJudet("");
+        DateLivrare.getInstance().setCoordonateAdresa(null);
+
+        spinnerJudet.setSelection(0);
+        textLocalitate.setText("");
+        textNrStr.setText("");
+        textStrada.setText("");
 
     }
 
@@ -654,8 +710,8 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
                 Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay);
 
-                Calendar calendarNow = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
-                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                Calendar calendarNow = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar
+                        .getInstance().get(Calendar.DAY_OF_MONTH));
 
                 int dayLivrare = calendar.get(Calendar.DAY_OF_WEEK);
 
@@ -714,11 +770,26 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
         StatusIntervalLivrare statusInterval = UtilsDates.getStatusIntervalLivrare(dataLivrare.getTime());
 
-        if (statusInterval.isValid()) {
-            textDataLivrare.setText(displayFormat.format(dataLivrare.getTime()));
-            DateLivrare.getInstance().setDataLivrare(displayFormat.format(dataLivrare.getTime()));
-        } else
-            Toast.makeText(getApplicationContext(), statusInterval.getMessage(), Toast.LENGTH_LONG).show();
+        if (CreareComandaGed.tipComanda.equals("S") && CreareComandaGed.rezervStoc) {
+
+            int dateDiff = UtilsDates.dateDiffinDays(dataLivrare.getTime());
+
+            if (dateDiff > Constants.NR_ZILE_CMD_SIM_REZ_STOC) {
+                Toast.makeText(getApplicationContext(),
+                        "Livrarea trebuie sa se faca in cel mult " + Constants.NR_ZILE_CMD_SIM_REZ_STOC + " zile de la data curenta.", Toast.LENGTH_LONG)
+                        .show();
+            } else {
+                textDataLivrare.setText(displayFormat.format(dataLivrare.getTime()));
+                DateLivrare.getInstance().setDataLivrare(displayFormat.format(dataLivrare.getTime()));
+            }
+
+        } else {
+            if (statusInterval.isValid()) {
+                textDataLivrare.setText(displayFormat.format(dataLivrare.getTime()));
+                DateLivrare.getInstance().setDataLivrare(displayFormat.format(dataLivrare.getTime()));
+            } else
+                Toast.makeText(getApplicationContext(), statusInterval.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -881,12 +952,16 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         adapterTonaj.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTonaj.setAdapter(adapterTonaj);
 
-        if (DateLivrare.getInstance().getTonaj() != null)
+        if (DateLivrare.getInstance().getTonaj() != null) {
             for (int i = 0; i < spinnerTonaj.getCount(); i++)
                 if (spinnerTonaj.getItemAtPosition(i).toString().toUpperCase().contains(DateLivrare.getInstance().getTonaj())) {
                     spinnerTonaj.setSelection(i);
                     break;
                 }
+
+            if (DateLivrare.getInstance().getTonaj().equals("20"))
+                spinnerTonaj.setSelection(spinnerTonaj.getCount()-1);
+        }
 
     }
 
@@ -900,42 +975,62 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     }
 
+    private void setupSpinnerDebitare() {
+
+        String[] debitareValues = {"Tip prelucrare lemn", "DEBITARE"};
+
+        ArrayAdapter<String> adapterDebitare = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, debitareValues);
+        adapterDebitare.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDebitare.setAdapter(adapterDebitare);
+
+    }
+
     private void addAdresaLivrare() {
 
         radioAdresaSediu = (RadioButton) findViewById(R.id.radioAdresaSediu);
         radioAltaAdresa = (RadioButton) findViewById(R.id.radioAltaAdresa);
         radioAdresaObiectiv = (RadioButton) findViewById(R.id.radioAdresaObiectiv);
 
+        TextView labelAdresa2 = (TextView) findViewById(R.id.labelAdresa2);
+
+        if (DateLivrare.getInstance().getTipPersClient().equals("PF"))
+            labelAdresa2.setText("Adresa de facturare");
+        else
+            labelAdresa2.setText("Adresa sediu social");
+
         addListenerRadioAdresaSediu();
         addListenerRadioAltaAdresa();
         addListenerRadioAdresaObiectiv();
 
         layoutAdrLivrare1 = (LinearLayout) findViewById(R.id.layoutAdrLivrare1);
-        layoutAdrLivrare1.setVisibility(View.GONE);
         layoutAdrLivrare2 = (LinearLayout) findViewById(R.id.layoutAdrLivrare2);
-        layoutAdrLivrare2.setVisibility(View.GONE);
 
         spinnerJudetLivrare = (Spinner) findViewById(R.id.spinnerJudetLivrare);
         spinnerJudetLivrare.setOnItemSelectedListener(new regionLivrareSelectedListener());
 
-        if (DateLivrare.getInstance().isAltaAdresa() || !DateLivrare.getInstance().getOrasD().trim().isEmpty()) {
-            radioAltaAdresa.setChecked(true);
+        layoutAdrLivrare1.setVisibility(View.VISIBLE);
+        layoutAdrLivrare2.setVisibility(View.VISIBLE);
+        addJudeteFacturare();
 
+        if (!DateLivrare.getInstance().getOrasD().trim().isEmpty()) {
+            radioAltaAdresa.setChecked(true);
+            DateLivrare.getInstance().setAltaAdresa(true);
             textLocalitateLivrare.setText(DateLivrare.getInstance().getOrasD());
             textStradaLivrare.setText(DateLivrare.getInstance().getAdresaD());
             setJudetLivrare();
+        }
+        else {
+            radioAdresaSediu.setChecked(true);
         }
 
     }
 
     private void setJudetLivrare() {
 
-        if (DateLivrare.getInstance().getCodJudetD() != null) {
+        if (DateLivrare.getInstance().getCodJudetD() != null && !DateLivrare.getInstance().getCodJudetD().trim().isEmpty()) {
 
-            listJudeteLivrare = new ArrayList<HashMap<String, String>>();
-
-            adapterJudeteLivrare = new SimpleAdapter(this, listJudeteLivrare, R.layout.rowlayoutjudete, new String[]{"numeJudet", "codJudet"},
-                    new int[]{R.id.textNumeJudet, R.id.textCodJudet});
+            adapterJudeteLivrare = new SimpleAdapter(this, listJudeteLivrare, R.layout.rowlayoutjudete, new String[]{"numeJudet", "codJudet"}, new int[]{
+                    R.id.textNumeJudet, R.id.textCodJudet});
 
             HashMap<String, String> temp = new HashMap<String, String>();
             temp.put("numeJudet", UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudetD()));
@@ -943,9 +1038,47 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             listJudeteLivrare.add(temp);
 
             spinnerJudetLivrare.setAdapter(adapterJudeteLivrare);
-            spinnerJudetLivrare.setSelection(0);
+
+            for (int i = 0; i < spinnerJudetLivrare.getAdapter().getCount(); i++) {
+                @SuppressWarnings("unchecked")
+                HashMap<String, String> artMap = (HashMap<String, String>) spinnerJudetLivrare.getAdapter().getItem(i);
+                if (artMap.get("codJudet").equals(DateLivrare.getInstance().getCodJudetD())) {
+                    spinnerJudetLivrare.setSelection(i);
+                    break;
+                }
+
+            }
 
         }
+
+    }
+
+    private void addJudeteFacturare() {
+
+        ArrayList<HashMap<String, String>> listJudeteFacturare = new ArrayList<HashMap<String, String>>();
+        HashMap<String, String> temp;
+        int i;
+
+        int nrJud = 0;
+        for (i = 0; i < UtilsGeneral.numeJudete.length; i++) {
+
+            temp = new HashMap<String, String>();
+            temp.put("numeJudet", UtilsGeneral.numeJudete[i]);
+            temp.put("codJudet", UtilsGeneral.codJudete[i]);
+            listJudeteFacturare.add(temp);
+
+        }
+
+        listJudeteLivrare = new ArrayList<HashMap<String, String>>(listJudeteFacturare);
+
+        adapterJudeteLivrare = new SimpleAdapter(this, listJudeteLivrare, R.layout.rowlayoutjudete, new String[]{"numeJudet", "codJudet"}, new int[]{
+                R.id.textNumeJudet, R.id.textCodJudet});
+
+        spinnerJudetLivrare.setAdapter(adapterJudeteLivrare);
+        spinnerJudetLivrare.setSelection(0);
+
+        textStradaLivrare.setText("");
+
 
     }
 
@@ -953,8 +1086,8 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
         listJudeteLivrare = new ArrayList<HashMap<String, String>>(listJudete);
 
-        adapterJudeteLivrare = new SimpleAdapter(this, listJudeteLivrare, R.layout.rowlayoutjudete, new String[]{"numeJudet", "codJudet"},
-                new int[]{R.id.textNumeJudet, R.id.textCodJudet});
+        adapterJudeteLivrare = new SimpleAdapter(this, listJudeteLivrare, R.layout.rowlayoutjudete, new String[]{"numeJudet", "codJudet"}, new int[]{
+                R.id.textNumeJudet, R.id.textCodJudet});
 
         spinnerJudetLivrare.setAdapter(adapterJudeteLivrare);
         spinnerJudetLivrare.setSelection(0);
@@ -978,7 +1111,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         radioAltaAdresa.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
                 if (arg1) {
-
                     layoutAdrLivrare1.setVisibility(View.VISIBLE);
                     layoutAdrLivrare2.setVisibility(View.VISIBLE);
                     DateLivrare.getInstance().setAltaAdresa(true);
@@ -988,6 +1120,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             }
         });
+
 
     }
 
@@ -1047,22 +1180,13 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     private void performGetJudete() {
 
-        if (UtilsUser.isUserSite() || CreareComandaGed.tipClient.equals("IP") || !DateLivrare.getInstance().getCodJudet().isEmpty() || isComandaClp()
-                || isComandaDl()  || UtilsUser.isUserIP()) {
+        if (isAdresaLivrareTCLI)
+            getJudeteFilialaLivrare();
+        else {
             fillJudeteClient(EnumJudete.getRegionCodes());
-
-        } else {
-            String unitLog = UserInfo.getInstance().getUnitLog();
-
-            if (unitLog.equals("NN10"))
-                unitLog = "AG10";
-
-            HashMap<String, String> params = new HashMap<String, String>();
-            params.put("filiala", unitLog);
-
-            AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
-            call.getCallResultsSyncActivity();
+            addAdresaLivrare();
         }
+
 
     }
 
@@ -1155,23 +1279,20 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                     ((TextView) findViewById(R.id.tipPlataContract)).setVisibility(View.VISIBLE);
                 }
 
+
                 if (pos == 0 || pos == 1 || pos == 2 || pos == 3) {
                     if (spinnerTermenPlata != null)
                         spinnerTermenPlata.setVisibility(View.VISIBLE);
                 }
 
-                if (pos == 2 || rawTipPlataStr.contains("E1")) {
-
-                    if (DateLivrare.getInstance().getTipPersClient().equals("PJ"))
-                        Toast.makeText(getApplicationContext(), "Valoare maxima comanda: 5000 RON", Toast.LENGTH_SHORT).show();
-
-                }
 
                 if (rawTipPlataStr.toLowerCase().contains("numerar") || rawTipPlataStr.toLowerCase().contains("ramburs")) {
                     checkAviz.setChecked(false);
                     checkAviz.setEnabled(false);
                 } else
                     checkAviz.setEnabled(true);
+
+                setFilialaPlataVisibility();
 
             }
 
@@ -1198,12 +1319,20 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                     if (spinnerPlata.getSelectedItem().toString().contains("E1"))
                         spinnerPlata.setSelection(0);
 
+                    if (!isAdresaLivrareTCLI)
+                        spinnerTonaj.setVisibility(View.INVISIBLE);
+
                 } else {
                     checkMacara.setChecked(DateLivrare.getInstance().isMasinaMacara());
                     setMacaraVisible();
                     spinnerTonaj.setVisibility(View.INVISIBLE);
                     spinnerTonaj.setSelection(0);
                 }
+
+                String tipTranspSel = spinnerTransp.getSelectedItem().toString().split("-")[0].trim();
+                setTipTranspOpt(tipTranspSel);
+
+                setFilialaPlataVisibility();
 
             }
 
@@ -1212,8 +1341,140 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         });
     }
 
-    private void setMacaraVisible() {
 
+    private void setTipTranspOpt(String tipTransp) {
+
+        if (!DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_VANZARE) && !DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_LIVRARE))
+            return;
+
+        if (isAdresaLivrareTCLI)
+            return;
+
+        if (tipTransp.equals("TCLI") && ModificareComanda.selectedCmd.equals("")) {
+            layoutAdr1.setVisibility(View.GONE);
+            layoutAdr2.setVisibility(View.GONE);
+            layoutAdr3.setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.VISIBLE);
+
+        } else {
+            DateLivrare.getInstance().setFilialaLivrareTCLI("");
+            ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.GONE);
+            layoutAdr1.setVisibility(View.VISIBLE);
+            layoutAdr2.setVisibility(View.VISIBLE);
+            layoutAdr3.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private void setSpinnerFilialeTCLIListener() {
+        spinnerFilialeTCLI.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                if (arg2 > 0) {
+
+                    String filialaLivrareTCLI = EnumFilialeLivrare.getCodFiliala(spinnerFilialeTCLI.getSelectedItem().toString());
+                    DateLivrare.getInstance().setFilialaLivrareTCLI(filialaLivrareTCLI);
+
+
+                    CreareComandaGed.filialaLivrareMathaus = filialaLivrareTCLI;
+                    CreareComandaGed.filialeArondateMathaus = filialaLivrareTCLI;
+
+
+                    if (!UtilsGeneral.isAceeasiFiliala(filialaLivrareTCLI, UserInfo.getInstance().getUnitLog())) {
+                        DateLivrare.getInstance().setTipComandaGed(TipCmdGed.COMANDA_LIVRARE);
+                        DateLivrare.getInstance().setCodFilialaCLP(filialaLivrareTCLI);
+                    } else {
+                        DateLivrare.getInstance().setTipComandaGed(TipCmdGed.COMANDA_VANZARE);
+                        DateLivrare.getInstance().setCodFilialaCLP("");
+                    }
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("filiala", filialaLivrareTCLI);
+                    operatiiAdresa.getAdresaFiliala(params);
+
+                    setFilialaPlataVisibility();
+                }
+
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+    }
+
+    private void setFilialaLivrareTCLI() {
+
+        if (DateLivrare.getInstance().getCodFilialaCLP() != null && !DateLivrare.getInstance().getCodFilialaCLP().isEmpty()) {
+
+            for (int ii = 0; ii < spinnerFilialeTCLI.getAdapter().getCount(); ii++) {
+                if (EnumFilialeLivrare.getCodFiliala(spinnerFilialeTCLI.getItemAtPosition(ii).toString()).equals(DateLivrare.getInstance().getCodFilialaCLP())) {
+                    spinnerFilialeTCLI.setSelection(ii);
+                    break;
+                }
+            }
+            spinnerFilialeTCLI.setEnabled(false);
+        } else if (DateLivrare.getInstance().getFilialaLivrareTCLI() != null && !DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty()) {
+            for (int ii = 0; ii < spinnerFilialeTCLI.getAdapter().getCount(); ii++) {
+                if (EnumFilialeLivrare.getCodFiliala(spinnerFilialeTCLI.getItemAtPosition(ii).toString()).equals(DateLivrare.getInstance().getFilialaLivrareTCLI())) {
+                    spinnerFilialeTCLI.setSelection(ii);
+                    break;
+                }
+            }
+
+            if (ListaArticoleComandaGed.getInstance().getListArticoleComanda() != null && ListaArticoleComandaGed.getInstance().getListArticoleComanda().size() > 0) {
+                spinnerTransp.setEnabled(false);
+                spinnerFilialeTCLI.setEnabled(false);
+            }
+
+        }
+    }
+
+    private void setAdresalivrareFiliala(String adresaFiliala) {
+        String[] tokenAdresa = adresaFiliala.split("#");
+
+        DateLivrare.getInstance().setNumeJudet(tokenAdresa[3]);
+        DateLivrare.getInstance().setCodJudet(tokenAdresa[2]);
+        DateLivrare.getInstance().setOras(tokenAdresa[1]);
+        DateLivrare.getInstance().setStrada(tokenAdresa[0]);
+        DateLivrare.getInstance().setCoordonateAdresa(new LatLng(Double.valueOf(tokenAdresa[4]), Double.valueOf(tokenAdresa[5])));
+        spinnerTonaj.setSelection(1);
+    }
+
+
+    private void setFilialaPlataVisibility() {
+
+        String tipTranspSel = spinnerTransp.getSelectedItem().toString().split("-")[0].trim();
+        String tipPlata = spinnerPlata.getSelectedItem().toString().split("-")[0].trim();
+
+        if ((DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_LIVRARE) || isComandaClp()) && tipTranspSel.equals("TCLI") && tipPlata.equals("N")) {
+            ((LinearLayout) findViewById(R.id.layoutFilialaPlata)).setVisibility(View.VISIBLE);
+            ((RadioButton) findViewById(R.id.radioPlataFilialaAg)).setText(EnumFiliale.getNumeFiliala(UserInfo.getInstance().getUnitLog()));
+            ((RadioButton) findViewById(R.id.radioPlataFilialaLivrare)).setText(EnumFiliale.getNumeFiliala(DateLivrare.getInstance().getCodFilialaCLP()));
+
+            String localFilialaPlata = DateLivrare.getInstance().getFilialaPlata() != null ? DateLivrare.getInstance().getFilialaPlata() : "";
+
+            if (!localFilialaPlata.trim().isEmpty()) {
+                if (localFilialaPlata.equals(DateLivrare.getInstance().getCodFilialaCLP()))
+                    ((RadioButton) findViewById(R.id.radioPlataFilialaLivrare)).setChecked(true);
+                else
+                    ((RadioButton) findViewById(R.id.radioPlataFilialaAg)).setChecked(true);
+            }
+        } else
+            ((LinearLayout) findViewById(R.id.layoutFilialaPlata)).setVisibility(View.GONE);
+
+    }
+
+    private void getJudeteFilialaLivrare() {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("filiala", DateLivrare.getInstance().getFilialaLivrareTCLI());
+
+        AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
+        call.getCallResultsSyncActivity();
+
+    }
+
+    private void setMacaraVisible() {
         checkMacara.setVisibility(View.INVISIBLE);
 
     }
@@ -1281,7 +1542,14 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         textNrStr.setText(UtilsAddress.getStreetNumber(DateLivrare.getInstance().getStrada()));
 
         setListenerTextStrada();
+        getFilialaLivrareMathaus(DateLivrare.getInstance().getCodJudet());
 
+    }
+
+    private void getFilialaLivrareMathaus(String codJudet) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("codJudet", codJudet);
+        operatiiAdresa.getFilialaLivrareMathaus(params);
     }
 
     private void setListenerTextLocalitate() {
@@ -1355,6 +1623,9 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             }
         else
+            locExist = true;
+
+        if (tipLocalitate.equals("LIVRARE"))
             locExist = true;
 
         if (!locExist && !localitateCurenta.isEmpty()) {
@@ -1523,7 +1794,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     private boolean existaArticole() {
         return ListaArticoleComandaGed.getInstance().getListArticoleComanda() != null
-                && ListaArticoleComandaGed.getInstance().getListArticoleComanda().size() > 0;
+                && ListaArticoleComandaGed.getInstance().getListArticoleComanda().size() > 0 && !DateLivrare.getInstance().getTransport().equals("TCLI");
     }
 
     public void addListenerSaveAdr() {
@@ -1544,15 +1815,23 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         String observatii = "", obsPlata = " ", strMailAddr = " ";
 
         String nrStrada = "";
+        DateLivrare dateLivrareInstance = DateLivrare.getInstance();
 
         if (textNrStr.getText().toString().trim().length() > 0)
             nrStrada = " NR " + textNrStr.getText().toString().trim();
 
-        strada = textStrada.getText().toString().trim() + " " + nrStrada;
+        if (((LinearLayout) findViewById(R.id.layoutFilLivrare)).getVisibility() == View.VISIBLE) {
 
-        DateLivrare dateLivrareInstance = DateLivrare.getInstance();
+            if (spinnerFilialeTCLI.getSelectedItemPosition() == 0) {
+                Toast.makeText(getApplicationContext(), "Selectati filiala care livreaza.", Toast.LENGTH_LONG).show();
+                return;
+            }
 
-        dateLivrareInstance.setStrada(strada);
+        } else {
+            strada = textStrada.getText().toString().trim() + " " + nrStrada;
+            dateLivrareInstance.setStrada(strada);
+        }
+
         dateLivrareInstance.setAdrLivrNoua(true);
         dateLivrareInstance.setAddrNumber(" ");
 
@@ -1571,7 +1850,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         if (strMailAddr.trim().length() == 0)
             strMailAddr = " ";
 
-        if (!(layoutListAdrese.getVisibility() == View.VISIBLE) && !(DateLivrare.getInstance().isAltaAdresa())) {
+        if (!(layoutListAdrese.getVisibility() == View.VISIBLE) && !(DateLivrare.getInstance().isAltaAdresa()) && (((LinearLayout) findViewById(R.id.layoutFilLivrare)).getVisibility() == View.GONE)) {
 
             verificaLocalitate("SEDIU");
 
@@ -1602,14 +1881,19 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
         } else {
             if (pers.equals("")) {
-                Toast.makeText(getApplicationContext(), "Completati persoana de contact!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Completati persoana de contact.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (telefon.equals("")) {
-                Toast.makeText(getApplicationContext(), "Completati nr. de telefon!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Completati nr. de telefon.", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (telefon.length() != 10) {
+                Toast.makeText(getApplicationContext(), "Nr. de telefon invalid.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
         }
 
         if (DateLivrare.getInstance().getDataLivrare().isEmpty()) {
@@ -1622,12 +1906,31 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             return;
         }
 
+
+        if (((LinearLayout) findViewById(R.id.layoutFilialaPlata)).getVisibility() == View.VISIBLE) {
+            if (((RadioButton) findViewById(R.id.radioPlataFilialaAg)).isChecked())
+                DateLivrare.getInstance().setFilialaPlata(UserInfo.getInstance().getUnitLog());
+            else if (((RadioButton) findViewById(R.id.radioPlataFilialaLivrare)).isChecked())
+                DateLivrare.getInstance().setFilialaPlata(DateLivrare.getInstance().getCodFilialaCLP());
+            else {
+                Toast.makeText(getApplicationContext(), "Selectati filiala in care se plateste.", Toast.LENGTH_LONG).show();
+                return;
+            }
+        } else
+            DateLivrare.getInstance().setFilialaPlata("");
+
+
         if (radioAltaAdresa.isChecked()) {
 
             verificaLocalitate("LIVRARE");
 
             if (DateLivrare.getInstance().getOrasD().trim().equals("")) {
-                Toast.makeText(getApplicationContext(), "Completati localitatea!", Toast.LENGTH_SHORT).show();
+
+                if (DateLivrare.getInstance().getTipPersClient().equals("PF"))
+                    Toast.makeText(getApplicationContext(), "Completati adresa de facturare.", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "Completati adresa sediului social.", Toast.LENGTH_SHORT).show();
+
                 return;
             }
 
@@ -1670,8 +1973,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         dateLivrareInstance.setTipPlata(rawTipPlataStr.substring(0, rawTipPlataStr.indexOf("-") - 1).trim());
 
         if (dateLivrareInstance.getTransport().equals("TCLI") && dateLivrareInstance.getTipPlata().equals("E1")) {
-            Toast.makeText(getApplicationContext(), "Pentru transport TCLI nu puteti selecta metoda de plata Numerar sofer.", Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getApplicationContext(), "Pentru transport TCLI nu puteti selecta metoda de plata Numerar sofer.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -1723,7 +2025,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             return;
         }
 
-        if (dateLivrareInstance.getTipDocInsotitor().equals("2") && dateLivrareInstance.getTipPlata().equals("E1")) {
+        if (dateLivrareInstance.getTipDocInsotitor().contains("2") && dateLivrareInstance.getTipPlata().equals("E1")) {
             Toast.makeText(getApplicationContext(), "Pentru avizul de expeditie selectati alta metoda de plata.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -1746,6 +2048,11 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             dateLivrareInstance.setPrelucrare(spinnerIndoire.getSelectedItem().toString());
         } else
             dateLivrareInstance.setPrelucrare("-1");
+
+        if (spinnerDebitare.getVisibility() == View.VISIBLE && spinnerDebitare.getSelectedItemPosition() > 0) {
+            dateLivrareInstance.setPrelucrareLemn(spinnerDebitare.getSelectedItem().toString());
+        } else
+            dateLivrareInstance.setPrelucrareLemn("-1");
 
         if (spinnerMeseriasi.getSelectedItem() != null)
             dateLivrareInstance.setCodMeserias(((BeanClient) spinnerMeseriasi.getSelectedItem()).getCodClient());
@@ -1912,25 +2219,27 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 if (!isAdresaComplet())
                     return;
 
+
                 MapAddressDialog mapDialog = new MapAddressDialog(getAddressFromForm(), SelectAdrLivrCmdGed.this, fm);
                 mapDialog.setMapListener(SelectAdrLivrCmdGed.this);
                 mapDialog.show();
+
+
             }
         });
+    }
+
+
+    private void testMe() {
+
     }
 
     private Address getAddressFromForm() {
         Address address = new Address();
 
-        if (radioAdresaSediu.isChecked()) {
-            address.setCity(DateLivrare.getInstance().getOras());
-            address.setStreet(UtilsAddress.getStreetNoNumber(DateLivrare.getInstance().getStrada()));
-            address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
-        } else if (radioAltaAdresa.isChecked()) {
-            address.setCity(DateLivrare.getInstance().getOrasD());
-            address.setStreet(UtilsAddress.getStreetNoNumber(DateLivrare.getInstance().getAdresaD()));
-            address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudetD()));
-        }
+        address.setCity(DateLivrare.getInstance().getOras());
+        address.setStreet(UtilsAddress.getStreetNoNumber(DateLivrare.getInstance().getStrada()));
+        address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
 
         return address;
     }
@@ -1966,15 +2275,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
         String localitate = DateLivrare.getInstance().getOras();
         List<BeanLocalitate> listLocalitati = listAdreseJudet.getListLocalitati();
-
-        if (radioAltaAdresa.isChecked()) {
-            localitate = DateLivrare.getInstance().getOrasD();
-
-            if (listAlteAdrese == null)
-                return isAdresaOk;
-
-            listLocalitati = listAlteAdrese.getListLocalitati();
-        }
 
         BeanLocalitate beanLocalitate = HelperAdreseLivrare.getDateLocalitate(listLocalitati, localitate);
 
@@ -2073,15 +2373,28 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
         this.dateLivrareClient = dateLivrareClient;
 
-        int nrJudete = spinnerJudet.getAdapter().getCount();
+        textLocalitateLivrare.setText(dateLivrareClient.getLocalitate());
+        DateLivrare.getInstance().setOrasD(dateLivrareClient.getLocalitate());
+
+        if (!dateLivrareClient.getStrada().isEmpty() && !dateLivrareClient.getStrada().equals("null")) {
+            textStradaLivrare.setText(dateLivrareClient.getStrada());
+            DateLivrare.getInstance().setAdresaD(dateLivrareClient.getStrada());
+        }
+
+        DateLivrare.getInstance().setCodJudetD(dateLivrareClient.getCodJudet());
+        addJudeteFacturare();
+        setJudetLivrare();
+        addAdresaLivrare();
+
+        int nrJudete = spinnerJudetLivrare.getAdapter().getCount();
 
         for (int i = 0; i < nrJudete; i++) {
 
             @SuppressWarnings("unchecked")
-            HashMap<String, String> artMap = (HashMap<String, String>) spinnerJudet.getAdapter().getItem(i);
+            HashMap<String, String> artMap = (HashMap<String, String>) spinnerJudetLivrare.getAdapter().getItem(i);
 
             if (artMap.get("codJudet").equals(dateLivrareClient.getCodJudet())) {
-                spinnerJudet.setSelection(i);
+                spinnerJudetLivrare.setSelection(i);
                 break;
             }
 
@@ -2092,14 +2405,15 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private void setDateLivrareClient() {
 
         if ((UtilsUser.isCGED() || UtilsUser.isSSCM() || CreareComandaGed.tipClient.equals("IP")) && dateLivrareClient != null) {
-            textLocalitate.setText(dateLivrareClient.getLocalitate());
+            textLocalitateLivrare.setText(dateLivrareClient.getLocalitate());
+
 
             if (!dateLivrareClient.getStrada().isEmpty() && !dateLivrareClient.getStrada().equals("null")) {
-                textStrada.setText(dateLivrareClient.getStrada());
+                textStradaLivrare.setText(dateLivrareClient.getStrada());
             }
 
             if (!dateLivrareClient.getNrStrada().isEmpty() && !dateLivrareClient.getNrStrada().equals("null")) {
-                textNrStr.setText(dateLivrareClient.getNrStrada());
+                //textNrStr.setText(dateLivrareClient.getNrStrada());
             }
 
             if (!dateLivrareClient.getNumePersContact().isEmpty() && !dateLivrareClient.getNumePersContact().equals("null")) {
@@ -2129,6 +2443,11 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             valideazaAdresaResponse((String) result);
         } else if (numeComanda == EnumOperatiiAdresa.GET_DATE_LIVRARE_CLIENT) {
             loadDateLivrareClient(operatiiAdresa.deserializeDateLivrareClient((String) result));
+        } else if (numeComanda == EnumOperatiiAdresa.GET_FILIALA_MATHAUS) {
+            CreareComandaGed.filialaLivrareMathaus = ((String) result).split(",")[0];
+            CreareComandaGed.filialeArondateMathaus = (String) result;
+        } else if (numeComanda == EnumOperatiiAdresa.GET_ADRESA_FILIALA) {
+            setAdresalivrareFiliala((String) result);
         } else {
             switch (tipLocalitate) {
                 case LOCALITATE_SEDIU:
@@ -2152,6 +2471,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         setAdresaLivrare(MapUtils.getAddress(address));
 
     }
+
 
     @Override
     public void obiectivSelected(ObiectivConsilier obiectiv) {

@@ -120,6 +120,9 @@ public class ListaArticoleComanda extends Observable {
 		while (iterator.hasNext()) {
 			articol = iterator.next();
 
+			if (articol.getAlteValori() == null || articol.getAlteValori().trim().isEmpty())
+				continue;
+
 			localPretLista = articol.getAlteValori();
 			localpretArt = localPretLista.split("!");
 			totalFaraDisc += Double.parseDouble(localpretArt[0]);
@@ -150,6 +153,9 @@ public class ListaArticoleComanda extends Observable {
 		int i = 0;
 		for (i = 0; i < listArticoleComanda.size(); i++) {
 			articol = listArticoleComanda.get(i);
+
+			if (articol.getAlteValori() == null || articol.getAlteValori().trim().isEmpty())
+				continue;
 
 			tokCantArticol = String.valueOf(articol.getCantitate());
 			tokNumeArticol = articol.getNumeArticol();

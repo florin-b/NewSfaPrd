@@ -3,9 +3,9 @@ package my.logon.screen.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import my.logon.screen.enums.EnumDepartExtra;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.UserInfo;
-import my.logon.screen.enums.EnumDepartExtra;
 
 public class DepartamentAgent {
 
@@ -80,20 +80,19 @@ public class DepartamentAgent {
 		return UserInfo.getInstance().getTipUser().equals("AV") || UserInfo.getInstance().getTipUser().equals("SD");
 	}
 
-	
-
 	public static List<String> getDepartamenteAgent() {
 
 		ArrayList<String> depart = new ArrayList<String>();
 
-		if (isKA() || UtilsUser.isInfoUser() || UtilsUser.isSMR() || UtilsUser.isCVR() || UtilsUser.isSSCM() || UtilsUser.isCGED()
-				|| UtilsUser.isOIVPD() || UtilsUser.isUserSapKA()) {
+		if (isKA() || UtilsUser.isInfoUser() || UtilsUser.isSMR() || UtilsUser.isCVR() || UtilsUser.isSSCM() || UtilsUser.isCGED() || UtilsUser.isOIVPD()
+				|| UtilsUser.isUserSDKA()) {
 
 			for (EnumDepartExtra depKA : EnumDepartExtra.values()) {
 				if (depKA.getCod().equals("00") || depKA.getCod().equals("11"))
 					depart.add(depKA.getNume());
 			}
 		}
+
 		else if (isAG()) {
 			depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
@@ -110,7 +109,7 @@ public class DepartamentAgent {
 
 		}
 
-		depart.add("Mathaus");
+		depart.add("Catalog site");
 		return depart;
 	}
 
@@ -155,8 +154,12 @@ public class DepartamentAgent {
 			depart.add(EnumDepartExtra.getNumeDepart("11"));
 		}
 
+		depart.add("Catalog site");
+
+
 		return depart;
 	}
+
 
 	public static List<String> getDepartamenteAgentGED() {
 
@@ -172,7 +175,7 @@ public class DepartamentAgent {
 
 		else if (isAG()) {
 			depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
-			
+
 			if (UserInfo.getInstance().getCodDepart().startsWith("04") && UserInfo.getInstance().getDepartExtra().length() > 0) {
 				String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");
 
@@ -180,16 +183,19 @@ public class DepartamentAgent {
 					depart.add(EnumDepartExtra.getNumeDepart(depExtra[i]));
 				}
 			}
-			
+
 			depart.add(EnumDepartExtra.getNumeDepart("11"));
+			depart.add("Catalog site");
+
+		}else {
+			depart.add(EnumDepartExtra.getNumeDepart("11"));
+			depart.add("Catalog site");
 		}
 
-		
-		
 		return depart;
-	}	
-	
-	
+	}
+
+
 	public static List<String> getDepartamenteAgentCLP(String diviziiClient) {
 
 		ArrayList<String> depart = new ArrayList<String>();

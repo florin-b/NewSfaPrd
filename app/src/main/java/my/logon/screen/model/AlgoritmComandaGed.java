@@ -7,11 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import my.logon.screen.model.Constants;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.utils.UtilsComenziGed;
-
 import my.logon.screen.beans.BeanDeficitDivizie;
+import my.logon.screen.utils.UtilsComenziGed;
 
 public class AlgoritmComandaGed {
 
@@ -287,7 +284,6 @@ public class AlgoritmComandaGed {
 		double localCoef = 0;
 
 		if (UserInfo.getInstance().getCoefCorectie().contains(codDepart)) {
-
 			String[] arrayCoefs = UserInfo.getInstance().getCoefCorectie().split(";");
 
 			for (String coef : arrayCoefs) {
@@ -303,7 +299,6 @@ public class AlgoritmComandaGed {
 				}
 
 			}
-
 		}
 
 		return localCoef;
@@ -412,6 +407,19 @@ public class AlgoritmComandaGed {
 
 	public Set<BeanDeficitDivizie> getDeficitDivizii() {
 		return deficitDivizii;
+	}
+
+	public double getMarjaBrutaClient(ArrayList<ArticolComanda> listArticole){
+		double marjaBrutaClient = 0;
+		double cmp = 0;
+
+		for (int i = 0; i < listArticole.size(); i++) {
+			ArticolComanda articol = listArticole.get(i);
+			cmp = round(articol.getCmp() * Constants.TVA, 3);
+			marjaBrutaClient += (articol.getPretUnitarClient() - cmp) * articol.getCantitate();
+		}
+
+		return marjaBrutaClient;
 	}
 
 }

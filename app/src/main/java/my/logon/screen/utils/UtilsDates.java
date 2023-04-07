@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import my.logon.screen.model.Constants;
 import my.logon.screen.beans.StatusIntervalLivrare;
+import my.logon.screen.model.Constants;
 
 public class UtilsDates {
 
@@ -114,6 +114,8 @@ public class UtilsDates {
 
 	}
 	
+	
+	
 	public static int dateDiffinDays2(Date dateStop) {
 
 		long diff = getDateMidnight().getTime() + 1000 - dateStop.getTime();
@@ -124,6 +126,9 @@ public class UtilsDates {
 		return (int) (diff / (24 * 60 * 60 * 1000));
 
 	}
+	
+	
+	
 
 	public static StatusIntervalLivrare getStatusIntervalLivrare(Date dateStop) {
 
@@ -184,6 +189,11 @@ public class UtilsDates {
 
 		return -1;
 
+	}
+
+	public static String formatDataExp(String dataExp) {
+		String[] blocks = dataExp.split("-");
+		return blocks[2] + "-" + blocks[1] + "-" + blocks[0];
 	}
 	
 	public static String formatDateFromSap(String strDate) {

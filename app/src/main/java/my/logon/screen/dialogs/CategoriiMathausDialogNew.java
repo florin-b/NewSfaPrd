@@ -35,7 +35,6 @@ import my.logon.screen.listeners.OperatiiMathausListener;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.OperatiiMathaus;
 import my.logon.screen.model.UserInfo;
-import my.logon.screen.screens.CreareComanda;
 
 public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathausListener, AdapterMathausListener {
 
@@ -62,6 +61,7 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
     private String categorieCurenta;
     private RadioGroup radioTipArt;
     private boolean expandMainList = true;
+    private String filialaLivrareMathaus;
 
     private enum AfisArtMathaus {
         CATEGORIE, CAUTARE
@@ -286,8 +286,6 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         });
     }
 
-
-
     private void cautaArticoleMathaus() {
 
         spinnerCategorii.setSelection(0);
@@ -308,7 +306,7 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("codArticol", textCodArticol.getText().toString().trim().toLowerCase());
         params.put("tipCautare", tipCautare);
-        params.put("filiala", CreareComanda.filialaLivrareMathaus);
+        params.put("filiala", filialaLivrareMathaus);
         params.put("depart", UserInfo.getInstance().getCodDepart());
         params.put("pagina", String.valueOf(this.paginaCurenta));
 
@@ -468,6 +466,7 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
             clearCautaView();
             tipAfisArticole = AfisArtMathaus.CATEGORIE;
 
+
             getArticole(categorie.getCodHybris(), paginaCurenta);
 
         }
@@ -559,6 +558,10 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
 
     public void setArticolMathausListener(ArticolMathausListener listener) {
         this.listener = listener;
+    }
+
+    public void setFilialaLivrareMathaus(String filialaLivrareMathaus){
+        this.filialaLivrareMathaus = filialaLivrareMathaus;
     }
 
     @Override

@@ -12,6 +12,83 @@
             android:orientation="vertical" >
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:text="Transport"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Spinner
+                    android:id="@+id/spinnerTransp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.1"
+                    android:gravity="left" />
+
+                <CheckBox
+                    android:id="@+id/checkMacara"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="0.15"
+                    android:text="Camion cu macara" />
+
+                <Spinner
+                    android:id="@+id/spinnerTonaj"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.1"
+                    android:gravity="left" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutFilLivrare"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Filiala livrare"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <Spinner
+                    android:id="@+id/spinnerFiliale"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_weight="0.3"
+                    android:gravity="left" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/layoutHeaderAdrese"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,6 +166,8 @@
                 android:id="@+id/layoutAdr1"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -97,7 +176,7 @@
                     android:layout_gravity="bottom|left"
                     android:layout_marginLeft="3dip"
                     android:gravity="left"
-                    android:text="Sediul social"
+                    android:text="Adresa livrare"
                     android:textColor="@color/labelColor"
                     android:textSize="17sp"
                     android:typeface="serif" />
@@ -131,6 +210,8 @@
                     android:layout_marginRight="180dip"
                     android:layout_weight="0.1"
                     android:dropDownHeight="250dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:inputType="textCapSentences|textNoSuggestions"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -190,6 +271,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutAdr3"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
                 android:orientation="horizontal" >
@@ -422,47 +504,49 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutFilialaPlata"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center|left"
-                    android:layout_marginLeft="3dip"
+                    android:layout_gravity="center_vertical|left"
                     android:gravity="left"
-                    android:text="Transport"
+                    android:paddingLeft="5dip"
+                    android:text="Plata in filiala"
                     android:textColor="@color/labelColor"
                     android:textSize="17sp"
                     android:typeface="serif" />
 
-                <Spinner
-                    android:id="@+id/spinnerTransp"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_weight="0.1"
-                    android:gravity="left" />
+                <RadioGroup
+                    android:id="@+id/radioFilialaPlata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
+                    android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/checkMacara"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="0.15"
-                    android:text="Camion cu macara" />
+                    <RadioButton
+                        android:id="@+id/radioPlataFilialaAg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/labelColor"
+                        android:textSize="17sp" />
 
-                <Spinner
-                    android:id="@+id/spinnerTonaj"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginRight="180dip"
-                    android:layout_weight="0.1"
-                    android:gravity="left" />
+                    <RadioButton
+                        android:id="@+id/radioPlataFilialaLivrare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:textColor="@color/labelColor"
+                        android:textSize="17sp" />
+                </RadioGroup>
+
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -647,13 +731,22 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="left|bottom"
                     android:layout_marginRight="180dip"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.13"
+                    android:gravity="left" />
+
+                <Spinner
+                    android:id="@+id/spinnerDebitare"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.13"
                     android:gravity="left" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.1" />
             </LinearLayout>
 
             <LinearLayout
@@ -721,17 +814,20 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutOptiuniAdrLivrare"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
 
                 <TextView
+
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center"
                     android:layout_marginLeft="3dip"
                     android:gravity="left"
-                    android:text="Adresa de livrare"
                     android:textColor="@color/labelColor"
                     android:textSize="17sp"
                     android:typeface="serif" />
@@ -747,8 +843,7 @@
                         android:id="@+id/radioAdresaSediu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="Sediul social"
+                        android:text="Adresa de livrare"
                         android:textColor="@color/labelColor"
                         android:textSize="16sp" />
 
@@ -758,6 +853,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dip"
                         android:text="Alta adresa"
+                        android:checked="true"
                         android:textColor="@color/labelColor"
                         android:textSize="16sp" />
 
@@ -784,10 +880,16 @@
                 android:layout_height="60dip"
                 android:orientation="horizontal" >
 
-                <View
+                <TextView
+                    android:id="@+id/labelAdresa2"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dip" />
+                    android:layout_gravity="left|center"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
 
                 <Spinner
                     android:id="@+id/spinnerJudetLivrare"

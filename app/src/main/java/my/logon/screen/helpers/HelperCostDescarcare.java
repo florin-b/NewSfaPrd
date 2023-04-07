@@ -19,7 +19,7 @@ import my.logon.screen.model.ArticolComanda;
 
 public class HelperCostDescarcare {
 
-    public static List<ArticolComanda> getArticoleDescarcare(CostDescarcare costDescarcare, double valoareCost, String filiala,
+    public static List<ArticolComanda> getArticoleDescarcare(CostDescarcare costDescarcare, double valoareCost,
                                                              List<ArticolComanda> articoleComanda) {
 
         double procentReducere = valoareCost / costDescarcare.getValoareDescarcare();
@@ -54,7 +54,7 @@ public class HelperCostDescarcare {
             articolComanda.setTipArt("");
             articolComanda.setDepart(artDesc.getDepart());
             articolComanda.setDepartSintetic(artDesc.getDepart());
-            articolComanda.setFilialaSite(filiala);
+            articolComanda.setFilialaSite(artDesc.getFiliala());
 
             listArticole.add(articolComanda);
         }
@@ -259,62 +259,62 @@ public class HelperCostDescarcare {
 
     }
 
-    public static CostDescarcare deserializeCostComenziMacara(String dateCost) {
-        CostDescarcare costDescarcare = new CostDescarcare();
+    public static CostDescarcare deserializeCostComenziMacara(String dateCost){
+        CostDescarcare costDescarcare =new CostDescarcare();
 
         List<ArticolDescarcare> listArticole = new ArrayList<ArticolDescarcare>();
         List<ArticolPalet> listPaleti = new ArrayList<ArticolPalet>();
 
-        try {
+        try{
             JSONArray jsonObject = new JSONArray(dateCost);
 
             for (int i = 0; i < jsonObject.length(); i++) {
                 JSONObject comandaObject = jsonObject.getJSONObject(i);
 
-                costDescarcare.setSePermite(Boolean.valueOf(comandaObject.getString("sePermite")));
+                    costDescarcare.setSePermite(Boolean.valueOf(comandaObject.getString("sePermite")));
 
-                JSONArray jsonArray = new JSONArray(comandaObject.getString("articoleDescarcare"));
+                    JSONArray jsonArray = new JSONArray(comandaObject.getString("articoleDescarcare"));
 
-                for (int ii = 0; ii < jsonArray.length(); ii++) {
-                    ArticolDescarcare articol = new ArticolDescarcare();
+                    for (int ii = 0; ii < jsonArray.length(); ii++) {
+                        ArticolDescarcare articol = new ArticolDescarcare();
 
-                    JSONObject object = jsonArray.getJSONObject(ii);
+                        JSONObject object = jsonArray.getJSONObject(ii);
 
-                    articol.setCod(object.getString("cod"));
-                    articol.setDepart(object.getString("depart"));
-                    articol.setValoare(Double.valueOf(object.getString("valoare")));
-                    articol.setCantitate(Double.valueOf(object.getString("cantitate")));
-                    articol.setValoareMin(Double.valueOf(object.getString("valoareMin")));
-                    articol.setFiliala(comandaObject.getString("filiala"));
-                    listArticole.add(articol);
+                        articol.setCod(object.getString("cod"));
+                        articol.setDepart(object.getString("depart"));
+                        articol.setValoare(Double.valueOf(object.getString("valoare")));
+                        articol.setCantitate(Double.valueOf(object.getString("cantitate")));
+                        articol.setValoareMin(Double.valueOf(object.getString("valoareMin")));
+                        articol.setFiliala(comandaObject.getString("filiala"));
+                        listArticole.add(articol);
+
+                    }
+
+                    JSONArray jsonPaleti = new JSONArray(comandaObject.getString("articolePaleti"));
+
+                    for (int j = 0; j < jsonPaleti.length(); j++) {
+                        ArticolPalet articol = new ArticolPalet();
+
+                        JSONObject object = jsonPaleti.getJSONObject(j);
+
+                        articol.setCodPalet(object.getString("codPalet"));
+                        articol.setNumePalet(object.getString("numePalet"));
+                        articol.setDepart(object.getString("depart"));
+                        articol.setCantitate(Integer.valueOf(object.getString("cantitate")));
+                        articol.setPretUnit(Double.valueOf(object.getString("pretUnit")));
+                        articol.setFurnizor(object.getString("furnizor"));
+                        articol.setCodArticol(object.getString("codArticol"));
+                        articol.setNumeArticol(object.getString("numeArticol"));
+                        articol.setCantArticol(object.getString("cantArticol"));
+                        articol.setUmArticol(object.getString("umArticol"));
+                        articol.setFiliala(comandaObject.getString("filiala"));
+
+                        listPaleti.add(articol);
+
+                    }
 
                 }
 
-                JSONArray jsonPaleti = new JSONArray(comandaObject.getString("articolePaleti"));
-
-                for (int j = 0; j < jsonPaleti.length(); j++) {
-                    ArticolPalet articol = new ArticolPalet();
-
-                    JSONObject object = jsonPaleti.getJSONObject(j);
-
-                    articol.setCodPalet(object.getString("codPalet"));
-                    articol.setNumePalet(object.getString("numePalet"));
-                    articol.setDepart(object.getString("depart"));
-                    articol.setCantitate(Integer.valueOf(object.getString("cantitate")));
-                    articol.setPretUnit(Double.valueOf(object.getString("pretUnit")));
-                    articol.setFurnizor(object.getString("furnizor"));
-                    articol.setCodArticol(object.getString("codArticol"));
-                    articol.setNumeArticol(object.getString("numeArticol"));
-                    articol.setCantArticol(object.getString("cantArticol"));
-                    articol.setUmArticol(object.getString("umArticol"));
-                    articol.setFiliala(comandaObject.getString("filiala"));
-
-                    listPaleti.add(articol);
-
-                }
-
-
-            }
 
         } catch (JSONException e) {
 
@@ -412,6 +412,8 @@ public class HelperCostDescarcare {
 
         return unitLog;
     }
+
+
 
 
 }

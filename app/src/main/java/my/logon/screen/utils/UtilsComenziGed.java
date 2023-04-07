@@ -76,7 +76,7 @@ public class UtilsComenziGed {
 		double totalTranspCmd = 0;
 
 		for (ArticolComanda art : listArticole) {
-			if (art.getNumeArticol().toLowerCase().contains("servicii") && art.getNumeArticol().toLowerCase().contains("transport"))
+			if (isArticolTransport(art))
 				totalTranspCmd += art.getPretUnit();
 		}
 
@@ -84,7 +84,8 @@ public class UtilsComenziGed {
 	}
 
 	public static boolean isArticolTransport(ArticolComanda articol) {
-		return articol.getNumeArticol().toLowerCase().contains("servicii") && articol.getNumeArticol().toLowerCase().contains("transport");
+		return (articol.getNumeArticol().toLowerCase().contains("servicii") && articol.getNumeArticol().toLowerCase().contains("transport"))
+				|| articol.getNumeArticol().toLowerCase().contains("serv.transp");
 	}
 
 	public static void setValoareArticolTransport(ArrayList<ArticolComanda> listArticole, double valoareTransport) {

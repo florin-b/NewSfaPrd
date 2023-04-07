@@ -55,6 +55,8 @@ public class DateLivrareAfisare {
     private Delegat delegat;
     private double marjaT1 = 0;
     private double procentT1 = 0;
+    private double marjaT1Tot = 0;
+    private double procentT1Tot = 0;
     private double mCantCmd = 0;
     private double mCant30 = 0;
     private double marjaBrutaPalVal = 0;
@@ -68,6 +70,9 @@ public class DateLivrareAfisare {
 
     private double marjaBruta = 0;
     private double procMarjaBruta = 0;
+
+    private double marjaBrutaTot = 0;
+    private double procMarjaBrutaTot = 0;
 
     private String tipPersAgent;
     private String filialaPlata;
@@ -603,5 +608,37 @@ public class DateLivrareAfisare {
 
     public void setFilialaPlata(String filialaPlata) {
         this.filialaPlata = filialaPlata;
+    }
+
+    public double getMarjaT1Tot() {
+        return marjaT1Tot;
+    }
+
+    public void setMarjaT1Tot(double marjaT1Tot) {
+        this.marjaT1Tot = marjaT1Tot;
+    }
+
+    public double getProcentT1Tot() {
+        return procentT1Tot;
+    }
+
+    public void setProcentT1Tot(double procentT1Tot) {
+        this.procentT1Tot = procentT1Tot;
+    }
+
+    public double getMarjaBrutaTot() {
+        return marjaBrutaTot;
+    }
+
+    public void setMarjaBrutaTot(double marjaBrutaTot) {
+        this.marjaBrutaTot = marjaBrutaTot;
+    }
+
+    public double getProcMarjaBrutaTot() {
+        return procMarjaBrutaTot;
+    }
+
+    public void setProcMarjaBrutaTot(double procMarjaBrutaTot) {
+        this.procMarjaBrutaTot = procMarjaBrutaTot;
     }
 }

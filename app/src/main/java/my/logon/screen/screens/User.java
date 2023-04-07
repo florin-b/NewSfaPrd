@@ -4,24 +4,6 @@
  */
 package my.logon.screen.screens;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import my.logon.screen.listeners.CodPinDialogListener;
-import my.logon.screen.listeners.HelperSiteListener;
-import my.logon.screen.listeners.OperatiiMeniuListener;
-import my.logon.screen.model.HelperUserSite;
-import my.logon.screen.model.InfoStrings;
-import my.logon.screen.model.OperatiiMeniu;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.UtilsUser;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -39,9 +21,27 @@ import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import my.logon.screen.R;
 import my.logon.screen.dialogs.PinSalarizareDialog;
 import my.logon.screen.enums.EnumFiliale;
 import my.logon.screen.enums.EnumOperatiiMeniu;
+import my.logon.screen.listeners.CodPinDialogListener;
+import my.logon.screen.listeners.HelperSiteListener;
+import my.logon.screen.listeners.OperatiiMeniuListener;
+import my.logon.screen.model.HelperUserSite;
+import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.OperatiiMeniu;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsUser;
 
 public class User extends Activity implements HelperSiteListener, CodPinDialogListener, OperatiiMeniuListener {
 
@@ -109,9 +109,9 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 
 			setListenerRadioSal();
 		}
-
+		
 		textVersiuneCod = (TextView) findViewById(R.id.textVersiuneCod);
-
+		
 		PackageInfo pInfo = null;
 		try {
 			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -123,15 +123,16 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 		String buildVer = "";
 		if (pInfo != null) {
 			buildVer = String.valueOf(pInfo.versionCode);
-			lastUpdate = pInfo.firstInstallTime; 
+			lastUpdate = pInfo.firstInstallTime;
 		}
-
+		
 		DateFormat datePattern = new SimpleDateFormat("dd-MMM-yyyy' 'HH:mm:ss", Locale.UK);
 		datePattern.setTimeZone(TimeZone.getTimeZone("GMT+2"));
 
 		String dateUpdate = datePattern.format(new Date(lastUpdate));
-
+		
 		textVersiuneCod.setText(buildVer + " / " + dateUpdate);
+		
 
 		// exceptie pentru agenti si sd din BUC
 		if (UserInfo.getInstance().getTipAcces().equals("9") || UserInfo.getInstance().getTipAcces().equals("10")) {
@@ -170,11 +171,12 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 		}
 
 		// user site
-		if (UserInfo.getInstance().getUserSite().equals("X") || UtilsUser.isUserIP()) {
+		if (UserInfo.getInstance().getUserSite().equals("X") || UserInfo.getInstance().getTipUserSap().equals("SDIP")
+				|| UserInfo.getInstance().getTipUserSap().equals("CVIP")) {
 
+			// afisare filiale BUC
 			listFiliala = new ArrayList<HashMap<String, String>>();
-			adapterFiliala = new SimpleAdapter(this, listFiliala, R.layout.simplerowlayout_1, new String[] { "rowText" },
-					new int[] { R.id.textRowName });
+			adapterFiliala = new SimpleAdapter(this, listFiliala, R.layout.simplerowlayout_1, new String[] { "rowText" }, new int[] { R.id.textRowName });
 
 			HashMap<String, String> temp;
 
@@ -190,6 +192,11 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 			spinnerFiliala.setOnItemSelectedListener(new onSelectedFiliala());
 			spinnerFiliala.setSelection(EnumFiliale.getItemPosition(UserInfo.getInstance().getUnitLog()));
 
+			if (UtilsUser.isUserIP())
+				spinnerFiliala.setEnabled(false);
+
+
+
 		}
 
 		if ((UserInfo.getInstance().getTipAcces().equals("27") || UserInfo.getInstance().getTipAcces().equals("32")
@@ -198,15 +205,14 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 				&& !UserInfo.getInstance().getUserSite().equals("X") && !UtilsUser.isUserIP())// KA,
 		// cons
 		// sau
-		// sm
+		// sm, sdip
 		{
 
 			// pentru cei din BUC posibilitate selectie filiale BUC
 			if (UserInfo.getInstance().getUnitLog().contains("BU")) {
 				// afisare filiale BUC
 				listFiliala = new ArrayList<HashMap<String, String>>();
-				adapterFiliala = new SimpleAdapter(this, listFiliala, R.layout.simplerowlayout_1, new String[] { "rowText" },
-						new int[] { R.id.textRowName });
+				adapterFiliala = new SimpleAdapter(this, listFiliala, R.layout.simplerowlayout_1, new String[] { "rowText" }, new int[] { R.id.textRowName });
 
 				HashMap<String, String> temp;
 				temp = new HashMap<String, String>();
@@ -270,8 +276,8 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 			spinnerDepart.setVisibility(View.INVISIBLE);
 
 		listDepart = new ArrayList<HashMap<String, String>>();
-		adapterDepart = new SimpleAdapter(this, listDepart, R.layout.simplerowlayout_2, new String[] { "rowText", "rowDesc" }, new int[] {
-				R.id.textRowName, R.id.textRowId });
+		adapterDepart = new SimpleAdapter(this, listDepart, R.layout.simplerowlayout_2, new String[] { "rowText", "rowDesc" }, new int[] { R.id.textRowName,
+				R.id.textRowId });
 
 		HashMap<String, String> temp;
 		temp = new HashMap<String, String>();

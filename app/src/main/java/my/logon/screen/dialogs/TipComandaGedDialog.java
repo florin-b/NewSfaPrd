@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import my.logon.screen.R;
+import my.logon.screen.adapters.ComandaAMOBAdapter;
+import my.logon.screen.beans.ComandaAmobAfis;
 import my.logon.screen.enums.EnumComenziDAO;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.listeners.ComenziDAOListener;
@@ -35,11 +38,11 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 	private String codFilialaDest = "";
 
 	private String[] numeFiliala = { "Bacau", "Baia Mare", "Brasov", "Buzau", "Brasov-central", "Buc. Andronache", "Buc. Militari", "Buc. Otopeni",
-			"Buc. Glina", "Constanta", "Cluj", "Craiova", "Focsani", "Galati", "Hunedoara", "Iasi", "Oradea", "Piatra Neamt", "Pitesti", "Ploiesti",
-			"Sibiu", "Suceava", "Timisoara", "Tg. Mures" };
+			"Buc. Glina", "Constanta", "Cluj", "Craiova", "Focsani", "Galati", "Hunedoara", "Iasi", "Oradea", "Piatra Neamt", "Pitesti", "Ploiesti", "Sibiu",
+			"Suceava","Timisoara", "Tg. Mures" };
 
-	private String[] codFiliala = { "BC10", "MM10", "BV10", "BZ10", "BV90", "BU13", "BU11", "BU12", "BU10", "CT10", "CJ10", "DJ10", "VN10", "GL10",
-			"HD10", "IS10", "BH10", "NT10", "AG10", "PH10", "SB10", "SV10", "TM10", "MS10" };
+	private String[] codFiliala = { "BC10", "MM10", "BV10", "BZ10", "BV90", "BU13", "BU11", "BU12", "BU10", "CT10", "CJ10", "DJ10", "VN10", "GL10", "HD10",
+			"IS10", "BH10", "NT10", "AG10", "PH10", "SB10","SV10", "TM10", "MS10" };
 
 	public TipComandaGedDialog(Context context) {
 		super(context);
@@ -63,11 +66,13 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 		setCancelable(true);
 
 		final RadioButton radioNoua = (RadioButton) findViewById(R.id.radioNoua);
-		final RadioButton radioAmob = (RadioButton) findViewById(R.id.radioAmob);
-		final RadioButton radioCLP = (RadioButton) findViewById(R.id.radioCLP);
 		final RadioButton radioDL = (RadioButton) findViewById(R.id.radioDL);
+		final RadioButton radioAmob = (RadioButton) findViewById(R.id.radioAmob);
+		radioAmob.setVisibility(View.INVISIBLE);
+		final RadioButton radioCLP = (RadioButton) findViewById(R.id.radioCLP);
 		final RadioButton radioACZC = (RadioButton) findViewById(R.id.radioACZC);
-
+		final RadioButton radioDeteriorate = (RadioButton) findViewById(R.id.radioDeteriorate);
+		
 		if (UtilsUser.isUserIP())
 			radioCLP.setVisibility(View.INVISIBLE);
 
@@ -75,8 +80,8 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 		final TextView textInfoClp = (TextView) findViewById(R.id.textInfoClp);
 
 		ArrayList<HashMap<String, String>> listFiliale = new ArrayList<HashMap<String, String>>();
-		final SimpleAdapter adapterFiliale = new SimpleAdapter(context, listFiliale, R.layout.rowlayoutjudete,
-				new String[] { "numeJudet", "codJudet" }, new int[] { R.id.textNumeJudet, R.id.textCodJudet });
+		final SimpleAdapter adapterFiliale = new SimpleAdapter(context, listFiliale, R.layout.rowlayoutjudete, new String[] { "numeJudet", "codJudet" },
+				new int[] { R.id.textNumeJudet, R.id.textCodJudet });
 
 		fillFiliale(listFiliale);
 		spinnerFilialeClp.setAdapter(adapterFiliale);
@@ -95,6 +100,8 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 					tipComanda = TipCmdGed.DISPOZITIE_LIVRARE;
 				else if (radioACZC.isChecked())
 					tipComanda = TipCmdGed.ARTICOLE_COMANDA;
+				else if (radioDeteriorate.isChecked())
+					tipComanda = TipCmdGed.ARTICOLE_DETERIORATE;
 				else if (radioAmob.isChecked()) {
 					tipComanda = TipCmdGed.COMANDA_AMOB;
 					if (idComanda.equals("-1"))
@@ -125,7 +132,19 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 
 			@Override
 			public void onClick(View v) {
-				spinnerComenziAmob.setVisibility(View.INVISIBLE);
+				spinnerComenziAmob.setVisibility(View.GONE);
+				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				textInfoClp.setVisibility(View.INVISIBLE);
+
+			}
+
+		});
+
+		radioDL.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				spinnerComenziAmob.setVisibility(View.GONE);
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
 				textInfoClp.setVisibility(View.INVISIBLE);
 
@@ -139,18 +158,7 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 			public void onClick(View v) {
 				spinnerFilialeClp.setVisibility(View.VISIBLE);
 				textInfoClp.setVisibility(View.VISIBLE);
-
-			}
-
-		});
-
-		radioDL.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				spinnerComenziAmob.setVisibility(View.INVISIBLE);
-				spinnerFilialeClp.setVisibility(View.INVISIBLE);
-				textInfoClp.setVisibility(View.INVISIBLE);
+				spinnerComenziAmob.setVisibility(View.GONE);
 
 			}
 
@@ -161,6 +169,7 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 			@Override
 			public void onClick(View v) {
 				spinnerComenziAmob.setVisibility(View.VISIBLE);
+				spinnerFilialeClp.setVisibility(View.GONE);
 				getComenziAMOB();
 
 			}
@@ -171,7 +180,19 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 
 			@Override
 			public void onClick(View v) {
-				spinnerComenziAmob.setVisibility(View.INVISIBLE);
+				spinnerComenziAmob.setVisibility(View.GONE);
+				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				textInfoClp.setVisibility(View.INVISIBLE);
+
+			}
+
+		});
+
+		radioDeteriorate.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				spinnerComenziAmob.setVisibility(View.GONE);
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
 				textInfoClp.setVisibility(View.INVISIBLE);
 
@@ -186,6 +207,8 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				ComandaAmobAfis comanda = (ComandaAmobAfis) parent.getAdapter().getItem(position);
+				idComanda = comanda.getId();
 
 			}
 
@@ -197,11 +220,30 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 	}
 
 	private void getComenziAMOB() {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("codAgent", UserInfo.getInstance().getCod());
+		comandaDAO.getComenziAmob(params);
 
 	}
 
 	public void setTipCmdGedListener(TipCmdGedListener listener) {
 		this.listener = listener;
+	}
+
+	private void populateListComenzi(List<ComandaAmobAfis> listComenzi) {
+
+		ComandaAmobAfis comanda = new ComandaAmobAfis();
+		comanda.setNumeClient("Selectati o comanda");
+		comanda.setIdAmob("-1");
+		comanda.setId("-1");
+		comanda.setDataCreare(" ");
+		comanda.setValoare(" ");
+		comanda.setMoneda(" ");
+
+		listComenzi.add(0, comanda);
+
+		ComandaAMOBAdapter comenziAdapter = new ComandaAMOBAdapter(context, listComenzi);
+		spinnerComenziAmob.setAdapter(comenziAdapter);
 	}
 
 	private void fillFiliale(ArrayList<HashMap<String, String>> listFiliale) {
@@ -229,6 +271,7 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 
 	@Override
 	public void operationComenziComplete(EnumComenziDAO methodName, Object result) {
+		populateListComenzi(comandaDAO.deserializeComenziAmobAfis((String) result));
 
 	}
 

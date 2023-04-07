@@ -6,7 +6,6 @@
     android:orientation="horizontal" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="0.6"
@@ -39,7 +38,6 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|left"
@@ -153,10 +151,11 @@
                     android:layout_height="wrap_content" >
 
                     <TextView
+                        android:id="@+id/textMarjaPalMoneda"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.4"
-                        android:text="Marja bruta (RON)"
+                        
                         android:textColor="@color/detColor1"
                         android:textSize="16sp"
                         android:typeface="serif" />
@@ -257,6 +256,45 @@
                 android:textSize="16sp"
                 android:typeface="serif" />
 
+
+            <TextView
+                android:id="@+id/textValMarjaT1Total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textColor="@color/totalColor1"
+                android:textSize="16sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textProcMarjaT1Total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textColor="@color/totalColor1"
+                android:textSize="16sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textCastigBrutTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textColor="@color/totalColor1"
+                android:textSize="16sp"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/textMarjaCmdTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/totalColor1"
+                android:textSize="16sp"
+                android:typeface="serif" />
+
+
             <TextView
                 android:id="@+id/textValMarjaT1"
                 android:layout_width="wrap_content"
@@ -286,7 +324,6 @@
                 android:typeface="serif" />
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/tabelaDetaliiCmd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -351,6 +388,7 @@
                 android:typeface="serif"
                 android:visibility="invisible" />
 
+
             <TextView
                 android:id="@+id/textComandaBV90"
                 android:layout_width="wrap_content"
@@ -375,7 +413,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/tabelaConditii"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -385,7 +422,6 @@
             android:orientation="vertical" >
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
@@ -424,7 +460,6 @@
                 android:typeface="sans" />
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -465,7 +500,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -495,6 +529,7 @@
                     android:typeface="monospace" />
 
                 <TextView
+                    android:id="@+id/txtMonedaPretArt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|bottom"
@@ -506,7 +541,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -522,7 +556,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
@@ -545,7 +578,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -588,7 +620,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -642,7 +673,6 @@
                 </Button>
 
                 <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/contentLayoutCmd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -650,7 +680,6 @@
                     android:orientation="vertical" >
 
                     <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -668,7 +697,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -677,7 +705,6 @@
                         android:orientation="horizontal" >
 
                         <LinearLayout
-                            xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
@@ -685,7 +712,6 @@
                             android:orientation="vertical" >
 
                             <LinearLayout
-                                xmlns:android="http://schemas.android.com/apk/res/android"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left"
@@ -721,7 +747,6 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                xmlns:android="http://schemas.android.com/apk/res/android"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal" >
@@ -748,7 +773,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
@@ -769,7 +793,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"

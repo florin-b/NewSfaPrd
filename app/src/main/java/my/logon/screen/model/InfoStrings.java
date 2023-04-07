@@ -68,18 +68,18 @@ public class InfoStrings {
 		case 31:
 			retVal = "Comanda alocata pe borderou";
 			break;
-
 		case 96:
 			retVal = "Comanda salvata. Tipul de transport a fost redeterminat.";
+
 			break;	
 		case 98:
 			retVal = "Comanda nu a fost salvata. Tipul de transport nu s-a putut determina.";
-			break;							
+			break;			
 		case 99:
 			retVal = "Atentie! Clientul nu apartine diviziei din document.";
 			break;
 		default:
-			retVal = "Stare comanda necunoscuta.";
+			retVal = "Stare comanda necunoscuta. Cod stare: " + msgId;
 			break;
 		}
 
@@ -152,7 +152,7 @@ public class InfoStrings {
 
 		case 41:
 			retVal = "Comanda fara rez. stoc cu conditii";
-			break;			
+			break;
 			
 		case 30:
 			retVal = "Comanda nealocata pe borderou";
@@ -574,12 +574,6 @@ public class InfoStrings {
 
 			else if (filiala.equals("BU10"))
 				codClient = "4119000430";
-			
-			else if (filiala.equals("MS10"))
-				codClient = "4119001145";
-
-			else if (filiala.equals("SV10"))
-				codClient = "4119001361";
 
 		}
 
@@ -688,7 +682,7 @@ public class InfoStrings {
 			codClient = "4119000392";
 
 		else if (filiala.equals("SV10"))
-			codClient = "4119001359";
+			codClient = "4119001358";
 
 		return codClient;
 
@@ -764,9 +758,6 @@ public class InfoStrings {
 		else if (filiala.equals("BU12")) // Otopeni
 			codClient = "4119000371";
 
-		else if (filiala.equals("SV10"))
-			codClient = "4119001358";
-
 		return codClient;
 
 	}
@@ -807,13 +798,6 @@ public class InfoStrings {
 
 			else if (filiala.equals("BU10"))
 				codClient = "4119000431";
-			
-			else if (filiala.equals("MS10"))
-				codClient = "4119001146";
-
-			else if (filiala.equals("SV10"))
-				codClient = "4119001362";
-			
 
 		}
 
@@ -840,7 +824,7 @@ public class InfoStrings {
 				codClient = "4119000176";
 
 			else if (filiala.equals("IS10"))
-				codClient = "4119000196";
+				codClient = "4119000317";
 
 			else if (filiala.equals("TM10"))
 				codClient = "4119000252";
@@ -850,12 +834,6 @@ public class InfoStrings {
 
 			else if (filiala.equals("BU10"))
 				codClient = "4119000432";
-			
-			else if (filiala.equals("MS10"))
-				codClient = "4119001147";
-
-			else if (filiala.equals("SV10"))
-				codClient = "4119001363";
 
 		}
 
@@ -1093,7 +1071,7 @@ public class InfoStrings {
 			codClient = "4119000411";
 
 		else if (filiala.equals("SV10"))
-			codClient = "4119001357";
+			codClient = "4119001364";
 
 		return codClient;
 
@@ -1175,7 +1153,76 @@ public class InfoStrings {
 
 	}
 
+	public static String getClientGed_FaraFactura_OBSOLETE(String filiala) {
 
+		String codClient = "00";
+
+		if (filiala.equals("AG10"))
+			codClient = "4119000286";
+
+		if (filiala.equals("BC10"))
+			codClient = "4119000288";
+
+		if (filiala.equals("BH10"))
+			codClient = "4119000290";
+
+		if (filiala.equals("BV10"))
+			codClient = "4119000293";
+
+		if (filiala.equals("BZ10"))
+			codClient = "4119000294";
+
+		if (filiala.equals("CJ10"))
+			codClient = "4119000295";
+
+		if (filiala.equals("CT10"))
+			codClient = "4119000296";
+
+		if (filiala.equals("DJ10"))
+			codClient = "4119000297";
+
+		if (filiala.equals("GL10"))
+			codClient = "4119000298";
+
+		if (filiala.equals("HD10"))
+			codClient = "4119000299";
+
+		if (filiala.equals("IS10"))
+			codClient = "4119000300";
+
+		if (filiala.equals("MM10"))
+			codClient = "4119000301";
+
+		if (filiala.equals("MS10"))
+			codClient = "4119000302";
+
+		if (filiala.equals("NT10"))
+			codClient = "4119000303";
+
+		if (filiala.equals("PH10"))
+			codClient = "4119000304";
+
+		if (filiala.equals("TM10"))
+			codClient = "4119000305";
+
+		if (filiala.equals("VN10"))
+			codClient = "4119000306";
+
+		if (filiala.equals("BU13")) // Andronache
+			codClient = "4119000287";
+
+		if (filiala.equals("BU10")) // Glina
+			codClient = "4119000289";
+
+		if (filiala.equals("BU11")) // Militari
+			codClient = "4119000291";
+
+		if (filiala.equals("BU12")) // Otopeni
+			codClient = "4119000292";
+
+		return codClient;
+
+	}
 
 	public static String getTipUser(String tipUser) {
 		String tipAcces = "NN";

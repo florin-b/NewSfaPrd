@@ -76,9 +76,21 @@ public class ListaArticoleComandaGed extends Observable {
 
 			String tipAlert = "";
 			ArticolComanda articol = null;
+			String[] preturiArt;
+			String artPretPromo;
+
 			Iterator<ArticolComanda> iterator = listArticoleComanda.iterator();
 			while (iterator.hasNext()) {
 				articol = iterator.next();
+
+				if (articol.getAlteValori() == null || articol.getAlteValori().trim().isEmpty())
+					continue;
+
+				preturiArt = articol.getAlteValori().split("!");
+				artPretPromo = preturiArt[5];
+
+				if (artPretPromo.equals("1"))
+					continue;
 
 				articol.setPretUnitarClient(articol.getPretUnitarClient() * (1 - procentGlobal / 100));
 				articol.setPretUnit(articol.getPretUnitarClient());

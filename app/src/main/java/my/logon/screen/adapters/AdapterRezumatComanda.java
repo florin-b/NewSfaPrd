@@ -30,6 +30,7 @@ import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsGeneral;
 
 public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTransportListener {
 
@@ -48,6 +49,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private ViewHolder myViewHolder;
     private List<ArticolComanda> listArticoleTransport;
     private boolean selectTransp;
+    private boolean modifPretTransp;
 
     public AdapterRezumatComanda(Context context, List<RezumatComanda> listComenzi, List<CostTransportMathaus> costTransport, String tipTransportCmd, String filialeArondate, boolean selectTransp) {
         this.context = context;
@@ -57,6 +59,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         this.filialeArondate = filialeArondate;
         listArticoleTransport = new ArrayList<>();
         this.selectTransp = selectTransp;
+        this.modifPretTransp = true;
         clearTransportArticol(listComenzi);
 
     }
@@ -115,7 +118,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
             viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
             String tipTranspArt = getTipTransport(rezumat.getFilialaLivrare());
 
-            if (filialeArondate.contains(rezumat.getFilialaLivrare()) || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
+            if (filialeArondate.contains(UtilsGeneral.getUnitLogDistrib(rezumat.getFilialaLivrare())) || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
 
                 ArrayAdapter<String> adapterSpinnerTransp = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, tipTransportArray);
                 adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -193,6 +196,11 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
             }
 
         }
+
+        if (modifPretTransp && viewHolder.btnPretTransport.getVisibility() == View.VISIBLE)
+            viewHolder.btnPretTransport.setVisibility(View.VISIBLE);
+        else
+            viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
 
         setListenerSpinnerTransport(viewHolder.spinnerTransport, rezumat, viewHolder);
         setListenerEliminaBtn(viewHolder.stergeComandaBtn, position);
@@ -279,7 +287,9 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                     adaugaArticolTransport(rezumat, viewHolder);
 
                     if (tipTransportSelected.equals("TRAP")) {
-                        viewHolder.btnPretTransport.setVisibility(View.VISIBLE);
+
+                        if (modifPretTransp)
+                            viewHolder.btnPretTransport.setVisibility(View.VISIBLE);
 
                         if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
                             listener.setStareRezumat("1", rezumat.getFilialaLivrare());
@@ -289,7 +299,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
                     }
 
-                    //adaugaArticolTransport(rezumat, viewHolder);
+
                 }
 
             }
@@ -432,11 +442,15 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private String getTipTransport(String filiala) {
 
         String tipTransport = "";
+        modifPretTransp = true;
 
         for (CostTransportMathaus cost : costTransport) {
 
             if (cost.getFiliala().equals(filiala)) {
                 tipTransport = cost.getTipTransp();
+
+                if (cost.getCodArtTransp().trim().isEmpty() || cost.getValTransp().equals("0"))
+                    modifPretTransp = false;
                 break;
             }
 

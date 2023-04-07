@@ -25,12 +25,13 @@ public class TipComandaDistributieDialog extends Dialog {
 	private TipCmdDistrib tipComanda = TipCmdDistrib.COMANDA_VANZARE;
 	private String codFilialaDest = "";
 
+
 	private String[] numeFiliala = { "Bacau", "Baia Mare", "Brasov", "Buzau", "Brasov-central", "Buc. Andronache", "Buc. Militari", "Buc. Otopeni",
 			"Buc. Glina", "Constanta", "Cluj", "Craiova", "Focsani", "Galati", "Hunedoara", "Iasi", "Oradea", "Piatra Neamt", "Pitesti", "Ploiesti", "Sibiu",
-			"Suceava","Timisoara", "Tg. Mures" };
+			"Suceava", "Timisoara", "Tg. Mures" };
 
 	private String[] codFiliala = { "BC10", "MM10", "BV10", "BZ10", "BV90", "BU13", "BU11", "BU12", "BU10", "CT10", "CJ10", "DJ10", "VN10", "GL10", "HD10",
-			"IS10", "BH10", "NT10", "AG10", "PH10", "SB10", "SV10", "TM10", "MS10" };
+			"IS10", "BH10", "NT10", "AG10", "PH10", "SB10","SV10", "TM10", "MS10" };
 
 	public TipComandaDistributieDialog(Context context) {
 		super(context);
@@ -54,6 +55,7 @@ public class TipComandaDistributieDialog extends Dialog {
 		final RadioButton radioCC = (RadioButton) findViewById(R.id.radioCC);
 		final RadioButton radioCLP = (RadioButton) findViewById(R.id.radioCLP);
 		final RadioButton radioACZC = (RadioButton) findViewById(R.id.radioACZC);
+		final RadioButton radioDeteriorate = (RadioButton) findViewById(R.id.radioDeteriorate);
 
 		final Spinner spinnerFilialeClp = (Spinner) findViewById(R.id.spinFilialaCLP);
 
@@ -79,13 +81,14 @@ public class TipComandaDistributieDialog extends Dialog {
 					tipComanda = TipCmdDistrib.LIVRARE_CUSTODIE;
 				else if (radioACZC.isChecked())
 					tipComanda = TipCmdDistrib.ARTICOLE_COMANDA;
+				else if (radioDeteriorate.isChecked())
+					tipComanda = TipCmdDistrib.ARTICOLE_DETERIORATE;
 				else if (radioCLP.isChecked()) {
 					if (spinnerFilialeClp.getSelectedItemPosition() == 0) {
 						Toast.makeText(context, "Selectati filiala", Toast.LENGTH_LONG).show();
 						return;
 					}
 
-					@SuppressWarnings("unchecked")
 					HashMap<String, String> artMap = (HashMap<String, String>) adapterFiliale.getItem(spinnerFilialeClp.getSelectedItemPosition());
 					codFilialaDest = artMap.get("codJudet");
 					tipComanda = TipCmdDistrib.COMANDA_LIVRARE;
@@ -149,6 +152,17 @@ public class TipComandaDistributieDialog extends Dialog {
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
 				textInfo.setVisibility(View.VISIBLE);
 				textInfo.setText("Trebuie sa existe un proces verbal de angajament semnat de client.");
+
+			}
+
+		});
+
+		radioDeteriorate.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				textInfo.setVisibility(View.INVISIBLE);
 
 			}
 

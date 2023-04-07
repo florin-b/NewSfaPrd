@@ -5,6 +5,49 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/articoleAmobHeaderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/articolAmobLabel"
+            android:layout_width="0dip"
+            android:layout_height="45dip"
+            android:layout_gravity="left"
+            android:layout_weight="0.3"
+            android:gravity="left"
+            android:text="Articole comanda Amob"
+            android:textColor="@color/foreColorObiective1"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <Button
+            android:id="@+id/importAmob"
+            style="@style/ok_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="0.25"
+            android:background="@drawable/ok_button_style"
+            android:text="Importa toate articolele" />
+
+        <TextView
+            android:id="@+id/articolAmobDetalii"
+            android:layout_width="0dip"
+            android:layout_height="45dip"
+            android:layout_gravity="right"
+            android:layout_weight="0.3"
+            android:gravity="right"
+            android:textColor="@color/foreColorObiective1"
+            android:textSize="17sp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cautareArticoleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -82,13 +125,27 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal" >
 
-        <ListView
-            android:id="@android:id/list"
+        <include
+            android:id="@+id/layout_articol_mathaus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.40"
-            android:choiceMode="singleChoice"
-            android:drawSelectorOnTop="false" />
+            android:layout_weight="0.5"
+            layout="@layout/layout_articol_mathaus"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layout_list_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4" >
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:drawSelectorOnTop="false" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/resLayout"
@@ -181,6 +238,49 @@
                             android:textColor="@color/detColor2"
                             android:textSize="16sp"
                             android:textStyle="bold"
+                            android:typeface="monospace" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutStocMathaus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:id="@+id/labelStocMathaus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_weight="0.08"
+                            android:gravity="right"
+                            android:text="Extra:"
+                            android:textColor="@color/dropColor2"
+                            android:textSize="15sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/textStocMathaus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_weight="0.13"
+                            android:gravity="right"
+                            android:textColor="@color/dropColor2"
+                            android:textSize="15sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/textUmMathaus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.05"
+                            android:gravity="right"
+                            android:textColor="@color/dropColor2"
+                            android:textSize="15sp"
                             android:typeface="monospace" />
                     </LinearLayout>
 
@@ -384,8 +484,8 @@
                     android:textColor="@color/editTextColor1"
                     android:textSize="17sp"
                     android:typeface="monospace" />
-                
-                 <TextView
+
+                <TextView
                     android:id="@+id/txtPretUmAlt"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -598,7 +698,7 @@
                                 android:layout_gravity="left"
                                 android:layout_weight="0.15"
                                 android:text="Transport: "
-                                android:textColor="@color/cmpColor1"
+                                android:textColor="@color/marjaColor1"
                                 android:textSize="18sp"
                                 android:typeface="serif" />
 
@@ -611,7 +711,44 @@
                                 android:layout_weight="0.15"
                                 android:gravity="left"
                                 android:text="0.0"
-                                android:textColor="@color/cmpColor1"
+                                android:textColor="@color/marjaColor1"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutDataExp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/labelDataExp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_weight="0.15"
+                                android:text="Data exp: "
+                                android:textColor="@color/marjaColor1"
+                                android:textSize="18sp"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:id="@+id/textDataExp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="0.15"
+                                android:gravity="left"
+                                android:textColor="@color/marjaColor1"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
                                 android:typeface="serif" />
@@ -690,6 +827,25 @@
                         android:textSize="15sp"
                         android:typeface="monospace" />
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layoutRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    >
+
+                    <Button
+                        android:id="@+id/afisArtRecomBtn"
+                        style="@style/ok_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dip"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:background="@drawable/cancel_button_style"
+                        android:paddingLeft="15dip"
+                        android:paddingRight="15dip"
+                        android:text="Clientii au mai cumparat si..." />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

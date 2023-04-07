@@ -1,6 +1,7 @@
 package my.logon.screen.screens;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,6 +45,8 @@ public class ClientReturComanda extends Fragment implements OperatiiClientListen
 	private TextView selectIcon;
 	private Spinner spinnerCautare;
 	private EnumTipComanda tipComanda;
+	private RadioGroup radioTipCmd;
+
 
 	private ClientReturListener clientListener;
 
@@ -77,8 +81,12 @@ public class ClientReturComanda extends Fragment implements OperatiiClientListen
 		setSpinnerCautareItems();
 		setSpinnerCautareListener();
 
+		radioTipCmd = (RadioGroup) v.findViewById(R.id.radioTipCmd);
+		setTipCmdRadioListener();
+
 		if (!UtilsUser.isCV() && !UtilsUser.isUserIP()) {
 			tipComanda = EnumTipComanda.DISTRIBUTIE;
+			radioTipCmd.setVisibility(View.VISIBLE);
 
 		} else {
 			tipComanda = EnumTipComanda.GED;
@@ -87,6 +95,32 @@ public class ClientReturComanda extends Fragment implements OperatiiClientListen
 
 		return v;
 
+	}
+
+	private void setTipCmdRadioListener(){
+		radioTipCmd.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				selectIcon.setVisibility(View.INVISIBLE);
+				switch (checkedId) {
+					case R.id.radioDistrib:
+						textNumeClient.setText("");
+						clientiList.setAdapter(null);
+						tipComanda = EnumTipComanda.DISTRIBUTIE;
+						spinnerCautare.setVisibility(View.GONE);
+						break;
+					case R.id.radioGed:
+						textNumeClient.setText("");
+						clientiList.setAdapter(null);
+						tipComanda = EnumTipComanda.GED;
+						spinnerCautare.setVisibility(View.VISIBLE);
+						break;
+				}
+
+			}
+
+		});
 	}
 
 	private void setSpinnerCautareItems() {
@@ -118,12 +152,12 @@ public class ClientReturComanda extends Fragment implements OperatiiClientListen
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onAttach(Context context) {
+		super.onAttach(context);
 		try {
 			clientListener = (ClientReturListener) getActivity();
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString());
+			throw new ClassCastException(context.toString());
 		}
 	}
 
@@ -160,11 +194,12 @@ public class ClientReturComanda extends Fragment implements OperatiiClientListen
 			params.put("unitLog", UserInfo.getInstance().getUnitLog());
 			params.put("tipCmd","CMD");
 			params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
-			
+
 			if (UtilsUser.isUserGed() || tipComanda == EnumTipComanda.GED)
 				opClient.getListClientiCV(params);
 			else
 				opClient.getListClienti(params);
+
 			hideSoftKeyboard();
 
 		}
@@ -183,7 +218,7 @@ public class ClientReturComanda extends Fragment implements OperatiiClientListen
 
 				BeanClient client = (BeanClient) arg0.getAdapter().getItem(arg2);
 				if (client != null) {
-					clientListener.clientSelected(client.getCodClient(), client.getNumeClient(), "", null);
+					clientListener.clientSelected(client.getCodClient(), client.getNumeClient(), "", tipComanda);
 
 				}
 			}

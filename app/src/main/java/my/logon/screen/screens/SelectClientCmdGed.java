@@ -79,8 +79,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 	private LinearLayout layoutClientPersoana, layoutClientDistrib;
 	private ListView listViewClienti;
 	private BeanClient selectedClient;
-	private TextView textNumeClientDistrib, textCodClientDistrib, textAdrClient, textLimitaCredit, textRestCredit, textTipClient, clientBlocat,
-			filialaClient;
+	private TextView textNumeClientDistrib, textCodClientDistrib, textAdrClient, textLimitaCredit, textRestCredit, textTipClient, clientBlocat, filialaClient;
 
 	private RadioButton radioClMeserias;
 	private NumberFormat numberFormat;
@@ -100,7 +99,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 	private boolean pressedTVAButton = false;
 	private Spinner spinnerAgenti;
 	private RadioGroup radioSelectAgent;
-	private LinearLayout layoutLabelRefClient, layoutTextRefClient;
+
 	private String codCuiIp;
 
 	@Override
@@ -139,9 +138,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 		layoutDetaliiClientDistrib = (LinearLayout) findViewById(R.id.detaliiClientDistrib);
 		layoutDetaliiClientDistrib.setVisibility(View.GONE);
-
-		layoutLabelRefClient = (LinearLayout) findViewById(R.id.layoutLabelRefClient);
-		layoutTextRefClient = (LinearLayout) findViewById(R.id.layoutTextRefClient);
 
 		textNumeClientDistrib = (TextView) findViewById(R.id.textNumeClientDistrib);
 		textCodClientDistrib = (TextView) findViewById(R.id.textCodClientDistrib);
@@ -324,6 +320,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 	}
 
 	private void performVerificareTVA() {
+
 		String strCui = "";
 
 		if (radioClientInstPub.isChecked()) {
@@ -335,6 +332,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cuiClient", strCui);
 		operatiiClient.getStarePlatitorTva(params);
+
 	}
 
 	private void setListenerFacturaPF() {
@@ -531,6 +529,12 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			txtNumeClientGed.setText(platitorTva.getNumeClient());
 			txtCodJ.setText(platitorTva.getNrInreg());
 
+			if (platitorTva.getCodJudet()!= null && !platitorTva.getCodJudet().equals("null") && !platitorTva.getCodJudet().trim().isEmpty()) {
+				DateLivrare.getInstance().setCodJudetD(platitorTva.getCodJudet());
+				DateLivrare.getInstance().setOrasD(platitorTva.getLocalitate());
+				DateLivrare.getInstance().setAdresaD(platitorTva.getStrada());
+			}
+
 		}
 
 		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
@@ -549,9 +553,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					verificaID.setVisibility(View.GONE);
 					verificaTva.setVisibility(View.GONE);
 					labelIDClient.setText("CUI");
-
-					layoutLabelRefClient.setVisibility(View.GONE);
-					layoutTextRefClient.setVisibility(View.GONE);
 
 					clearDateLivrare();
 
@@ -577,9 +578,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					((LinearLayout) findViewById(R.id.layoutLabelJ)).setVisibility(View.VISIBLE);
 					((LinearLayout) findViewById(R.id.layoutTextJ)).setVisibility(View.VISIBLE);
 
-					layoutLabelRefClient.setVisibility(View.GONE);
-					layoutTextRefClient.setVisibility(View.GONE);
-
 					layoutLabelJ.setVisibility(View.VISIBLE);
 					layoutTextJ.setVisibility(View.VISIBLE);
 					checkPlatTva.setChecked(true);
@@ -591,6 +589,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					txtCodJ.setText("");
 					setTextNumeClientEnabled(true);
 					clearDateLivrare();
+
+
 				}
 
 			}
@@ -613,9 +613,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					((LinearLayout) findViewById(R.id.layoutTextJ)).setVisibility(View.INVISIBLE);
 
 					txtNumeClientGed.setText("");
-
-					layoutLabelRefClient.setVisibility(View.GONE);
-					layoutTextRefClient.setVisibility(View.GONE);
 
 				}
 
@@ -643,8 +640,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					setTextNumeClientEnabled(true);
 					clearDateLivrare();
 
-					layoutLabelRefClient.setVisibility(View.GONE);
-					layoutTextRefClient.setVisibility(View.GONE);
 				}
 
 			}
@@ -663,9 +658,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 				verificaID.setVisibility(View.GONE);
 				checkFacturaPF.setVisibility(View.GONE);
 				labelIDClient.setText("COD");
-
-				layoutLabelRefClient.setVisibility(View.GONE);
-				layoutTextRefClient.setVisibility(View.GONE);
 
 				setTextNumeClientEnabled(false);
 
@@ -690,21 +682,21 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 				checkPlatTva.setVisibility(View.INVISIBLE);
 
 				verificaTva.setVisibility(View.VISIBLE);
+
 				verificaID.setVisibility(View.GONE);
 				checkFacturaPF.setVisibility(View.GONE);
 				labelIDClient.setText("COD");
 				txtCNPClient.setVisibility(View.VISIBLE);
 
-				layoutLabelRefClient.setVisibility(View.VISIBLE);
-				layoutTextRefClient.setVisibility(View.VISIBLE);
-
 				setTextNumeClientEnabled(false);
 
 				tipClient = EnumTipClient.MESERIAS;
-				
+
+
+
 				int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.6);
 				int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
-				
+
 				CautaClientDialog clientDialog = new CautaClientDialog(SelectClientCmdGed.this);
 				clientDialog.setInstitPublica(true);
 				clientDialog.getWindow().setLayout(width, height);
@@ -735,6 +727,9 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 	private void clearDateLivrare() {
 
+		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_DETERIORATE)
+			return;
+
 		String filialaClp = "";
 
 		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_LIVRARE) {
@@ -762,7 +757,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			DateLivrare.getInstance().setTipComandaGed(TipCmdGed.DISPOZITIE_LIVRARE);
 
 			if (localIsCmdACZC)
-				DateLivrare.getInstance().setTipComandaGed(TipCmdGed.ARTICOLE_COMANDA);
+                DateLivrare.getInstance().setTipComandaGed(TipCmdGed.ARTICOLE_COMANDA);
 		}
 
 	}
@@ -809,7 +804,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		saveClntBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
-				if (radioClPJ.isChecked() && !pressedTVAButton && !UtilsUser.isCGED() && !UtilsUser.isAgentOrSD() && !UtilsUser.isSSCM()) {
+				if (radioClPJ.isChecked() && !pressedTVAButton && !UtilsUser.isCGED() && !UtilsUser.isSSCM()) {
 					performVerificareTVA();
 				} else
 					valideazaDateClient();
@@ -847,8 +842,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 						CreareComandaGed.codClientVar = InfoStrings.getClientGenericGedWood_faraFact(UserInfo.getInstance().getUnitLog(), "PF");
 					} else {
 						if (UtilsUser.isUserExceptieCONSGED())
-							CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed_CONSGED_faraFactura(UserInfo.getInstance().getUnitLog(),
-									"PF");
+							CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed_CONSGED_faraFactura(UserInfo.getInstance().getUnitLog(), "PF");
 						else
 							CreareComandaGed.codClientVar = InfoStrings.getClientGed_FaraFactura(UserInfo.getInstance().getUnitLog());
 
@@ -910,6 +904,10 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 							CreareComandaGed.codClientVar = InfoStrings.gedPJNeplatitorTVA(UserInfo.getInstance().getUnitLog());
 					}
 				}
+
+				if (CreareComandaGed.codClientCUI != null && !CreareComandaGed.codClientCUI.trim().isEmpty())
+					CreareComandaGed.codClientVar = CreareComandaGed.codClientCUI;
+
 			}
 
 			if (radioCmdNormala.isChecked())
@@ -919,8 +917,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 			if (layoutTextJ.getVisibility() == View.VISIBLE)
 				CreareComandaGed.codJ = txtCodJ.getText().toString().trim();
-
-			DateLivrare.getInstance().setRefClient(((EditText) findViewById(R.id.textRefClient)).getText().toString().trim());
 
 		}
 
@@ -965,6 +961,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 				return;
 			}
 		}
+
+		DateLivrare.getInstance().setRefClient(((EditText) findViewById(R.id.textRefClient)).getText().toString().trim());
 
 		finish();
 
@@ -1084,8 +1082,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			listAgenti.add(agent);
 		}
 
-		SimpleAdapter adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" },
-				new int[] { R.id.textNumeAgent, R.id.textCodAgent });
+		SimpleAdapter adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" }, new int[] {
+				R.id.textNumeAgent, R.id.textCodAgent });
 
 		Spinner spinnerAgenti = ((Spinner) findViewById(R.id.spinnerAgenti));
 
@@ -1132,15 +1130,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			spinnerAgenti.setSelection(1);
 
 	}
-	
-	private void getInfoCreditClient(String codClient) {
 
-		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("codClient", codClient);
-		operatiiClient.getInfoCredit(params);
-
-	}
-	
 	private void setInfoCreditClient(String result) {
 		InfoCredit infoCredit = operatiiClient.deserializeInfoCreditClient(result);
 
@@ -1206,44 +1196,44 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 	}
 
+	private void getInfoCreditClient(String codClient) {
+
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("codClient", codClient);
+		operatiiClient.getInfoCredit(params);
+
+	}
+
 	public void clientSelected(BeanClient client) {
+
 		if (tipClient == EnumTipClient.MESERIAS) {
 			txtNumeClientGed.setText(client.getNumeClient());
 			txtCNPClient.setText(client.getCodClient());
 			CreareComandaGed.codClientVar = client.getCodClient();
 			CreareComandaGed.tipClient = client.getTipClient();
 			CreareComandaGed.tipClientIP = client.getTipClientIP();
-			
 			CreareComandaGed.tipPlataContract = client.getTipPlata();
 			DateLivrare.getInstance().setClientBlocat(client.isClientBlocat());
-
-			layoutLabelRefClient.setVisibility(View.VISIBLE);
-			layoutTextRefClient.setVisibility(View.VISIBLE);
-
+			
 			if (client.getTermenPlata() != null)
 				CreareComandaGed.listTermenPlata = client.getTermenPlata();
 
 			if (radioClientInstPub.isChecked()) {
 				labelIDClient.setText(labelIDClient.getText() + "\t\t\t\t\t CUI: " + client.getCodCUI());
 				codCuiIp = client.getCodCUI();
+
 				txtNumeClientGed.setText(client.getNumeClient().replaceFirst("\\(.*", ""));
-				
+
 				if (DateLivrare.getInstance().getFurnizorComanda() != null) {
-				} else {
-					if (!client.getFilialaClientIP().equals(UserInfo.getInstance().getUnitLog())) {
-						CreareComandaGed.tipComandaGed = TipCmdGed.COMANDA_LIVRARE;
-						DateLivrare.getInstance().setTipComandaGed(TipCmdGed.COMANDA_LIVRARE);
-						DateLivrare.getInstance().setCodFilialaCLP(UserInfo.getInstance().getUnitLog());
+				} else if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_DETERIORATE)){
+				}
+				else {
+					if (!client.getFilialaClientIP().equals(UserInfo.getInstance().getUnitLog()))
 						UserInfo.getInstance().setUnitLog(client.getFilialaClientIP());
 
-					} else {
-						CreareComandaGed.tipComandaGed = TipCmdGed.COMANDA_VANZARE;
-						DateLivrare.getInstance().setTipComandaGed(TipCmdGed.COMANDA_VANZARE);
-						DateLivrare.getInstance().setCodFilialaCLP("");
-					}
 
 				}
-				
+
 				getInfoCreditClient(client.getCodClient());
 			}
 
@@ -1254,7 +1244,11 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			CreareComandaGed.codClientVar = client.getCodClient();
 			CreareComandaGed.numeClientVar = client.getNumeClient();
 			CreareComandaGed.tipClient = client.getTipClient();
-			
+
+			DateLivrare.getInstance().setCodJudetD(client.getCodJudet());
+			DateLivrare.getInstance().setOrasD(client.getLocalitate());
+			DateLivrare.getInstance().setAdresaD(client.getStrada());
+
 			CreareComandaGed.tipPlataContract = client.getTipPlata();
 			DateLivrare.getInstance().setClientBlocat(client.isClientBlocat());
 
@@ -1275,7 +1269,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 	}
 
 	private void populateDatePersonale(BeanDatePersonale datePersonale) {
-		
+
 		CreareComandaGed.tipPlataContract = datePersonale.getTipPlata();
 		DateLivrare.getInstance().setClientBlocat(datePersonale.isClientBlocat());
 
@@ -1285,9 +1279,13 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		txtNumeClientGed.setText(datePersonale.getNume());
 		txtCNPClient.setText(datePersonale.getCnp());
 
-		DateLivrare.getInstance().setCodJudet(datePersonale.getCodjudet());
-		DateLivrare.getInstance().setOras(datePersonale.getLocalitate());
-		DateLivrare.getInstance().setStrada(datePersonale.getStrada());
+		CreareComandaGed.codClientCUI = "";
+		if (datePersonale.getCodClient()!= null && !datePersonale.getCodClient().equals("-1"))
+			CreareComandaGed.codClientCUI = datePersonale.getCodClient();
+
+		DateLivrare.getInstance().setCodJudetD(datePersonale.getCodjudet());
+		DateLivrare.getInstance().setOrasD(datePersonale.getLocalitate());
+		DateLivrare.getInstance().setAdresaD(datePersonale.getStrada());
 
 	}
 

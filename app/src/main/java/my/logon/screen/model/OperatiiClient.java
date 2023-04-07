@@ -168,6 +168,15 @@ public class OperatiiClient implements AsyncTaskListener {
 					if (object.has("tipPlata") && object.getString("tipPlata") != "null")
 						client.setTipPlata(object.getString("tipPlata"));
 
+					if (object.has("localitate") && object.getString("localitate") != "null")
+						client.setLocalitate(object.getString("localitate"));
+
+					if (object.has("codJudet") && object.getString("codJudet") != "null")
+						client.setCodJudet(object.getString("codJudet"));
+
+					if (object.has("strada") && object.getString("strada") != "null")
+						client.setStrada(object.getString("strada"));
+
 					listClienti.add(client);
 
 				}
@@ -338,6 +347,9 @@ public class OperatiiClient implements AsyncTaskListener {
 
 					if (dateObject.has("tipPlata") && dateObject.getString("tipPlata") != "null")
 						datePersonale.setTipPlata(dateObject.getString("tipPlata"));
+
+					if (dateObject.has("codClient") && dateObject.getString("codClient") != "null")
+						datePersonale.setCodClient(dateObject.getString("codClient"));
 
 					listDate.add(datePersonale);
 

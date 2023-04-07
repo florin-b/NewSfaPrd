@@ -1,5 +1,7 @@
 package my.logon.screen.beans;
 
+import java.util.List;
+
 public class PretArticolGed {
 
 	private String pret;
@@ -31,7 +33,9 @@ public class PretArticolGed {
 	private String errMsg;
 	private double procReducereCmp;
 	private double pretFaraTva;
+	private String dataExp;
 	private double greutate;
+	private List<BeanArticolCautare> articoleRecomandate;
 
 	public String getPret() {
 		return pret;
@@ -265,11 +269,27 @@ public class PretArticolGed {
 		this.pretFaraTva = pretFaraTva;
 	}
 
+	public String getDataExp() {
+		return dataExp;
+	}
+
+	public void setDataExp(String dataExp) {
+		this.dataExp = dataExp;
+	}
+
 	public double getGreutate() {
 		return greutate;
 	}
 
 	public void setGreutate(double greutate) {
 		this.greutate = greutate;
+	}
+
+	public List<BeanArticolCautare> getArticoleRecomandate() {
+		return articoleRecomandate;
+	}
+
+	public void setArticoleRecomandate(List<BeanArticolCautare> articoleRecomandate) {
+		this.articoleRecomandate = articoleRecomandate;
 	}
 }

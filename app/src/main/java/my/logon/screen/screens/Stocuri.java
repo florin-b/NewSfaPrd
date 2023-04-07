@@ -170,8 +170,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 			spinnerFiliale.setVisibility(View.VISIBLE);
 		}
 
-		if (UtilsUser.isANYDV()) // directori
-		{
+		if (UtilsUser.isANYDV()) {
 			// se ofera acces filialele din definitie
 			populateFilialeDV();
 			spinnerFiliale.setVisibility(View.VISIBLE);
@@ -432,7 +431,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 
 	boolean isWood() {
 		return UserInfo.getInstance().getTipUser().equals("WOOD");
-	}	
+	}
 	
 	protected void performGetPret() {
 
@@ -724,14 +723,14 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 
 				textStocImbatranit.setVisibility(View.VISIBLE);
 				textStocImbatranit.setText("Stoc imbatranit: " + tokStocArt[3]);
-				
+
 				String[] stocBlocat = tokStocArt[4].split("#");
 
 				if (stocBlocat.length > 1) {
 					((TextView) findViewById(R.id.textStocBlocat)).setVisibility(View.VISIBLE);
 					((TextView) findViewById(R.id.textStocBlocat)).setText("Stoc blocat: " + stocBlocat[0] + " Tip: " + stocBlocat[1]);
 				} else
-					((TextView) findViewById(R.id.textStocBlocat)).setVisibility(View.GONE);				
+					((TextView) findViewById(R.id.textStocBlocat)).setVisibility(View.GONE);
 
 			} else {
 
