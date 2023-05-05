@@ -636,6 +636,9 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                 params.put("filiala", filialaStocMathaus);
                 params.put("codArticol", codArticol);
                 params.put("um", umVanz);
+                params.put("tipCmd", "D");
+                params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
+                params.put("codUser", UserInfo.getInstance().getCod());
 
                 opArticol.getStocMathaus(params);
 
