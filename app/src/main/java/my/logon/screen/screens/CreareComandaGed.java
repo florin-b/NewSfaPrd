@@ -102,6 +102,7 @@ import my.logon.screen.listeners.TipCmdGedListener;
 import my.logon.screen.listeners.ValoareNegociataDialogListener;
 import my.logon.screen.model.AlgoritmComandaGed;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.Comanda;
 import my.logon.screen.model.ComenziDAO;
 import my.logon.screen.model.Constants;
@@ -227,6 +228,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private AntetCmdMathaus antetMathausTCLI;
     private boolean redirectDateLivrareTCLI = false;
     double costTransportIP = 0;
+
+    private RezumatComandaDialog rezumatComanda;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -1592,6 +1595,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 !DateLivrare.getInstance().getFilialaLivrareTCLI().trim().isEmpty())
             filialaLivrareMathaus = DateLivrare.getInstance().getFilialaLivrareTCLI();
 
+
         comandaMathaus.setSellingPlant(filialaLivrareMathaus);
         List<DateArticolMathaus> listArticoleMat = new ArrayList<DateArticolMathaus>();
 
@@ -1669,6 +1673,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
         List<DateArticolMathaus> articoleMathaus = livrareMathaus.getComandaMathaus().getDeliveryEntryDataList();
         List<ArticolComanda> articoleComandaGed = ListaArticoleComandaGed.getInstance().getListArticoleComanda();
+        ListaArticoleComandaGed.getInstance().reseteazaArticoleLivrare();
 
         String codArticolComanda;
         for (ArticolComanda articolComanda : articoleComandaGed) {
@@ -1694,15 +1699,20 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
                 if (codArticolComanda.equals(articolMathaus.getProductCode())) {
 
+                    ArticolComandaGed articolLivrare = ListaArticoleComandaGed.getInstance().genereazaArticolLivrare((ArticolComandaGed) articolComanda);
+                    articolLivrare.setCantitate(articolMathaus.getQuantity());
+                    articolLivrare.setCantUmb(articolMathaus.getQuantity());
+
                     if (articolComanda.getFilialaSite().equals("BV90")) {
                     } else {
-                        articolComanda.setFilialaSite(articolMathaus.getDeliveryWarehouse());
+                        articolLivrare.setFilialaSite(articolMathaus.getDeliveryWarehouse());
                     }
 
                     if (!tipComandaGed.equals(TipCmdGed.DISPOZITIE_LIVRARE))
-                        articolComanda.setDepozit(articolMathaus.getDepozit());
+                        articolLivrare.setDepozit(articolMathaus.getDepozit());
 
-                    break;
+                    ListaArticoleComandaGed.getInstance().getListArticoleLivrare().add(articolLivrare);
+
                 }
 
             }
@@ -1713,7 +1723,6 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_LIVRARE) || isComandaDL_TRAP() ||
                 DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_DETERIORATE))
             HelperMathaus.adaugaArticolTransport(livrareMathaus.getCostTransport(), "20");
-
 
         recalculTotal();
 
@@ -1726,7 +1735,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     private void verificaPretMacaraRezumat() {
 
+
         HelperCostDescarcare.eliminaCostDescarcare(ListaArticoleComandaGed.getInstance().getListArticoleComanda());
+        HelperCostDescarcare.eliminaCostDescarcare(ListaArticoleComandaGed.getInstance().getListArticoleLivrare());
 
         if (!UtilsUser.isAV_SD_01() && !isComandaPaletiCVO()) {
 
@@ -1737,7 +1748,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             else if (tipComandaGed == TipCmdGed.COMANDA_LIVRARE)
                 codFurnizor = DateLivrare.getInstance().getCodFilialaCLP();
 
-            List<RezumatComanda> listComenziRezumat = HelperMathaus.getRezumatComanda(ListaArticoleComandaGed.getInstance().getListArticoleComanda());
+            List<RezumatComanda> listComenziRezumat = HelperMathaus.getRezumatComanda(ListaArticoleComandaGed.getInstance().getListArticoleLivrare());
             List<ComandaCalculDescarcare> listComenziDescarcare = HelperCostDescarcare.getComenziCalculDescarcare(listComenziRezumat);
 
             String comenziSer = comandaDAO.serializeCalcComenziMacara(listComenziDescarcare);
@@ -1855,10 +1866,11 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
         saveComandaMathaus = false;
 
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.7);
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.65);
 
-        RezumatComandaDialog rezumatComanda = new RezumatComandaDialog(this, ListaArticoleComandaGed.getInstance().getListArticoleComanda(), "20", costTransport, DateLivrare.getInstance().getTransport(), CreareComandaGed.filialeArondateMathaus, selectTransp);
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.99);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.95);
+
+        rezumatComanda = new RezumatComandaDialog(this, ListaArticoleComandaGed.getInstance().getListArticoleLivrare(), "20", costTransport, DateLivrare.getInstance().getTransport(), CreareComandaGed.filialeArondateMathaus, selectTransp);
         rezumatComanda.setRezumatListener(this);
         rezumatComanda.getWindow().setLayout(width, height);
         rezumatComanda.show();
@@ -1870,6 +1882,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private void verificaPretMacara() {
 
         HelperCostDescarcare.eliminaCostDescarcare(ListaArticoleComandaGed.getInstance().getListArticoleComanda());
+
+        HelperCostDescarcare.eliminaCostDescarcare(ListaArticoleComandaGed.getInstance().getListArticoleLivrare());
 
         if (!isExceptieComandaIP() && !UtilsUser.isAV_SD_01() && !isComandaPaletiCVO()) {
 
@@ -1914,10 +1928,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
             DateLivrare.getInstance().setMasinaMacara(true);
 
-            List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcare, valoarePret, ListaArticoleComandaGed.getInstance().getListArticoleComanda());
+            List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcare, valoarePret, ListaArticoleComandaGed.getInstance().getListArticoleLivrare());
 
-            ListaArticoleComandaGed.getInstance().getListArticoleComanda().addAll(articoleDescarcare);
-            adapter.notifyDataSetChanged();
+            ListaArticoleComandaGed.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
 
             recalculTotal();
 
@@ -2121,7 +2134,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     public List<ArticolComanda> prepareArtForDelivery() {
 
-        List<ArticolComanda> tempListArticole = new ArrayList<ArticolComanda>(listArticole);
+
+        List<ArticolComanda> tempListArticole = new ArrayList<ArticolComanda>(ListaArticoleComandaGed.getInstance().getListArticoleLivrare());
 
         return tempListArticole;
     }
@@ -2155,9 +2169,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 obj.put("cantUmb", listArticole.get(i).getCantUmb());
                 obj.put("Umb", listArticole.get(i).getUmb());
                 obj.put("ponderare", listArticole.get(i).getPonderare());
-
                 obj.put("filialaSite", listArticole.get(i).getFilialaSite());
-
                 obj.put("istoricPret", listArticole.get(i).getIstoricPret());
                 obj.put("valTransport", listArticole.get(i).getValTransport());
                 obj.put("procTransport", listArticole.get(i).getProcTransport());
@@ -2422,38 +2434,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         }
     }
 
-    private void saveCmdStatus_old(String saveResponse) {
-        if (!saveResponse.equals("-1")) {
-            try {
 
-                // instiintare pret transport client (daca e cazul) si apoi
-                // confirmare salvare
-
-                if (saveResponse.contains("#")) {
-                    String[] varResp = saveResponse.split("#");
-                    nrCmdGED = varResp[2];
-                }
-
-                // pentru transport ARBSQ se afiseaza valoarea transportului
-                if (DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT")) {
-                    displayDlgPretTransp(saveResponse);
-                } else
-                // comanda ged fara transport client
-                {
-                    Toast.makeText(getApplicationContext(), InfoStrings.statusSAPMsg(Integer.parseInt(saveResponse)), Toast.LENGTH_SHORT).show();
-
-                    clearAllData();
-                }
-
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Comanda NU a fost salvata!", Toast.LENGTH_LONG).show();
-            slidingDrawerCmd.animateClose();
-        }
-    }
 
     private void clearAllData() {
 
@@ -2944,11 +2925,13 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     public void operationArtComplComplete(boolean btnSaveCmd) {
         if (btnSaveCmd) {
 
+            //comanda simulata
             if (tipComandaGed == TipCmdGed.ARTICOLE_COMANDA || tipComandaGed == TipCmdGed.DISPOZITIE_LIVRARE || tipComandaGed == TipCmdGed.COMANDA_AMOB) {
                 performSaveCmd();
             } else {
                 afisRezumatComandaDialog(livrareMathaus.getCostTransport(), true);
             }
+
         }
 
     }
@@ -2971,14 +2954,13 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     private void adaugaPalet(ArticolPalet articolPalet, EnumPaleti status) {
 
+
         String depozitPalet = HelperCostDescarcare
-                .getDepozitPalet(ListaArticoleComandaGed.getInstance().getListArticoleComanda(), articolPalet.getCodArticol());
+                .getDepozitPalet(ListaArticoleComandaGed.getInstance().getListArticoleLivrare(), articolPalet.getCodArticol());
 
-        String unitlogPalet = HelperCostDescarcare.getUnitlogPalet(ListaArticoleComandaGed.getInstance().getListArticoleComanda(), articolPalet.getCodArticol());
-
+        String unitlogPalet = HelperCostDescarcare.getUnitlogPalet(ListaArticoleComandaGed.getInstance().getListArticoleLivrare(), articolPalet.getCodArticol());
         ArticolComanda articol = HelperCostDescarcare.getArticolPalet(articolPalet, depozitPalet, unitlogPalet);
-        ListaArticoleComandaGed.getInstance().addArticolComanda(articol);
-        adapter.notifyDataSetChanged();
+        ListaArticoleComandaGed.getInstance().addArticolLivrareComanda(articol);
 
         costDescarcare.getArticoleDescarcare().get(0).setCantitate(costDescarcare.getArticoleDescarcare().get(0).getCantitate() + articol.getCantitate());
 
@@ -3206,6 +3188,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         totalComanda = ListaArticoleComandaGed.getInstance().getTotalComanda();
         textTotalCmd.setText(String.format("%.02f", totalComanda));
         recalculTotal();
+
+        rezumatComanda.setListArticole(ListaArticoleComandaGed.getInstance().getListArticoleLivrare());
 
 
     }

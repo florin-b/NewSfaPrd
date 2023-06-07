@@ -4,25 +4,6 @@
  */
 package my.logon.screen.screens;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.OperatiiArticolListener;
-import my.logon.screen.listeners.PreturiListener;
-import my.logon.screen.model.Constants;
-import my.logon.screen.model.InfoStrings;
-import my.logon.screen.model.OperatiiArticol;
-import my.logon.screen.model.OperatiiArticolFactory;
-import my.logon.screen.model.OperatiiFiliala;
-import my.logon.screen.model.Preturi;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.DepartamentAgent;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
-import my.logon.screen.adapters.CautareArticoleAdapter;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -46,9 +27,29 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.CautareArticoleAdapter;
 import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
+import my.logon.screen.listeners.OperatiiArticolListener;
+import my.logon.screen.listeners.PreturiListener;
+import my.logon.screen.model.Constants;
+import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.OperatiiArticol;
+import my.logon.screen.model.OperatiiArticolFactory;
+import my.logon.screen.model.OperatiiFiliala;
+import my.logon.screen.model.Preturi;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.DepartamentAgent;
+import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class PreturiActivity extends ListActivity implements PreturiListener, OperatiiArticolListener {
 
@@ -144,8 +145,8 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 			populateFilialeSDIP();
 			spinnerFiliale.setVisibility(View.VISIBLE);
 
-		}
-
+		}		
+		
 	}
 
 	private void addSpinnerDepartamente() {
@@ -267,8 +268,10 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 		spinnerFiliale.setAdapter(adapterFiliale);
 		spinnerFiliale.setSelection(selectedItem - 1);
 
-	}
-
+	}	
+	
+	
+	
 	// captare evenimente spinner filiale
 	public class MyOnSelectedFiliala implements OnItemSelectedListener {
 
@@ -418,7 +421,7 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 			HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
 
 			// consilieri sau sm
-			if (UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18") || UtilsUser.isUserIP()) {
+			if (UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18") || UtilsUser.isUserIP() || UserInfo.getInstance().getTipUserSap().equals("SDCVA")) {
 
 				filialaPret = filialaPret.substring(0, 2) + "2" + filialaPret.substring(3, 4);
 				
@@ -454,6 +457,7 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 			pret = Preturi.getInstance();
 			pret.setPreturiListener(this);
 			pret.getPret(params, methodName, this);
+			
 
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
@@ -494,7 +498,7 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 
 		TextView labelPTVA = new TextView(this);
 		// pentru consilieri nu se afiseaza pretul cu tva
-		if (!UserInfo.getInstance().getTipAcces().equals("17") && !UserInfo.getInstance().getTipAcces().equals("18") && !UtilsUser.isUserIP()) {
+		if (!UserInfo.getInstance().getTipAcces().equals("17") && !UserInfo.getInstance().getTipAcces().equals("18") && !UtilsUser.isUserIP() && !UserInfo.getInstance().getTipUserSap().equals("SDCVA")) {
 
 			labelPTVA.setText("Pret + tva");
 			labelPTVA.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
@@ -512,7 +516,7 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 			labelPretGED.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
 			labelPretGED.setTextSize(16);
 			labelPretGED.setGravity(Gravity.LEFT);
-			labelPretGED.setTextColor(getResources().getColor(R.color.detColor4));
+			labelPretGED.setTextColor(getResources().getColor(R.color.detColor4)); 
 			labelPretGED.setLayoutParams(layoutParams);
 			rowLayout.addView(labelPretGED);
 		}
@@ -548,7 +552,7 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 				labelPret.setLayoutParams(layoutParams);
 				rowLayoutCh.addView(labelPret);
 
-				if (!UserInfo.getInstance().getTipAcces().equals("17") && !UserInfo.getInstance().getTipAcces().equals("18") && !UtilsUser.isUserIP()) {
+				if (!UserInfo.getInstance().getTipAcces().equals("17") && !UserInfo.getInstance().getTipAcces().equals("18") && !UtilsUser.isUserIP() && !UserInfo.getInstance().getTipUserSap().equals("SDCVA")) {
 					labelPTVA = new TextView(this);
 					labelPTVA.setText("");
 					if (artTok[1] != null) {
@@ -647,7 +651,7 @@ public class PreturiActivity extends ListActivity implements PreturiListener, Op
 
 	public void taskComplete(String response) {
 		afisPretArt(response);
-		if (UtilsUser.isCV() || UtilsUser.isUserIP())
+		if (UtilsUser.isCV() || UtilsUser.isUserIP() || UserInfo.getInstance().getTipUserSap().equals("SDCVA"))
 			performGetCodBare();
 	}
 

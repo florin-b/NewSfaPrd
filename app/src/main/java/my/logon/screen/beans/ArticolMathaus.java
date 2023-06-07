@@ -1,112 +1,131 @@
 package my.logon.screen.beans;
 
 public class ArticolMathaus extends ArticolDB {
-    private String cod;
-    private String nume;
-    private String adresaImg;
-    private String adresaImgMare;
-    private String descriere;
-    private String catMathaus;
-    private String pretUnitar;
-    private boolean isLocal;
-    private boolean isArticolSite;
-    private String tip1;
-    private String tip2;
-    private String planificator;
+	private String cod;
+	private String nume;
+	private String adresaImg;
+	private String adresaImgMare;
+	private String descriere;
+	private String catMathaus;
+	private String pretUnitar;
+	private boolean isLocal;
+	private boolean isArticolSite;
+	private String tip1;
+	private String tip2;
+	private String planificator;
 
-    public String getCod() {
-        return cod;
-    }
+	public ArticolMathaus(){
 
-    public void setCod(String cod) {
-        this.cod = cod;
-    }
+	}
 
-    public String getNume() {
-        return nume;
-    }
+	public ArticolMathaus(ArticolMathaus articolMathaus){
+		this.cod = articolMathaus.getCod();
+		this.nume = articolMathaus.getNume();
+		this.adresaImg = articolMathaus.getAdresaImg();
+		this.adresaImgMare = articolMathaus.getAdresaImgMare();
+		this.descriere = articolMathaus.getDescriere();
+		this.catMathaus = articolMathaus.getCatMathaus();
+		this.pretUnitar = articolMathaus.getPretUnitar();
+		this.isLocal = articolMathaus.isLocal();
+		this.isArticolSite = articolMathaus.isArticolSite;
+		this.tip1 = articolMathaus.getTip1();
+		this.tip2 = articolMathaus.getTip2();
+		this.planificator = articolMathaus.getPlanificator();
+	}
 
-    public void setNume(String nume) {
-        this.nume = nume;
-    }
+	public String getCod() {
+		return cod;
+	}
 
-    public String getAdresaImg() {
-        return adresaImg;
-    }
+	public void setCod(String cod) {
+		this.cod = cod;
+	}
 
-    public void setAdresaImg(String adresaImg) {
-        this.adresaImg = adresaImg;
-    }
+	public String getNume() {
+		return nume;
+	}
 
-    public String getAdresaImgMare() {
-        return adresaImgMare;
-    }
+	public void setNume(String nume) {
+		this.nume = nume;
+	}
 
-    public void setAdresaImgMare(String adresaImgMare) {
-        this.adresaImgMare = adresaImgMare;
-    }
+	public String getAdresaImg() {
+		return adresaImg;
+	}
 
-    public String getDescriere() {
-        return descriere;
-    }
+	public void setAdresaImg(String adresaImg) {
+		this.adresaImg = adresaImg;
+	}
 
-    public void setDescriere(String descriere) {
-        this.descriere = descriere;
-    }
+	public String getAdresaImgMare() {
+		return adresaImgMare;
+	}
 
-    public String getCatMathaus() {
-        return catMathaus;
-    }
+	public void setAdresaImgMare(String adresaImgMare) {
+		this.adresaImgMare = adresaImgMare;
+	}
 
-    public void setCatMathaus(String catMathaus) {
-        this.catMathaus = catMathaus;
-    }
+	public String getDescriere() {
+		return descriere;
+	}
 
-    public String getPretUnitar() {
-        return pretUnitar;
-    }
+	public void setDescriere(String descriere) {
+		this.descriere = descriere;
+	}
 
-    public void setPretUnitar(String pretUnitar) {
-        this.pretUnitar = pretUnitar;
-    }
+	public String getCatMathaus() {
+		return catMathaus;
+	}
 
-    public boolean isLocal() {
-        return isLocal;
-    }
+	public void setCatMathaus(String catMathaus) {
+		this.catMathaus = catMathaus;
+	}
 
-    public void setLocal(boolean isLocal) {
-        this.isLocal = isLocal;
-    }
+	public String getPretUnitar() {
+		return pretUnitar;
+	}
 
-    public boolean isArticolSite() {
-        return isArticolSite;
-    }
+	public void setPretUnitar(String pretUnitar) {
+		this.pretUnitar = pretUnitar;
+	}
 
-    public void setArticolSite(boolean isArticolSite) {
-        this.isArticolSite = isArticolSite;
-    }
+	public boolean isLocal() {
+		return isLocal;
+	}
 
-    public String getTip1() {
-        return tip1;
-    }
+	public void setLocal(boolean isLocal) {
+		this.isLocal = isLocal;
+	}
 
-    public void setTip1(String tip1) {
-        this.tip1 = tip1;
-    }
+	public boolean isArticolSite() {
+		return isArticolSite;
+	}
 
-    public String getTip2() {
-        return tip2;
-    }
+	public void setArticolSite(boolean isArticolSite) {
+		this.isArticolSite = isArticolSite;
+	}
 
-    public void setTip2(String tip2) {
-        this.tip2 = tip2;
-    }
+	public String getTip1() {
+		return tip1;
+	}
 
-    public String getPlanificator() {
-        return planificator;
-    }
+	public void setTip1(String tip1) {
+		this.tip1 = tip1;
+	}
 
-    public void setPlanificator(String planificator) {
-        this.planificator = planificator;
-    }
+	public String getTip2() {
+		return tip2;
+	}
+
+	public void setTip2(String tip2) {
+		this.tip2 = tip2;
+	}
+
+	public String getPlanificator() {
+		return planificator;
+	}
+
+	public void setPlanificator(String planificator) {
+		this.planificator = planificator;
+	}
 }

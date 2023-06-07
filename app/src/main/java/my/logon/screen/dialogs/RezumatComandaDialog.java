@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,6 +23,7 @@ import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.listeners.ComandaMathausListener;
 import my.logon.screen.listeners.RezumatListener;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
@@ -39,6 +43,10 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
     private LinearLayout layoutInfo;
     private Button btnAdresaLivrare;
     private boolean selectTransp;
+    private TextView textTotalComanda;
+    private List<RezumatComanda> listRezumat;
+    private NumberFormat nf2 = new DecimalFormat("#,##0.00");
+    private AdapterRezumatComanda adapterRezumat;
 
     public RezumatComandaDialog(Context context, List<ArticolComanda> listArticole, String canal, List<CostTransportMathaus> costTransport, String tipTransport, String filialeArondate, boolean selectTransp) {
         super(context);
@@ -62,9 +70,11 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
         listViewComenzi = (ListView) findViewById(R.id.listComenzi);
 
-        AdapterRezumatComanda adapterRezumat = new AdapterRezumatComanda(context, getRezumatComanda(), costTransport, tipTransport, filialeArondate, selectTransp);
+        adapterRezumat = new AdapterRezumatComanda(context, getRezumatComanda(), costTransport, tipTransport, filialeArondate, selectTransp, canalDistrib);
         adapterRezumat.setRezumatListener(this);
         listViewComenzi.setAdapter(adapterRezumat);
+
+        this.listRezumat = getRezumatComanda();
 
         btnCancelComanda = (Button) findViewById(R.id.btnCancelComanda);
         setListenerBtnCancel();
@@ -74,6 +84,9 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
         layoutInfo = (LinearLayout) findViewById(R.id.layoutInfo);
         btnAdresaLivrare = (Button) findViewById(R.id.btnAdresaLivrare);
         setListenerAdresaLivrare();
+
+        textTotalComanda = (TextView) findViewById(R.id.textTotalComanda);
+        getTotalComenzi();
 
     }
 
@@ -193,15 +206,16 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
         List<ArticolComanda> listArticoleComanda;
         if (canalDistrib.equals("10"))
-            listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
+            listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleLivrare();
         else
-            listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleComanda();
+            listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
 
         listArticoleComanda.add(articolComanda);
 
         if (listener != null)
             listener.comandaEliminata();
 
+        getTotalComenzi();
 
     }
 
@@ -210,9 +224,10 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
         List<ArticolComanda> listArticoleComanda;
         if (canalDistrib.equals("10"))
-            listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
+
+            listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleLivrare();
         else
-            listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleComanda();
+            listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
 
         Iterator<ArticolComanda> listIterator = listArticoleComanda.iterator();
 
@@ -226,8 +241,13 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
         }
 
 
+
         if (listener != null)
             listener.comandaEliminata();
+
+        getTotalComenzi();
+
+
 
     }
 
@@ -239,6 +259,33 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
         }
 
         return false;
+    }
+
+    private void getTotalComenzi(){
+
+        double valoareTotal = 0;
+
+        for (RezumatComanda rezumatComanda : getRezumatComanda()){
+            valoareTotal += getTotalComanda(rezumatComanda);
+        }
+
+        textTotalComanda.setText(nf2.format(valoareTotal));
+
+    }
+
+    private double getTotalComanda(RezumatComanda rezumat) {
+
+        double valoareTotal = 0;
+
+        for (ArticolComanda art : rezumat.getListArticole()) {
+
+            if (art instanceof ArticolComandaGed)
+                valoareTotal += canalDistrib.equals("10") ? art.getPret() : art.getPretUnitarClient() * art.getCantUmb();
+            else
+                valoareTotal += art.getPret();
+        }
+
+        return valoareTotal;
     }
 
     @Override
@@ -255,6 +302,11 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
             layoutInfo.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    public void setListArticole(List<ArticolComanda> listArticole){
+        this.listArticole = listArticole;
+        adapterRezumat.setListRezumat(getRezumatComanda());
     }
 
 

@@ -27,6 +27,10 @@ public class HelperCostDescarcare {
         List<ArticolComanda> listArticole = new ArrayList<ArticolComanda>();
 
         for (ArticolDescarcare artDesc : costDescarcare.getArticoleDescarcare()) {
+
+            if (artDesc.getCantitate() == 0)
+                continue;
+
             ArticolComanda articolComanda = new ArticolComanda();
 
             articolComanda.setCodArticol(artDesc.getCod());
@@ -65,13 +69,17 @@ public class HelperCostDescarcare {
 
 
     public static List<ArticolComanda> getArticoleDescarcareDistrib(CostDescarcare costDescarcare, double valoareCost,
-                                                                    List<ArticolComanda> articoleComanda) {
+                                                             List<ArticolComanda> articoleComanda) {
 
         double procentReducere = valoareCost / costDescarcare.getValoareDescarcare();
 
         List<ArticolComanda> listArticole = new ArrayList<ArticolComanda>();
 
         for (ArticolDescarcare artDesc : costDescarcare.getArticoleDescarcare()) {
+
+            if (artDesc.getCantitate() == 0)
+                continue;
+
             ArticolComanda articolComanda = new ArticolComanda();
 
             articolComanda.setCodArticol(artDesc.getCod());
@@ -264,6 +272,7 @@ public class HelperCostDescarcare {
 
         List<ArticolDescarcare> listArticole = new ArrayList<ArticolDescarcare>();
         List<ArticolPalet> listPaleti = new ArrayList<ArticolPalet>();
+        costDescarcare.setSePermite(false);
 
         try{
             JSONArray jsonObject = new JSONArray(dateCost);
@@ -271,7 +280,8 @@ public class HelperCostDescarcare {
             for (int i = 0; i < jsonObject.length(); i++) {
                 JSONObject comandaObject = jsonObject.getJSONObject(i);
 
-                    costDescarcare.setSePermite(Boolean.valueOf(comandaObject.getString("sePermite")));
+                    if(Boolean.valueOf(comandaObject.getString("sePermite")))
+                        costDescarcare.setSePermite(true);
 
                     JSONArray jsonArray = new JSONArray(comandaObject.getString("articoleDescarcare"));
 

@@ -21,9 +21,9 @@ public class HelperMathaus {
 
         List<ArticolComanda> listArticoleComanda;
         if (canalDistrib.equals("10"))
-            listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
+            listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleLivrare();
         else
-            listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleComanda();
+            listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
 
         eliminaCostTransport(listArticoleComanda, costTransport);
 
@@ -39,8 +39,7 @@ public class HelperMathaus {
                         listArticoleComanda.add(genereazaArticolTransport(articol, cost, canalDistrib));
                         break;
                     }
-                }
-                else {
+                } else {
 
                     if (cost.getFiliala().equals(articol.getFilialaSite()) && !cost.getValTransp().equals("0")) {
                         listArticoleComanda.add(genereazaArticolTransport(articol, cost, canalDistrib));
@@ -79,7 +78,7 @@ public class HelperMathaus {
 
         for (CostTransportMathaus cost : costTransport) {
             if (cost.getValTransp() != null)
-                cost.setValTransp(String.format("%.02f",Double.valueOf(cost.getValTransp()) * Constants.TVA));
+                cost.setValTransp(String.format("%.02f", Double.valueOf(cost.getValTransp()) * Constants.TVA));
 
         }
 
@@ -213,5 +212,6 @@ public class HelperMathaus {
         }
 
     }
+
 
 }
