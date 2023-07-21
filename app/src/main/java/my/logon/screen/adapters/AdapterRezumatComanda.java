@@ -117,6 +117,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
         if (getArticolTransport(rezumat.getFilialaLivrare()) == null) {
 
+
             String tipTranspArt = getTipTransport(rezumat.getFilialaLivrare());
             afisCostTransportComanda(rezumat,viewHolder, rezumat.getFilialaLivrare());
             viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
@@ -483,7 +484,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
         for (CostTransportMathaus cost : costTransport) {
 
-            if (cost.getFiliala().equals(filiala)) {
+            if (cost.getFiliala().equals(filiala) && isArtTransp(cost.getNumeCost())) {
                 tipTransport = cost.getTipTransp();
 
                 break;
@@ -499,9 +500,12 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
         boolean isPermitModifTransp = true;
 
+        if (costTransport == null || costTransport.isEmpty())
+            isPermitModifTransp = false;
+
         for (CostTransportMathaus cost : costTransport) {
 
-            if (cost.getFiliala().equals(filiala)) {
+            if (cost.getFiliala().equals(filiala) && isArtTransp(cost.getNumeCost())) {
 
                 if (cost.getCodArtTransp().trim().isEmpty() || cost.getValTransp().equals("0"))
                     isPermitModifTransp = false;
@@ -519,7 +523,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         double valTransport = 0;
         for (CostTransportMathaus cost : costTransport) {
 
-            if (cost.getFiliala().equals(filiala) && !cost.getValTransp().equals("0")) {
+            if (cost.getFiliala().equals(filiala) && !cost.getValTransp().equals("0") && isArtTransp(cost.getNumeCost())) {
                 valTransport = Double.valueOf(cost.getValTransp());
                 break;
             }

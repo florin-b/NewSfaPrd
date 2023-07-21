@@ -15,6 +15,7 @@ import my.logon.screen.beans.BeanGreutateArticol;
 import my.logon.screen.beans.BeanParametruPretGed;
 import my.logon.screen.beans.ComandaMathaus;
 import my.logon.screen.beans.CostTransportMathaus;
+import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.listeners.OperatiiArticolListener;
@@ -99,5 +100,7 @@ public interface OperatiiArticol {
 	public void getArticoleACZC(HashMap<String, String> params);
 
 	public ArrayList<BeanArticolCautare> deserializeArtRecom(String serListArticole) ;
+
+	public String serializeDatePoligon(DatePoligonLivrare datePoligonLivrare);
 
 }

@@ -14,4 +14,8 @@ public class Constants {
 
 	public final static double MAX_GREUTATE_CNP = 500;
 	public final static double MAX_VALOARE_CNP = 10000;
+
+	public final static String TIP_ARTICOL_ENERGOFAG = "0003";
+
+
 }

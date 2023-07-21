@@ -37,6 +37,10 @@ public class PretArticolGed {
 	private double greutate;
 	private List<BeanArticolCautare> articoleRecomandate;
 
+	private String tipMarfa;
+	private double greutateBruta;
+	private String lungimeArt;
+
 	public String getPret() {
 		return pret;
 	}
@@ -291,5 +295,29 @@ public class PretArticolGed {
 
 	public void setArticoleRecomandate(List<BeanArticolCautare> articoleRecomandate) {
 		this.articoleRecomandate = articoleRecomandate;
+	}
+
+	public String getTipMarfa() {
+		return tipMarfa;
+	}
+
+	public void setTipMarfa(String tipMarfa) {
+		this.tipMarfa = tipMarfa;
+	}
+
+	public double getGreutateBruta() {
+		return greutateBruta;
+	}
+
+	public void setGreutateBruta(double greutateBruta) {
+		this.greutateBruta = greutateBruta;
+	}
+
+	public String getLungimeArt() {
+		return lungimeArt;
+	}
+
+	public void setLungimeArt(String lungimeArt) {
+		this.lungimeArt = lungimeArt;
 	}
 }

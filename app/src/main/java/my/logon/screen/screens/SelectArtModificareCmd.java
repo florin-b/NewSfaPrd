@@ -62,6 +62,7 @@ import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.DepartamentAgent;
+import my.logon.screen.utils.UtilsDates;
 import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
 
@@ -96,7 +97,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 	private TextView textPromo;
 	private boolean pretMod = false;
 	private double initPrice = 0, cmpArt = 0;
-	private double finalPrice = 0, minimKAPrice = 0;
+	private double finalPrice = 0, minimKAPrice = 0, greutateArt = 0;
 	private double listPrice = 0, procDiscClient = 0;
 	private double discMaxAV = 0, discMaxSD = 0; // , discMaxDV = 0;
 
@@ -119,7 +120,12 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 	private ArticolDB articolDBSelected;
 	private TextView txtImpachetare;
 	private String istoricPret;
+	private String dataExpPret;
 	private List<BeanCablu05> listCabluri;
+
+	private String tipMarfa = "";
+	private double greutateBruta = 0;
+	private String lungimeArt = "";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -840,7 +846,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 					if (textCant.getVisibility() != View.VISIBLE) {
 						return;
 					}
-
+					
 					if (isConditieCabluri05BV90() && listCabluri == null) {
 						getCabluri05(codArticol);
 						return;
@@ -956,8 +962,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 						if (ModificareComanda.isComandaDistrib) {
 							if ((finalPrice / valMultiplu) < cmpArt) {
 
-								Toast.makeText(getApplicationContext(), "Procentul de reducere este mai mare decat cel acceptat.", Toast.LENGTH_LONG)
-										.show();
+								Toast.makeText(getApplicationContext(), "Procentul de reducere este mai mare decat cel acceptat.", Toast.LENGTH_LONG).show();
 
 								subCmp = "1";
 								return;
@@ -1005,7 +1010,14 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 						unArticol.setTipAlert(tipAlert);
 						unArticol.setStatus(" ");
 						unArticol.setDepartAprob(articolDBSelected.getDepartAprob());
+						unArticol.setDataExpPret(dataExpPret);
 						unArticol.setListCabluri(listCabluri);
+						unArticol.setGreutate(greutateArt);
+						unArticol.setFilialaSite(ModificareComanda.filialaAlternativaM);
+
+						unArticol.setTipMarfa(tipMarfa);
+						unArticol.setGreutateBruta(greutateBruta);
+						unArticol.setLungimeArt(lungimeArt);
 
 						if (procRedFin > 0)
 							unArticol.setIstoricPret(istoricPret);
@@ -1020,14 +1032,14 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 																								// e
 																								// adaugat
 																								// deja
-								ModificareComanda.articoleComanda += numeArticol + "#" + codArticol + "#" + cantArticol + "#"
-										+ String.valueOf(finalPrice) + "#" + localUnitMas + "#" + globalDepozSel + "#" + nf.format(procRedFin) + "#"
-										+ tipAlert + "#" + codPromo + "#" + nf.format(procRedFact) + "#" + nf.format(procDiscClient) + "#"
-										+ nf.format(procentAprob) + "#" + valMultiplu + "#" + String.valueOf(valArticol) + "#" + infoArticol + "#"
-										+ Umb + "#" + cantUmb + "#" + alteValori + "#" + globalCodDepartSelectetItem + "#" + tipArticol + "@@";
+								ModificareComanda.articoleComanda += numeArticol + "#" + codArticol + "#" + cantArticol + "#" + String.valueOf(finalPrice)
+										+ "#" + localUnitMas + "#" + globalDepozSel + "#" + nf.format(procRedFin) + "#" + tipAlert + "#" + codPromo + "#"
+										+ nf.format(procRedFact) + "#" + nf.format(procDiscClient) + "#" + nf.format(procentAprob) + "#" + valMultiplu + "#"
+										+ String.valueOf(valArticol) + "#" + infoArticol + "#" + Umb + "#" + cantUmb + "#" + alteValori + "#"
+										+ globalCodDepartSelectetItem + "#" + tipArticol + "@@";
 						} else {
-							Toast.makeText(getApplicationContext(), "Comanda contine depozite diferite, articolul nu a fost adaugat! ",
-									Toast.LENGTH_LONG).show();
+							Toast.makeText(getApplicationContext(), "Comanda contine depozite diferite, articolul nu a fost adaugat! ", Toast.LENGTH_LONG)
+									.show();
 						}
 
 						textNumeArticol.setText("");
@@ -1049,8 +1061,12 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 						globalCantArt = 0;
 						globalCodDepartSelectetItem = "";
 						subCmp = "0";
-
+						greutateArt = 0;
 						listCabluri = null;
+
+						tipMarfa = "";
+						greutateBruta = 0;
+						lungimeArt = "";
 
 						redBtnTable.setVisibility(View.GONE);
 						labelStoc.setVisibility(View.GONE);
@@ -1094,7 +1110,8 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 		});
 
 	}
-
+	
+	
 	private boolean isConditieCabluri05BV90() {
 		return articolDBSelected.getDepart().equals("05") && ModificareComanda.filialaAlternativaM.equals("BV90");
 	}
@@ -1109,13 +1126,13 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 	}
 
 	private void afisCabluri05(List<BeanCablu05> listCabluri) {
-
+		
 		if (listCabluri.isEmpty()) {
 			this.listCabluri = listCabluri;
 			saveArtBtn.performClick();
 			return;
 		}
-
+		
 		int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
 		int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
 
@@ -1125,6 +1142,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 		cabluriDialog.show();
 
 	}
+	
 
 	private void populateListViewArt(List<ArticolDB> resultsList) {
 		listArticole.clear();
@@ -1208,6 +1226,11 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
 				cantUmb = tokenPret[14];
 				Umb = tokenPret[15];
+				greutateArt = Double.parseDouble(tokenPret[24].trim());
+
+				tipMarfa = tokenPret[26];
+				greutateBruta = Double.parseDouble(tokenPret[27].trim());
+				lungimeArt = tokenPret[28];
 
 				cmpArt = Double.parseDouble(tokenPret[17]);
 
@@ -1246,7 +1269,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 				procDiscClient = 0;
 				minimKAPrice = 0;
 				if (UserInfo.getInstance().getTipAcces().equals("27")) {
-
+					
 					minimKAPrice = listPrice / globalCantArt * valMultiplu - (listPrice / globalCantArt * valMultiplu) * Double.valueOf(tokenPret[16]) / 100;
 
 					if (listPrice > 0)
@@ -1290,6 +1313,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
 				txtPretArt.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
 				txtPretArt.setHint(nf2.format(initPrice / globalCantArt * valMultiplu));
+				
+				dataExpPret = tokenPret[23];
+				((TextView) findViewById(R.id.textDataExp)).setText(UtilsDates.formatDataExp(tokenPret[23]));
 
 				if (ModificareComanda.isComandaDistrib)
 					textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu * Constants.TVA)));
@@ -1364,9 +1390,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
 							}
 
-							// artPromoText = getArtName(tokenPret[4]) + " " +
-							// tokenPret[5];
-
 							textPromo.setText("Articol cu promotie");
 
 						}
@@ -1417,8 +1440,8 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 				String[] arrayPret = arrayIstoric[0].split("@");
 
 				TextView textIstoric1 = (TextView) findViewById(R.id.txtIstoricPret1);
-				textIstoric1.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / "
-						+ arrayPret[1] + " " + arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
+				textIstoric1.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / " + arrayPret[1] + " "
+						+ arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
 
 			}
 
@@ -1429,8 +1452,8 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 				String[] arrayPret = arrayIstoric[1].split("@");
 
 				TextView textIstoric2 = (TextView) findViewById(R.id.txtIstoricPret2);
-				textIstoric2.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / "
-						+ arrayPret[1] + " " + arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
+				textIstoric2.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / " + arrayPret[1] + " "
+						+ arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
 
 			}
 
@@ -1441,8 +1464,8 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 				String[] arrayPret = arrayIstoric[2].split("@");
 
 				TextView textIstoric3 = (TextView) findViewById(R.id.txtIstoricPret3);
-				textIstoric3.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / "
-						+ arrayPret[1] + " " + arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
+				textIstoric3.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / " + arrayPret[1] + " "
+						+ arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
 
 			}
 
@@ -1454,8 +1477,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
 		if (artPromo.toUpperCase(Locale.getDefault()).equals("X"))
 			return true;
-		else if (!ModificareComanda.isComandaDistrib
-				&& !(ModificareComanda.filialaAlternativaM.toUpperCase().contains("BV9") && globalDepozSel.equals("MAV1")))
+		else if (!ModificareComanda.isComandaDistrib && !(ModificareComanda.filialaAlternativaM.toUpperCase().contains("BV9") && globalDepozSel.equals("MAV1")))
 			return true;
 
 		return false;
@@ -1558,7 +1580,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 				localFiliala = ModificareComanda.filialaAlternativaM;
 		}
 
-
 		HashMap<String, String> params = new HashMap<String, String>();
 
 		params.put("codArt", codArticol);
@@ -1587,8 +1608,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 		case GET_STOC_DEPOZIT:
 			listArtStoc((String) result);
 			break;
-			case GET_CABLURI_05:
-				afisCabluri05(opArticol.deserializeCabluri05((String) result));
+		case GET_CABLURI_05:
+			afisCabluri05(opArticol.deserializeCabluri05((String) result));
+			break;
 		default:
 			break;
 
@@ -1600,7 +1622,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 	public void cabluriSelected(List<BeanCablu05> listCabluri) {
 		this.listCabluri = listCabluri;
 		saveArtBtn.performClick();
-
+		
 	}
 
 }

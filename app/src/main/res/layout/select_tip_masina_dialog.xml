@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:text="Selectati, la solicitarea clientului, tipul de camion pentru livrare:"
+        android:textColor="#44524b"
+        android:textSize="17sp"
+        android:typeface="serif" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox_cscurt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camion scurt"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <CheckBox
+            android:id="@+id/checkbox_civeco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:text="Camioneta IVECO"
+            android:typeface="sans" />
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/btnContinua"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:background="@drawable/ok_button_style"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="Continua" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,6 +10,7 @@ import java.util.List;
 
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.InfoStrings;
 
@@ -63,7 +64,7 @@ public class UtilsComenzi {
 			return false;
 	}
 
-	public static String[] tipPlataGed(boolean isRestrictie) {
+	public static String[] tipPlataGed_obsolete(boolean isRestrictie) {
 		if (isRestrictie)
 			return new String[] { "E - Plata in numerar in filiala", "CB - Card bancar", "E1 - Numerar sofer" };
 		else
@@ -168,6 +169,37 @@ public class UtilsComenzi {
 
 		return false;
 
+	}
+
+	public static double getGreutateKgArticole(List<ArticolComanda> listArticole){
+		double greutate = 0;
+
+		for (ArticolComanda articol : listArticole) {
+			greutate += articol.getGreutateBruta();
+
+		}
+
+		return greutate;
+	}
+
+	public static boolean isComandaEnergofaga(List<ArticolComanda> listArticole){
+
+		for (ArticolComanda articol : listArticole) {
+			if (articol.getTipMarfa() != null && articol.getTipMarfa().equals(Constants.TIP_ARTICOL_ENERGOFAG))
+				return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isComandaExtralungi(List<ArticolComanda> listArticole){
+
+		for (ArticolComanda articol : listArticole) {
+			if (articol.getLungimeArt() != null && articol.getLungimeArt().toLowerCase().equals("extralungi"))
+				return true;
+		}
+
+		return false;
 	}
 
 }

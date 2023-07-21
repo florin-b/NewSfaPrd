@@ -59,6 +59,7 @@ import my.logon.screen.beans.BeanAdresaLivrare;
 import my.logon.screen.beans.BeanAdreseJudet;
 import my.logon.screen.beans.BeanLocalitate;
 import my.logon.screen.beans.BeanObiectivDepartament;
+import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.GeocodeAddress;
 import my.logon.screen.beans.StatusIntervalLivrare;
@@ -866,8 +867,11 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                 }
 
             if (DateLivrare.getInstance().getTonaj().equals("20"))
-                spinnerTonaj.setSelection(spinnerTonaj.getCount()-1);
+                spinnerTonaj.setSelection(spinnerTonaj.getCount() - 1);
+
         }
+
+
     }
 
     private void setupSpinnerIndoire() {
@@ -983,7 +987,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                     HashMap<String, String> params = new HashMap<>();
                     params.put("filiala", filialaLivrareTCLI);
                     operatiiAdresa.getAdresaFiliala(params);
-
 
 
                     setFilialaPlataVisibility();
@@ -2047,10 +2050,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             return;
         }
 
-        if (spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() == 0) {
-            Toast.makeText(getApplicationContext(), "Selectati tonajul!", Toast.LENGTH_LONG).show();
-            return;
-        }
 
         if (DateLivrare.getInstance().getDataLivrare().isEmpty()) {
             Toast.makeText(getApplicationContext(), "Selectati data livrare!", Toast.LENGTH_LONG).show();
@@ -2093,10 +2092,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             return;
         }
 
-        if (DateLivrare.getInstance().getTransport().equals("TRAP") && isAdresaText()) {
-            valideazaTonajAdresaNoua();
-
-        }
 
         String cantar = "NU";
         dateLivrareInstance.setCantar("NU");
@@ -2199,7 +2194,10 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         if (radioText.isChecked() && adresaNouaExista())
             return;
 
-        finish();
+        getDatePoligonLivrare();
+
+        //aici
+        //finish();
 
     }
 
@@ -2262,6 +2260,52 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     private boolean isConditiiTonaj(Spinner spinnerTransp, Spinner spinnerTonaj) {
         return spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() > 0;
 
+    }
+
+    private void getDatePoligonLivrare() {
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("coords", DateLivrare.getInstance().getCoordonateAdresa().latitude + "," + DateLivrare.getInstance().getCoordonateAdresa().longitude);
+        operatiiAdresa.getDatePoligonLivrare(params);
+    }
+
+    private void setDatePoligonLivrare(String datePoligonLivrare) {
+        DatePoligonLivrare poligonLivrare = operatiiAdresa.deserializePoligonLivrare(datePoligonLivrare);
+        DateLivrare.getInstance().setDatePoligonLivrare(null);
+
+        if (!poligonLivrare.getFilialaPrincipala().trim().isEmpty()) {
+            CreareComanda.filialaLivrareMathaus = poligonLivrare.getFilialaPrincipala();
+            CreareComanda.filialeArondateMathaus = poligonLivrare.getFilialaPrincipala();
+            DateLivrare.getInstance().setDatePoligonLivrare(poligonLivrare);
+
+            if (poligonLivrare.getLimitareTonaj().trim().isEmpty())
+                DateLivrare.getInstance().setTonaj("20");
+            else {
+                DateLivrare.getInstance().setTonaj(poligonLivrare.getLimitareTonaj());
+                if (isCondInfoRestrictiiTonaj())
+                    Toast.makeText(getApplicationContext(), "La aceasta adresa exista o limitare de tonaj de " + poligonLivrare.getLimitareTonaj() + " T.", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            if (spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() == 0 &&
+                    DateLivrare.getInstance().getDatePoligonLivrare() == null) {
+                Toast.makeText(getApplicationContext(), "Selectati tonajul!", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (DateLivrare.getInstance().getTransport().equals("TRAP") && isAdresaText()) {
+                valideazaTonajAdresaNoua();
+
+            }
+        }
+
+        finish();
+    }
+
+    public boolean isCondInfoRestrictiiTonaj() {
+        return DateLivrare.getInstance().getTransport().equals("TRAP") && (
+                DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE) ||
+                        DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_LIVRARE) ||
+                        DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_DETERIORATE));
     }
 
     private boolean isAdresaGoogleOk() {
@@ -2490,6 +2534,9 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                 break;
             case GET_ADRESA_FILIALA:
                 setAdresalivrareFiliala((String) result);
+                break;
+            case GET_DATE_POLIGON_LIVRARE:
+                setDatePoligonLivrare((String) result);
                 break;
             default:
                 break;

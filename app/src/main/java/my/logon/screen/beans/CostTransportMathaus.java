@@ -7,6 +7,9 @@ public class CostTransportMathaus {
 	private String valTransp;
 	private String codArtTransp;
 	private String depart;
+	private String numeCost;
+
+
 
 	public String getFiliala() {
 		return filiala;
@@ -48,11 +51,11 @@ public class CostTransportMathaus {
 		this.depart = depart;
 	}
 
-	@Override
-	public String toString() {
-		return "CostTransportMathaus [filiala=" + filiala + ", tipTransp=" + tipTransp + ", valTransp=" + valTransp + ", codArtTransp=" + codArtTransp + "]";
+	public String getNumeCost() {
+		return numeCost;
 	}
-	
-	
 
+	public void setNumeCost(String numeCost) {
+		this.numeCost = numeCost;
+	}
 }

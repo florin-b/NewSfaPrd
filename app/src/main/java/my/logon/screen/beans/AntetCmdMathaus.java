@@ -1,5 +1,7 @@
 package my.logon.screen.beans;
 
+import java.util.List;
+
 public class AntetCmdMathaus {
 
     private String localitate;
@@ -7,8 +9,14 @@ public class AntetCmdMathaus {
     private String codClient;
     private String tipPers;
     private String depart;
-    public String codPers;
-    public String tipTransp;
+    private String codPers;
+    private String tipTransp;
+    private boolean isCamionDescoperit;
+    private boolean isMacara;
+    private List<OptiuneCamion> optiuniCamion;
+    private double greutateComanda;
+    private String tipComandaCamion;
+
 
     public String getLocalitate() {
         return localitate;
@@ -64,5 +72,45 @@ public class AntetCmdMathaus {
 
     public void setTipTransp(String tipTransp) {
         this.tipTransp = tipTransp;
+    }
+
+    public boolean isCamionDescoperit() {
+        return isCamionDescoperit;
+    }
+
+    public void setCamionDescoperit(boolean camionDescoperit) {
+        isCamionDescoperit = camionDescoperit;
+    }
+
+    public boolean isMacara() {
+        return isMacara;
+    }
+
+    public void setMacara(boolean macara) {
+        isMacara = macara;
+    }
+
+    public List<OptiuneCamion> getOptiuniCamion() {
+        return optiuniCamion;
+    }
+
+    public void setOptiuniCamion(List<OptiuneCamion> optiuniCamion) {
+        this.optiuniCamion = optiuniCamion;
+    }
+
+    public double getGreutateComanda() {
+        return greutateComanda;
+    }
+
+    public void setGreutateComanda(double greutateComanda) {
+        this.greutateComanda = greutateComanda;
+    }
+
+    public String getTipComandaCamion() {
+        return tipComandaCamion;
+    }
+
+    public void setTipComandaCamion(String tipComandaCamion) {
+        this.tipComandaCamion = tipComandaCamion;
     }
 }

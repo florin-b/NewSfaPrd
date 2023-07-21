@@ -9,7 +9,6 @@ import java.util.Set;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.model.ArticolComanda;
-import my.logon.screen.model.Constants;
 import my.logon.screen.model.HelperTranspBuc;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
@@ -17,15 +16,18 @@ import my.logon.screen.utils.UtilsComenzi;
 
 public class HelperMathaus {
 
-    public static void adaugaArticolTransport(List<CostTransportMathaus> costTransport, String canalDistrib) {
+    public static void adaugaArticolTransport(List<CostTransportMathaus> costTransport, String canalDistrib, List<ArticolComanda> listArticole) {
 
         List<ArticolComanda> listArticoleComanda;
         if (canalDistrib.equals("10"))
             listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleLivrare();
-        else
+        else if (canalDistrib.equals("20"))
             listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
+        else
+            listArticoleComanda = listArticole;
 
-        eliminaCostTransport(listArticoleComanda, costTransport);
+        eliminaCostTransport(listArticoleComanda);
+        eliminaTaxeTransport(listArticoleComanda);
 
         for (CostTransportMathaus cost : costTransport) {
 
@@ -73,15 +75,38 @@ public class HelperMathaus {
 
     }
 
+    private static boolean isArtTaxaTransp(String numeArticol) {
+        return numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("TONAJ");
+    }
 
-    public static void adaugaAdaugaTVATransport(List<CostTransportMathaus> costTransport) {
+    private static boolean isArtCostTransp(String numeArticol) {
+        return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
+    }
 
-        for (CostTransportMathaus cost : costTransport) {
-            if (cost.getValTransp() != null)
-                cost.setValTransp(String.format("%.02f", Double.valueOf(cost.getValTransp()) * Constants.TVA));
+    public static void eliminaTaxeTransport(List<ArticolComanda> listArticole) {
 
+        Iterator<ArticolComanda> iterator = listArticole.iterator();
+        while (iterator.hasNext()) {
+
+            ArticolComanda articol = iterator.next();
+
+            if (isArtTaxaTransp(articol.getNumeArticol())) {
+                iterator.remove();
+            }
         }
+    }
 
+    public static void eliminaCostTransport(List<ArticolComanda> listArticole) {
+
+        Iterator<ArticolComanda> iterator = listArticole.iterator();
+        while (iterator.hasNext()) {
+
+            ArticolComanda articol = iterator.next();
+
+            if (isArtCostTransp(articol.getNumeArticol())) {
+                iterator.remove();
+            }
+        }
     }
 
     public static void eliminaCostTransport(List<ArticolComanda> listArticole, List<CostTransportMathaus> costTransport) {
@@ -109,7 +134,7 @@ public class HelperMathaus {
         ArticolComanda articolComanda = new ArticolComanda();
 
         articolComanda.setCodArticol(costTransport.getCodArtTransp().replaceAll("^0+", ""));
-        articolComanda.setNumeArticol("PREST.SERV.TRANSPORT");
+        articolComanda.setNumeArticol(costTransport.getNumeCost());
         articolComanda.setCantitate(1);
         articolComanda.setCantUmb(1);
         articolComanda.setPretUnit(Double.valueOf(costTransport.getValTransp()));

@@ -25,4 +25,8 @@ public interface IComenziDAO {
 	
 	void getPozitieMasina(HashMap<String, String> params);
 	
+	void getComenziAmob(HashMap<String, String> params);
+
+	void getOptiuniMasini(HashMap<String, String> params);
+	
 }

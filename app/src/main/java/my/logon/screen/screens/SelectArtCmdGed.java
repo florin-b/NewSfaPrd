@@ -774,7 +774,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                 params.put("codUser", UserInfo.getInstance().getCod());
 
                 opArticol.getStocMathaus(params);
-                //
+
 
             }
         });
@@ -1666,18 +1666,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                         if (tipComanda.equalsIgnoreCase("S") && !rezervStoc) {
 
                         }
-                        //am modificat aici
-                        /*
-                        else if (isConditieExtraMathaus()) {
 
-                            cmdExtraMathaus = getArticoleExtraMathaus();
-                            if (!cmdExtraMathaus.isSucces()) {
-                                Toast.makeText(getApplicationContext(), "Stoc insuficient!", Toast.LENGTH_LONG).show();
-                                return;
-                            }
-
-                        }
-                         */
                         else {
 
                             Toast.makeText(getApplicationContext(), "Stoc insuficient!", Toast.LENGTH_LONG).show();
@@ -1845,6 +1834,10 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                         articol.setListCabluri(listCabluri);
                         articol.setGreutate(selectedArticol.getGreutate());
                         articol.setPretFaraTva(selectedArticol.getPretFaraTva());
+
+                        articol.setTipMarfa(selectedArticol.getTipMarfa());
+                        articol.setGreutateBruta(selectedArticol.getGreutateBruta());
+                        articol.setLungimeArt(selectedArticol.getLungimeArt());
 
                         if (procRedFin > 0)
                             articol.setIstoricPret(selectedArticol.getIstoricPret());
@@ -2866,6 +2859,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             else
                 globalDepozSel = articolDBSelected.getDepart().substring(0, 2) + "V1";
         }
+
 
         if (DateLivrare.getInstance().getTransport().equals("TCLI") && UtilsGeneral.isFilMareLivrTCLIGed() && DateLivrare.getInstance().getFilialaLivrareTCLI()!= null && !DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty()) {
             if (UtilsGeneral.isUlDistrib(DateLivrare.getInstance().getFilialaLivrareTCLI()))

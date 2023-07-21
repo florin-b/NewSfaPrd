@@ -8,7 +8,6 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -52,7 +51,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -93,7 +91,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -119,17 +116,16 @@
                     android:gravity="left"
                     android:textColor="@color/detColor4"
                     android:textSize="16sp"
-                    android:typeface="sans"
-                    android:visibility="invisible"
-                    />
+                    android:typeface="sans" />
 
                 <TextView
                     android:id="@+id/textTransport"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right"
+                    android:gravity="right"
                     android:layout_marginLeft="5dip"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.2"
                     android:textColor="@color/detColor4"
                     android:textSize="16sp"
                     android:typeface="sans" />
@@ -137,7 +133,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_gravity="left"
@@ -145,7 +140,6 @@
             android:orientation="vertical" >
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -192,7 +186,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -235,7 +228,6 @@
             </LinearLayout>
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -280,8 +272,18 @@
                     android:typeface="sans" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textGreutateCmd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="40dp"
+                android:gravity="right"
+                android:textColor="@color/discountColor1"
+                android:textSize="16sp"
+                android:typeface="sans" />
+
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -304,7 +306,6 @@
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -410,7 +411,6 @@
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_gravity="left"

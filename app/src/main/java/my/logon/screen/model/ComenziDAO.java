@@ -233,6 +233,11 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
         performOperation(params);
     }
 
+    public void getOptiuniMasini(HashMap<String, String> params){
+        numeComanda = EnumComenziDAO.GET_OPTIUNI_MASINI;
+        performOperation(params);
+    }
+
     private void performOperation(HashMap<String, String> params) {
         AsyncTaskListener contextListener = (AsyncTaskListener) ComenziDAO.this;
         AsyncTaskWSCall call = new AsyncTaskWSCall(context, contextListener, numeComanda.getComanda(), params);
@@ -553,6 +558,15 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
                     if (articolObject.has("greutate"))
                         articol.setGreutate(Double.valueOf(articolObject.getString("greutate")));
+
+                    if (articolObject.has("greutateBruta") && !articolObject.getString("greutateBruta").equals("null"))
+                        articol.setGreutateBruta(Double.valueOf(articolObject.getString("greutateBruta")));
+
+                    if (articolObject.has("lungimeArt") && !articolObject.getString("lungimeArt").equals("null"))
+                        articol.setLungimeArt(articolObject.getString("lungimeArt"));
+
+                    if (articolObject.has("tipMarfa") && !articolObject.getString("tipMarfa").equals("null"))
+                        articol.setTipMarfa(articolObject.getString("tipMarfa"));
 
                     listArticole.add(articol);
 

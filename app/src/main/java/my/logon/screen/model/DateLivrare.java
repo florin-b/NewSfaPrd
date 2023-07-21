@@ -11,6 +11,7 @@ import java.util.List;
 import enums.EnumZona;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateLivrareAfisare;
+import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.FurnizorComanda;
 import my.logon.screen.beans.ObiectivConsilier;
@@ -97,8 +98,10 @@ public class DateLivrare {
 	private String filialaLivrareTCLI;
 	private List<TranspComenzi> transpComenzi;
 	private String filialaPlata;
+	private DatePoligonLivrare datePoligonLivrare;
 
 	private DateLivrareAfisare dateLivrareAfisare;
+	private String tipMasina = "";
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -711,6 +714,22 @@ public class DateLivrare {
 		this.filialaPlata = filialaPlata;
 	}
 
+	public DatePoligonLivrare getDatePoligonLivrare() {
+		return datePoligonLivrare;
+	}
+
+	public void setDatePoligonLivrare(DatePoligonLivrare datePoligonLivrare) {
+		this.datePoligonLivrare = datePoligonLivrare;
+	}
+
+	public String getTipMasina() {
+		return tipMasina;
+	}
+
+	public void setTipMasina(String tipMasina) {
+		this.tipMasina = tipMasina;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -773,6 +792,8 @@ public class DateLivrare {
 		filialaLivrareTCLI = "";
 		transpComenzi = null;
 		filialaPlata = "";
+		datePoligonLivrare = null;
+		tipMasina = "";
 
 	}
 

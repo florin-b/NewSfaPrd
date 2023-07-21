@@ -68,8 +68,7 @@ public class ArticolMathausAdapter extends BaseAdapter {
 		stocTextView.setText(articol.getPlanificator());
 
 
-		// if (imageView.getDrawable() == null)
-		// if (!hasImage(imageView))
+
 		new DownloadImageTask(imageView).execute(articol.getAdresaImg());
 
 		convertView.setBackgroundResource(R.drawable.shadow_light);

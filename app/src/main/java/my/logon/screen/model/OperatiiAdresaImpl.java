@@ -15,6 +15,7 @@ import java.util.List;
 import my.logon.screen.beans.BeanAdreseJudet;
 import my.logon.screen.beans.BeanDateLivrareClient;
 import my.logon.screen.beans.BeanLocalitate;
+import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.enums.EnumLocalitate;
 import my.logon.screen.enums.EnumOperatiiAdresa;
 import my.logon.screen.listeners.AsyncTaskListener;
@@ -104,6 +105,12 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 
 	}
 
+	public void getDatePoligonLivrare(HashMap<String, String> params){
+		this.params = params;
+		numeComanda = EnumOperatiiAdresa.GET_DATE_POLIGON_LIVRARE;
+		performOperation();
+	}
+
 	public List<String> deserializeListLocalitati(Object resultList) {
 
 		List<String> listLocalitati = new ArrayList<String>();
@@ -132,8 +139,19 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 		List<BeanLocalitate> listLocalitati = new ArrayList<BeanLocalitate>();
 		List<String> listStrazi = new ArrayList<String>();
 
+		adreseJudet.setListLocalitati(listLocalitati);
+		adreseJudet.setListStrazi(listStrazi);
+
+		if (((String) resultList).length() == 2) {
+			return adreseJudet;
+		}
+
 		try {
 			JSONObject jsonObject = new JSONObject((String) resultList);
+
+			if (!jsonObject.toString().contains("listLocalitati"))
+				return adreseJudet;
+
 			JSONArray jsonArrayLoc = new JSONArray(jsonObject.getString("listLocalitati"));
 
 			for (int i = 0; i < jsonArrayLoc.length(); i++) {
@@ -188,6 +206,25 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
 		}
 		return dateLivrare;
+	}
+
+	public DatePoligonLivrare deserializePoligonLivrare(String result){
+		DatePoligonLivrare poligonLivrare = new DatePoligonLivrare();
+
+		try {
+
+			JSONObject jsonObject = new JSONObject((String) result);
+			poligonLivrare.setFilialaPrincipala(jsonObject.getString("filialaPrincipala"));
+			poligonLivrare.setFilialaSecundara(jsonObject.getString("filialaSecundara"));
+			poligonLivrare.setTipZona(jsonObject.getString("tipZona"));
+			poligonLivrare.setLimitareTonaj(jsonObject.getString("limitareTonaj"));
+			poligonLivrare.setNume(jsonObject.getString("nume"));
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return poligonLivrare;
 	}
 
 	public void setOperatiiAdresaListener(OperatiiAdresaListener listener) {

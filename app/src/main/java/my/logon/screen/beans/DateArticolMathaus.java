@@ -10,6 +10,7 @@ public class DateArticolMathaus {
 	private String tip2;
 	private String depozit;
 	private String ulStoc;
+	private double greutate;
 
 	public String getDeliveryWarehouse() {
 		return deliveryWarehouse;
@@ -73,5 +74,13 @@ public class DateArticolMathaus {
 
 	public void setUlStoc(String ulStoc) {
 		this.ulStoc = ulStoc;
+	}
+
+	public double getGreutate() {
+		return greutate;
+	}
+
+	public void setGreutate(double greutate) {
+		this.greutate = greutate;
 	}
 }

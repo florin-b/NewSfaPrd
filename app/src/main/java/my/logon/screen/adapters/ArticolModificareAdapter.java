@@ -3,13 +3,13 @@ package my.logon.screen.adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -27,7 +27,6 @@ import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.OperatiiArticolImpl;
 import my.logon.screen.model.UserInfo;
-
 
 public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArticolListener {
 
@@ -281,9 +280,11 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 	private void setStergeArticolListener(ViewHolder viewHolder, final int position) {
 		viewHolder.stergeArticolBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				String codArticol = listArticole.get(position).getCodArticol();
+				String filiala = listArticole.get(position).getFilialaSite();
 				listArticole.remove(position);
 				if (listener != null) {
-					listener.articolSters();
+					listener.articolSters(codArticol, filiala);
 				}
 				notifyDataSetChanged();
 			}
@@ -416,7 +417,7 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 
 		if (articolComanda.getUnitLogAlt().toUpperCase().contains("BV9"))
 			return articolComanda.getUnitLogAlt();
-		else if (articolComanda.getDepozit().toUpperCase().equals("WOOD"))
+		else if (articolComanda.getDepozit().toUpperCase().equals("WOOD") || comanda.getCanalDistrib().equals("20"))
 			return comanda.getFiliala();
 		else
 			return UserInfo.getInstance().getUnitLog();

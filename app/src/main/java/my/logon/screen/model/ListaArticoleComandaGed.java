@@ -492,13 +492,16 @@ public class ListaArticoleComandaGed extends Observable implements OperatiiArtic
 		articolLivrare.setProcT1(articolComanda.getProcT1());
 		articolLivrare.setValT1(articolComanda.getValT1());
 		articolLivrare.setDataExpPret(articolComanda.getDataExpPret());
-		articolLivrare.setArticolMathaus(new ArticolMathaus(articolComanda.getArticolMathaus()));
+		if (articolComanda.getArticolMathaus() != null)
+			articolLivrare.setArticolMathaus(new ArticolMathaus(articolComanda.getArticolMathaus()));
+
 		articolLivrare.setListCabluri(articolComanda.getListCabluri());
 		articolLivrare.setPretFaraTva(articolComanda.getPretFaraTva());
 		articolLivrare.setAczcDeLivrat(articolComanda.getAczcDeLivrat());
 		articolLivrare.setAczcLivrat(articolComanda.getAczcLivrat());
 		articolLivrare.setTipTransport(articolComanda.getTipTransport());
 		articolLivrare.setGreutate(articolComanda.getGreutate());
+		articolLivrare.setGreutateBruta(articolComanda.getGreutateBruta());
 
 		articolLivrare.setPretUnitarGed(articolComanda.getPretUnitarGed());
 		articolLivrare.setMarjaClient(articolComanda.getMarjaClient());
@@ -513,6 +516,50 @@ public class ListaArticoleComandaGed extends Observable implements OperatiiArtic
 
 		return articolLivrare;
 
+	}
+
+	public void eliminaArticolLivrare(String codArticol, String filiala){
+		Iterator<ArticolComanda> iterator = listArticoleLivrare.iterator();
+
+		while (iterator.hasNext()) {
+			ArticolComanda art = iterator.next();
+			if (art.getCodArticol().equals(codArticol) && art.getFilialaSite().equals(filiala)) {
+				iterator.remove();
+				break;
+			}
+		}
+	}
+
+	public double getGreutateKgArticole(){
+
+		double greutate = 0;
+
+		for (ArticolComanda articol : listArticoleComanda) {
+			greutate += articol.getGreutateBruta();
+
+		}
+
+		return greutate;
+	}
+
+	public boolean isComandaEnergofaga(){
+
+		for (ArticolComanda articol : listArticoleComanda) {
+			if (articol.getTipMarfa().equals(Constants.TIP_ARTICOL_ENERGOFAG))
+				return true;
+		}
+
+		return false;
+	}
+
+	public boolean isComandaExtralungi(){
+
+		for (ArticolComanda articol : listArticoleComanda) {
+			if (articol.getLungimeArt().equals("extralungi"))
+				return true;
+		}
+
+		return false;
 	}
 
 	public List<BeanConditiiArticole> getConditiiArticole() {
@@ -553,5 +600,7 @@ public class ListaArticoleComandaGed extends Observable implements OperatiiArtic
 			break;
 		}
 	}
+
+
 
 }

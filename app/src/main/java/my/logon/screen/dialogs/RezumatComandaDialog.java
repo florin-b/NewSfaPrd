@@ -217,6 +217,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
         getTotalComenzi();
 
+
     }
 
     @Override
@@ -224,7 +225,6 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
         List<ArticolComanda> listArticoleComanda;
         if (canalDistrib.equals("10"))
-
             listArticoleComanda = ListaArticoleComanda.getInstance().getListArticoleLivrare();
         else
             listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
@@ -239,8 +239,6 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
                 break;
             }
         }
-
-
 
         if (listener != null)
             listener.comandaEliminata();

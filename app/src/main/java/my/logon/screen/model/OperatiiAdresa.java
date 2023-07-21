@@ -5,6 +5,7 @@ import java.util.List;
 
 import my.logon.screen.beans.BeanAdreseJudet;
 import my.logon.screen.beans.BeanDateLivrareClient;
+import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.enums.EnumLocalitate;
 import my.logon.screen.listeners.OperatiiAdresaListener;
 
@@ -34,5 +35,9 @@ public interface OperatiiAdresa {
 	public void getFilialaLivrareMathaus(HashMap<String, String> params);
 
 	public void getAdresaFiliala(HashMap<String, String> params);
+
+	public void getDatePoligonLivrare(HashMap<String, String> params);
+
+	public DatePoligonLivrare deserializePoligonLivrare(String result);
 
 }

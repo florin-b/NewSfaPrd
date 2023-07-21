@@ -25,7 +25,9 @@ import my.logon.screen.beans.BeanParametruPretGed;
 import my.logon.screen.beans.ComandaMathaus;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
+import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.LivrareMathaus;
+import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumUnitMas;
@@ -578,6 +580,10 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				pretArticol.setDataExp(jsonObject.getString("dataExp"));
 				pretArticol.setGreutate(Double.valueOf(jsonObject.getString("greutate")));
 				pretArticol.setArticoleRecomandate(deserializeArtRecom(jsonObject.getString("articoleRecomandate")));
+				pretArticol.setTipMarfa(jsonObject.getString("tipMarfa"));
+				pretArticol.setGreutateBruta(Double.valueOf(jsonObject.getString("greutateBruta")));
+				pretArticol.setLungimeArt(jsonObject.getString("lungime"));
+
 
 			}
 
@@ -728,6 +734,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				cost.setValTransp(transpObject.getString("valTransp").equals("null") ? "0" : transpObject.getString("valTransp"));
 				cost.setCodArtTransp(transpObject.getString("codArtTransp").equals("null") ? "0" : transpObject.getString("codArtTransp"));
 				cost.setDepart(transpObject.getString("depart"));
+				cost.setNumeCost(transpObject.getString("numeCost"));
 				listCostTransport.add(cost);
 
 			}
@@ -789,12 +796,48 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 			jsonAntet.put("codPers", antetComanda.getCodPers());
 			jsonAntet.put("tipTransp", antetComanda.getTipTransp());
 
+			jsonAntet.put("camionDescoperit", antetComanda.isCamionDescoperit());
+			jsonAntet.put("macara", antetComanda.isMacara());
+
+			if (antetComanda.getOptiuniCamion() == null)
+				jsonAntet.put("tipCamion", " ");
+			else
+				jsonAntet.put("tipCamion", serializeOptiuniCamion(antetComanda.getOptiuniCamion()));
+
+			jsonAntet.put("greutateComanda", antetComanda.getGreutateComanda());
+			jsonAntet.put("tipComandaCamion", antetComanda.getTipComandaCamion());
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
 		return jsonAntet.toString();
 
+	}
+
+	public String serializeOptiuniCamion(List<OptiuneCamion> listOptiuni) {
+
+		JSONArray jsonArray = new JSONArray();
+		JSONObject object = null;
+
+		Iterator<OptiuneCamion> iterator = listOptiuni.iterator();
+
+		while (iterator.hasNext()) {
+			OptiuneCamion optiune = iterator.next();
+
+			object = new JSONObject();
+			try {
+				object.put("nume", optiune.getNume());
+				object.put("exista", optiune.isExista());
+				object.put("selectat", optiune.isSelectat());
+				jsonArray.put(object);
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return jsonArray.toString();
 	}
 
 	public String serializeComandaMathaus(ComandaMathaus comandaMathaus) {
@@ -816,6 +859,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				jsonObject.put("tip2", articol.getTip2());
 				jsonObject.put("ulStoc", articol.getUlStoc());
 				jsonObject.put("depozit", articol.getDepozit());
+				jsonObject.put("greutate", articol.getGreutate());
 				jsonArray.put(jsonObject);
 			}
 
@@ -826,6 +870,36 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		}
 
 		return jsonComanda.toString();
+
+	}
+
+
+
+	public String serializeDatePoligon(DatePoligonLivrare datePoligonLivrare) {
+
+		JSONObject jsonPoligon = new JSONObject();
+
+		try {
+
+			if (datePoligonLivrare != null) {
+				jsonPoligon.put("filialaPrincipala", datePoligonLivrare.getFilialaPrincipala());
+				jsonPoligon.put("filialaSecundara", datePoligonLivrare.getFilialaSecundara());
+				jsonPoligon.put("tipZona", datePoligonLivrare.getTipZona());
+				jsonPoligon.put("limitareTonaj", datePoligonLivrare.getLimitareTonaj());
+				jsonPoligon.put("nume", datePoligonLivrare.getNume());
+			} else {
+				jsonPoligon.put("filialaPrincipala", "");
+				jsonPoligon.put("filialaSecundara", "");
+				jsonPoligon.put("tipZona", "");
+				jsonPoligon.put("limitareTonaj", "");
+				jsonPoligon.put("nume", "");
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonPoligon.toString();
 
 	}
 
