@@ -1373,6 +1373,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         paramPret.setFilialaAlternativa(CreareComandaGed.filialaAlternativa);
         paramPret.setCodClientParavan(CreareComandaGed.codClientParavan);
         paramPret.setFilialaClp(DateLivrare.getInstance().getCodFilialaCLP());
+        paramPret.setTipTransport(DateLivrare.getInstance().getTransport());
 
         params.put("parametruPret", opArticol.serializeParamPretGed(paramPret));
 
@@ -1838,6 +1839,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                         articol.setTipMarfa(selectedArticol.getTipMarfa());
                         articol.setGreutateBruta(selectedArticol.getGreutateBruta());
                         articol.setLungimeArt(selectedArticol.getLungimeArt());
+                        articol.setCantitateInit(Double.valueOf(cantArticol));
 
                         if (procRedFin > 0)
                             articol.setIstoricPret(selectedArticol.getIstoricPret());

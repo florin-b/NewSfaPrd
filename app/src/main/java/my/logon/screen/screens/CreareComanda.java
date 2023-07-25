@@ -1599,6 +1599,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                 articolCmd.setTipTransport(articol.getTipTransport());
                 articolCmd.setGreutate(articol.getGreutate());
                 articolCmd.setGreutateBruta(articol.getGreutateBruta());
+                articolCmd.setCantitateInit(articol.getCantitateInit());
 
                 if (isArtGedExceptie(articol))
                     articolCmd.setObservatii(articol.getObservatii());
@@ -1706,6 +1707,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                 obj.put("tipTransport", listArticole.get(i).getTipTransport());
                 obj.put("greutate", listArticole.get(i).getGreutate());
                 obj.put("greutateBruta", listArticole.get(i).getGreutateBruta());
+                obj.put("cantitateInit", listArticole.get(i).getCantitateInit());
                 myArray.put(obj);
             }
         } catch (Exception ex) {
@@ -1943,7 +1945,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
                     ArticolComanda articolLivrare = ListaArticoleComanda.getInstance().genereazaArticolLivrare(articolComanda);
                     articolLivrare.setCantitate(articolMathaus.getQuantity());
-                    articolLivrare.setCantUmb(articolMathaus.getQuantity());
                     articolLivrare.setPret((articolComanda.getPret() / articolComanda.getCantitate()) * articolMathaus.getQuantity());
 
                     if (articolComanda.getFilialaSite().equals("BV90")) {
@@ -1990,6 +1991,12 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         antetMathausTCLI.setDepart(antetCmdMathaus.getDepart());
         antetMathausTCLI.setCodPers(antetCmdMathaus.getCodPers());
         antetMathausTCLI.setTipTransp("TRAP");
+
+        antetMathausTCLI.setCamionDescoperit(DateLivrare.getInstance().isCamionDescoperit());
+        antetMathausTCLI.setMacara(DateLivrare.getInstance().isMasinaMacara());
+        antetMathausTCLI.setOptiuniCamion(stareOptiuniCamion);
+        antetMathausTCLI.setGreutateComanda(ListaArticoleComanda.getInstance().getGreutateKgArticole());
+        antetMathausTCLI.setTipComandaCamion(ListaArticoleComanda.getInstance().isComandaEnergofaga() ? "ENERGOFAGA" : "NORMALA");
 
         List<DateArticolMathaus> listArticoleMat = new ArrayList<DateArticolMathaus>();
 

@@ -19,6 +19,7 @@ public class BeanParametruPretGed {
 	private String filialaAlternativa;
 	private String codClientParavan;
 	private String filialaClp;
+	private String tipTransport;
 
 	public String getClient() {
 		return client;
@@ -155,7 +156,15 @@ public class BeanParametruPretGed {
 	public void setFilialaClp(String filialaClp) {
 		this.filialaClp = filialaClp;
 	}
-	
+
+	public String getTipTransport() {
+		return tipTransport;
+	}
+
+	public void setTipTransport(String tipTransport) {
+		this.tipTransport = tipTransport;
+	}
+
 	@Override
 	public String toString() {
 		return "BeanParametruPretGed [client=" + client + ", articol=" + articol + ", cantitate=" + cantitate + ", depart=" + depart + ", um=" + um + ", ul="

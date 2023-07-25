@@ -139,6 +139,8 @@ public class ListaArticoleComanda extends Observable {
 
 		articolLivrare.setPonderare(articolComanda.getPonderare());
 
+		articolLivrare.setCantitateInit(articolComanda.getCantitateInit());
+
 		return articolLivrare;
 
 	}

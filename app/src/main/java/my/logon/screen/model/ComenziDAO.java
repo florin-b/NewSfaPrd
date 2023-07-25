@@ -568,6 +568,9 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                     if (articolObject.has("tipMarfa") && !articolObject.getString("tipMarfa").equals("null"))
                         articol.setTipMarfa(articolObject.getString("tipMarfa"));
 
+                    if (articolObject.has("cantitateInit") && !articolObject.getString("cantitateInit").equals("null"))
+                        articol.setCantitateInit(Double.valueOf(articolObject.getString("cantitateInit")));
+
                     listArticole.add(articol);
 
                 }

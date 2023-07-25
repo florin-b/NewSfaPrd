@@ -514,6 +514,8 @@ public class ListaArticoleComandaGed extends Observable implements OperatiiArtic
 		articolLivrare.setAdaosMinimAcceptat(articolComanda.getAdaosMinimAcceptat());
 		articolLivrare.setPonderare(articolComanda.getPonderare());
 
+		articolLivrare.setCantitateInit(articolComanda.getCantitateInit());
+
 		return articolLivrare;
 
 	}

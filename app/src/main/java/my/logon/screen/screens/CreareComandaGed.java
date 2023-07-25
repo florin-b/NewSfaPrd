@@ -1489,6 +1489,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         antetMathausTCLI.setDepart(antetCmdMathaus.getDepart());
         antetMathausTCLI.setCodPers(antetCmdMathaus.getCodPers());
         antetMathausTCLI.setTipTransp("TRAP");
+
         antetMathausTCLI.setCamionDescoperit(DateLivrare.getInstance().isCamionDescoperit());
         antetMathausTCLI.setMacara(DateLivrare.getInstance().isMasinaMacara());
         antetMathausTCLI.setOptiuniCamion(stareOptiuniCamion);
@@ -1791,7 +1792,6 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
                     ArticolComandaGed articolLivrare = ListaArticoleComandaGed.getInstance().genereazaArticolLivrare((ArticolComandaGed) articolComanda);
                     articolLivrare.setCantitate(articolMathaus.getQuantity());
-                    articolLivrare.setCantUmb(articolMathaus.getQuantity());
 
                     if (articolComanda.getFilialaSite().equals("BV90")) {
                     } else {
@@ -2276,6 +2276,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 obj.put("greutate", listArticole.get(i).getGreutate());
                 obj.put("tipTransport", listArticole.get(i).getTipTransport());
                 obj.put("greutateBruta", listArticole.get(i).getGreutateBruta());
+                obj.put("cantitateInit", listArticole.get(i).getCantitateInit());
 
                 myArray.put(obj);
 

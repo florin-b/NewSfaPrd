@@ -977,7 +977,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
                     ArticolComanda articolLivrare = ListaArticoleComanda.getInstance().genereazaArticolLivrare((ArticolComandaGed) articolComanda);
                     articolLivrare.setCantitate(articolMathaus.getQuantity());
-                    articolLivrare.setCantUmb(articolMathaus.getQuantity());
 
                     if (articolComanda.getFilialaSite().equals("BV90")) {
                     } else {
@@ -1673,6 +1672,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                 obj.put("listCabluri", new OperatiiArticolImpl(this).serializeCabluri05(artComanda.getListCabluri()));
                 obj.put("greutate", artComanda.getGreutate());
                 obj.put("greutateBruta", artComanda.getGreutateBruta());
+                obj.put("cantitateInit", artComanda.getCantitateInit());
 
                 if (!UtilsUser.isAgentOrSDorKA()) {
                     if ((artComanda.getNumeArticol() != null && artComanda.getPonderare() == 1)

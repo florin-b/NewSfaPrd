@@ -1254,6 +1254,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         params.put("canalDistrib", CreareComanda.canalDistrib);
         params.put("filialaAlternativa", filialaPret);
         params.put("filialaClp", DateLivrare.getInstance().getCodFilialaCLP());
+        params.put("tipTransport", DateLivrare.getInstance().getTransport());
 
         opArticol.getPret(params);
 
@@ -1699,6 +1700,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                         unArticol.setTipMarfa(tipMarfa);
                         unArticol.setGreutateBruta(greutateBruta);
                         unArticol.setLungimeArt(lungimeArt);
+                        unArticol.setCantitateInit(Double.valueOf(cantArticol));
 
                         if (procRedFin > 0)
                             unArticol.setIstoricPret(istoricPret);
