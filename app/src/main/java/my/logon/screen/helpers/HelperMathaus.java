@@ -9,6 +9,7 @@ import java.util.Set;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.HelperTranspBuc;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
@@ -79,6 +80,10 @@ public class HelperMathaus {
         return numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("TONAJ");
     }
 
+    private static boolean isArtTaxaMetro(String numeArticol){
+        return numeArticol != null && numeArticol.toUpperCase().contains("EXTRA") && numeArticol.toUpperCase().contains("METRO");
+    }
+
     private static boolean isArtCostTransp(String numeArticol) {
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
     }
@@ -90,7 +95,7 @@ public class HelperMathaus {
 
             ArticolComanda articol = iterator.next();
 
-            if (isArtTaxaTransp(articol.getNumeArticol())) {
+            if (isArtTaxaTransp(articol.getNumeArticol()) || isArtTaxaMetro(articol.getNumeArticol())) {
                 iterator.remove();
             }
         }
@@ -235,6 +240,20 @@ public class HelperMathaus {
                 articolComanda.setTipTransport(tipTransp);
             }
         }
+
+    }
+
+    public static void setTonajComanda(){
+
+        if (DateLivrare.getInstance().getDatePoligonLivrare() == null)
+            return;
+
+        if (DateLivrare.getInstance().getTipMasina() == null || DateLivrare.getInstance().getTipMasina().trim().isEmpty())
+            DateLivrare.getInstance().setTonaj("20");
+        else if (DateLivrare.getInstance().getTipMasina().toLowerCase().contains("iveco"))
+            DateLivrare.getInstance().setTonaj("3.5");
+        else if (DateLivrare.getInstance().getTipMasina().toLowerCase().contains("scurt"))
+            DateLivrare.getInstance().setTonaj("10");
 
     }
 

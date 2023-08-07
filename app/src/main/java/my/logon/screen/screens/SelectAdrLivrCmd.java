@@ -89,7 +89,6 @@ import my.logon.screen.model.OperatiiObiective;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.Exceptions;
 import my.logon.screen.utils.MapUtils;
-import my.logon.screen.utils.UtilsAddress;
 import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsDates;
 import my.logon.screen.utils.UtilsGeneral;
@@ -2196,8 +2195,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
         getDatePoligonLivrare();
 
-        //aici
-        //finish();
+
 
     }
 
@@ -2343,7 +2341,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         Address address = new Address();
 
         address.setCity(DateLivrare.getInstance().getOras());
-        address.setStreet(UtilsAddress.getStreetNoNumber(DateLivrare.getInstance().getStrada()));
+        address.setStreet(DateLivrare.getInstance().getStrada());
         address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
 
         return address;

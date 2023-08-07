@@ -874,13 +874,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 menu.setHeaderTitle(articol.getNumeArticol());
 
                 menu.add(Menu.NONE, 0, 0, "Sterge");
-                if (!UserInfo.getInstance().getTipAcces().equals("9") && !UserInfo.getInstance().getTipAcces().equals("10")
-                        && !UserInfo.getInstance().getTipUserSap().equals("CONS-GED")) {
-                    if (!isTotalNegociat)
-                        menu.add(Menu.NONE, 1, 1, "Schimba pret");
-                }
 
-                menu.add(Menu.NONE, 2, 2, "Schimba cantitate");
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -2415,6 +2409,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             obj.put("idObiectiv", DateLivrare.getInstance().getIdObiectiv());
             obj.put("isAdresaObiectiv", DateLivrare.getInstance().isAdresaObiectiv());
             obj.put("coordonateGps", getCoordAdresa());
+            HelperMathaus.setTonajComanda();
             obj.put("tonaj", DateLivrare.getInstance().getTonaj());
             obj.put("prelucrare", DateLivrare.getInstance().getPrelucrare());
             obj.put("clientRaft", DateLivrare.getInstance().isClientRaft());

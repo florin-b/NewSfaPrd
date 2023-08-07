@@ -853,6 +853,10 @@ public class AprobareComanda extends Activity implements ComenziDAOListener, Den
         textTipTransport.setText("Transport: " + UtilsGeneral.getDescTipTransport(dateLivrare.getTransport()));
         textMetodaPlata.setText("Plata: " + UtilsGeneral.getDescTipPlata(dateLivrare.getTipPlata(), dateLivrare.getTermenPlata()));
 
+        //corectie pt. adresa de livrare in city_d
+        if (labelAdresa.getVisibility() == View.VISIBLE && labelAdresa.getText().equals("Adresa de livrare noua") && !dateLivrare.getOras().trim().isEmpty()){
+            textAdrLivrNoua.setText(strAdresaLivrare.toString());
+        }
 
         textFilialaClp.setVisibility(View.INVISIBLE);
         textFilialaClp.setText("");
@@ -1411,7 +1415,7 @@ public class AprobareComanda extends Activity implements ComenziDAOListener, Den
                     if (!adrLivrN.equals("-1")) {
                         btnConditii.setVisibility(View.VISIBLE);
                         labelAdresa.setText("Adresa de livrare noua");
-                        textAdrLivrNoua.setText(adrLivrN);
+
                     } else {
                         btnConditii.setVisibility(View.VISIBLE);
                         labelAdresa.setText("Adresa de livrare");
@@ -1445,7 +1449,6 @@ public class AprobareComanda extends Activity implements ComenziDAOListener, Den
                 if (!adrLivrN.equals("-1")) {
                     labelAdresa.setVisibility(View.VISIBLE);
                     textAdrLivrNoua.setVisibility(View.VISIBLE);
-                    textAdrLivrNoua.setText(adrLivrN);
                 }
 
                 // nu necesita aprobare sd, doar se afiseaza
