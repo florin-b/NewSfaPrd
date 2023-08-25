@@ -693,15 +693,6 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.GONE);
 		}
 
-		/*
-		if (!dateLivrare.getCodJudetD().trim().isEmpty()) {
-			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.VISIBLE);
-			((TextView) findViewById(R.id.textAdrLivrare)).setText("jud. " + InfoStrings.numeJudet(dateLivrare.getCodJudetD()) + ", loc. "
-					+ dateLivrare.getOrasD() + ", " + dateLivrare.getAdresaD());
-		} else
-			((LinearLayout) findViewById(R.id.layoutAdrLivrare)).setVisibility(View.GONE);
-
-		 */
 
 		if (!dateLivrare.getNrCmdClp().trim().isEmpty() || dateLivrare.getCodFilialaCLP().length() == 4) {
 			((LinearLayout) findViewById(R.id.layoutNrCmdClp)).setVisibility(View.VISIBLE);
@@ -912,6 +903,8 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 	}
 
 	private void showStareComanda(String stareComanda) {
+
+
 		CustomInfoDialog infoDialog = new CustomInfoDialog(this, "Stare comanda");
 		infoDialog.setInfoText(stareComanda);
 		infoDialog.show();

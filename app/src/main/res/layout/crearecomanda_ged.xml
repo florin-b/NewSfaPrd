@@ -99,7 +99,7 @@
                 <TextView
                     android:id="@+id/textCantar"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dip"
                     android:layout_gravity="left"
                     android:layout_marginLeft="0dip"
                     android:layout_weight="0.0"
@@ -112,7 +112,7 @@
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.4"
                     android:gravity="left"
                     android:textColor="@color/detColor4"
                     android:textSize="16sp"
@@ -125,7 +125,7 @@
                     android:layout_gravity="right"
                     android:gravity="right"
                     android:layout_marginLeft="5dip"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.3"
                     android:textColor="@color/detColor4"
                     android:textSize="16sp"
                     android:typeface="sans" />

@@ -332,7 +332,8 @@ public class ListaArticoleComandaGed extends Observable implements OperatiiArtic
 	}
 
 	private boolean isSameArticol(ArticolComanda articol1, ArticolComanda articol2) {
-		return articol1.getCodArticol().equals(articol2.getCodArticol()) && articol1.getDepozit().equals(articol2.getDepozit())
+		return articol1.getCodArticol().equals(articol2.getCodArticol()) && articol1.getDepozit().replace("040","04").
+				replace("041","04").equals(articol2.getDepozit().replace("040","04").replace("041","04"))
 				&& articol1.getFilialaSite().equals(articol2.getFilialaSite());
 	}
 

@@ -1,11 +1,13 @@
 package my.logon.screen.dialogs;
 
-import my.logon.screen.R;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import my.logon.screen.R;
 
 public class CustomInfoDialog extends Dialog {
 
@@ -43,6 +45,7 @@ public class CustomInfoDialog extends Dialog {
 	@Override
 	public void show() {
 		textAlert.setText(alertText);
+		textAlert.setMovementMethod(new ScrollingMovementMethod());
 		super.show();
 	}
 

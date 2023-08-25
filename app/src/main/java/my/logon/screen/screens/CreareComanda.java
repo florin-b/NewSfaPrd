@@ -707,7 +707,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             dateLivrareInstance.setCodAgent(UserInfo.getInstance().getCod());
             dateLivrareInstance.setFactRed(factRed);
 
-            if (dateLivrareInstance.getZonaBucuresti() != null && tipComandaDistributie != TipCmdDistrib.LIVRARE_CUSTODIE) {
+            if (dateLivrareInstance.getZonaBucuresti() != null && tipComandaDistributie != TipCmdDistrib.LIVRARE_CUSTODIE && !ListaArticoleComanda.getInstance().getListArticoleComanda().isEmpty()) {
 
 
                 HelperTranspBuc.eliminaCostTransportZoneBuc(ListaArticoleComanda.getInstance().getListArticoleComanda());

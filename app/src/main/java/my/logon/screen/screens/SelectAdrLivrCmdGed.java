@@ -1449,7 +1449,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         if ((DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_LIVRARE) || isComandaClp()) && tipTranspSel.equals("TCLI") && tipPlata.equals("N")) {
             ((LinearLayout) findViewById(R.id.layoutFilialaPlata)).setVisibility(View.VISIBLE);
             ((RadioButton) findViewById(R.id.radioPlataFilialaAg)).setText(EnumFiliale.getNumeFiliala(UserInfo.getInstance().getUnitLog()));
-            ((RadioButton) findViewById(R.id.radioPlataFilialaLivrare)).setText(EnumFiliale.getNumeFiliala(DateLivrare.getInstance().getCodFilialaCLP()));
+            ((RadioButton) findViewById(R.id.radioPlataFilialaLivrare)).setText(EnumFiliale.getNumeFiliala(UtilsGeneral.getUnitLogDistrib(DateLivrare.getInstance().getCodFilialaCLP())));
 
             String localFilialaPlata = DateLivrare.getInstance().getFilialaPlata() != null ? DateLivrare.getInstance().getFilialaPlata() : "";
 

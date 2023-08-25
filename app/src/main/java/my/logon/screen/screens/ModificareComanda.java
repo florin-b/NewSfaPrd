@@ -1019,8 +1019,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         rezumatComanda.getWindow().setLayout(width, height);
         rezumatComanda.show();
 
-        //aici, de verificat
-        //comandaEliminata();
+
 
     }
 
@@ -1455,6 +1454,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                 tipUser = "AV";
             else
                 tipUser = UserInfo.getInstance().getTipUser();
+
+            if (alertSD || alertDV)
+                comandaFinala.setComandaBlocata("1");
 
             params.put("comanda", " ");
             params.put("tipUser", tipUser);
@@ -2476,11 +2478,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                 afisTotalComenziNumerar((String) result);
                 break;
             case GET_LIVRARI_MATHAUS:
-                //aici
-               // if (isComandaCanal10())
                     setLivrariMathaus((String) result);
-               // else
-               //     adaugaPretTransport((String) result);
                 break;
             case GET_OPTIUNI_MASINI:
                 afisOptiuniMasini((String) result);
@@ -2504,33 +2502,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             return;
         }
 
-        //aici
-        /*
-        NumberFormat nf3 = NumberFormat.getInstance(new Locale("en", "US"));
-        nf3.setMinimumFractionDigits(2);
-        nf3.setMaximumFractionDigits(2);
-        nf3.setGroupingUsed(false);
-
-        valTransportSAP = Double.valueOf(nf3.format(UtilsComenziGed.getValoareTransportSap(listArticole)));
-        valTransport = Double.valueOf(nf3.format(UtilsComenziGed.getValoareTransportComanda(listArticole)));
-
-        if (valTransport < valTransportSAP)
-            valTransport = valTransportSAP;
-
-        if (!DateLivrare.getInstance().getTransport().equals("TCLI")) {
-            UtilsComenziGed.setValoareArticolTransport(listArticole, valTransport);
-            adapterArticole.notifyDataSetChanged();
-        }
-
-        if (DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT")) {
-            valTranspBtn.setVisibility(View.VISIBLE);
-            valTranspBtn.setText("Transp: " + nf3.format(valTransport));
-        } else {
-            valTranspBtn.setVisibility(View.INVISIBLE);
-            valTransport = 0;
-        }
-
-         */
 
     }
 
