@@ -17,6 +17,7 @@ import my.logon.screen.R;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.listeners.TipCmdDistribListener;
 import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsComenzi;
 
 public class TipComandaDistributieDialog extends Dialog {
 
@@ -56,8 +57,11 @@ public class TipComandaDistributieDialog extends Dialog {
 		final RadioButton radioCLP = (RadioButton) findViewById(R.id.radioCLP);
 		final RadioButton radioACZC = (RadioButton) findViewById(R.id.radioACZC);
 		final RadioButton radioDeteriorate = (RadioButton) findViewById(R.id.radioDeteriorate);
+		final RadioButton radioFasonate = (RadioButton) findViewById(R.id.radioFasonate);
 
 		final Spinner spinnerFilialeClp = (Spinner) findViewById(R.id.spinFilialaCLP);
+
+		final Spinner spinnerFilialeFasonate = (Spinner) findViewById(R.id.spinFilialaFasonate);
 
 		final TextView textInfo = (TextView) findViewById(R.id.textInfo);
 
@@ -67,6 +71,11 @@ public class TipComandaDistributieDialog extends Dialog {
 
 		fillFiliale(listFiliale);
 		spinnerFilialeClp.setAdapter(adapterFiliale);
+
+		final SimpleAdapter adapterFilialeFasonate = new SimpleAdapter(context, UtilsComenzi.fillFilialeFasonate(), R.layout.rowlayoutjudete, new String[] { "numeJudet", "codJudet" },
+				new int[] { R.id.textNumeJudet, R.id.textCodJudet });
+
+		spinnerFilialeFasonate.setAdapter(adapterFilialeFasonate);
 
 		Button btnOkTipCmd = (Button) findViewById(R.id.btnOkTipCmd);
 		btnOkTipCmd.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +103,16 @@ public class TipComandaDistributieDialog extends Dialog {
 					tipComanda = TipCmdDistrib.COMANDA_LIVRARE;
 
 				}
+				else if (radioFasonate.isChecked()) {
+					if (spinnerFilialeFasonate.getSelectedItemPosition() == 0) {
+						Toast.makeText(context, "Selectati filiala", Toast.LENGTH_LONG).show();
+						return;
+					}
+
+					HashMap<String, String> artMap = (HashMap<String, String>) adapterFilialeFasonate.getItem(spinnerFilialeFasonate.getSelectedItemPosition());
+					codFilialaDest = artMap.get("codJudet");
+					tipComanda = TipCmdDistrib.COMANDA_FASONATE;
+				}
 
 				if (listener != null)
 					listener.tipComandaSelected(tipComanda, codFilialaDest);
@@ -106,6 +125,7 @@ public class TipComandaDistributieDialog extends Dialog {
 			@Override
 			public void onClick(View v) {
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
 				textInfo.setVisibility(View.INVISIBLE);
 
 			}
@@ -117,6 +137,7 @@ public class TipComandaDistributieDialog extends Dialog {
 			@Override
 			public void onClick(View v) {
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
 				textInfo.setVisibility(View.INVISIBLE);
 
 			}
@@ -128,6 +149,7 @@ public class TipComandaDistributieDialog extends Dialog {
 			@Override
 			public void onClick(View v) {
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
 				textInfo.setVisibility(View.INVISIBLE);
 
 			}
@@ -139,6 +161,7 @@ public class TipComandaDistributieDialog extends Dialog {
 			@Override
 			public void onClick(View v) {
 				spinnerFilialeClp.setVisibility(View.VISIBLE);
+				spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
 				textInfo.setVisibility(View.INVISIBLE);
 
 			}
@@ -150,6 +173,7 @@ public class TipComandaDistributieDialog extends Dialog {
 			@Override
 			public void onClick(View v) {
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
 				textInfo.setVisibility(View.VISIBLE);
 				textInfo.setText("Trebuie sa existe un proces verbal de angajament semnat de client.");
 
@@ -162,6 +186,20 @@ public class TipComandaDistributieDialog extends Dialog {
 			@Override
 			public void onClick(View v) {
 				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+				textInfo.setVisibility(View.INVISIBLE);
+
+			}
+
+		});
+
+		radioFasonate
+				.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				spinnerFilialeClp.setVisibility(View.INVISIBLE);
+				spinnerFilialeFasonate.setVisibility(View.VISIBLE);
 				textInfo.setVisibility(View.INVISIBLE);
 
 			}
@@ -196,5 +234,7 @@ public class TipComandaDistributieDialog extends Dialog {
 		}
 
 	}
+
+
 
 }

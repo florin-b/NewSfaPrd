@@ -1,12 +1,18 @@
 package my.logon.screen.helpers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import my.logon.screen.beans.BeanStocTCLI;
 import my.logon.screen.beans.CostTransportMathaus;
+import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.DateLivrare;
@@ -14,8 +20,11 @@ import my.logon.screen.model.HelperTranspBuc;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.utils.UtilsComenzi;
+import my.logon.screen.utils.UtilsGeneral;
 
 public class HelperMathaus {
+
+    private static NumberFormat nf2 = new DecimalFormat("#0.00");
 
     public static void adaugaArticolTransport(List<CostTransportMathaus> costTransport, String canalDistrib, List<ArticolComanda> listArticole) {
 
@@ -76,7 +85,7 @@ public class HelperMathaus {
 
     }
 
-    private static boolean isArtTaxaTransp(String numeArticol) {
+    public static boolean isArtTaxaTransp(String numeArticol) {
         return numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("TONAJ");
     }
 
@@ -84,7 +93,7 @@ public class HelperMathaus {
         return numeArticol != null && numeArticol.toUpperCase().contains("EXTRA") && numeArticol.toUpperCase().contains("METRO");
     }
 
-    private static boolean isArtCostTransp(String numeArticol) {
+    public static boolean isArtCostTransp(String numeArticol) {
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
     }
 
@@ -170,12 +179,14 @@ public class HelperMathaus {
         articolComanda.setDepartSintetic(departArt);
         articolComanda.setFilialaSite(costTransport.getFiliala());
         articolComanda.setTipTransport(costTransport.getTipTransp());
+        articolComanda.setCantitate50(articolComanda.getCantitate());
+        articolComanda.setUm50("BUC");
 
         return articolComanda;
     }
 
     private static String getDepozitDescarcare(ArticolComanda articol) {
-        if (UtilsComenzi.isDespozitDeteriorate(articol.getDepozit()))
+        if (UtilsComenzi.isDespozitDeteriorate(articol.getDepozit()) || isDepozitExceptie(articol.getDepozit()))
             return articol.getDepozit();
         else {
             if (articol.getDepart().substring(0, 2).equals("11"))
@@ -183,6 +194,12 @@ public class HelperMathaus {
             else
                 return articol.getDepart().substring(0, 2) + "V1";
         }
+    }
+
+    public static boolean isDepozitExceptie(String depozit){
+        return depozit != null &&
+                (depozit.equals("DESC") || depozit.equals("GAR1") || depozit.equals("WOOD") || depozit.equals("MAV2") ||
+                        depozit.equals("92V1") || depozit.equals("95V1") || depozit.equals("DSCM") || depozit.equals("MAD1"));
     }
 
     public static List<RezumatComanda> getRezumatComanda(List<ArticolComanda> listArticole) {
@@ -254,6 +271,147 @@ public class HelperMathaus {
             DateLivrare.getInstance().setTonaj("3.5");
         else if (DateLivrare.getInstance().getTipMasina().toLowerCase().contains("scurt"))
             DateLivrare.getInstance().setTonaj("10");
+
+    }
+
+    public static double getCantitateCanal50(DateArticolMathaus articolMathaus, ArticolComanda articolComanda){
+
+        BigDecimal cantLivrata = new BigDecimal(articolMathaus.getQuantity());
+        BigDecimal cant50 = new BigDecimal(articolComanda.getCantitate50());
+        BigDecimal cantTotal = new BigDecimal(articolComanda.getCantitate());
+        BigDecimal resultInter = cantLivrata.multiply(cant50);
+        BigDecimal resultFin = resultInter.divide(cantTotal,2, RoundingMode.HALF_EVEN);
+
+        return resultFin.doubleValue();
+
+    }
+
+    public static String getFilialaSecundara(){
+        if (DateLivrare.getInstance().getDatePoligonLivrare() != null && !DateLivrare.getInstance().getDatePoligonLivrare().getFilialaSecundara().trim().isEmpty())
+            return DateLivrare.getInstance().getDatePoligonLivrare().getFilialaSecundara();
+
+        return "";
+    }
+
+    public static boolean isConditiiDepozitTCLI(ArticolComanda articolComanda){
+
+        if (!DateLivrare.getInstance().getTransport().equals("TCLI"))
+            return false;
+
+        if (articolComanda.getListStocTCLI() == null || articolComanda.getListStocTCLI().size() == 0)
+            return false;
+
+        return true;
+    }
+
+    public static List<BeanStocTCLI> genereazaStocArticolTCLI(ArticolComanda articolComanda){
+
+        List<BeanStocTCLI> listStocTCLI = new ArrayList<>();
+
+        double cantNecesar = articolComanda.getCantitate();
+
+        BeanStocTCLI stocV1 = getStocDepozit(articolComanda, articolComanda.getDepart().substring(0,2) + "V1");
+        BeanStocTCLI stocMAV1 = getStocDepozit(articolComanda, "MAV1");
+
+            BeanStocTCLI beanStoc = new BeanStocTCLI();
+
+            if (stocV1.getCantitate() > 0) {
+
+                if (cantNecesar <= stocV1.getCantitate()) {
+                    beanStoc.setCantitate(cantNecesar);
+                    cantNecesar = 0;
+                } else {
+                    beanStoc.setCantitate(stocV1.getCantitate());
+                    cantNecesar = cantNecesar - beanStoc.getCantitate();
+                }
+
+                beanStoc.setDepozit(stocV1.getDepozit());
+                beanStoc.setUm(stocV1.getUm());
+                listStocTCLI.add(beanStoc);
+            }
+            if (stocMAV1.getCantitate() > 0 && cantNecesar > 0 && cantNecesar <= stocMAV1.getCantitate()) {
+
+                beanStoc = new BeanStocTCLI();
+                beanStoc.setCantitate(cantNecesar);
+                beanStoc.setDepozit(stocMAV1.getDepozit());
+                beanStoc.setUm(stocMAV1.getUm());
+                listStocTCLI.add(beanStoc);
+            }
+
+
+        return listStocTCLI;
+    }
+
+    private static BeanStocTCLI getStocDepozit(ArticolComanda articolComanda, String depozit){
+
+        BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
+
+        for (BeanStocTCLI stocTCLI : articolComanda.getListStocTCLI()){
+            if (stocTCLI.getDepozit().equals(depozit)){
+                beanStocTCLI.setCantitate(stocTCLI.getCantitate());
+                beanStocTCLI.setDepozit(stocTCLI.getDepozit());
+                beanStocTCLI.setUm(stocTCLI.getUm());
+                break;
+            }
+        }
+
+        return beanStocTCLI;
+    }
+
+    public static DateArticolMathaus genereazaStocArticolTCLI(ArticolComanda artCmd, BeanStocTCLI stocTCLI){
+
+        DateArticolMathaus dateArticol = new DateArticolMathaus();
+        dateArticol.setProductCode(artCmd.getCodArticol());
+        dateArticol.setQuantity(artCmd.getCantitate());
+        dateArticol.setUnit(artCmd.getUm());
+
+        double valPozArt = artCmd.getPret();
+
+        if (valPozArt == 0)
+            valPozArt = (artCmd.getPretUnitarClient() / artCmd.getMultiplu()) * artCmd.getCantitate();
+
+        dateArticol.setValPoz(valPozArt);
+        dateArticol.setGreutate(artCmd.getGreutateBruta());
+        dateArticol.setQuantity50(artCmd.getCantitate50());
+
+        if (stocTCLI != null && stocTCLI.getCantitate() > 0) {
+            dateArticol.setQuantity(stocTCLI.getCantitate());
+
+            double valPozTCLI = (stocTCLI.getCantitate() * valPozArt) / artCmd.getCantitate();
+            dateArticol.setValPoz(Double.parseDouble(nf2.format(valPozTCLI)));
+
+            double greutateTCLI = (stocTCLI.getCantitate() * artCmd.getGreutateBruta()) / artCmd.getCantitate();
+            dateArticol.setGreutate(Double.parseDouble(nf2.format(greutateTCLI)));
+
+            dateArticol.setQuantity50(stocTCLI.getCantitate());
+        }
+
+        dateArticol.setUnit50(artCmd.getUm50());
+
+        if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()) || isDepozitExceptie(artCmd.getDepozit()))
+            dateArticol.setDepozit(artCmd.getDepozit());
+        else if (stocTCLI != null && !stocTCLI.getDepozit().trim().isEmpty())
+            dateArticol.setDepozit(stocTCLI.getDepozit());
+        else
+            dateArticol.setDepozit("");
+
+        if (artCmd.getArticolMathaus() != null)
+            dateArticol.setTip2(artCmd.getArticolMathaus().getTip2());
+        else
+            dateArticol.setTip2("");
+
+        if (artCmd.getFilialaSite().equals("BV90"))
+            dateArticol.setUlStoc("BV90");
+        else if (stocTCLI != null) {
+            if (stocTCLI.getDepozit().equals("MAV1"))
+                dateArticol.setUlStoc(UtilsGeneral.getUnitLogGed(artCmd.getFilialaSite()));
+            else
+                dateArticol.setUlStoc(artCmd.getFilialaSite());
+        }
+        else if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
+            dateArticol.setUlStoc(DateLivrare.getInstance().getCodFilialaFasonate());
+
+        return dateArticol;
 
     }
 

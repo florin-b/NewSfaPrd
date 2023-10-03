@@ -1,16 +1,18 @@
 package my.logon.screen.utils;
 
+import android.content.Context;
+import android.location.Geocoder;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import android.content.Context;
-import android.location.Geocoder;
 import my.logon.screen.beans.Address;
 import my.logon.screen.beans.GeocodeAddress;
-
-import com.google.android.gms.maps.model.LatLng;
 
 public class MapUtils {
 
@@ -24,7 +26,7 @@ public class MapUtils {
 		StringBuilder strAddress = new StringBuilder();
 
 		if (address.getStreet() != null && !address.getStreet().equals("")) {
-			strAddress.append(address.getStreet());
+			strAddress.append(address.getStreet().toUpperCase().replace(" NR ", " ").replace(" NR. ", " "));
 			strAddress.append(",");
 		}
 
@@ -39,30 +41,57 @@ public class MapUtils {
 		}
 
 		if (address.getCity() != null && !address.getCity().equals("")) {
-			if (address.getCity().contains("SECTOR") && address.getSector().equals("BUCURESTI"))
-				strAddress.append("BUCURESTI");
-			else
-				strAddress.append(address.getCity());
+			strAddress.append(address.getCity());
 			strAddress.append(",");
 		}
 
 		strAddress.append(address.getCountry());
-		
 
-		Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
+		Locale aLocale = new Locale.Builder().setLanguage("ro").build();
+		Geocoder geoCoder = new Geocoder(context, aLocale);
 		List<android.location.Address> addresses = new ArrayList<android.location.Address>();
 		try {
 			addresses = geoCoder.getFromLocationName(strAddress.toString(), 1);
-
 		} catch (IOException e) {
 			geoAddress.setErrorMessage(e.toString());
+			Toast.makeText(context, "GeocodeAddress: " + e.toString(), Toast.LENGTH_LONG).show();
 		}
 
+
 		if (addresses.size() > 0) {
-			latitude = addresses.get(0).getLatitude();
-			longitude = addresses.get(0).getLongitude();
-			geoAddress.setGeoStatus(true);
-			geoAddress.setErrorMessage("Succes");
+
+			boolean isLocalitateCorecta = false;
+
+			String judetResult = addresses.get(0).getAdminArea();
+			String comunaResult = addresses.get(0).getSubAdminArea();
+			String localitateResult = addresses.get(0).getLocality();
+
+			String localitateAdresa = UtilsFormatting.flattenToAscii(address.getCity().trim().toLowerCase());
+			String judetAdresa = UtilsFormatting.flattenToAscii(address.getSector().trim().toLowerCase());
+
+			if (judetAdresa.equals("bucuresti"))
+				localitateAdresa = judetAdresa;
+
+			if (!UtilsFormatting.flattenToAscii(judetResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(judetAdresa).toLowerCase()))
+				isLocalitateCorecta = false;
+			else if (localitateResult != null){
+				isLocalitateCorecta = UtilsFormatting.flattenToAscii(localitateResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase());
+			}
+			else if (comunaResult != null)
+				isLocalitateCorecta = UtilsFormatting.flattenToAscii(comunaResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase());
+			else
+				isLocalitateCorecta = false;
+
+
+			if (isLocalitateCorecta) {
+				latitude = addresses.get(0).getLatitude();
+				longitude = addresses.get(0).getLongitude();
+				geoAddress.setGeoStatus(true);
+				geoAddress.setErrorMessage("Succes");
+			} else {
+				geoAddress.setGeoStatus(false);
+				geoAddress.setErrorMessage("Adresa inexistenta.");
+			}
 
 		}
 
@@ -131,6 +160,9 @@ public class MapUtils {
 				tempString = "BUCURESTI";
 		} else
 			tempString = "";
+
+		if (tempString.equals("BUCURESTI"))
+			tempString = UtilsAddress.getSectorBucuresti(googleAddress.getSubLocality());
 
 		address.setCity(tempString);
 

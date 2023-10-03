@@ -11,6 +11,10 @@ public class DateArticolMathaus {
 	private String depozit;
 	private String ulStoc;
 	private double greutate;
+	private double cantUmb;
+
+	private double quantity50;
+	private String unit50;
 
 	public String getDeliveryWarehouse() {
 		return deliveryWarehouse;
@@ -82,5 +86,29 @@ public class DateArticolMathaus {
 
 	public void setGreutate(double greutate) {
 		this.greutate = greutate;
+	}
+
+	public double getQuantity50() {
+		return quantity50;
+	}
+
+	public void setQuantity50(double quantity50) {
+		this.quantity50 = quantity50;
+	}
+
+	public String getUnit50() {
+		return unit50;
+	}
+
+	public void setUnit50(String unit50) {
+		this.unit50 = unit50;
+	}
+
+	public double getCantUmb() {
+		return cantUmb;
+	}
+
+	public void setCantUmb(double cantUmb) {
+		this.cantUmb = cantUmb;
 	}
 }

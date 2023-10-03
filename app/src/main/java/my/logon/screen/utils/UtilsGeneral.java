@@ -40,7 +40,7 @@ public class UtilsGeneral {
 
     public static String[] numeJudete = {"Selectati un judet", "ALBA", "ARAD", "ARGES", "BACAU", "BIHOR", "BISTRITA-NASAUD", "BOTOSANI", "BRAILA", "BRASOV",
             "BUCURESTI", "BUZAU", "CALARASI", "CARAS-SEVERIN", "CLUJ", "CONSTANTA", "COVASNA", "DAMBOVITA", "DOLJ", "GALATI", "GIURGIU", "GORJ", "HARGHITA",
-            "HUNEDOARA", "IALOMITA", "IASI", "ILFOV", "MARAMURES", "MEHEDINTI", "MURES", "NEAMT", "OLT", "PRAHOVA", "SALAJ", "SATU-MARE", "SIBIU", "SUCEAVA",
+            "HUNEDOARA", "IALOMITA", "IASI", "ILFOV", "MARAMURES", "MEHEDINTI", "MURES", "NEAMT", "OLT", "PRAHOVA", "SALAJ", "SATU MARE", "SIBIU", "SUCEAVA",
             "TELEORMAN", "TIMIS", "TULCEA", "VALCEA", "VASLUI", "VRANCEA"};
 
     public static String[] codJudete = {" ", "01", "02", "03", "04", "05", "06", "07", "09", "08", "40", "10", "51", "11", "12", "13", "14", "15", "16", "17",
@@ -89,6 +89,9 @@ public class UtilsGeneral {
             listDepozite.add("D1 - deteriorate");
             listDepozite.add("MAD1");
         }
+
+        if (UtilsUser.isConsWood())
+            listDepozite.add("WOOD");
 
         listDepozite.add("DSCM");
 
@@ -463,7 +466,7 @@ public class UtilsGeneral {
             retVal = "SALAJ";
 
         if (codJudet.equals("30"))
-            retVal = "SATU-MARE";
+            retVal = "SATU MARE";
 
         if (codJudet.equals("32"))
             retVal = "SIBIU";

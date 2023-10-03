@@ -571,6 +571,9 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                     if (articolObject.has("cantitateInit") && !articolObject.getString("cantitateInit").equals("null"))
                         articol.setCantitateInit(Double.valueOf(articolObject.getString("cantitateInit")));
 
+                    articol.setUm50(articolObject.getString("um50"));
+                    articol.setCantitate50(Double.valueOf(articolObject.getString("cantitate50")));
+
                     listArticole.add(articol);
 
                 }

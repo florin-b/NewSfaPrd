@@ -1349,10 +1349,12 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         if (isAdresaLivrareTCLI)
             return;
 
-        if (tipTransp.equals("TCLI") && ModificareComanda.selectedCmd.equals("")) {
+        //aici pentru modificare comenzi ged TCLI
+        if (tipTransp.equals("TCLI") ) {
             layoutAdr1.setVisibility(View.GONE);
             layoutAdr2.setVisibility(View.GONE);
             layoutAdr3.setVisibility(View.GONE);
+            if (ModificareComanda.selectedCmd.equals(""))
             ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.VISIBLE);
 
         } else {
@@ -1601,7 +1603,8 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             @SuppressWarnings("unchecked")
             HashMap<String, String> tempMap = (HashMap<String, String>) spinnerJudet.getSelectedItem();
-            numeJudet = tempMap.get("numeJudet");
+            if (tempMap != null)
+                numeJudet = tempMap.get("numeJudet");
 
         } else {
             textLoc = textLocalitateLivrare;
@@ -1610,7 +1613,8 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             @SuppressWarnings("unchecked")
             HashMap<String, String> tempMap = (HashMap<String, String>) spinnerJudetLivrare.getSelectedItem();
-            numeJudet = tempMap.get("numeJudet");
+            if (tempMap != null)
+                numeJudet = tempMap.get("numeJudet");
         }
 
         if (listLocalitati != null)
@@ -2259,7 +2263,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                     return;
 
 
-                MapAddressDialog mapDialog = new MapAddressDialog(getAddressFromForm(), SelectAdrLivrCmdGed.this, fm);
+                MapAddressDialog mapDialog = new MapAddressDialog(getAddressFromFormPozitionare(), SelectAdrLivrCmdGed.this, fm);
                 mapDialog.setMapListener(SelectAdrLivrCmdGed.this);
                 mapDialog.show();
 
@@ -2268,6 +2272,17 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         });
     }
 
+
+    private void testMe() {
+
+    }
+
+    private Address getAddressFromFormPozitionare() {
+        Address address = new Address();
+        address.setCity(DateLivrare.getInstance().getOras());
+        address.setSector(UtilsGeneral.getNumeJudet(DateLivrare.getInstance().getCodJudet()));
+        return address;
+    }
 
     private Address getAddressFromForm() {
         Address address = new Address();

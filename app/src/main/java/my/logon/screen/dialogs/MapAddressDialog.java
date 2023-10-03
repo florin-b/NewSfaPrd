@@ -3,7 +3,6 @@ package my.logon.screen.dialogs;
 import android.app.ActionBar.LayoutParams;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,20 +19,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import enums.EnumZona;
-import main.ZoneBucuresti;
 import my.logon.screen.R;
 import my.logon.screen.beans.Address;
 import my.logon.screen.beans.GeocodeAddress;
 import my.logon.screen.listeners.MapListener;
 import my.logon.screen.screens.ExceptionHandler;
 import my.logon.screen.utils.MapUtils;
-
 
 
 public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
@@ -89,9 +84,9 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 	public void show() {
 		try{
 
-			((SupportMapFragment) fm.findFragmentById(R.id.map)).getMapAsync(this);
+		((SupportMapFragment) fm.findFragmentById(R.id.map)).getMapAsync(this);
 
-			super.show();
+		super.show();
 		} catch (Exception e) {
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
 		}
@@ -106,11 +101,6 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 			if (address.getStreet() != null && address.getStreet().trim().length() > 1)
 				detailLevel = DETAIL_HIGH;
 
-			/*
-			GeocodeAddress geoAddress = MapUtils.geocodeAddress(address, context);
-			LatLng coord = geoAddress.getCoordinates();
-			 */
-
 			if (addressCoords.latitude == 0) {
 				textLabel.setText("Adresa inexistenta.");
 				removeMap();
@@ -119,7 +109,7 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 
 				map.getUiSettings().setZoomControlsEnabled(true);
 				addMapMarker(map);
-				addZoneBucuresti(map);
+
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(addressCoords, detailLevel));
 
 				setMapListener();
@@ -143,7 +133,7 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 					markerOptions.position(latLng);
 					map.clear();
 					map.addMarker(markerOptions);
-					addZoneBucuresti(map);
+
 					map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
 					android.location.Address locAddress = MapUtils.getAddressFromCoordinate(latLng, context);
@@ -174,11 +164,11 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 
 
 
-			for (beans.LatLng coord : brutCoords) {
-				LatLng oneCoord = new LatLng(coord.getLat(), coord.getLng());
-				listCoords.add(oneCoord);
+		for (beans.LatLng coord : brutCoords) {
+			LatLng oneCoord = new LatLng(coord.getLat(), coord.getLng());
+			listCoords.add(oneCoord);
 
-			}
+		}
 
 		} catch (Exception e) {
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
@@ -218,8 +208,8 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 				fm.beginTransaction().remove(f).commit();
 		}
 		catch(Exception ex){
-			Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
-		}
+				Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
+			}
 
 	}
 
@@ -238,34 +228,6 @@ public class MapAddressDialog extends Dialog implements OnMapReadyCallback {
 		this.mapListener = listener;
 	}
 
-	public void addZoneBucuresti(GoogleMap map) {
-
-		if (!address.getCity().equalsIgnoreCase("bucuresti"))
-			return;
-
-		List<beans.LatLng> zoneA = ZoneBucuresti.getZona(EnumZona.ZONA_A);
-
-		PolygonOptions polyOptionsA = new PolygonOptions();
-		polyOptionsA.addAll(getGoogleCoords(zoneA));
-		polyOptionsA.strokeColor(Color.RED);
-		polyOptionsA.strokeWidth(3);
-
-		List<beans.LatLng> zoneB1 = ZoneBucuresti.getZona(EnumZona.ZONA_B1);
-		PolygonOptions polyOptionsB1 = new PolygonOptions();
-		polyOptionsB1.addAll(getGoogleCoords(zoneB1));
-		polyOptionsB1.strokeColor(Color.BLACK);
-		polyOptionsB1.strokeWidth(3);
-
-		List<beans.LatLng> zoneB2 = ZoneBucuresti.getZona(EnumZona.ZONA_B2);
-		PolygonOptions polyOptionsB2 = new PolygonOptions();
-		polyOptionsB2.addAll(getGoogleCoords(zoneB2));
-		polyOptionsB2.strokeColor(Color.BLACK);
-		polyOptionsB2.strokeWidth(3);
-
-		map.addPolygon(polyOptionsA);
-		map.addPolygon(polyOptionsB1);
-		map.addPolygon(polyOptionsB2);
-	}
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {

@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import my.logon.screen.beans.ArticolMathaus;
 import my.logon.screen.beans.BeanCablu05;
+import my.logon.screen.beans.BeanStocTCLI;
 
 public class ArticolComanda implements Comparable<ArticolComanda> {
 
@@ -105,7 +106,13 @@ public class ArticolComanda implements Comparable<ArticolComanda> {
 	private double greutateBruta;
 	private String lungimeArt;
 
+
 	private double cantitateInit;
+
+	private String um50;
+	private double cantitate50;
+
+	private List<BeanStocTCLI> listStocTCLI;
 
 	public int getNrCrt() {
 		return nrCrt;
@@ -728,6 +735,30 @@ public class ArticolComanda implements Comparable<ArticolComanda> {
 
 	public void setCantitateInit(double cantitateInit) {
 		this.cantitateInit = cantitateInit;
+	}
+
+	public String getUm50() {
+		return um50;
+	}
+
+	public void setUm50(String um50) {
+		this.um50 = um50;
+	}
+
+	public double getCantitate50() {
+		return cantitate50;
+	}
+
+	public void setCantitate50(double cantitate50) {
+		this.cantitate50 = cantitate50;
+	}
+
+	public List<BeanStocTCLI> getListStocTCLI() {
+		return listStocTCLI;
+	}
+
+	public void setListStocTCLI(List<BeanStocTCLI> listStocTCLI) {
+		this.listStocTCLI = listStocTCLI;
 	}
 
 	@Override

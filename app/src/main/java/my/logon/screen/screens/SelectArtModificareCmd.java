@@ -80,6 +80,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 	LinearLayout redBtnTable, layoutStocKA, layoutPretMaxKA, layoutPretMediuKA;
 	EditText valRedIntText, valRedDecText;
 	public String globalDepozSel = "", artPromoText = "", cantUmb = "", Umb = "", selectedUnitMas = "", globalCodDepartSelectetItem = "";
+	private String cantitate50 = "", um50 = "";
 
 	ToggleButton tglButton, tglProc, tglTipArtBtn;
 
@@ -1020,6 +1021,10 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 						unArticol.setGreutateBruta(greutateBruta);
 						unArticol.setLungimeArt(lungimeArt);
 
+						unArticol.setCantitate50(Double.valueOf(cantitate50));
+						unArticol.setUm50(um50);
+
+
 						unArticol.setCantitateInit(Double.valueOf(cantArticol));
 
 						if (procRedFin > 0)
@@ -1218,6 +1223,36 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
 	}
 
+	public void showModifCantInfo(String cantInfo, String cant50Info, String um50Info) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+		StringBuilder infoText = new StringBuilder();
+
+		infoText.append("\nAcest produs se vinde doar in ");
+		infoText.append(um50Info);
+		infoText.append(" si cantitatea a fost ajustata la ");
+		infoText.append(cantInfo + " ");
+		infoText.append(textUM.getText());
+		infoText.append(" pentru a corespunde la ");
+		infoText.append(cant50Info + " " + um50Info + ".\n");
+
+		alertDialogBuilder.setTitle("Info");
+		alertDialogBuilder.setMessage(infoText.toString()).setCancelable(false)
+				.setNegativeButton("Inchide", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	private boolean isConditiiModifCant50(String cantArticol, String cantitate50, String um50){
+		return !textUM.getText().toString().trim().equals(um50) && Double.parseDouble(cantitate50) > 0
+				&& selectedCant != Double.parseDouble(cantArticol);
+	}
+
 	private void listArtPret(String pretResponse) {
 
 		try {
@@ -1234,6 +1269,18 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 				tipMarfa = tokenPret[26];
 				greutateBruta = Double.parseDouble(tokenPret[27].trim());
 				lungimeArt = tokenPret[28];
+
+				cantitate50 = tokenPret[29];
+				um50 = tokenPret[30];
+
+				if (isConditiiModifCant50(tokenPret[0],cantitate50,um50)){
+					textCant.setText(tokenPret[0]);
+					showModifCantInfo(tokenPret[0],cantitate50,um50);
+					selectedCant = Double.parseDouble(textCant.getText().toString().trim());
+				}
+
+				if (Double.parseDouble(cantitate50) == 0)
+					cantitate50 = tokenPret[0];
 
 				cmpArt = Double.parseDouble(tokenPret[17]);
 
@@ -1327,7 +1374,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
 				discMaxAV = Double.valueOf(tokenPret[10]);
 				discMaxSD = Double.valueOf(tokenPret[11]);
-
+				// discMaxDV = Double.valueOf(tokenPret[12]);
 
 				infoArticol = tokenPret[9].replace(',', '.');
 

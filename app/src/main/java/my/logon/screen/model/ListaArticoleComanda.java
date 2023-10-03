@@ -141,6 +141,9 @@ public class ListaArticoleComanda extends Observable {
 
 		articolLivrare.setCantitateInit(articolComanda.getCantitateInit());
 
+		articolLivrare.setCantitate50(articolComanda.getCantitate50());
+		articolLivrare.setUm50(articolComanda.getUm50());
+
 		return articolLivrare;
 
 	}

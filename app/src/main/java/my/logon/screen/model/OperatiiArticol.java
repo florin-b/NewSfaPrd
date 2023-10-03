@@ -103,4 +103,6 @@ public interface OperatiiArticol {
 
 	public String serializeDatePoligon(DatePoligonLivrare datePoligonLivrare);
 
+	public void getStocDisponibilTCLI(HashMap<String, String> params);
+
 }

@@ -41,6 +41,9 @@ public class PretArticolGed {
 	private double greutateBruta;
 	private String lungimeArt;
 
+	private String um50;
+	private String cantitate50;
+
 	public String getPret() {
 		return pret;
 	}
@@ -319,5 +322,21 @@ public class PretArticolGed {
 
 	public void setLungimeArt(String lungimeArt) {
 		this.lungimeArt = lungimeArt;
+	}
+
+	public String getUm50() {
+		return um50;
+	}
+
+	public void setUm50(String um50) {
+		this.um50 = um50;
+	}
+
+	public String getCantitate50() {
+		return cantitate50;
+	}
+
+	public void setCantitate50(String cantitate50) {
+		this.cantitate50 = cantitate50;
 	}
 }

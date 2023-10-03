@@ -33,6 +33,7 @@ import my.logon.screen.listeners.AdapterMathausListener;
 import my.logon.screen.listeners.ArticolMathausListener;
 import my.logon.screen.listeners.OperatiiMathausListener;
 import my.logon.screen.model.Constants;
+import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.OperatiiMathaus;
 import my.logon.screen.model.UserInfo;
 
@@ -303,12 +304,17 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         else
             tipCautare = "n";
 
+        String tipComanda = "";
+        if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
+            tipComanda = "fasonate";
+
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("codArticol", textCodArticol.getText().toString().trim().toLowerCase());
         params.put("tipCautare", tipCautare);
         params.put("filiala", filialaLivrareMathaus);
         params.put("depart", UserInfo.getInstance().getCodDepart());
         params.put("pagina", String.valueOf(this.paginaCurenta));
+        params.put("tipComanda", tipComanda);
 
         if (this.categorieCurenta != null && this.categorieCurenta.equals("0")) // ND-uri neclasificate
             opMathaus.cautaArticoleLocal(params);
@@ -501,12 +507,17 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
 
     private void getArticole(String codCategorie, int nrPagina) {
 
+        String tipComanda = "";
+        if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
+            tipComanda = "fasonate";
+
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("codCategorie", codCategorie);
         params.put("filiala", UserInfo.getInstance().getUnitLog());
         params.put("depart", UserInfo.getInstance().getCodDepart());
         params.put("pagina", String.valueOf(nrPagina));
         params.put("tipArticol", tipArticolAfis.toString());
+        params.put("tipComanda", tipComanda);
         opMathaus.getArticole(params);
 
     }

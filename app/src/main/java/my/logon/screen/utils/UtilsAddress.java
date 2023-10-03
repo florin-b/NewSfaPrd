@@ -37,4 +37,21 @@ public class UtilsAddress {
 			return " ";
 	}
 
+	public static String getSectorBucuresti(String googleSector){
+		if (googleSector.toLowerCase().contains("sectorul 1"))
+			return "SECTOR 1";
+		else if (googleSector.toLowerCase().contains("sectorul 2"))
+			return "SECTOR 2";
+		else if (googleSector.toLowerCase().contains("sectorul 3"))
+			return "SECTOR 3";
+		else if (googleSector.toLowerCase().contains("sectorul 4"))
+			return "SECTOR 4";
+		else if (googleSector.toLowerCase().contains("sectorul 5"))
+			return "SECTOR 5";
+		else if (googleSector.toLowerCase().contains("sectorul 6"))
+			return "SECTOR 6";
+		else
+			return "BUCURESTI";
+	}
+
 }

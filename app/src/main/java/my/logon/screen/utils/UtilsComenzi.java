@@ -4,8 +4,10 @@ import android.widget.Spinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.enums.TipCmdDistrib;
@@ -171,6 +173,15 @@ public class UtilsComenzi {
 
 	}
 
+	public static boolean isDepozitTCLI(String depozit, String departament){
+		String depozitDistrib = departament.substring(0,2) + "V1";
+
+		if (depozit.equals(depozitDistrib) || depozit.equals("MAV1"))
+			return true;
+
+		return false;
+	}
+
 	public static double getGreutateKgArticole(List<ArticolComanda> listArticole){
 		double greutate = 0;
 
@@ -200,6 +211,39 @@ public class UtilsComenzi {
 		}
 
 		return false;
+	}
+
+
+
+	public static ArrayList<HashMap<String, String>> fillFilialeFasonate() {
+
+		ArrayList<HashMap<String, String>> listFilialeFasonate = new ArrayList<HashMap<String, String>>();
+
+		HashMap<String, String> temp;
+		int i = 0;
+
+		temp = new HashMap<String, String>();
+		temp.put("numeJudet", "Selectati filiala");
+		temp.put("codJudet", "");
+		listFilialeFasonate.add(temp);
+
+		temp = new HashMap<String, String>();
+		temp.put("numeJudet", "Buc. Glina");
+		temp.put("codJudet", "BU10");
+		listFilialeFasonate.add(temp);
+
+		temp = new HashMap<String, String>();
+		temp.put("numeJudet", "Brasov");
+		temp.put("codJudet", "BV10");
+		listFilialeFasonate.add(temp);
+
+		temp = new HashMap<String, String>();
+		temp.put("numeJudet", "Iasi");
+		temp.put("codJudet", "IS10");
+		listFilialeFasonate.add(temp);
+
+		return listFilialeFasonate;
+
 	}
 
 }

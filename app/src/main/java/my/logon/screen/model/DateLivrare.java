@@ -102,6 +102,7 @@ public class DateLivrare {
 
 	private DateLivrareAfisare dateLivrareAfisare;
 	private String tipMasina = "";
+	private String codFilialaFasonate;
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -730,6 +731,17 @@ public class DateLivrare {
 		this.tipMasina = tipMasina;
 	}
 
+	public String getCodFilialaFasonate() {
+
+		if (codFilialaFasonate == null)
+			return "";
+		return codFilialaFasonate;
+	}
+
+	public void setCodFilialaFasonate(String codFilialaFasonate) {
+		this.codFilialaFasonate = codFilialaFasonate;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -794,6 +806,7 @@ public class DateLivrare {
 		filialaPlata = "";
 		datePoligonLivrare = null;
 		tipMasina = "";
+		codFilialaFasonate = "";
 
 	}
 

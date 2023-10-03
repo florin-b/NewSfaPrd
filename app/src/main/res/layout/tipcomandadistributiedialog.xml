@@ -91,18 +91,52 @@
                 android:textSize="17sp"
                 android:typeface="sans" >
             </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioFasonate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dip"
+                android:checked="false"
+                android:text="Comanda otel fasonat"
+                android:textColor="@color/detColor1"
+                android:textSize="17sp"
+                android:typeface="sans" >
+            </RadioButton>
+
+
         </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginBottom="20dip"
+            android:gravity="bottom"
+            android:orientation="vertical" >
 
         <Spinner
             android:id="@+id/spinFilialaCLP"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="45dip"
             android:layout_gravity="bottom|left"
-            android:layout_marginBottom="20dip"
             android:layout_marginLeft="30dip"
-            android:layout_weight="0.1"
             android:gravity="left"
             android:visibility="invisible" />
+
+        <Spinner
+            android:id="@+id/spinFilialaFasonate"
+            android:layout_width="wrap_content"
+            android:layout_height="45dip"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="30dip"
+            android:gravity="left"
+            android:visibility="invisible" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <TextView

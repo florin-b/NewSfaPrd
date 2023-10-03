@@ -99,7 +99,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 	private boolean pressedTVAButton = false;
 	private Spinner spinnerAgenti;
 	private RadioGroup radioSelectAgent;
-
 	private String codCuiIp;
 
 	@Override
@@ -138,6 +137,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 		layoutDetaliiClientDistrib = (LinearLayout) findViewById(R.id.detaliiClientDistrib);
 		layoutDetaliiClientDistrib.setVisibility(View.GONE);
+
 
 		textNumeClientDistrib = (TextView) findViewById(R.id.textNumeClientDistrib);
 		textCodClientDistrib = (TextView) findViewById(R.id.textCodClientDistrib);
@@ -578,6 +578,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					((LinearLayout) findViewById(R.id.layoutLabelJ)).setVisibility(View.VISIBLE);
 					((LinearLayout) findViewById(R.id.layoutTextJ)).setVisibility(View.VISIBLE);
 
+
 					layoutLabelJ.setVisibility(View.VISIBLE);
 					layoutTextJ.setVisibility(View.VISIBLE);
 					checkPlatTva.setChecked(true);
@@ -639,6 +640,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					labelIDClient.setText("CNP");
 					setTextNumeClientEnabled(true);
 					clearDateLivrare();
+
 
 				}
 
@@ -736,6 +738,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			filialaClp = DateLivrare.getInstance().getCodFilialaCLP();
 		}
 
+		String codFilialaFasonate = DateLivrare.getInstance().getCodFilialaFasonate();
+
 		FurnizorComanda furnizorComanda = null;
 
 		boolean localIsCmdACZC = DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_COMANDA;
@@ -751,6 +755,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			DateLivrare.getInstance().setCodFilialaCLP(filialaClp);
 			DateLivrare.getInstance().setTipComandaGed(TipCmdGed.COMANDA_LIVRARE);
 		}
+
+		DateLivrare.getInstance().setCodFilialaFasonate(codFilialaFasonate);
 
 		if (furnizorComanda != null) {
 			DateLivrare.getInstance().setFurnizorComanda(furnizorComanda);
@@ -907,7 +913,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 				if (CreareComandaGed.codClientCUI != null && !CreareComandaGed.codClientCUI.trim().isEmpty())
 					CreareComandaGed.codClientVar = CreareComandaGed.codClientCUI;
-
 			}
 
 			if (radioCmdNormala.isChecked())
@@ -1214,7 +1219,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			CreareComandaGed.tipClientIP = client.getTipClientIP();
 			CreareComandaGed.tipPlataContract = client.getTipPlata();
 			DateLivrare.getInstance().setClientBlocat(client.isClientBlocat());
-			
+
 			if (client.getTermenPlata() != null)
 				CreareComandaGed.listTermenPlata = client.getTermenPlata();
 
@@ -1230,8 +1235,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 				else {
 					if (!client.getFilialaClientIP().equals(UserInfo.getInstance().getUnitLog()))
 						UserInfo.getInstance().setUnitLog(client.getFilialaClientIP());
-
-
 				}
 
 				getInfoCreditClient(client.getCodClient());
@@ -1282,6 +1285,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		CreareComandaGed.codClientCUI = "";
 		if (datePersonale.getCodClient()!= null && !datePersonale.getCodClient().equals("-1"))
 			CreareComandaGed.codClientCUI = datePersonale.getCodClient();
+
 
 		DateLivrare.getInstance().setCodJudetD(datePersonale.getCodjudet());
 		DateLivrare.getInstance().setOrasD(datePersonale.getLocalitate());

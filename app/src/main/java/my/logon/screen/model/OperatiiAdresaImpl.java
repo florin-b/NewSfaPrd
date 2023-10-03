@@ -167,6 +167,9 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 				listLocalitati.add(loc);
 			}
 
+			if (!jsonObject.toString().contains("listStrazi"))
+				return adreseJudet;
+
 			JSONArray jsonArrayStrazi = new JSONArray(jsonObject.getString("listStrazi"));
 
 			for (int i = 0; i < jsonArrayStrazi.length(); i++) {

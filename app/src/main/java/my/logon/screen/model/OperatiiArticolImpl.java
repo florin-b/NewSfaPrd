@@ -91,6 +91,12 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 		performOperation();
 	}
 
+	public void getStocDisponibilTCLI(HashMap<String, String> params) {
+		numeComanda = EnumArticoleDAO.GET_STOC_TCLI;
+		this.params = params;
+		performOperation();
+	}
+
 	public void getArticoleDistributie(HashMap<String, String> params) {
 		numeComanda = EnumArticoleDAO.GET_ARTICOLE_DISTRIBUTIE;
 		this.params = params;
@@ -584,6 +590,8 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				pretArticol.setTipMarfa(jsonObject.getString("tipMarfa"));
 				pretArticol.setGreutateBruta(Double.valueOf(jsonObject.getString("greutateBruta")));
 				pretArticol.setLungimeArt(jsonObject.getString("lungime"));
+				pretArticol.setUm50(jsonObject.getString("um50"));
+				pretArticol.setCantitate50(jsonObject.getString("cantitate50"));
 
 
 			}
@@ -771,6 +779,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				articol.setQuantity(Double.parseDouble(articolObject.getString("quantity")));
 				articol.setUnit(articolObject.getString("unit"));
 				articol.setDepozit(articolObject.getString("depozit"));
+				articol.setCantUmb(Double.parseDouble(articolObject.getString("cantUmb")));
 
 				listArticole.add(articol);
 			}
@@ -861,6 +870,10 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 				jsonObject.put("ulStoc", articol.getUlStoc());
 				jsonObject.put("depozit", articol.getDepozit());
 				jsonObject.put("greutate", articol.getGreutate());
+
+				jsonObject.put("quantity50", articol.getQuantity50());
+				jsonObject.put("unit50", articol.getUnit50());
+
 				jsonArray.put(jsonObject);
 			}
 
