@@ -32,26 +32,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="left|bottom"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.2"
                     android:gravity="left" />
 
-                <CheckBox
-                    android:id="@+id/checkMacara"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="0.15"
-                    android:text="Camion cu macara" />
-
-                <Spinner
-                    android:id="@+id/spinnerTonaj"
+                <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginRight="180dip"
-                    android:layout_weight="0.1"
-                    android:gravity="left" />
+                    android:layout_weight="0.5"
+                     />
+
+
             </LinearLayout>
 
 
@@ -822,7 +812,7 @@
                 >
 
                 <TextView
-
+                    android:id="@+id/labelAdresa22"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center"
@@ -837,13 +827,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dip"
                     android:layout_gravity="bottom"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    >
 
                     <RadioButton
                         android:id="@+id/radioAdresaSediu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Adresa de livrare"
+
                         android:textColor="@color/labelColor"
                         android:textSize="16sp" />
 

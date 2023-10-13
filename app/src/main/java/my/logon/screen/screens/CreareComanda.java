@@ -2007,53 +2007,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
     }
 
-    private void getLivrariMathausCmdTCLI() {
 
-
-        List<DateArticolMathaus> listArticoleMat = new ArrayList<DateArticolMathaus>();
-
-        for (TranspComenzi transpComenzi : DateLivrare.getInstance().getTranspComenzi()) {
-
-            if (transpComenzi.getTransport().equals("TRAP")) {
-
-                for (DateArticolMathaus articolMathaus : livrareMathaus.getComandaMathaus().getDeliveryEntryDataList()) {
-
-                    if (transpComenzi.getFiliala().equals(articolMathaus.getDeliveryWarehouse())) {
-
-
-                        for (DateArticolMathaus dateArticolMathaus : comandaMathausTCLI.getDeliveryEntryDataList()) {
-
-                            if (dateArticolMathaus.getProductCode().equals(articolMathaus.getProductCode())) {
-
-                                DateArticolMathaus dateArticol = new DateArticolMathaus();
-                                dateArticol.setProductCode(articolMathaus.getProductCode().replaceAll("^0+(?!$)", ""));
-                                dateArticol.setQuantity(articolMathaus.getQuantity());
-                                dateArticol.setUnit(articolMathaus.getUnit());
-                                dateArticol.setValPoz(dateArticolMathaus.getValPoz());
-                                dateArticol.setTip2("");
-                                dateArticol.setUlStoc(articolMathaus.getUlStoc());
-                                listArticoleMat.add(dateArticol);
-                            }
-
-                        }
-                    }
-
-                }
-
-            }
-
-        }
-
-        comandaMathausTCLI.setDeliveryEntryDataList(listArticoleMat);
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("antetComanda", opArticol.serializeAntetCmdMathaus(antetMathausTCLI));
-        params.put("comandaMathaus", opArticol.serializeComandaMathaus(comandaMathausTCLI));
-        params.put("canal", "10");
-
-        comandaDAO.getLivrariMathausTCLI(params);
-
-    }
 
     private void setLivrariMathausTCLI(String result) {
 

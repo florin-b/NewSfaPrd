@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -412,6 +414,22 @@ public class HelperMathaus {
             dateArticol.setUlStoc(DateLivrare.getInstance().getCodFilialaFasonate());
 
         return dateArticol;
+
+    }
+
+    public static List<BeanStocTCLI> getStocTCLIDepozit(String cantitate, String depozit, String um){
+
+        NumberFormat numberFormat = new DecimalFormat("#,##0.00");
+
+        BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
+        try {
+            beanStocTCLI.setCantitate(numberFormat.parse(cantitate).doubleValue());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        beanStocTCLI.setDepozit(depozit);
+        beanStocTCLI.setUm(um);
+        return Arrays.asList(beanStocTCLI);
 
     }
 

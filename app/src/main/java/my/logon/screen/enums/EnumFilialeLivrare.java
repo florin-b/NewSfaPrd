@@ -5,10 +5,10 @@ import java.util.List;
 
 public enum EnumFilialeLivrare {
 
-	ARGES("Arges - distributie", "AG10"), ARGES2("Arges - Mathaus", "AG20"), ANDRONACHE("Andronache", "BU13"), BACAU("Bacau", "BC10"), BIHOR("Bihor", "BH10"), BUZAU("Buzau", "BZ10"), GLINA("Glina - distributie", "BU10"), GLINA2("Glina - Mathaus", "BU20"), MILITARI(
-			"Militari", "BU11"), OTOPENI("Otopeni", "BU12"), BRASOV("Brasov", "BV10"), CLUJ("Cluj", "CJ10"), CONSTANTA("Constanta", "CT10"), DOLJ("Dolj",
-			"DJ10"), GALATI("Galati", "GL10"), HUNEDOARA("Hunedoara", "HD10"), IASI("Iasi - distributie", "IS10"), IASI2("Iasi - Mathaus", "IS20"), MARAMURES("Maramures", "MM10"), MURES("Mures", "MS10"), PIATRA_NEAMT(
-			"Neamt", "NT10"), PRAHOVA("Prahova", "PH10"), SIBIU("Sibiu", "SB10"),SUCEAVA("Suceava", "SV10"),TIMISOARA("Timisoara", "TM10"), VRANCEA("Vrancea", "VN10");
+	ARGES("Arges - distributie", "AG10"), ARGES2("Arges - Mathaus", "AG20"), ANDRONACHE("Andronache", "BU13"), BACAU("Bacau", "BC10"), BIHOR("Bihor - distributie", "BH10"),BIHOR2("Bihor - Mahaus", "BH20"), BUZAU("Buzau", "BZ10"), GLINA("Glina - distributie", "BU10"), GLINA2("Glina - Mathaus", "BU20"), MILITARI(
+			"Militari", "BU11"), OTOPENI("Otopeni", "BU12"), BRASOV("Brasov", "BV10"), CLUJ("Cluj", "CJ10"), CONSTANTA("Constanta - distributie", "CT10"), CONSTANTA2("Constanta - Mathaus", "CT20"), DOLJ("Dolj - distributie",
+			"DJ10"), DOLJ2("Dolj - Mathaus", "DJ20"), GALATI("Galati - distibutie", "GL10"), GALATI2("Galati - Mathaus", "GL20"), HUNEDOARA("Hunedoara", "HD10"), IASI("Iasi - distributie", "IS10"), IASI2("Iasi - Mathaus", "IS20"), MARAMURES("Maramures", "MM10"), MURES("Mures", "MS10"), PIATRA_NEAMT(
+			"Neamt", "NT10"), PRAHOVA("Prahova", "PH10"), SIBIU("Sibiu", "SB10"),SUCEAVA("Suceava - distributie", "SV10"), SUCEAVA2("Suceava - Mathaus", "SV20"),TIMISOARA("Timisoara", "TM10"), VRANCEA("Vrancea", "VN10");
 
 	private String nume;
 	private String cod;

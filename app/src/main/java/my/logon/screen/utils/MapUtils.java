@@ -36,7 +36,11 @@ public class MapUtils {
 		}
 
 		if (address.getSector() != null && !address.getSector().equals("")) {
-			strAddress.append(address.getSector());
+
+			if (!UtilsFormatting.flattenToAscii(address.getSector()).toLowerCase().contains("bucuresti"))
+				strAddress.append("Judetul " + address.getSector());
+			else
+				strAddress.append(address.getSector());
 			strAddress.append(",");
 		}
 
@@ -46,7 +50,6 @@ public class MapUtils {
 		}
 
 		strAddress.append(address.getCountry());
-
 		Locale aLocale = new Locale.Builder().setLanguage("ro").build();
 		Geocoder geoCoder = new Geocoder(context, aLocale);
 		List<android.location.Address> addresses = new ArrayList<android.location.Address>();
@@ -65,6 +68,7 @@ public class MapUtils {
 			String judetResult = addresses.get(0).getAdminArea();
 			String comunaResult = addresses.get(0).getSubAdminArea();
 			String localitateResult = addresses.get(0).getLocality();
+			String subLocalitateResult = addresses.get(0).getSubLocality() != null ? addresses.get(0).getSubLocality() : " ";
 
 			String localitateAdresa = UtilsFormatting.flattenToAscii(address.getCity().trim().toLowerCase());
 			String judetAdresa = UtilsFormatting.flattenToAscii(address.getSector().trim().toLowerCase());
@@ -75,7 +79,8 @@ public class MapUtils {
 			if (!UtilsFormatting.flattenToAscii(judetResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(judetAdresa).toLowerCase()))
 				isLocalitateCorecta = false;
 			else if (localitateResult != null){
-				isLocalitateCorecta = UtilsFormatting.flattenToAscii(localitateResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase());
+				isLocalitateCorecta = UtilsFormatting.flattenToAscii(localitateResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase()) ||
+						UtilsFormatting.flattenToAscii(subLocalitateResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase());
 			}
 			else if (comunaResult != null)
 				isLocalitateCorecta = UtilsFormatting.flattenToAscii(comunaResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase());
@@ -154,8 +159,10 @@ public class MapUtils {
 		tempString = tempString.replace("MUNICIPIUL", "").trim();
 		address.setSector(tempString);
 
-		if (googleAddress.getLocality() != null) {
-			tempString = UtilsFormatting.flattenToAscii(googleAddress.getLocality()).toUpperCase();
+		String localitateAddress = googleAddress.getSubLocality() != null ? googleAddress.getSubLocality() : googleAddress.getLocality();
+
+		if (localitateAddress != null) {
+			tempString = UtilsFormatting.flattenToAscii(localitateAddress).toUpperCase();
 			if (tempString.equalsIgnoreCase("bucharest"))
 				tempString = "BUCURESTI";
 		} else

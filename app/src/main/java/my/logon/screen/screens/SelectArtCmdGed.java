@@ -690,8 +690,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         if (DateLivrare.getInstance().getTransport().equals("TCLI") && DateLivrare.getInstance().getFilialaLivrareTCLI()!= null && !DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty()) {
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");
-            //performListArtStoc();
-            getStocComenziTCLI();
+            performListArtStoc();
         } else if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_DETERIORATE)){
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");
@@ -702,12 +701,6 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     }
 
-    private void getStocComenziTCLI(){
-        if (UtilsGeneral.isFilMareLivrTCLIDistrib() || articolDBSelected.getDepart().equals("11"))
-            performListArtStoc();
-        else
-            getStocDisponibilTCLI();
-    }
 
     private void setCatMathausListener() {
         btnCatMathaus.setOnClickListener(new OnClickListener() {
@@ -793,6 +786,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                 params.put("tipCmd", "G");
                 params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
                 params.put("codUser", UserInfo.getInstance().getCod());
+                params.put("tipZona", DateLivrare.getInstance().getDatePoligonLivrare().getTipZona());
 
                 opArticol.getStocMathaus(params);
 
@@ -1379,6 +1373,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         BeanParametruPretGed paramPret = new BeanParametruPretGed();
         paramPret.setClient(codClientVar);
         paramPret.setArticol(codArticol);
+
         paramPret.setCantitate(textCant.getText().toString().trim());
         paramPret.setDepart(globalCodDepartSelectetItem);
         paramPret.setUm(paramUnitMas);
@@ -1413,14 +1408,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         return DateLivrare.getInstance().getOras();
 
-        /*
-        if (DateLivrare.getInstance().isAltaAdresa()) {
-            return DateLivrare.getInstance().getOrasD();
-        } else {
-            return DateLivrare.getInstance().getOras();
-        }
 
-         */
 
     }
 
@@ -1745,17 +1733,14 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                             procRedFin = (1 - finalPrice / (initPrice / globalCantArt * valMultiplu)) * 100;
                     }
 
-                    if (procRedFin > 80) {
-                        Toast.makeText(getApplicationContext(), "Procentul de reducere depaseste pragul admis! ", Toast.LENGTH_SHORT).show();
 
+/*
                         if (CreareComandaGed.tipComandaGed == TipCmdGed.COMANDA_AMOB && importAllAmob) {
                             setProcesatArticolAmob(codArticol, globalDepozSel);
                             proceseazaArticoleAmob();
                         }
-                        return;
-                    }
+*/
 
-                    // sf. verificare
 
                     // pt. unele articole care nu au pret (servicii)
                     if (pretVanzare == 0)
@@ -1869,6 +1854,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
                         articol.setCantitate50(Double.valueOf(selectedArticol.getCantitate50()));
                         articol.setUm50(selectedArticol.getUm50());
+
+                        if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+                            listStocTCLI = HelperMathaus.getStocTCLIDepozit(textStoc.getText().toString(),articol.getDepozit(),articol.getUm());
 
                         articol.setListStocTCLI(listStocTCLI);
 
@@ -2102,6 +2090,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     @SuppressWarnings("unchecked")
     private void listArtStoc(String stocResponse) {
+
+        listStocTCLI = new ArrayList<>();
 
         if (!stocResponse.equals("-1")) {
 
@@ -2976,15 +2966,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         if (codArticol.length() == 8)
             codArticol = "0000000000" + codArticol;
 
-        if (DateLivrare.getInstance().getTransport().equals("TCLI") && DateLivrare.getInstance().getFilialaLivrareTCLI()!= null && !DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty()) {
-            if (articolDBSelected.getDepart().equals("11"))
-                globalDepozSel = "MAV1";
-            else
-                globalDepozSel = articolDBSelected.getDepart().substring(0, 2) + "V1";
-        }
-
-
-        if (DateLivrare.getInstance().getTransport().equals("TCLI") && UtilsGeneral.isFilMareLivrTCLIGed() && DateLivrare.getInstance().getFilialaLivrareTCLI()!= null && !DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty()) {
+        if (isDepartMathaus && DateLivrare.getInstance().getTransport().equals("TCLI") && DateLivrare.getInstance().getFilialaLivrareTCLI()!= null && !DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty()) {
             if (UtilsGeneral.isUlDistrib(DateLivrare.getInstance().getFilialaLivrareTCLI()))
                 globalDepozSel = articolDBSelected.getDepart().substring(0, 2) + "V1";
             else
@@ -3054,7 +3036,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     private boolean isCondArtStocBV90() {
 
-        return articolMathaus != null && DateLivrare.getInstance().getTipComandaGed() != TipCmdGed.ARTICOLE_DETERIORATE &&
+        return articolMathaus != null && !DateLivrare.getInstance().getTransport().equals("TCLI") && DateLivrare.getInstance().getTipComandaGed() != TipCmdGed.ARTICOLE_DETERIORATE &&
                 (articolMathaus.getDepart().equals(("01")) || articolMathaus.getDepart().equals(("02")) || articolMathaus.getDepart().equals("05"));
 
     }

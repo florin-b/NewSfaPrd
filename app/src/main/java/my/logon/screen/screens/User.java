@@ -199,10 +199,9 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 
 		}
 
-		if ((UserInfo.getInstance().getTipAcces().equals("27") || UserInfo.getInstance().getTipAcces().equals("32")
-				|| UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18") || UserInfo.getInstance()
+		if ((UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18") || UserInfo.getInstance()
 				.getTipAcces().equals("39"))
-				&& !UserInfo.getInstance().getUserSite().equals("X") && !UtilsUser.isUserIP())// KA,
+				&& !UserInfo.getInstance().getUserSite().equals("X") && !UtilsUser.isUserIP())//
 		// cons
 		// sau
 		// sm, sdip
@@ -266,7 +265,7 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 				spinnerDepart.setVisibility(View.INVISIBLE);
 			}
 
-		} // sf. KA
+		} // sf. cons
 
 		if (UserInfo.getInstance().getExtraFiliale().size() > 0) {
 			addExtraFiliale();

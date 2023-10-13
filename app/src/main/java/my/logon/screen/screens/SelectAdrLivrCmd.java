@@ -85,7 +85,6 @@ import my.logon.screen.model.OperatiiAdresa;
 import my.logon.screen.model.OperatiiAdresaImpl;
 import my.logon.screen.model.OperatiiObiective;
 import my.logon.screen.model.UserInfo;
-import my.logon.screen.utils.Exceptions;
 import my.logon.screen.utils.MapUtils;
 import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsDates;
@@ -123,7 +122,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     private RadioButton radioLista, radioText, radioObiectiv;
     private boolean adrNouaModifCmd = false;
     private int selectedAddrModifCmd = -1;
-    private CheckBox checkMacara, chkbClientLaRaft;
+    private CheckBox  chkbClientLaRaft;
     private Spinner spinnerObiective;
     private LinearLayout layoutObiective;
 
@@ -137,7 +136,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     private AutoCompleteTextView textLocalitate, textStrada;
     private Button btnPozitieAdresa;
     private EditText textNrStr;
-    private Spinner spinnerTonaj, spinnerIndoire, spinnerDebitare;
+    private Spinner  spinnerIndoire, spinnerDebitare;
     private ArrayList<BeanAdresaLivrare> adreseList;
     private LinearLayout layoutPrelucrare04;
 
@@ -466,9 +465,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             }
         }
 
-        checkMacara = (CheckBox) findViewById(R.id.checkMacara);
-        setMacaraVisible();
-        setListenerCheckMacara();
 
         checkFactPaleti = (CheckBox) findViewById(R.id.chkFactPaleti);
         checkFactPaleti.setChecked(DateLivrare.getInstance().isFactPaletSeparat());
@@ -476,8 +472,8 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         chkCamionDescoperit = (CheckBox) findViewById(R.id.chkCamionDescoperit);
         chkCamionDescoperit.setChecked(DateLivrare.getInstance().isCamionDescoperit());
 
-        spinnerTonaj = (Spinner) findViewById(R.id.spinnerTonaj);
-        setupSpinnerTonaj();
+
+
 
         spinnerIndoire = (Spinner) findViewById(R.id.spinnerIndoire);
         setupSpinnerIndoire();
@@ -614,7 +610,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         if (spinnerAdreseLivrare.getAdapter() != null && spinnerAdreseLivrare.getAdapter().getCount() > 0)
             setAdresaLivrareFromList((BeanAdresaLivrare) spinnerAdreseLivrare.getAdapter().getItem(0));
 
-        spinnerTonaj.setVisibility(View.VISIBLE);
+
         spinnerTransp.setSelection(0);
 
     }
@@ -848,28 +844,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         return false;
     }
 
-    private void setupSpinnerTonaj() {
 
-        String[] tonajValues = {"Selectati tonajul", "3.5 T", "10 T", "Fara restrictie de tonaj"};
-
-        ArrayAdapter<String> adapterTonaj = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tonajValues);
-        adapterTonaj.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTonaj.setAdapter(adapterTonaj);
-
-        if (DateLivrare.getInstance().getTonaj() != null) {
-            for (int i = 0; i < spinnerTonaj.getCount(); i++)
-                if (spinnerTonaj.getItemAtPosition(i).toString().toUpperCase().contains(DateLivrare.getInstance().getTonaj())) {
-                    spinnerTonaj.setSelection(i);
-                    break;
-                }
-
-            if (DateLivrare.getInstance().getTonaj().equals("20"))
-                spinnerTonaj.setSelection(spinnerTonaj.getCount() - 1);
-
-        }
-
-
-    }
 
     private void setupSpinnerIndoire() {
 
@@ -896,9 +871,8 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
                 if (arg2 == 0) {
-                    checkMacara.setChecked(DateLivrare.getInstance().isMasinaMacara());
-                    setMacaraVisible();
-                    spinnerTonaj.setVisibility(View.VISIBLE);
+
+
                     setDateDelegatVisibility(false);
                 } else {
 
@@ -907,12 +881,8 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                     else
                         setDateDelegatVisibility(false);
 
-                    checkMacara.setChecked(false);
-                    checkMacara.setVisibility(View.INVISIBLE);
 
 
-                    if (!isAdresaLivrareTCLI)
-                        spinnerTonaj.setVisibility(View.INVISIBLE);
                 }
 
                 String tipTranspSel = spinnerTransp.getSelectedItem().toString().split("-")[0].trim();
@@ -936,14 +906,16 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         if (isAdresaLivrareTCLI)
             return;
 
-        if (tipTransp.equals("TCLI") && ModificareComanda.selectedCmd.equals("")) {
+        if (tipTransp.equals("TCLI")) {
             layoutAdrese.setVisibility(View.GONE);
             layoutAdr1.setVisibility(View.GONE);
             layoutAdr2.setVisibility(View.GONE);
             layoutHarta.setVisibility(View.GONE);
             ((LinearLayout) findViewById(R.id.layoutRadioAdrese)).setVisibility(View.GONE);
             ((LinearLayout) findViewById(R.id.layoutBlocScara)).setVisibility(View.GONE);
-            ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.VISIBLE);
+
+            if (ModificareComanda.selectedCmd.equals(""))
+                ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.VISIBLE);
 
         } else {
             ((LinearLayout) findViewById(R.id.layoutRadioAdrese)).setVisibility(View.VISIBLE);
@@ -1055,13 +1027,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         }
     }
 
-    private void setListenerCheckMacara() {
-        checkMacara.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DateLivrare.getInstance().setMasinaMacara(isChecked);
-            }
-        });
-    }
+
 
     private void setListenerCheckObsSofer() {
         checkObsSofer.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -1143,6 +1109,27 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     private void performGetJudete() {
 
         fillJudeteClient(EnumJudete.getRegionCodes());
+
+        /*
+
+        if (isComandaClp() || isComandaBV() || isComandaDl() || DateLivrare.getInstance().isClientFurnizor() || isLivrareCustodie()) {
+            fillJudeteClient(EnumJudete.getRegionCodes());
+
+        } else {
+            String unitLog = UserInfo.getInstance().getUnitLog();
+
+            if (unitLog.equals("NN10"))
+                unitLog = "AG10";
+
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("filiala", unitLog);
+
+            AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
+            call.getCallResultsSyncActivity();
+        }
+
+
+         */
 
     }
 
@@ -1402,8 +1389,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             @Override
             public void onClick(View v) {
                 clearAdresaLivrare();
-                spinnerTonaj.setEnabled(true);
-                spinnerTonaj.setSelection(0);
+
 
             }
         });
@@ -1430,8 +1416,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             @Override
             public void onClick(View v) {
                 clearAdresaLivrare();
-                spinnerTonaj.setEnabled(true);
-                spinnerTonaj.setSelection(0);
+
 
             }
         });
@@ -1495,7 +1480,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             if (selectedAddrModifCmd != -1)
                 spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
 
-            if (!ModificareComanda.selectedCmd.equals("")) {
+            if (!ModificareComanda.selectedCmd.equals("") && !DateLivrare.getInstance().getTransport().equals("TCLI")) {
                 if (!adrNouaModifCmd)
                     getCmdDateLivrare();
                 else
@@ -1680,47 +1665,11 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
     }
 
-    private void setSpinnerTonajValue(String tonaj) {
 
-        if (tonaj == null || tonaj.equals("0")) {
-            spinnerTonaj.setSelection(0);
-            spinnerTonaj.setEnabled(true);
-            return;
-        }
 
-        DateLivrare.getInstance().setTonaj(tonaj);
 
-        int pos = HelperAdreseLivrare.getTonajSpinnerPos(tonaj);
 
-        if (pos > 0) {
-            spinnerTonaj.setSelection(pos);
-            spinnerTonaj.setEnabled(false);
-        }
 
-    }
-
-    private void setMacaraVisible() {
-
-        checkMacara.setVisibility(View.INVISIBLE);
-
-    }
-
-    private boolean isArtException() {
-
-        List<String> articoleExceptii = Exceptions.getExceptionsMacara(this);
-        List<ArticolComanda> articoleComanda = ListaArticoleComanda.getInstance().getListArticoleComanda();
-
-        for (String exceptie : articoleExceptii) {
-
-            for (ArticolComanda articol : articoleComanda) {
-                if (exceptie.equals(articol.getCodArticol()))
-                    return true;
-            }
-
-        }
-
-        return false;
-    }
 
     public class SpinnerTouchListener implements OnTouchListener {
 
@@ -1852,6 +1801,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
         }
 
+        if (listLocalitati != null)
         for (String localitate : listLocalitati) {
             if (localitate.trim().equalsIgnoreCase(localitateCurenta)) {
                 locExist = true;
@@ -1859,6 +1809,12 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             }
 
         }
+        else
+            locExist = true;
+
+        //nu se mai valideaza
+        if (tipLocalitate.equals("LIVRARE"))
+            locExist = true;
 
         if (!locExist && !localitateCurenta.isEmpty()) {
             String alert = "Localitatea " + localitateCurenta + " nu exista in judetul " + numeJudet + ". Completati alta localitate.";
@@ -1975,7 +1931,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                 setAdresaLivrareFromList(adresaLivrare);
             }
 
-        } else if (((LinearLayout) findViewById(R.id.layoutFilLivrare)).getVisibility() == View.VISIBLE) {
+        } else if (((LinearLayout) findViewById(R.id.layoutFilLivrare)).getVisibility() == View.VISIBLE || dateLivrareInstance.getTransport().equals("TCLI")) {
 
         } else {
 
@@ -2115,10 +2071,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             return;
         }
 
-        if (isConditiiTonaj(spinnerTransp, spinnerTonaj)) {
-            dateLivrareInstance.setTonaj(HelperAdreseLivrare.getTonajSpinnerValue(spinnerTonaj.getSelectedItemPosition()));
-        } else
-            dateLivrareInstance.setTonaj("-1");
+
 
         if (spinnerIndoire.getVisibility() == View.VISIBLE && spinnerIndoire.getSelectedItemPosition() > 0) {
             dateLivrareInstance.setPrelucrare(spinnerIndoire.getSelectedItem().toString());
@@ -2175,21 +2128,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
     }
 
-    private void valideazaTonajAdresaNoua() {
-        String tonajAdresaNoua = HelperAdreseLivrare.getTonajAdresaNoua(adreseList, DateLivrare.getInstance().getCoordonateAdresa());
-
-        String tonajExistent = HelperAdreseLivrare.getTonajSpinnerValue(spinnerTonaj.getSelectedItemPosition());
-
-        if (!tonajAdresaNoua.equals("0"))
-            setSpinnerTonajValue(tonajAdresaNoua);
-        else {
-            setSpinnerTonajValue(tonajExistent);
-            spinnerTonaj.setEnabled(true);
-        }
-
-        if (!tonajAdresaNoua.equals("0") && !tonajAdresaNoua.equals(tonajExistent))
-            Toast.makeText(getApplicationContext(), "Pentru aceasta zona tonajul a fost preluat din sistem.", Toast.LENGTH_LONG).show();
-    }
 
     private boolean adresaNouaExista() {
         int posAdresa = HelperAdreseLivrare.verificaDistantaAdresaNoua(adreseList, DateLivrare.getInstance().getCoordonateAdresa());
@@ -2203,7 +2141,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
             spinnerAdreseLivrare.setSelection(posAdresa != -1 ? posAdresa : adresaExista);
             return true;
         } else if (posAdresa != -1) {
-            valideazaTonajAdresaNoua();
             return false;
         } else
             return false;
@@ -2223,10 +2160,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         return true;
     }
 
-    private boolean isConditiiTonaj(Spinner spinnerTransp, Spinner spinnerTonaj) {
-        return spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() > 0;
 
-    }
 
     private void getDatePoligonLivrare() {
 
@@ -2251,17 +2185,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
                 if (isCondInfoRestrictiiTonaj())
                     Toast.makeText(getApplicationContext(), "La aceasta adresa exista o limitare de tonaj de " + poligonLivrare.getLimitareTonaj() + " T.", Toast.LENGTH_LONG).show();
             }
-        } else {
-            if (spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() == 0 &&
-                    DateLivrare.getInstance().getDatePoligonLivrare() == null) {
-                Toast.makeText(getApplicationContext(), "Selectati tonajul!", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if (DateLivrare.getInstance().getTransport().equals("TRAP") && isAdresaText()) {
-                valideazaTonajAdresaNoua();
-
-            }
         }
 
         finish();
@@ -2282,13 +2205,16 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         BeanLocalitate beanLocalitate = new BeanLocalitate();
 
         GeocodeAddress geoAddress = MapUtils.geocodeAddress(getAddressFromForm(), getApplicationContext());
+        isAdresaOk = geoAddress.isAdresaValida();
+
+        if (!isAdresaOk)
+            return false;
+
         DateLivrare.getInstance().setCoordonateAdresa(geoAddress.getCoordinates());
 
         if (isAdresaText()) {
             addressCoordinates = geoAddress.getCoordinates();
             beanLocalitate = HelperAdreseLivrare.getDateLocalitate(listAdreseJudet.getListLocalitati(), DateLivrare.getInstance().getOras());
-            isAdresaOk = geoAddress.isAdresaValida();
-
         } else {
             beanLocalitate.setOras(adresaLivrareSelected.isOras());
             beanLocalitate.setRazaKm(adresaLivrareSelected.getRazaKm());
@@ -2324,7 +2250,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         DateLivrare.getInstance().setOras(tokenAdresa[1]);
         DateLivrare.getInstance().setStrada(tokenAdresa[0]);
         DateLivrare.getInstance().setCoordonateAdresa(new LatLng(Double.valueOf(tokenAdresa[4]), Double.valueOf(tokenAdresa[5])));
-        spinnerTonaj.setSelection(1);
+
     }
 
     private void setAdresaLivrareFromList(BeanAdresaLivrare adresaLivrare) {
@@ -2354,7 +2280,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
         DateLivrare.getInstance().setCoordonateAdresa(new LatLng(Double.valueOf(tokenCoords[0]), Double.valueOf(tokenCoords[1])));
 
-        setSpinnerTonajValue(adresaLivrare.getTonaj());
+
 
         getFilialaLivrareMathaus();
 
@@ -2525,7 +2451,6 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     public void addressSelected(LatLng coord, android.location.Address address) {
         DateLivrare.getInstance().setCoordonateAdresa(coord);
         setAdresaLivrare(MapUtils.getAddress(address));
-        valideazaTonajAdresaNoua();
 
     }
 

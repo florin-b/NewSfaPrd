@@ -136,12 +136,12 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private List<BeanAdresaLivrare> listAdrese = null;
     private RadioButton radioListAdrese, radioTextAdrese;
     private LinearLayout layoutHeaderAdrese, layoutListAdrese, layoutAdrOras, layoutAdrStrada;
-    private CheckBox checkMacara, chkbClientLaRaft;
+    private CheckBox chkbClientLaRaft;
     private OperatiiAdresa operatiiAdresa;
     private AutoCompleteTextView textLocalitate, textStrada, textLocalitateLivrare, textStradaLivrare;
     private Button btnPozitieAdresa;
     private EditText textNrStr;
-    private Spinner spinnerIndoire, spinnerTonaj;
+    private Spinner spinnerIndoire;
     private TextView textDataLivrare;
     private Button btnDataLivrare;
     private Spinner spinnerMeseriasi;
@@ -339,9 +339,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             addListenerTipPlata();
 
-            checkMacara = (CheckBox) findViewById(R.id.checkMacara);
-            setMacaraVisible();
-            setListenerCheckMacara();
+
 
             checkFactPaleti = (CheckBox) findViewById(R.id.chkFactPaleti);
             checkFactPaleti.setChecked(DateLivrare.getInstance().isFactPaletSeparat());
@@ -356,8 +354,8 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             setupSpinnerDebitare();
 
             spinnerTransp = (Spinner) findViewById(R.id.spinnerTransp);
-            spinnerTonaj = (Spinner) findViewById(R.id.spinnerTonaj);
-            setupSpinnerTonaj();
+
+
 
             adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTransp.setAdapter(adapterSpinnerTransp);
@@ -497,6 +495,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             operatiiClient.getMeseriasi(params);
 
             spinnerProgramLivrare = (Spinner) findViewById(R.id.spinnerProgramLivrare);
+            spinnerProgramLivrare.setSelection(3);
             if (!dateLivrareInstance.getProgramLivrare().equals("0"))
                 spinnerProgramLivrare.setSelection(Integer.parseInt(dateLivrareInstance.getProgramLivrare()));
 
@@ -545,7 +544,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 if (bundle.getString("adrLivrareTCLI") != null && bundle.getString("adrLivrareTCLI").equals(("true"))) {
                     isAdresaLivrareTCLI = true;
                     ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.GONE);
-                    spinnerTonaj.setVisibility(View.VISIBLE);
                     spinnerTransp.setSelection(0);
                     spinnerTransp.setSelection(0);
                     clearAdresaLivrare();
@@ -872,14 +870,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     }
 
-    private void setListenerCheckMacara() {
-        checkMacara.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DateLivrare.getInstance().setMasinaMacara(isChecked);
-            }
 
-        });
-    }
 
     public class SpinnerAdreseTouchListener implements OnTouchListener {
 
@@ -945,26 +936,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     }
 
-    private void setupSpinnerTonaj() {
 
-        String[] tonajValues = {"Selectati tonajul", "3.5 T", "10 T", "Fara restrictie de tonaj"};
-
-        ArrayAdapter<String> adapterTonaj = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tonajValues);
-        adapterTonaj.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTonaj.setAdapter(adapterTonaj);
-
-        if (DateLivrare.getInstance().getTonaj() != null) {
-            for (int i = 0; i < spinnerTonaj.getCount(); i++)
-                if (spinnerTonaj.getItemAtPosition(i).toString().toUpperCase().contains(DateLivrare.getInstance().getTonaj())) {
-                    spinnerTonaj.setSelection(i);
-                    break;
-                }
-
-            if (DateLivrare.getInstance().getTonaj().equals("20"))
-                spinnerTonaj.setSelection(spinnerTonaj.getCount() - 1);
-        }
-
-    }
 
     private void setupSpinnerIndoire() {
 
@@ -1304,28 +1276,19 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         spinnerTransp.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-                if (pos == 0) {
-                    spinnerTonaj.setVisibility(View.VISIBLE);
-
-                } else if (pos == 1) {
+                 if (pos == 1) {
                     DateLivrare.getInstance().setValTransport(0);
                     DateLivrare.getInstance().setValTransportSAP(0);
                     DateLivrare.getInstance().setMasinaMacara(false);
-                    checkMacara.setVisibility(View.INVISIBLE);
-                    spinnerTonaj.setVisibility(View.INVISIBLE);
-                    spinnerTonaj.setSelection(0);
+
+
+
 
                     if (spinnerPlata.getSelectedItem().toString().contains("E1"))
                         spinnerPlata.setSelection(0);
 
-                    if (!isAdresaLivrareTCLI)
-                        spinnerTonaj.setVisibility(View.INVISIBLE);
 
-                } else {
-                    checkMacara.setChecked(DateLivrare.getInstance().isMasinaMacara());
-                    setMacaraVisible();
-                    spinnerTonaj.setVisibility(View.INVISIBLE);
-                    spinnerTonaj.setSelection(0);
+
                 }
 
                 String tipTranspSel = spinnerTransp.getSelectedItem().toString().split("-")[0].trim();
@@ -1439,7 +1402,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         DateLivrare.getInstance().setOras(tokenAdresa[1]);
         DateLivrare.getInstance().setStrada(tokenAdresa[0]);
         DateLivrare.getInstance().setCoordonateAdresa(new LatLng(Double.valueOf(tokenAdresa[4]), Double.valueOf(tokenAdresa[5])));
-        spinnerTonaj.setSelection(1);
+
     }
 
 
@@ -1475,10 +1438,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     }
 
-    private void setMacaraVisible() {
-        checkMacara.setVisibility(View.INVISIBLE);
 
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -2029,7 +1989,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             return;
         }
 
-        dateLivrareInstance.setTonaj("-1");
 
         if (radioAltaAdresa.isChecked() && !DateLivrare.getInstance().isAltaAdresa()) {
             dateLivrareInstance.setDateLivrare(getAdrLivrareJSON());
@@ -2037,11 +1996,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             setAdresaLivrareObiectiv();
         }
 
-        if (isConditiiTonaj(spinnerTransp, spinnerTonaj)) {
-            String[] tonaj = spinnerTonaj.getSelectedItem().toString().split(" ");
-            dateLivrareInstance.setTonaj(tonaj[0]);
-        } else
-            dateLivrareInstance.setTonaj("-1");
 
         if (spinnerIndoire.getVisibility() == View.VISIBLE && spinnerIndoire.getSelectedItemPosition() > 0) {
             dateLivrareInstance.setPrelucrare(spinnerIndoire.getSelectedItem().toString());
@@ -2066,10 +2020,10 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         else
             dateLivrareInstance.setProgramLivrare("0");
 
-        //aici
+
         getDatePoligonLivrare();
 
-        //finish();
+
 
     }
 
@@ -2096,12 +2050,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 if (isCondInfoRestrictiiTonaj())
                     Toast.makeText(getApplicationContext(), "La aceasta adresa exista o limitare de tonaj de " + poligonLivrare.getLimitareTonaj() + " T.", Toast.LENGTH_LONG).show();
             }
-        } else {
-            if (spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque") && spinnerTonaj.getSelectedItemPosition() == 0 &&
-                    DateLivrare.getInstance().getDatePoligonLivrare() == null) {
-                Toast.makeText(getApplicationContext(), "Selectati tonajul!", Toast.LENGTH_LONG).show();
-                return;
-            }
         }
 
         finish();
@@ -2123,11 +2071,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         return true;
     }
 
-    private boolean isConditiiTonaj(Spinner spinnerTransp, Spinner spinnerTonaj) {
-        return spinnerTransp.getSelectedItem().toString().toLowerCase().contains("arabesque")
-                && spinnerTonaj.getSelectedItem().toString().split(" ")[1].equals("T");
 
-    }
 
     private void setAdresaLivrare(Address address) {
 
