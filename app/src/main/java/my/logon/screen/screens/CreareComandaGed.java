@@ -1681,7 +1681,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
             List<BeanStocTCLI> listStocTCLI;
 
-            if (HelperMathaus.isConditiiDepozitTCLI(artCmd)) {
+            if (HelperMathaus.isConditiiDepozitTCLI(artCmd,"20")) {
                 listStocTCLI = HelperMathaus.genereazaStocArticolTCLI(artCmd);
 
                 for (BeanStocTCLI stocTCLI : listStocTCLI){
@@ -1793,7 +1793,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                     articolLivrare.setCantitate50(HelperMathaus.getCantitateCanal50(articolMathaus, articolComanda));
                     articolLivrare.setUm50(articolComanda.getUm50());
 
-                    if (HelperMathaus.isConditiiDepozitTCLI(articolComanda) && articolMathaus.getCantUmb() == 0){
+                    if (HelperMathaus.isConditiiDepozitTCLI(articolComanda,"20") && articolMathaus.getCantUmb() == 0){
                         double cantUmbTCLI = (articolMathaus.getQuantity() * articolComanda.getCantUmb()) / articolComanda.getCantitate();
                         articolLivrare.setCantUmb(cantUmbTCLI);
                     }

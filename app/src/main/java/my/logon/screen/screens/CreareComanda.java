@@ -1926,7 +1926,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                     articolLivrare.setCantitate50(HelperMathaus.getCantitateCanal50(articolMathaus, articolComanda));
                     articolLivrare.setUm50(articolComanda.getUm50());
 
-                    if (HelperMathaus.isConditiiDepozitTCLI(articolComanda) && articolMathaus.getCantUmb() == 0){
+                    if (HelperMathaus.isConditiiDepozitTCLI(articolComanda,"10") && articolMathaus.getCantUmb() == 0){
                         double cantUmbTCLI = (articolMathaus.getQuantity() * articolComanda.getCantUmb()) / articolComanda.getCantitate();
                         articolLivrare.setCantUmb(cantUmbTCLI);
                     }
@@ -2114,7 +2114,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
             List<BeanStocTCLI> listStocTCLI;
 
-            if (HelperMathaus.isConditiiDepozitTCLI(artCmd)) {
+            if (HelperMathaus.isConditiiDepozitTCLI(artCmd,"10")) {
                 listStocTCLI = HelperMathaus.genereazaStocArticolTCLI(artCmd);
 
                 for (BeanStocTCLI stocTCLI : listStocTCLI){

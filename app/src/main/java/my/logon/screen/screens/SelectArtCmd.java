@@ -1717,6 +1717,8 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                             unArticol.setFilialaSite(filialaStocBV90);
                         else if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
                             unArticol.setFilialaSite(DateLivrare.getInstance().getCodFilialaFasonate());
+                        else if (HelperMathaus.isComandaVanzareTCLI())
+                            unArticol.setFilialaSite(DateLivrare.getInstance().getFilialaLivrareTCLI());
                         else
                             unArticol.setFilialaSite(CreareComanda.filialaAlternativa);
 

@@ -1835,6 +1835,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                             articol.setFilialaSite(filialaStocBV90);
                         else if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
                             articol.setFilialaSite(DateLivrare.getInstance().getCodFilialaFasonate());
+                        else if (HelperMathaus.isComandaVanzareTCLI())
+                            articol.setFilialaSite(DateLivrare.getInstance().getFilialaLivrareTCLI());
                         else
                             articol.setFilialaSite(CreareComandaGed.filialaAlternativa);
 

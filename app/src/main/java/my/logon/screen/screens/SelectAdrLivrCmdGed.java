@@ -2021,7 +2021,10 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             dateLivrareInstance.setProgramLivrare("0");
 
 
-        getDatePoligonLivrare();
+        if (DateLivrare.getInstance().getCoordonateAdresa() != null)
+            getDatePoligonLivrare();
+        else
+            finish();
 
 
 
@@ -2072,63 +2075,36 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     }
 
 
-
     private void setAdresaLivrare(Address address) {
 
-        if (radioAdresaSediu.isChecked()) {
+        textLocalitate.getText().clear();
+        textStrada.getText().clear();
+        textNrStr.getText().clear();
 
-            textLocalitate.getText().clear();
-            textStrada.getText().clear();
-            textNrStr.getText().clear();
+        int nrJudete = spinnerJudet.getAdapter().getCount();
 
-            int nrJudete = spinnerJudet.getAdapter().getCount();
+        for (int j = 0; j < nrJudete; j++) {
+            HashMap<String, String> artMapLivr = (HashMap<String, String>) this.adapterJudete.getItem(j);
+            String numeJudet = artMapLivr.get("numeJudet").toString();
 
-            for (int j = 0; j < nrJudete; j++) {
-                HashMap<String, String> artMapLivr = (HashMap<String, String>) this.adapterJudete.getItem(j);
-                String numeJudet = artMapLivr.get("numeJudet").toString();
-
-                if (address.getSector().equals(numeJudet)) {
-                    spinnerJudet.setSelection(j);
-                    break;
-                }
-
-            }
-
-            if (address.getCity() != null && !address.getCity().isEmpty())
-                textLocalitate.setText(address.getCity());
-
-            if (address.getStreet() != null && !address.getStreet().isEmpty())
-                textStrada.setText(address.getStreet());
-
-            if (address.getNumber() != null && !address.getNumber().isEmpty())
-                textNrStr.setText(address.getNumber());
-        } else if (radioAltaAdresa.isChecked()) {
-
-            if (address.getCity() != null && !address.getCity().isEmpty())
-                textLocalitateLivrare.setText(address.getCity());
-
-            if (address.getStreet() != null && !address.getStreet().isEmpty())
-                textStradaLivrare.setText(address.getStreet());
-
-            if (address.getNumber() != null && !address.getNumber().isEmpty())
-                textStradaLivrare.setText(address.getStreet() + " " + address.getNumber());
-
-            int nrJudete = spinnerJudetLivrare.getAdapter().getCount();
-
-            for (int j = 0; j < nrJudete; j++) {
-                HashMap<String, String> artMapLivr = (HashMap<String, String>) this.adapterJudeteLivrare.getItem(j);
-                String numeJudet = artMapLivr.get("numeJudet").toString();
-
-                if (address.getSector().equals(numeJudet)) {
-                    spinnerJudetLivrare.setSelection(j);
-                    break;
-                }
-
+            if (address.getSector().equals(numeJudet)) {
+                spinnerJudet.setSelection(j);
+                break;
             }
 
         }
 
+        if (address.getCity() != null && !address.getCity().isEmpty())
+            textLocalitate.setText(address.getCity());
+
+        if (address.getStreet() != null && !address.getStreet().isEmpty())
+            textStrada.setText(address.getStreet());
+
+        if (address.getNumber() != null && !address.getNumber().isEmpty())
+            textNrStr.setText(address.getNumber());
     }
+
+
 
     private void valideazaAdresaLivrare() {
 

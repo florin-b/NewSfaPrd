@@ -122,6 +122,9 @@ public class HelperAdreseLivrare {
 
 		int selectedPos = -1;
 
+		if (listAdrese == null || coordAdresa == null)
+			return -1;
+
 		int pos = 0;
 		for (BeanAdresaLivrare adresa : listAdrese) {
 			String coords[] = adresa.getCoords().split(",");

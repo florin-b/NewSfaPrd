@@ -10,7 +10,7 @@ android {
         applicationId "my.logon.screen"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 280
+        versionCode 281
         versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

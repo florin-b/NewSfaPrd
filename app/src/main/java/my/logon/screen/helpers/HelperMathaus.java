@@ -16,6 +16,8 @@ import my.logon.screen.beans.BeanStocTCLI;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.RezumatComanda;
+import my.logon.screen.enums.TipCmdDistrib;
+import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.HelperTranspBuc;
@@ -295,7 +297,13 @@ public class HelperMathaus {
         return "";
     }
 
-    public static boolean isConditiiDepozitTCLI(ArticolComanda articolComanda){
+    public static boolean isConditiiDepozitTCLI(ArticolComanda articolComanda, String canal){
+
+        if (canal.equals("10") && DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.DISPOZITIE_LIVRARE))
+            return false;
+
+        if (canal.equals("20") && DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.DISPOZITIE_LIVRARE))
+            return false;
 
         if (!DateLivrare.getInstance().getTransport().equals("TCLI"))
             return false;
@@ -431,6 +439,11 @@ public class HelperMathaus {
         beanStocTCLI.setUm(um);
         return Arrays.asList(beanStocTCLI);
 
+    }
+
+    public static boolean isComandaVanzareTCLI(){
+        return DateLivrare.getInstance().getTransport().equals("TCLI") && DateLivrare.getInstance().getFilialaLivrareTCLI() != null &&
+        !DateLivrare.getInstance().getFilialaLivrareTCLI().trim().isEmpty();
     }
 
 

@@ -2116,7 +2116,10 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         if (radioText.isChecked() && adresaNouaExista())
             return;
 
-        getDatePoligonLivrare();
+        if (DateLivrare.getInstance().getCoordonateAdresa() != null)
+            getDatePoligonLivrare();
+        else
+            finish();
 
     }
 
