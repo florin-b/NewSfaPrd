@@ -3,6 +3,7 @@ package my.logon.screen.helpers;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -375,6 +376,11 @@ public class HelperMathaus {
         dateArticol.setQuantity(artCmd.getCantitate());
         dateArticol.setUnit(artCmd.getUm());
 
+        DecimalFormat df = new DecimalFormat("#####0.00");
+        DecimalFormatSymbols dfs = df.getDecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
+
         double valPozArt = artCmd.getPret();
 
         if (valPozArt == 0)
@@ -388,10 +394,10 @@ public class HelperMathaus {
             dateArticol.setQuantity(stocTCLI.getCantitate());
 
             double valPozTCLI = (stocTCLI.getCantitate() * valPozArt) / artCmd.getCantitate();
-            dateArticol.setValPoz(Double.parseDouble(nf2.format(valPozTCLI)));
+            dateArticol.setValPoz(Double.parseDouble(df.format(valPozTCLI)));
 
             double greutateTCLI = (stocTCLI.getCantitate() * artCmd.getGreutateBruta()) / artCmd.getCantitate();
-            dateArticol.setGreutate(Double.parseDouble(nf2.format(greutateTCLI)));
+            dateArticol.setGreutate(Double.parseDouble(♣.format(greutateTCLI)));
 
             dateArticol.setQuantity50(stocTCLI.getCantitate());
         }
@@ -427,11 +433,14 @@ public class HelperMathaus {
 
     public static List<BeanStocTCLI> getStocTCLIDepozit(String cantitate, String depozit, String um){
 
-        NumberFormat numberFormat = new DecimalFormat("#,##0.00");
+        DecimalFormat df = new DecimalFormat("#####0.00");
+        DecimalFormatSymbols dfs = df.getDecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
 
         BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
         try {
-            beanStocTCLI.setCantitate(numberFormat.parse(cantitate).doubleValue());
+            beanStocTCLI.setCantitate(df.parse(cantitate).doubleValue());
         } catch (ParseException e) {
             e.printStackTrace();
         }
