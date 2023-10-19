@@ -397,7 +397,7 @@ public class HelperMathaus {
             dateArticol.setValPoz(Double.parseDouble(df.format(valPozTCLI)));
 
             double greutateTCLI = (stocTCLI.getCantitate() * artCmd.getGreutateBruta()) / artCmd.getCantitate();
-            dateArticol.setGreutate(Double.parseDouble(♣.format(greutateTCLI)));
+            dateArticol.setGreutate(Double.parseDouble(df.format(greutateTCLI)));
 
             dateArticol.setQuantity50(stocTCLI.getCantitate());
         }
