@@ -1,5 +1,8 @@
 package my.logon.screen.utils;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.widget.Spinner;
 
 import java.text.ParseException;
@@ -245,5 +248,66 @@ public class UtilsComenzi {
 		return listFilialeFasonate;
 
 	}
+
+	public static String getFilialaDistrib(String filiala) {
+
+		if (filiala == null || filiala.trim().isEmpty())
+			return "";
+
+		return filiala.substring(0, 2) + "1" + filiala.substring(3, 4);
+
+	}
+
+	public static boolean isComandaDl() {
+		return DateLivrare.getInstance().getFurnizorComanda() != null && !DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().isEmpty()
+				&& DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().length() > 4;
+	}
+
+
+	public static boolean isAdresaUnitLogModifCmd(Context context, String filialaModifComanda, String filialaPoligon){
+
+		if (filialaModifComanda == null || filialaModifComanda.trim().isEmpty())
+			return true;
+
+		if (filialaPoligon == null)
+			return true;
+
+		if (isComandaDl())
+			return true;
+
+		if (!UtilsComenzi.getFilialaDistrib(filialaModifComanda).equals(filialaPoligon)) {
+
+			StringBuilder infoMsg = new StringBuilder();
+			infoMsg.append("\n");
+			infoMsg.append("Completati o adresa de livrare arondata filialei " + filialaModifComanda + ".");
+			infoMsg.append("\n");
+
+			UtilsComenzi.showAlertDialog(context, infoMsg.toString());
+
+			return false;
+		}
+
+		return true;
+
+	}
+
+
+
+	public static void showAlertDialog(Context context, String message){
+
+		AlertDialog.Builder dlgAlert = new AlertDialog.Builder(context);
+		dlgAlert.setMessage(message);
+		dlgAlert.setTitle("Atentie!");
+		dlgAlert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		dlgAlert.setPositiveButton("OK", null);
+		dlgAlert.setCancelable(true);
+		dlgAlert.create().show();
+	}
+
+
 
 }

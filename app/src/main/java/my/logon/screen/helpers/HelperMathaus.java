@@ -102,6 +102,14 @@ public class HelperMathaus {
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
     }
 
+    public static boolean isArtTaxaAcces(String numeArticol) {
+
+        boolean taxa1 =  numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("ACCES");
+        boolean taxa2 =  numeArticol != null && numeArticol.toUpperCase().contains("EXTRA") && numeArticol.toUpperCase().contains("METRO");
+
+        return taxa1 || taxa2;
+    }
+
     public static void eliminaTaxeTransport(List<ArticolComanda> listArticole) {
 
         Iterator<ArticolComanda> iterator = listArticole.iterator();
@@ -303,7 +311,13 @@ public class HelperMathaus {
         if (canal.equals("10") && DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.DISPOZITIE_LIVRARE))
             return false;
 
+        if (canal.equals("10") && DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_DETERIORATE))
+            return false;
+
         if (canal.equals("20") && DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.DISPOZITIE_LIVRARE))
+            return false;
+
+        if (canal.equals("20") && DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_DETERIORATE))
             return false;
 
         if (!DateLivrare.getInstance().getTransport().equals("TCLI"))
@@ -452,7 +466,7 @@ public class HelperMathaus {
 
     public static boolean isComandaVanzareTCLI(){
         return DateLivrare.getInstance().getTransport().equals("TCLI") && DateLivrare.getInstance().getFilialaLivrareTCLI() != null &&
-        !DateLivrare.getInstance().getFilialaLivrareTCLI().trim().isEmpty();
+                !DateLivrare.getInstance().getFilialaLivrareTCLI().trim().isEmpty();
     }
 
 

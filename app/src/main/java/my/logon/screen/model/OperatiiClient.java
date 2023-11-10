@@ -178,7 +178,6 @@ public class OperatiiClient implements AsyncTaskListener {
 						client.setStrada(object.getString("strada"));
 
 					listClienti.add(client);
-
 				}
 
 			}
@@ -217,6 +216,7 @@ public class OperatiiClient implements AsyncTaskListener {
 				if (jsonObject.has("tipPlata"))
 					detaliiClient.setTipPlata(jsonObject.getString("tipPlata"));
 
+				detaliiClient.setEmail(jsonObject.getString("email"));
 			}
 
 		} catch (JSONException e) {
@@ -299,6 +299,9 @@ public class OperatiiClient implements AsyncTaskListener {
 				platitorTva.setNumeClient(jsonObject.getString("numeClient"));
 				platitorTva.setNrInreg(jsonObject.getString("nrInreg"));
 				platitorTva.setErrMessage(jsonObject.getString("errMessage") != "null" ? jsonObject.getString("errMessage") : "");
+				platitorTva.setCodJudet(jsonObject.getString("codJudet"));
+				platitorTva.setLocalitate(jsonObject.getString("localitate"));
+				platitorTva.setStrada(jsonObject.getString("strada"));
 
 			}
 

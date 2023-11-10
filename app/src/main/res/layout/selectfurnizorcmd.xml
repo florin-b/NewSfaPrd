@@ -65,6 +65,34 @@
                 android:paddingRight="50dip"
                 android:text="@string/strCauta" />
 
+
+            <RadioGroup
+                android:id="@+id/radioCautare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/radioFurnizor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Nume furnizor"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp" />
+
+                <RadioButton
+                    android:id="@+id/radioArticol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cod articol"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp" />
+            </RadioGroup>
+
+
             <View
                 android:layout_width="30dip"
                 android:layout_height="match_parent" >

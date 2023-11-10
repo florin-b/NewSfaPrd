@@ -37,6 +37,9 @@ public class UserInfo {
 	private boolean isMeniuBlocat = false;
 	private String codPinMeniu = "";
 
+	private double maxNumerarPFizica = 0;
+	private double maxNumerarPJuridica = 0;
+
 	private static UserInfo instance = new UserInfo();
 
 	private UserInfo() {
@@ -262,6 +265,22 @@ public class UserInfo {
 
 	public void setCodPinMeniu(String codPinMeniu) {
 		this.codPinMeniu = codPinMeniu;
+	}
+
+	public double getMaxNumerarPFizica() {
+		return maxNumerarPFizica;
+	}
+
+	public void setMaxNumerarPFizica(double maxNumerarPFizica) {
+		this.maxNumerarPFizica = maxNumerarPFizica;
+	}
+
+	public double getMaxNumerarPJuridica() {
+		return maxNumerarPJuridica;
+	}
+
+	public void setMaxNumerarPJuridica(double maxNumerarPJuridica) {
+		this.maxNumerarPJuridica = maxNumerarPJuridica;
 	}
 
 	@Override

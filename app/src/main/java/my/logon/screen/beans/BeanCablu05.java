@@ -1,6 +1,8 @@
 package my.logon.screen.beans;
 
-public class BeanCablu05 {
+import java.io.Serializable;
+
+public class BeanCablu05 implements Serializable {
 	private String numeBoxa;
 	private String codBoxa;
 	private String stoc;

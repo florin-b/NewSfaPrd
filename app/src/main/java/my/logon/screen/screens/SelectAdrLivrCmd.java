@@ -101,9 +101,9 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     int posJudetSel = 0;
 
 
-    private String[] tipPlataContract = {"LC - Limita credit", "N - Numerar in filiala", "OPA - OP avans", "R - ramburs"};
-    private String[] tipPlataClBlocat = {"OPA - OP avans", "R - ramburs", "N - Numerar in filiala"};
-    private String[] tipPlataRest = {"OPA - OP avans", "R - ramburs", "N - Numerar in filiala"};
+    private String[] tipPlataContract = {"LC - Limita credit", "N - Numerar in filiala", "OPA - OP avans", "R - ramburs", "C - Card bancar"};
+    private String[] tipPlataClBlocat = {"OPA - OP avans", "R - ramburs", "N - Numerar in filiala", "C - Card bancar"};
+    private String[] tipPlataRest = {"OPA - OP avans", "R - ramburs", "N - Numerar in filiala", "C - Card bancar"};
 
     private String[] tipTransport = {"TRAP - Transport Arabesque", "TCLI - Transport client", "TFRN - Transport furnizor"};
 
@@ -158,6 +158,8 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
     private BeanAdresaLivrare adresaLivrareSelected;
     private Spinner spinnerFilialeTCLI;
     private boolean isAdresaLivrareTCLI;
+    private String ulLivrareModifCmd;
+    private EditText textMail;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -175,13 +177,17 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         operatiiAdresa = new OperatiiAdresaImpl(this);
         operatiiAdresa.setOperatiiAdresaListener(this);
 
+        ulLivrareModifCmd = "";
+
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("ModificareComanda")) {
 
+            ulLivrareModifCmd = bundle.getString("ulLivrare");
+
             if ((Double.parseDouble(bundle.getString("limitaCredit")) > 1) && !bundle.getString("termenPlata").equals("C000")) {
 
-                if (!DateLivrare.getInstance().getTipPlata().equals("N") && !DateLivrare.getInstance().getTipPlata().equals("R")) {
+                if (!DateLivrare.getInstance().getTipPlata().equals("N") && !DateLivrare.getInstance().getTipPlata().equals("R") && !DateLivrare.getInstance().getTipPlata().equals("CB")) {
                     CreareComanda.tipPlataContract = bundle.getString("tipPlataContract");
                     DateLivrare.getInstance().setTipPlata("LC");
                 }
@@ -205,6 +211,9 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         textLocalitate.setVisibility(View.INVISIBLE);
 
         textNrStr = (EditText) findViewById(R.id.textNrStr);
+
+        textMail = (EditText) findViewById(R.id.txtMail);
+        textMail.setText(DateLivrare.getInstance().getMail().trim().replace("~", "@"));
 
         btnPozitieAdresa = (Button) findViewById(R.id.btnPozitieAdresa);
         setListnerBtnPozitieAdresa();
@@ -1920,7 +1929,7 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         String adresa = "";
         String pers = "";
         String telefon = "";
-        String observatii = "", obsPlata = " ";
+        String observatii = "", obsPlata = " ", strMailAddr = " ";
 
         DateLivrare dateLivrareInstance = DateLivrare.getInstance();
 
@@ -1954,12 +1963,23 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         telefon = txtTel.getText().toString().trim();
         observatii = txtObservatii.getText().toString().trim();
         obsPlata = spinnerResponsabil.getSelectedItem().toString().substring(0, 2);
+        strMailAddr = textMail.getText().toString().trim();
 
         if (observatii.trim().length() == 0)
             observatii = " ";
 
+        if (strMailAddr.trim().length() == 0)
+            strMailAddr = " ";
+
         dateLivrareInstance.setPersContact(pers);
         dateLivrareInstance.setNrTel(telefon);
+
+        String rawTipPlataStr = spinnerPlata.getSelectedItem().toString();
+
+        if (rawTipPlataStr.startsWith("O") && (!strMailAddr.contains("@") || !strMailAddr.contains("."))) {
+            Toast.makeText(getApplicationContext(), "Completati adresa de e-mail.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         if (DateLivrare.getInstance().getOras().trim().equals("")) {
             Toast.makeText(getApplicationContext(), "Selectati localitatea!", Toast.LENGTH_LONG).show();
@@ -2054,6 +2074,8 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
 
         dateLivrareInstance.setObsLivrare(observatii.replace("#", "-").replace("@", "-"));
         dateLivrareInstance.setObsPlata(obsPlata);
+
+        dateLivrareInstance.setMail(strMailAddr.replace("#", "-").replace("@", "~"));
 
         String tipDocInsot = "";
 
@@ -2176,21 +2198,26 @@ public class SelectAdrLivrCmd extends AppCompatActivity implements OnTouchListen
         DatePoligonLivrare poligonLivrare = operatiiAdresa.deserializePoligonLivrare(datePoligonLivrare);
         DateLivrare.getInstance().setDatePoligonLivrare(null);
 
-        if (!poligonLivrare.getFilialaPrincipala().trim().isEmpty()) {
-            CreareComanda.filialaLivrareMathaus = poligonLivrare.getFilialaPrincipala();
-            CreareComanda.filialeArondateMathaus = poligonLivrare.getFilialaPrincipala();
-            DateLivrare.getInstance().setDatePoligonLivrare(poligonLivrare);
-
-            if (poligonLivrare.getLimitareTonaj().trim().isEmpty())
-                DateLivrare.getInstance().setTonaj("20");
-            else {
-                DateLivrare.getInstance().setTonaj(poligonLivrare.getLimitareTonaj());
-                if (isCondInfoRestrictiiTonaj())
-                    Toast.makeText(getApplicationContext(), "La aceasta adresa exista o limitare de tonaj de " + poligonLivrare.getLimitareTonaj() + " T.", Toast.LENGTH_LONG).show();
-            }
+        if (!UtilsComenzi.isAdresaUnitLogModifCmd(this, ulLivrareModifCmd, poligonLivrare.getFilialaPrincipala())) {
+            return;
         }
+        else {
+            if (!poligonLivrare.getFilialaPrincipala().trim().isEmpty()) {
+                CreareComanda.filialaLivrareMathaus = poligonLivrare.getFilialaPrincipala();
+                CreareComanda.filialeArondateMathaus = poligonLivrare.getFilialaPrincipala();
+                DateLivrare.getInstance().setDatePoligonLivrare(poligonLivrare);
 
-        finish();
+                if (poligonLivrare.getLimitareTonaj().trim().isEmpty())
+                    DateLivrare.getInstance().setTonaj("20");
+                else {
+                    DateLivrare.getInstance().setTonaj(poligonLivrare.getLimitareTonaj());
+                    if (isCondInfoRestrictiiTonaj())
+                        Toast.makeText(getApplicationContext(), "La aceasta adresa exista o limitare de tonaj de " + poligonLivrare.getLimitareTonaj() + " T.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            finish();
+        }
     }
 
     public boolean isCondInfoRestrictiiTonaj() {

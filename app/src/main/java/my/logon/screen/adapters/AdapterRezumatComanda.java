@@ -24,6 +24,7 @@ import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.beans.TranspComenzi;
 import my.logon.screen.dialogs.ModifPretTranspDialog;
+import my.logon.screen.helpers.HelperMathaus;
 import my.logon.screen.listeners.ModifPretTransportListener;
 import my.logon.screen.listeners.RezumatListener;
 import my.logon.screen.model.ArticolComanda;
@@ -68,7 +69,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
 
     public static class ViewHolder {
-        TextView textNumeArticole, textCantArticole, textFurnizor, textTransport, textTotal, textNrComanda, tipTransport;
+        TextView textNumeArticole, textCantArticole, textFurnizor, textTransport, textTotal, textNrComanda, tipTransport, textCodArticole, textValArticole;
         ImageButton stergeComandaBtn, btnPretTransport;
         LinearLayout layoutTransport;
         Spinner spinnerTransport;
@@ -84,6 +85,8 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
             viewHolder = new ViewHolder();
             viewHolder.textNumeArticole = (TextView) convertView.findViewById(R.id.textNumeArticole);
+            viewHolder.textCodArticole = (TextView) convertView.findViewById(R.id.textCodArticole);
+            viewHolder.textValArticole = (TextView) convertView.findViewById(R.id.textValArticole);
             viewHolder.textCantArticole = (TextView) convertView.findViewById(R.id.textCantArticole);
             viewHolder.textFurnizor = (TextView) convertView.findViewById(R.id.textFurnizor);
 
@@ -109,8 +112,10 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         RezumatComanda rezumat = getItem(position);
 
         viewHolder.textNrComanda.setText("Comanda nr. " + (position + 1));
+        viewHolder.textCodArticole.setText(getCodArticole(rezumat));
         viewHolder.textNumeArticole.setText(getNumeArticole(rezumat));
         viewHolder.textCantArticole.setText(getCantArticole(rezumat));
+        viewHolder.textValArticole.setText(getValArticole(rezumat));
         viewHolder.textFurnizor.setText("Livrare: " + rezumat.getFilialaLivrare());
         viewHolder.tipTransport.setText(getTipTransport(rezumat.getFilialaLivrare()));
 
@@ -386,7 +391,20 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
 
     private boolean isArtTransp(String numeArticol) {
+
+        if (numeArticol == null)
+            return  false;
+
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
+    }
+
+
+    private boolean isArtTaxa(String numeArticol){
+        if (numeArticol == null)
+            return  false;
+
+        return HelperMathaus.isArtTaxaAcces(numeArticol);
+
     }
 
     private void adaugaArticolTransport(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
@@ -612,6 +630,19 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
     }
 
+
+    private String getCodArticole(RezumatComanda rezumat) {
+
+        StringBuilder str = new StringBuilder();
+
+        for (ArticolComanda art : rezumat.getListArticole()) {
+            str.append(art.getCodArticol());
+            str.append("\n");
+        }
+
+        return str.toString();
+    }
+
     private String getNumeArticole(RezumatComanda rezumat) {
 
         StringBuilder str = new StringBuilder();
@@ -647,6 +678,29 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         return str.toString();
 
     }
+
+    private String getValArticole(RezumatComanda rezumat) {
+
+        StringBuilder str = new StringBuilder();
+
+        double valoareArticol = 0;
+        for (ArticolComanda art : rezumat.getListArticole()) {
+
+            if (art instanceof ArticolComandaGed)
+                valoareArticol = canalDistrib.equals("10") ? art.getPret() : art.getPretUnitarClient() * art.getCantUmb();
+            else
+                valoareArticol = art.getPret();
+
+            str.append(nf.format(valoareArticol));
+            str.append(" ");
+            str.append("lei");
+            str.append("\n");
+        }
+
+        return str.toString();
+
+    }
+
 
     private void adaugaTransportLista(ArticolComanda articolTransport) {
 

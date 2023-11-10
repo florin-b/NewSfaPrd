@@ -389,6 +389,38 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutMail"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="3dip"
+                    android:gravity="left|center"
+                    android:text="E-mail"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <EditText
+                    android:id="@+id/txtMail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="180dip"
+                    android:layout_weight="0.25"
+                    android:gravity="bottom"
+                    android:inputType="text"
+                    android:maxLength="150"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/layoutTipReducere"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"

@@ -1,10 +1,5 @@
 package my.logon.screen.dialogs;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
-import my.logon.screen.listeners.CostMacaraListener;
-import my.logon.screen.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -12,22 +7,31 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import my.logon.screen.R;
 import my.logon.screen.beans.CostDescarcare;
+import my.logon.screen.listeners.CostMacaraListener;
 
 public class CostMacaraDialog extends Dialog {
 
 	private CostMacaraListener listener;
 	private CostDescarcare costDescarcare;
 	private boolean permiteModif;
+	private boolean isExeceptieCVIP;
 
 	private Context context;
 
-	public CostMacaraDialog(Context context, CostDescarcare costDescarcare, boolean permiteModif) {
+	public CostMacaraDialog(Context context, CostDescarcare costDescarcare, boolean permiteModif, boolean isExeceptieCVIP) {
 		super(context);
 		this.context = context;
 
 		this.costDescarcare = costDescarcare;
 		this.permiteModif = permiteModif;
+		this.isExeceptieCVIP = isExeceptieCVIP;
+
 
 		setContentView(R.layout.cost_macara_dialog);
 		setTitle("Confirmare cost macara");
@@ -40,9 +44,16 @@ public class CostMacaraDialog extends Dialog {
 		nf2.setMinimumFractionDigits(2);
 		nf2.setMaximumFractionDigits(2);
 
+		double costDescarcareAfis = costDescarcare.getValoareDescarcare();
+
+		if (isExeceptieCVIP) {
+			costDescarcareAfis = costDescarcare.getValoareMinDescarcare();
+			permiteModif = false;
+		}
+
 		StringBuilder strCost = new StringBuilder();
 		strCost.append("Utilizarea macaralei presupune un cost suplimentar de ");
-		strCost.append(nf2.format(costDescarcare.getValoareDescarcare()));
+		strCost.append(nf2.format(costDescarcareAfis));
 		strCost.append(" RON. Sunteti de acord? ");
 
 		TextView textCostMacara = (TextView) findViewById(R.id.textCost);

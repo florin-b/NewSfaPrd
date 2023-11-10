@@ -1,6 +1,8 @@
 package my.logon.screen.beans;
 
-public class ArticolMathaus extends ArticolDB {
+import java.io.Serializable;
+
+public class ArticolMathaus extends ArticolDB implements Serializable {
 	private String cod;
 	private String nume;
 	private String adresaImg;

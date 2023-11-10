@@ -148,6 +148,9 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 		radioCmdFerma = (RadioButton) findViewById(R.id.radio_cmd_ferma);
 		radioCmdSimulata = (RadioButton) findViewById(R.id.radio_cmd_simulata);
 
+		radioCmdFerma.setVisibility(View.INVISIBLE);
+		radioCmdSimulata.setVisibility(View.INVISIBLE);
+
 	}
 
 	@Override
@@ -253,8 +256,8 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 				listAgenti.add(agent);
 			}
 
-			SimpleAdapter adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" },
-					new int[] { R.id.textNumeAgent, R.id.textCodAgent });
+			SimpleAdapter adapterAgenti = new SimpleAdapter(this, listAgenti, R.layout.rowlayoutagenti, new String[] { "numeAgent", "codAgent" }, new int[] {
+					R.id.textNumeAgent, R.id.textCodAgent });
 
 			spinnerAgenti.setAdapter(adapterAgenti);
 
@@ -460,8 +463,9 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 		numeClientVar = numeClient;
 
 		dateLivrareInstance.setDateLivrare(InfoStrings.numeJudet(dateLivrareInstance.getCodJudet()) + " " + dateLivrareInstance.getOras() + " "
-				+ dateLivrareInstance.getStrada() + "#" + dateLivrareInstance.getPersContact() + "#" + dateLivrareInstance.getNrTel()
-				+ "#NU#O#TRAP#NU");
+				+ dateLivrareInstance.getStrada() + "#" + dateLivrareInstance.getPersContact() + "#" + dateLivrareInstance.getNrTel() + "#NU#O#TRAP#NU");
+
+		dateLivrareInstance.setMail(detaliiClient.getEmail());
 
 		tipClient.setText(detaliiClient.getTipClient());
 		saveClntBtn.setVisibility(View.VISIBLE);
@@ -511,6 +515,7 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 		dateLivrareInstance.setPersContact("");
 		dateLivrareInstance.setNrTel("");
 		dateLivrareInstance.setDateLivrare("");
+		dateLivrareInstance.setRefClient("");
 
 		finish();
 		return;

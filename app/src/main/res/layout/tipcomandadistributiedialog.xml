@@ -89,6 +89,7 @@
                 android:text="Comanda de livrare CLP"
                 android:textColor="@color/detColor1"
                 android:textSize="17sp"
+                android:visibility="gone"
                 android:typeface="sans" >
             </RadioButton>
 

@@ -1,6 +1,8 @@
 package my.logon.screen.beans;
 
-public class BeanStocTCLI {
+import java.io.Serializable;
+
+public class BeanStocTCLI implements Serializable {
 
     private double cantitate;
     private String um;

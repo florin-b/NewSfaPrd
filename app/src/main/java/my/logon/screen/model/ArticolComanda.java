@@ -4,6 +4,7 @@
  */
 package my.logon.screen.model;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -12,7 +13,7 @@ import my.logon.screen.beans.ArticolMathaus;
 import my.logon.screen.beans.BeanCablu05;
 import my.logon.screen.beans.BeanStocTCLI;
 
-public class ArticolComanda implements Comparable<ArticolComanda> {
+public class ArticolComanda implements Comparable<ArticolComanda>, Serializable {
 
 	protected int nrCrt;
 	protected String numeArticol;
@@ -111,6 +112,8 @@ public class ArticolComanda implements Comparable<ArticolComanda> {
 
 	private String um50;
 	private double cantitate50;
+
+	private String sintetic;
 
 	private List<BeanStocTCLI> listStocTCLI;
 
@@ -759,6 +762,14 @@ public class ArticolComanda implements Comparable<ArticolComanda> {
 
 	public void setListStocTCLI(List<BeanStocTCLI> listStocTCLI) {
 		this.listStocTCLI = listStocTCLI;
+	}
+
+	public String getSintetic() {
+		return sintetic;
+	}
+
+	public void setSintetic(String sintetic) {
+		this.sintetic = sintetic;
 	}
 
 	@Override

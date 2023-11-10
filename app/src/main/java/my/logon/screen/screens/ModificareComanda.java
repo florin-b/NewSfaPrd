@@ -75,7 +75,6 @@ import my.logon.screen.dialogs.CostMacaraDialog;
 import my.logon.screen.dialogs.CostPaletiDialog;
 import my.logon.screen.dialogs.RezumatComandaDialog;
 import my.logon.screen.dialogs.SelectTipMasinaDialog;
-import my.logon.screen.dialogs.TranspModifCmdDialog;
 import my.logon.screen.enums.EnumComenziDAO;
 import my.logon.screen.enums.EnumPaleti;
 import my.logon.screen.enums.EnumTipClientIP;
@@ -447,6 +446,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                         nextScreenLivr.putExtra("tipPlataContract", DateLivrare.getInstance().getTipPlata());
                         nextScreenLivr.putExtra("limitaCredit", String.valueOf(DateLivrare.getInstance().getLimitaCredit()));
                         nextScreenLivr.putExtra("termenPlata", DateLivrare.getInstance().getTermenPlata());
+                        nextScreenLivr.putExtra("ulLivrare", getUlLivrareComanda());
 
                     } else {
                         nextScreenLivr = new Intent(getApplicationContext(), SelectAdrLivrCmd.class);
@@ -454,6 +454,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                         nextScreenLivr.putExtra("tipPlataContract", DateLivrare.getInstance().getTipPlata());
                         nextScreenLivr.putExtra("limitaCredit", String.valueOf(DateLivrare.getInstance().getLimitaCredit()));
                         nextScreenLivr.putExtra("termenPlata", DateLivrare.getInstance().getTermenPlata());
+                        nextScreenLivr.putExtra("ulLivrare", getUlLivrareComanda());
                     }
 
                     selectedCmdAdrLivr = selectedCmd;
@@ -748,19 +749,21 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                         comandaFinala.setNecesarAprobariCV(comandaSelectata.getAprobariNecesare());
 
                         if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance.getTipPlata().equals("E1") || dateLivrareInstance.getTipPlata().equals("R")) && tipClientVar.equals("PJ")) {
-                            if (totalComanda > 5000) {
-                                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de 5000 RON!", Toast.LENGTH_SHORT).show();
+                            if (totalComanda > UserInfo.getInstance().getMaxNumerarPJuridica()) {
+                                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " +
+                                        UserInfo.getInstance().getMaxNumerarPJuridica() + " RON!", Toast.LENGTH_SHORT).show();
                                 return;
                             } else
                                 getTotalComenziNumerar();
                         } else if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance.getTipPlata().equals("E1") || dateLivrareInstance.getTipPlata().equals("R")) && tipClientVar.equals("PF")) {
-                            if (totalComanda > 10000) {
-                                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de 10000 RON!", Toast.LENGTH_SHORT).show();
+                            if (totalComanda > UserInfo.getInstance().getMaxNumerarPFizica()) {
+                                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " +
+                                        UserInfo.getInstance().getMaxNumerarPFizica() + " RON!", Toast.LENGTH_SHORT).show();
                                 return;
                             } else
                                 getTotalComenziNumerar();
                         } else {
-                                getLivrariMathaus();
+                            getLivrariMathaus();
                         }
 
                     }
@@ -1092,18 +1095,10 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
     }
 
-    private void adaugaPretTransport(String pretTransport) {
-
-        LivrareMathaus livrareMathaus = new OperatiiArticolImpl(this).deserializeLivrareMathaus(pretTransport);
-        DateLivrare.getInstance().setCostTransportMathaus(livrareMathaus.getCostTransport());
-
-        HelperMathaus.adaugaArticolTransportModificare(livrareMathaus.getCostTransport(), listArticoleComanda);
-        adapterArticole.notifyDataSetChanged();
-
-        TranspModifCmdDialog dialog = new TranspModifCmdDialog(livrareMathaus.getCostTransport(), this);
-        dialog.setTranspModifCmdListener(this);
-        dialog.show();
+    private String getUlLivrareComanda(){
+        return isComandaCLP() ? DateLivrare.getInstance().getCodFilialaCLP() : selectedUnitLog;
     }
+
 
     @Override
     public void pretTranspModificat(List<CostTransportMathaus> listCostTransport) {
@@ -1140,10 +1135,10 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
     private void afisTotalComenziNumerar(String totalNumerar) {
 
-        double valPragNumerar = 5000;
+        double valPragNumerar = UserInfo.getInstance().getMaxNumerarPJuridica();
 
         if (tipClientVar.equals("PF"))
-            valPragNumerar = 10000;
+            valPragNumerar = UserInfo.getInstance().getMaxNumerarPFizica();
 
         if (totalComanda + Double.valueOf(totalNumerar) > valPragNumerar) {
 
@@ -1273,7 +1268,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         } else if (costDescarcare.getValoareDescarcare() > 0
                 && DateLivrare.getInstance().getTransport().equalsIgnoreCase("TRAP")) {
 
-            CostMacaraDialog macaraDialog = new CostMacaraDialog(this, costDescarcare, false);
+            CostMacaraDialog macaraDialog = new CostMacaraDialog(this, costDescarcare, false, isExceptieComandaIP());
             macaraDialog.setCostMacaraListener(this);
             macaraDialog.show();
 
@@ -1308,7 +1303,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         } else if (costDescarcare.getSePermite() && costDescarcare.getValoareDescarcare() > 0
                 && DateLivrare.getInstance().getTransport().equalsIgnoreCase("TRAP")) {
 
-            CostMacaraDialog macaraDialog = new CostMacaraDialog(this, costDescarcare, isComandaGed());
+            CostMacaraDialog macaraDialog = new CostMacaraDialog(this, costDescarcare, isComandaGed(), isExceptieComandaIP());
             macaraDialog.setCostMacaraListener(this);
             macaraDialog.show();
 
@@ -1968,6 +1963,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         totalComanda = 0;
         codTipReducere = "-1";
         permitArticoleDistribIP = true;
+        unitLogComanda = "";
         CreareComanda.tipPlataContract = " ";
         CreareComandaGed.tipPlataContract = " ";
         saveComandaMathaus = false;
@@ -2543,7 +2539,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     private void respingePalet() {
         if (costDescarcare.getSePermite() && costDescarcare.getValoareDescarcare() > 0 && DateLivrare.getInstance().getTransport().equalsIgnoreCase("TRAP")) {
 
-            CostMacaraDialog macaraDialog = new CostMacaraDialog(this, costDescarcare, isComandaGed());
+            CostMacaraDialog macaraDialog = new CostMacaraDialog(this, costDescarcare, isComandaGed(), isExceptieComandaIP());
             macaraDialog.setCostMacaraListener(this);
             macaraDialog.show();
 

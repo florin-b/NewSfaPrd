@@ -64,21 +64,20 @@ public class UtilsUser {
 				|| UserInfo.getInstance().getTipUser().equals("SMR");
 	}
 
-	public static boolean isUserSDKA() {
-		return UserInfo.getInstance().getTipUserSap().equals("SDKA") || UserInfo.getInstance().getTipUser().equals("SK");
-	}
-
 	public static boolean isAgentOrSD() {
-		return UserInfo.getInstance().getTipUserSap().toUpperCase().contains("AV")
-				|| UserInfo.getInstance().getTipUserSap().toUpperCase().equals("SD")
+		return UserInfo.getInstance().getTipUserSap().toUpperCase().contains("AV") || UserInfo.getInstance().getTipUserSap().toUpperCase().equals("SD")
 				|| UserInfo.getInstance().getTipUserSap().toUpperCase().equals("ASDL");
 
 	}
 
 	public static boolean isAgentOrSDorKA() {
-		return UserInfo.getInstance().getTipUserSap().toUpperCase().contains("AV")
-				|| UserInfo.getInstance().getTipUserSap().toUpperCase().equals("SD") || UserInfo.getInstance().getTipUser().equals("KA");
+		return UserInfo.getInstance().getTipUserSap().toUpperCase().contains("AV") || UserInfo.getInstance().getTipUserSap().toUpperCase().equals("SD")
+				|| UserInfo.getInstance().getTipUser().equals("KA");
 
+	}
+
+	public static boolean isUserSDKA() {
+		return UserInfo.getInstance().getTipUserSap().equals("SDKA");
 	}
 
 	public static boolean isSD() {
@@ -123,16 +122,12 @@ public class UtilsUser {
 		return UserInfo.getInstance().getTipUserSap().equalsIgnoreCase("OIVPD");
 	}
 
-	public static boolean isSDIP() {
-		return UserInfo.getInstance().getTipUserSap().equalsIgnoreCase("SDIP");
-	}
-
 	public static boolean isASDL() {
 		return UserInfo.getInstance().getTipUserSap().equalsIgnoreCase("ASDL");
 	}
 
-	public static boolean isUserSapKA() {
-		return UserInfo.getInstance().getTipUserSap().equals("KA");
+	public static boolean isSDIP() {
+		return UserInfo.getInstance().getTipUserSap().equalsIgnoreCase("SDIP");
 	}
 
 	public static boolean isUserIP() {
@@ -149,18 +144,19 @@ public class UtilsUser {
 
 		return tipUser;
 	}
-
+	
 	public static boolean isAV_SD_01() {
 		return (UserInfo.getInstance().getTipUser().equals("AV") || UserInfo.getInstance().getTipUser().equals("SD")) && UserInfo.getInstance().getCodDepart().equals("01");
-	}	
+	}
 	
 	public static boolean isCVO(){
 		return UserInfo.getInstance().getTipUserSap().equals("CVO");
 	}
-	
+
 	public static boolean isSVO(){
 		return UserInfo.getInstance().getTipUserSap().equals("SVO");
-	}
+	}	
+	
 	
 	public static boolean isDV_WOOD() {
 		if (isANYDV()) {
@@ -208,8 +204,7 @@ public class UtilsUser {
 
 		String filialeExceptie = "AG, BH, CJ, CT, DJ, GL";
 
-		if (UserInfo.getInstance().getTipUserSap().equals("CONS-GED")
-				&& filialeExceptie.contains(UserInfo.getInstance().getUnitLog().substring(0, 2)))
+		if (UserInfo.getInstance().getTipUserSap().equals("CONS-GED") && filialeExceptie.contains(UserInfo.getInstance().getUnitLog().substring(0, 2)))
 			return true;
 
 		return false;
@@ -229,6 +224,11 @@ public class UtilsUser {
 
 	public static boolean isUserSite() {
 		return UserInfo.getInstance().getUserSite().equalsIgnoreCase("X");
+	}
+
+	public static boolean isUserCVO(){
+		return UserInfo.getInstance().getTipUserSap().equals("CVO") || UserInfo.getInstance().getTipUserSap().equals("SVO");
+
 	}
 
 	public static String getULUserSite(String unitLog, String depozit) {

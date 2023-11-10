@@ -166,6 +166,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private boolean isAdresaLivrareTCLI;
 
     private ActivityResultLauncher<Intent> startActivityForResult;
+    private String ulLivrareModifCmd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -228,6 +229,12 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                     DateLivrare.getInstance().setTipPlata("LC");
                 }
 
+            }
+
+            ulLivrareModifCmd = "";
+
+            if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("ModificareComanda")) {
+                ulLivrareModifCmd = bundle.getString("ulLivrare");
             }
 
             textLocalitateLivrare = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocLivrare);
@@ -2041,21 +2048,26 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         DatePoligonLivrare poligonLivrare = operatiiAdresa.deserializePoligonLivrare(datePoligonLivrare);
         DateLivrare.getInstance().setDatePoligonLivrare(null);
 
-        if (!poligonLivrare.getFilialaPrincipala().trim().isEmpty()) {
-            CreareComandaGed.filialaLivrareMathaus = poligonLivrare.getFilialaPrincipala();
-            CreareComandaGed.filialeArondateMathaus = poligonLivrare.getFilialaPrincipala();
-            DateLivrare.getInstance().setDatePoligonLivrare(poligonLivrare);
-
-            if (poligonLivrare.getLimitareTonaj().trim().isEmpty())
-                DateLivrare.getInstance().setTonaj("20");
-            else {
-                DateLivrare.getInstance().setTonaj(poligonLivrare.getLimitareTonaj());
-                if (isCondInfoRestrictiiTonaj())
-                    Toast.makeText(getApplicationContext(), "La aceasta adresa exista o limitare de tonaj de " + poligonLivrare.getLimitareTonaj() + " T.", Toast.LENGTH_LONG).show();
-            }
+        if (!UtilsComenzi.isAdresaUnitLogModifCmd(this, ulLivrareModifCmd, poligonLivrare.getFilialaPrincipala())) {
+            return;
         }
+        else {
+            if (!poligonLivrare.getFilialaPrincipala().trim().isEmpty()) {
+                CreareComandaGed.filialaLivrareMathaus = poligonLivrare.getFilialaPrincipala();
+                CreareComandaGed.filialeArondateMathaus = poligonLivrare.getFilialaPrincipala();
+                DateLivrare.getInstance().setDatePoligonLivrare(poligonLivrare);
 
-        finish();
+                if (poligonLivrare.getLimitareTonaj().trim().isEmpty())
+                    DateLivrare.getInstance().setTonaj("20");
+                else {
+                    DateLivrare.getInstance().setTonaj(poligonLivrare.getLimitareTonaj());
+                    if (isCondInfoRestrictiiTonaj())
+                        Toast.makeText(getApplicationContext(), "La aceasta adresa exista o limitare de tonaj de " + poligonLivrare.getLimitareTonaj() + " T.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            finish();
+        }
     }
 
     public boolean isCondInfoRestrictiiTonaj() {
@@ -2073,6 +2085,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
         return true;
     }
+
 
 
     private void setAdresaLivrare(Address address) {
@@ -2102,9 +2115,8 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
         if (address.getNumber() != null && !address.getNumber().isEmpty())
             textNrStr.setText(address.getNumber());
+
     }
-
-
 
     private void valideazaAdresaLivrare() {
 

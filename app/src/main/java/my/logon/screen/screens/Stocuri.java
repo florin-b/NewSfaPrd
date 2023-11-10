@@ -40,6 +40,7 @@ import my.logon.screen.adapters.CautareArticoleAdapter;
 import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
+import my.logon.screen.enums.EnumFiliale;
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.listeners.PreturiListener;
@@ -139,49 +140,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 
 		textCodBare = (TextView) findViewById(R.id.textCodBare);
 
-		if (UserInfo.getInstance().getTipAcces().equals("9") || UserInfo.getInstance().getTipAcces().equals("10")
-				|| UserInfo.getInstance().getTipAcces().equals("12") || UserInfo.getInstance().getTipAcces().equals("14") || UtilsUser.isConsWood()) // agenti,
-		// sd, directori
-		{
-			// se ofera acces la unit.log. BV90
-			if (UserInfo.getInstance().getCodDepart().equals("02") || UserInfo.getInstance().getCodDepart().equals("05")
-					|| UserInfo.getInstance().getCodDepart().equals("01") || UserInfo.getInstance().getInitDivizie().equals("11")) {
-				populateFilialeAgenti();
-				spinnerFiliale.setVisibility(View.VISIBLE);
-
-			}
-
-			// agentii si sd-ii din Bucuresti au acces la toate filialele din
-			// Buc
-			if (UserInfo.getInstance().getUnitLog().substring(0, 2).equals("BU")) {
-				if (UserInfo.getInstance().getCodDepart().equals("03") || UserInfo.getInstance().getCodDepart().equals("04")
-						|| UserInfo.getInstance().getCodDepart().equals("06") || UserInfo.getInstance().getCodDepart().equals("07")
-						|| UserInfo.getInstance().getCodDepart().equals("08") || UserInfo.getInstance().getCodDepart().equals("09")) {
-					populateFilialeAgentiBuc();
-					spinnerFiliale.setVisibility(View.VISIBLE);
-
-				}
-			}
-
-		}
-
-		if (UtilsUser.isSDBUCURESTI()) {
-			populateFilialeAgentiBuc();
-			spinnerFiliale.setVisibility(View.VISIBLE);
-		}
-
-		if (UtilsUser.isANYDV()) {
-			// se ofera acces filialele din definitie
-			populateFilialeDV();
-			spinnerFiliale.setVisibility(View.VISIBLE);
-
-		}
-
-		if (UtilsUser.isSDIP()) {
-			populateFilialeSDIP();
-			spinnerFiliale.setVisibility(View.VISIBLE);
-
-		}
+		populateListFiliale();
 
 	}
 
@@ -345,6 +304,36 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 
 	}
 
+	private void populateListFiliale() {
+
+		listFiliale.clear();
+
+		HashMap<String, String> temp;
+
+		int selectedItem = 0, i = 1;
+
+		for (EnumFiliale enumF : EnumFiliale.values()) {
+			{
+				temp = new HashMap<String, String>();
+
+				temp.put("numeFiliala", enumF.getNume());
+				temp.put("codFiliala", enumF.getCod());
+
+				listFiliale.add(temp);
+
+				if (UserInfo.getInstance().getUnitLog().equals(enumF.getCod()))
+					selectedItem = i;
+
+				i++;
+			}
+
+			spinnerFiliale.setAdapter(adapterFiliale);
+			spinnerFiliale.setSelection(selectedItem - 1);
+			spinnerFiliale.setVisibility(View.VISIBLE);
+
+		}
+	}
+
 	private void populateFilialeSDIP() {
 
 		listFiliale.clear();
@@ -369,6 +358,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 
 		spinnerFiliale.setAdapter(adapterFiliale);
 		spinnerFiliale.setSelection(selectedItem - 1);
+
 
 	}
 

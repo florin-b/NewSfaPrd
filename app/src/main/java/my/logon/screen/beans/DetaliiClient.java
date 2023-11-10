@@ -19,6 +19,7 @@ public class DetaliiClient {
 	private boolean isFurnizor;
 	private String divizii;
 	private String tipPlata;
+	private String email;
 
 	public DetaliiClient() {
 
@@ -158,5 +159,13 @@ public class DetaliiClient {
 
 	public void setTipPlata(String tipPlata) {
 		this.tipPlata = tipPlata;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
