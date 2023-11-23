@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import my.logon.screen.beans.BeanStocTCLI;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.Constants;
@@ -183,6 +184,33 @@ public class UtilsComenzi {
 			return true;
 
 		return false;
+	}
+
+	public static boolean isDepozitUnitLog(String depozitStoc, List<String> listDepozite){
+
+		for (String depozit : listDepozite){
+			if (depozit.toLowerCase().equals(depozitStoc.toLowerCase()))
+				return true;
+		}
+
+		return false;
+	}
+
+	public static BeanStocTCLI getStocMaxim(List<BeanStocTCLI> listStocuri){
+
+		if (listStocuri == null || listStocuri.isEmpty()) {
+			return null;
+		}
+
+		BeanStocTCLI stocMaxim = listStocuri.get(0);
+
+		for (BeanStocTCLI stoc : listStocuri){
+			if (stoc.getCantitate() > stocMaxim.getCantitate())
+				stocMaxim = stoc;
+		}
+
+
+		return stocMaxim;
 	}
 
 	public static double getGreutateKgArticole(List<ArticolComanda> listArticole){

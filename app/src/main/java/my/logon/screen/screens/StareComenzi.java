@@ -4,6 +4,8 @@
  */
 package my.logon.screen.screens;
 
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -139,8 +141,8 @@ public class StareComenzi extends AppCompatActivity implements ComenziDAOListene
 	}
 
 	private void displayClientiBorderou(List<BeanClientBorderou> listClienti) {
-
-
+		
+		
 		if (listClienti.size() > 0) {
 			ClientBorderouAdapter adapter = new ClientBorderouAdapter(this, listClienti);
 			adapter.setComandaCurenta(comandaCurenta);
@@ -155,9 +157,9 @@ public class StareComenzi extends AppCompatActivity implements ComenziDAOListene
 			((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getView().setVisibility(View.INVISIBLE);
 
 		}
-
-
-
+		
+		
+		
 	}
 
 	private void setListenerHartaButton() {
@@ -255,16 +257,16 @@ public class StareComenzi extends AppCompatActivity implements ComenziDAOListene
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 
-			case 0:
-				showSelectComenziDialog();
-				break;
-			case 1:
-				showSelectAgentDialog();
-				break;
+		case 0:
+			showSelectComenziDialog();
+			break;
+		case 1:
+			showSelectAgentDialog();
+			break;
 
-			case android.R.id.home:
-				returnToMainMenu();
-				return true;
+		case android.R.id.home:
+			returnToMainMenu();
+			return true;
 
 		}
 		return false;
@@ -298,18 +300,18 @@ public class StareComenzi extends AppCompatActivity implements ComenziDAOListene
 	@Override
 	public void operationComenziComplete(EnumComenziDAO methodName, Object result) {
 		switch (methodName) {
-			case GET_COMENZI_DESCHISE:
-				listComenzi = operatiiComenzi.deserializeComenziDeschise((String) result);
-				displayComenziDeschise(listComenzi);
-				break;
-			case GET_CLIENTI_BORD:
-				displayClientiBorderou(operatiiComenzi.deserializeClientiBorderou((String) result));
-				break;
-			case GET_POZITIE_MASINA:
-				showMapPozitieMasina((String) result);
-				break;
-			default:
-				break;
+		case GET_COMENZI_DESCHISE:
+			listComenzi = operatiiComenzi.deserializeComenziDeschise((String) result);
+			displayComenziDeschise(listComenzi);
+			break;
+		case GET_CLIENTI_BORD:
+			displayClientiBorderou(operatiiComenzi.deserializeClientiBorderou((String) result));
+			break;
+		case GET_POZITIE_MASINA:
+			showMapPozitieMasina((String) result);
+			break;
+		default:
+			break;
 
 		}
 
@@ -364,7 +366,7 @@ public class StareComenzi extends AppCompatActivity implements ComenziDAOListene
 
 			LatLng coordMasina = new LatLng(Double.valueOf(localCoords[0]), Double.valueOf(localCoords[1]));
 
-			if (coordClient.latitude > 0) {
+			if (coordClient != null && coordClient.latitude > 0) {
 				MarkerOptions markerClient = new MarkerOptions();
 				markerClient.position(coordClient);
 				markerClient.icon(BitmapDescriptorFactory.fromResource(R.drawable.customer));

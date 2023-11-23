@@ -77,7 +77,7 @@ public class UtilsUser {
 	}
 
 	public static boolean isUserSDKA() {
-		return UserInfo.getInstance().getTipUserSap().equals("SDKA");
+		return UserInfo.getInstance().getTipUserSap().equals("SDKA") || UserInfo.getInstance().getTipUser().equals("SK");
 	}
 
 	public static boolean isSD() {

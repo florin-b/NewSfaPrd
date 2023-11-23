@@ -9,11 +9,13 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.beans.BeanAdreseJudet;
 import my.logon.screen.beans.BeanDateLivrareClient;
+import my.logon.screen.beans.BeanFilialaLivrare;
 import my.logon.screen.beans.BeanLocalitate;
 import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.enums.EnumLocalitate;
@@ -111,6 +113,11 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 		performOperation();
 	}
 
+	public void getFilialeComenziTCLI(){
+		numeComanda = EnumOperatiiAdresa.GET_FILIALE_TCLI;
+		performOperation();
+	}
+
 	public List<String> deserializeListLocalitati(Object resultList) {
 
 		List<String> listLocalitati = new ArrayList<String>();
@@ -131,6 +138,37 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 		}
 
 		return listLocalitati;
+	}
+
+	public List<BeanFilialaLivrare> deserializeFilialeLivrare(String resultList){
+
+		//{"nume":"Bacau Depozit Materiale grele","werks":"BC10","depozite":["01V2","02V2","03V2","04V2","04V3","05V2","06V2","07V2","09V2"]}
+
+		List<BeanFilialaLivrare> listFilialeLivrare = new ArrayList<>();
+
+		try {
+			Object json = new JSONTokener((String) resultList).nextValue();
+
+			if (json instanceof JSONArray) {
+				JSONArray jsonObject = new JSONArray((String) resultList);
+
+				for (int i = 0; i < jsonObject.length(); i++) {
+
+					BeanFilialaLivrare filialaLivrare = new BeanFilialaLivrare();
+					JSONObject filialaObject = jsonObject.getJSONObject(i);
+					filialaLivrare.setNumeFiliala(filialaObject.getString("nume"));
+					filialaLivrare.setUnitLog(filialaObject.getString("werks"));
+					String listDepozite[] = filialaObject.getString("depozite").replace("[","").replace("]","").replace("\"","").split(",");
+					filialaLivrare.setDepozite(Arrays.asList(listDepozite));
+					listFilialeLivrare.add(filialaLivrare);
+				}
+			}
+
+		} catch (JSONException e) {
+			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return listFilialeLivrare;
 	}
 
 	public BeanAdreseJudet deserializeListAdrese(Object resultList) {

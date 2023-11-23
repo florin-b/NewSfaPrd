@@ -1358,7 +1358,11 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                                 return;
                             } else
                                 getTotalComenziNumerar();
-                        } else
+                        } else if (isGreutateMaximaComanda()) {
+                            Toast.makeText(getApplicationContext(),Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        else
                             valideazaFinal();
 
                     }
@@ -1370,6 +1374,17 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             }
 
         }
+    }
+
+    private boolean isGreutateMaximaComanda(){
+
+        double greutateComanda = ListaArticoleComandaGed.getInstance().getGreutateKgArticole();
+
+        if (greutateComanda > Constants.MAX_GREUTATE_CMD_KG && DateLivrare.getInstance().getTransport().equals("TRAP")){
+            return true;
+        }
+
+        return false;
     }
 
     private void getTotalComenziNumerar() {
@@ -1553,8 +1568,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_LIVRARE)
             filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
         else if ((DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_VANZARE) && DateLivrare.getInstance().getTransport().equals("TCLI") &&
-                !DateLivrare.getInstance().getFilialaLivrareTCLI().trim().isEmpty())
-            filialaLivrareMathaus = DateLivrare.getInstance().getFilialaLivrareTCLI();
+                !DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().trim().isEmpty())
+            filialaLivrareMathaus = DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog();
 
         String livrareFilialaSecundara = HelperMathaus.getFilialaSecundara();
 
@@ -1573,7 +1588,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             List<BeanStocTCLI> listStocTCLI;
 
             if (HelperMathaus.isConditiiDepozitTCLI(artCmd, "20")) {
-                listStocTCLI = HelperMathaus.genereazaStocArticolTCLI(artCmd);
+                listStocTCLI = HelperMathaus.genereazaStocUnitLog(artCmd);
 
                 for (BeanStocTCLI stocTCLI : listStocTCLI) {
                     DateArticolMathaus dateArticol = HelperMathaus.genereazaStocArticolTCLI(artCmd, stocTCLI);

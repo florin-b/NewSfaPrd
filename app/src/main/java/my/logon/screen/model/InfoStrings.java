@@ -575,8 +575,6 @@ public class InfoStrings {
 			else if (filiala.equals("BU10"))
 				codClient = "4119000430";
 
-			else if (filiala.equals("SV10"))
-				codClient = "4119001361";
 
 		}
 
@@ -672,20 +670,21 @@ public class InfoStrings {
 		else if (filiala.equals("VN10"))
 			codClient = "4119000407";
 
-		else if (filiala.equals("BU13")) // Andronache
+		else if (filiala.equals("BU13"))
 			codClient = "4119000387";
 
-		else if (filiala.equals("BU10")) // Glina
+		else if (filiala.equals("BU10"))
 			codClient = "4119000389";
 
-		else if (filiala.equals("BU11")) // Militari
+		else if (filiala.equals("BU11"))
 			codClient = "4119000391";
 
-		else if (filiala.equals("BU12")) // Otopeni
+		else if (filiala.equals("BU12"))
 			codClient = "4119000392";
 
 		else if (filiala.equals("SV10"))
-			codClient = "4119001358";
+			codClient = "4119001376";
+
 
 		return codClient;
 
@@ -749,16 +748,16 @@ public class InfoStrings {
 		else if (filiala.equals("VN10"))
 			codClient = "4119000379";
 
-		else if (filiala.equals("BU13")) // Andronache
+		else if (filiala.equals("BU13"))
 			codClient = "4119000362";
 
-		else if (filiala.equals("BU10")) // Glina
+		else if (filiala.equals("BU10"))
 			codClient = "4119000364";
 
-		else if (filiala.equals("BU11")) // Militari
+		else if (filiala.equals("BU11"))
 			codClient = "4119000370";
 
-		else if (filiala.equals("BU12")) // Otopeni
+		else if (filiala.equals("BU12"))
 			codClient = "4119000371";
 
 		return codClient;
@@ -805,9 +804,6 @@ public class InfoStrings {
 			else if (filiala.equals("MS10"))
 				codClient = "4119001146";
 
-			else if (filiala.equals("SV10"))
-				codClient = "4119001362";
-
 		}
 
 		if (tipClient.equals("PJ")) {
@@ -846,9 +842,6 @@ public class InfoStrings {
 
 			else if (filiala.equals("MS10"))
 				codClient = "4119001147";
-
-			else if (filiala.equals("SV10"))
-				codClient = "4119001363";
 
 		}
 
@@ -928,9 +921,8 @@ public class InfoStrings {
 
 			else if (filiala.equals("SB10"))
 				codClient = "4119000360";
-
 			else if (filiala.equals("SV10"))
-				codClient = "4119001355";
+				codClient = "4119001377";
 
 		}
 
@@ -1004,7 +996,7 @@ public class InfoStrings {
 				codClient = "4119000410";
 
 			else if (filiala.equals("SV10"))
-				codClient = "4119001356";
+				codClient = "4119001377";
 
 		}
 
@@ -1048,7 +1040,7 @@ public class InfoStrings {
 			codClient = "4119000279";
 
 		else if (filiala.equals("MM10"))
-			codClient = "4119000354";
+			codClient = "4119000280";
 
 		else if (filiala.equals("MS10"))
 			codClient = "4119000281";
@@ -1065,10 +1057,10 @@ public class InfoStrings {
 		else if (filiala.equals("VN10"))
 			codClient = "4119000285";
 
-		else if (filiala.equals("BU13")) // Andronache
+		else if (filiala.equals("BU13"))
 			codClient = "4119000266";
 
-		else if (filiala.equals("BU10")) // Glina
+		else if (filiala.equals("BU10"))
 		{
 			if (!UserInfo.getInstance().getInitDivizie().equals("15"))
 				codClient = "4119000268";
@@ -1076,17 +1068,17 @@ public class InfoStrings {
 				codClient = "4119000440";
 		}
 
-		else if (filiala.equals("BU11")) // Militari
+		else if (filiala.equals("BU11"))
 			codClient = "4119000270";
 
-		else if (filiala.equals("BU12")) // Otopeni
+		else if (filiala.equals("BU12"))
 			codClient = "4119000271";
 
 		else if (filiala.equals("SB10"))
 			codClient = "4119000411";
 
 		else if (filiala.equals("SV10"))
-			codClient = "4119001357";
+			codClient = "4119001383";
 
 		return codClient;
 
@@ -1168,76 +1160,6 @@ public class InfoStrings {
 
 	}
 
-	public static String getClientGed_FaraFactura_OBSOLETE(String filiala) {
-
-		String codClient = "00";
-
-		if (filiala.equals("AG10"))
-			codClient = "4119000286";
-
-		if (filiala.equals("BC10"))
-			codClient = "4119000288";
-
-		if (filiala.equals("BH10"))
-			codClient = "4119000290";
-
-		if (filiala.equals("BV10"))
-			codClient = "4119000293";
-
-		if (filiala.equals("BZ10"))
-			codClient = "4119000294";
-
-		if (filiala.equals("CJ10"))
-			codClient = "4119000295";
-
-		if (filiala.equals("CT10"))
-			codClient = "4119000296";
-
-		if (filiala.equals("DJ10"))
-			codClient = "4119000297";
-
-		if (filiala.equals("GL10"))
-			codClient = "4119000298";
-
-		if (filiala.equals("HD10"))
-			codClient = "4119000299";
-
-		if (filiala.equals("IS10"))
-			codClient = "4119000300";
-
-		if (filiala.equals("MM10"))
-			codClient = "4119000301";
-
-		if (filiala.equals("MS10"))
-			codClient = "4119000302";
-
-		if (filiala.equals("NT10"))
-			codClient = "4119000303";
-
-		if (filiala.equals("PH10"))
-			codClient = "4119000304";
-
-		if (filiala.equals("TM10"))
-			codClient = "4119000305";
-
-		if (filiala.equals("VN10"))
-			codClient = "4119000306";
-
-		if (filiala.equals("BU13")) // Andronache
-			codClient = "4119000287";
-
-		if (filiala.equals("BU10")) // Glina
-			codClient = "4119000289";
-
-		if (filiala.equals("BU11")) // Militari
-			codClient = "4119000291";
-
-		if (filiala.equals("BU12")) // Otopeni
-			codClient = "4119000292";
-
-		return codClient;
-
-	}
 
 	public static String getTipUser(String tipUser) {
 		String tipAcces = "NN";

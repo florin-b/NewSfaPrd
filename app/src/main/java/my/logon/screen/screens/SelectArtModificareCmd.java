@@ -1024,6 +1024,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 						unArticol.setCantitate50(Double.valueOf(cantitate50));
 						unArticol.setUm50(um50);
 
+						unArticol.setSintetic(articolDBSelected.getSintetic());
 
 						unArticol.setCantitateInit(Double.valueOf(cantArticol));
 
@@ -1264,7 +1265,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
 				cantUmb = tokenPret[14];
 				Umb = tokenPret[15];
-				greutateArt = Double.parseDouble(tokenPret[23].trim());
+				greutateArt = Double.parseDouble(tokenPret[24].trim());
 
 				tipMarfa = tokenPret[26];
 				greutateBruta = Double.parseDouble(tokenPret[27].trim());
@@ -1364,8 +1365,8 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 				txtPretArt.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
 				txtPretArt.setHint(nf2.format(initPrice / globalCantArt * valMultiplu));
 				
-				dataExpPret = tokenPret[24];
-				((TextView) findViewById(R.id.textDataExp)).setText(UtilsDates.formatDataExp(tokenPret[24]));
+				dataExpPret = tokenPret[23];
+				((TextView) findViewById(R.id.textDataExp)).setText(UtilsDates.formatDataExp(tokenPret[23]));
 
 				if (ModificareComanda.isComandaDistrib)
 					textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu * Constants.TVA)));

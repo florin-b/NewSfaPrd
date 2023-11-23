@@ -519,6 +519,7 @@ public class ListaArticoleComandaGed extends Observable implements OperatiiArtic
 
 		articolLivrare.setCantitate50(articolComanda.getCantitate50());
 		articolLivrare.setUm50(articolComanda.getUm50());
+		articolLivrare.setSintetic(articolComanda.getSintetic());
 
 		return articolLivrare;
 

@@ -20,6 +20,7 @@ import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.HelperTranspBuc;
 import my.logon.screen.model.ListaArticoleComanda;
@@ -103,7 +104,6 @@ public class HelperMathaus {
     }
 
     public static boolean isArtTaxaAcces(String numeArticol) {
-
         boolean taxa1 =  numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("ACCES");
         boolean taxa2 =  numeArticol != null && numeArticol.toUpperCase().contains("EXTRA") && numeArticol.toUpperCase().contains("METRO");
 
@@ -329,6 +329,19 @@ public class HelperMathaus {
         return true;
     }
 
+    public static List<BeanStocTCLI> genereazaStocUnitLog(ArticolComanda articolComanda){
+        List<BeanStocTCLI> listStocTCLI = new ArrayList<>();
+
+        BeanStocTCLI beanStoc = new BeanStocTCLI();
+        beanStoc.setCantitate(articolComanda.getCantitate());
+        beanStoc.setDepozit(articolComanda.getListStocTCLI().get(0).getDepozit());
+        beanStoc.setUm(articolComanda.getListStocTCLI().get(0).getUm());
+        listStocTCLI.add(beanStoc);
+
+        return listStocTCLI;
+    }
+
+
     public static List<BeanStocTCLI> genereazaStocArticolTCLI(ArticolComanda articolComanda){
 
         List<BeanStocTCLI> listStocTCLI = new ArrayList<>();
@@ -466,8 +479,93 @@ public class HelperMathaus {
 
     public static boolean isComandaVanzareTCLI(){
         return DateLivrare.getInstance().getTransport().equals("TCLI") && DateLivrare.getInstance().getFilialaLivrareTCLI() != null &&
-                !DateLivrare.getInstance().getFilialaLivrareTCLI().trim().isEmpty();
+                !DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().trim().isEmpty();
     }
+
+
+    public static boolean isTaxaTransport(ArticolComanda articolComanda, CostTransportMathaus costTranport, String filiala){
+
+        if (articolComanda == null)
+            return false;
+
+        if (costTranport == null)
+            return false;
+
+        if (filiala == null)
+            return false;
+
+        return articolComanda.getCodArticol().replaceFirst ("^0*", "").equals(costTranport.getCodArtTransp().replaceFirst ("^0*", ""))
+                && articolComanda.getFilialaSite().equals(filiala) && costTranport.getFiliala().equals(filiala);
+
+    }
+
+    public static boolean isArticolIdentic(ArticolComanda articol1, ArticolComanda articol2){
+        if (articol1 == null || articol2 == null)
+            return false;
+
+        return articol1.getCodArticol().replaceFirst ("^0*", "").equals(articol2.getCodArticol().replaceFirst ("^0*", ""));
+
+    }
+
+
+    public static boolean isCodArticolServiciuTRAP(ArticolComanda articolComanda){
+
+        if (articolComanda == null)
+            return false;
+
+        if (articolComanda.getCodArticol() == null)
+            return false;
+
+        if (articolComanda.getNumeArticol() == null)
+            return false;
+
+        boolean isServiciu = articolComanda.getCodArticol().replaceFirst ("^0*", "").startsWith("30");
+
+        if (!isServiciu)
+            return false;
+
+        if (articolComanda.getNumeArticol().contains(Constants.NUME_SERV_DESC_PALET))
+            return true;
+        else if (isServiciuGeneral(articolComanda));
+            return false;
+
+    }
+
+
+    private static boolean isServiciuGeneral(ArticolComanda articolComanda){
+
+        if (articolComanda.getSintetic() == null)
+            return false;
+
+        String codArticol = articolComanda.getCodArticol().replaceFirst ("^0*", "");
+
+        String articoleServicii =  "30100021    SERVICII DEBITARE PAL " +
+                "30100028    SERVICII APLICARE CANT (19-25)/2MM " +
+                "30100029    SERVICII APLICARE CANT (19-23)/0,4MM" +
+                "30100060    SERVICII DEBITARE HDF" +
+                "30100061    SERVICII DEBITARE BLAT" +
+                "30100071    SERVICII DEBITARE PAL - PROMO" +
+                "30100072    SERVICII DEBITARE PAL - BUC" +
+                "30100073    SERVICII DEBITARE PAL - ML" +
+                "30100553    SERVICII DEBITARE OSB 1BUC" +
+                "30100840    SERVICII APLICARE CANT (28-45)/2MM" +
+                "30101101    SERVICII DUBLARE PAL" +
+                "30101102    SERVICII DEBITARE/INDREPTARE PAL DUBLAT" +
+                "30101421    SERVICII APLICARE CANT EXTERN(19-25)/2MM" +
+                "30101422    SERVICII APLICARE CANT EXTERN 22/0.4MM" +
+                "30101423    SERVICII APLICARE CANT EXTERN(28-44)/2MM" +
+                "30101463    SERVICII DEBITARE OSB - BUC" +
+                "30102430    SERVICII APLICARE CANT 0,4MM - PROMO" +
+                "30102431    SERVICII APLICARE CANT (19-25)/2MM-PROMO" +
+                "30102432    SERVICII APLICARE CANT (28-45)/2MM-PROMO" +
+                "30102433    SERVICII DEBITARE HDF-PROMO" +
+                "30102434    SERVICII DEBITARE BLAT-PROMO";
+
+        return articoleServicii.contains(codArticol) || articoleServicii.contains(articolComanda.getNumeArticol().toUpperCase().trim()) ||
+                articolComanda.getSintetic().toUpperCase().equals("01_SERVWD");
+
+    }
+
 
 
 }

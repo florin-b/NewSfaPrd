@@ -6,7 +6,7 @@ public enum EnumOperatiiAdresa {
     GET_DATE_LIVRARE("getCmdDateLivrare"), GET_ADRESE_LIVR_CLIENT(
             "getAdreseLivrareClient"), GET_LOCALITATI_LIVRARE_RAPIDA("getLocalitatiLivrareRapida"),
     GET_DATE_LIVRARE_CLIENT("getDateLivrareClient"), GET_FILIALA_MATHAUS("getFilialaJudetLivrare"),
-    GET_ADRESA_FILIALA("getAdresaFiliala"), GET_DATE_POLIGON_LIVRARE("getDatePoligonLivrare");
+    GET_ADRESA_FILIALA("getAdresaFiliala"), GET_DATE_POLIGON_LIVRARE("getDatePoligonLivrare"), GET_FILIALE_TCLI("getFilialeComenziTCLI");
     private String numeComanda;
 
     EnumOperatiiAdresa(String numeComanda) {

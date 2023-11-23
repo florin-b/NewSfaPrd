@@ -289,7 +289,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
     @Override
     public void setStareRezumat(String codStare, String filialaLivrare) {
 
-        if (DateLivrare.getInstance().getFilialaLivrareTCLI() == null || DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty())
+        if (DateLivrare.getInstance().getFilialaLivrareTCLI() == null || DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().isEmpty())
             return;
 
         if ((codStare.equals("0") && !isCom1()) || !selectTransp) {

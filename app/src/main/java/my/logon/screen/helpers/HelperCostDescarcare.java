@@ -16,6 +16,7 @@ import my.logon.screen.beans.ComandaCalculDescarcare;
 import my.logon.screen.beans.CostDescarcare;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.Constants;
 
 public class HelperCostDescarcare {
 
@@ -34,7 +35,7 @@ public class HelperCostDescarcare {
             ArticolComanda articolComanda = new ArticolComanda();
 
             articolComanda.setCodArticol(artDesc.getCod());
-            articolComanda.setNumeArticol("PREST.SERV.DESCARCARE PALET DIV " + artDesc.getDepart());
+            articolComanda.setNumeArticol(Constants.NUME_SERV_DESC_PALET + artDesc.getDepart());
             articolComanda.setCantitate(artDesc.getCantitate());
             articolComanda.setCantUmb(artDesc.getCantitate());
             articolComanda.setPretUnit(artDesc.getValoare() * procentReducere);
@@ -69,7 +70,7 @@ public class HelperCostDescarcare {
 
 
     public static List<ArticolComanda> getArticoleDescarcareDistrib(CostDescarcare costDescarcare, double valoareCost,
-                                                             List<ArticolComanda> articoleComanda) {
+                                                                    List<ArticolComanda> articoleComanda) {
 
         double procentReducere = valoareCost / costDescarcare.getValoareDescarcare();
 
@@ -83,7 +84,7 @@ public class HelperCostDescarcare {
             ArticolComanda articolComanda = new ArticolComanda();
 
             articolComanda.setCodArticol(artDesc.getCod());
-            articolComanda.setNumeArticol("PREST.SERV.DESCARCARE PALET DIV " + artDesc.getDepart());
+            articolComanda.setNumeArticol(Constants.NUME_SERV_DESC_PALET + artDesc.getDepart());
             articolComanda.setCantitate(artDesc.getCantitate());
             articolComanda.setCantUmb(artDesc.getCantitate());
             articolComanda.setPretUnit(artDesc.getValoare() * procentReducere);

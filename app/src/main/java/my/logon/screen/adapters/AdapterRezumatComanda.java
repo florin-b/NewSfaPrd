@@ -49,6 +49,8 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private ArticolComanda articolTransport;
     private ViewHolder myViewHolder;
     private List<ArticolComanda> listArticoleTransport;
+    private List<ArticolComanda> listArticoleTaxaTransp;
+    private List<ArticolComanda> listAlteTaxe;
     private boolean selectTransp;
     private String canalDistrib;
 
@@ -60,6 +62,8 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         this.tipTransportCmd = tipTransportCmd;
         this.filialeArondate = filialeArondate;
         listArticoleTransport = new ArrayList<>();
+        listArticoleTaxaTransp = new ArrayList<>();
+        listAlteTaxe = new ArrayList<>();
         this.selectTransp = selectTransp;
         this.canalDistrib = canalDistrib;
 
@@ -124,7 +128,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
 
             String tipTranspArt = getTipTransport(rezumat.getFilialaLivrare());
-            afisCostTransportComanda(rezumat,viewHolder, rezumat.getFilialaLivrare());
+            afisCostTransportComanda(rezumat, viewHolder, rezumat.getFilialaLivrare());
             viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
 
 
@@ -176,14 +180,14 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
                 } else if (tipTransportCmd.equals("TCLI")) {
 
-                    String[] tipTransportTCLIArray ;
-                    if (!tipTranspArt.isEmpty()){
+                    String[] tipTransportTCLIArray;
+                    if (!tipTranspArt.isEmpty()) {
                         tipTransportTCLIArray = new String[]{tipTranspArt, "TCLI"};
-                    }else
+                    } else
                         tipTransportTCLIArray = new String[]{"TCLI"};
 
 
-                    tipTransportTCLIArray = new String[]{"TRAP","TCLI"};
+                    tipTransportTCLIArray = new String[]{"TRAP", "TCLI"};
 
                     viewHolder.tipTransport.setVisibility(View.GONE);
                     viewHolder.spinnerTransport.setVisibility(View.VISIBLE);
@@ -288,14 +292,14 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 setTransportArticole(rezumat, tipTransportSelected);
 
                 if (tipTransportSelected.equals("TCLI")) {
-                    eliminaArticolTransport(rezumat, viewHolder);
+                    eliminaArticoleServicii(rezumat, viewHolder);
                     viewHolder.textTransport.setVisibility(View.INVISIBLE);
                     viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
                     listener.setStareRezumat("0", rezumat.getFilialaLivrare());
                     setTransportComenzi("TCLI", rezumat.getFilialaLivrare());
                 } else {
                     viewHolder.textTransport.setVisibility(View.VISIBLE);
-                    adaugaArticolTransport(rezumat, viewHolder);
+                    adaugaArticoleServicii(rezumat, viewHolder);
 
                     if (tipTransportSelected.equals("TRAP")) {
 
@@ -307,14 +311,10 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                         if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
                             listener.setStareRezumat("1", rezumat.getFilialaLivrare());
                             setTransportComenzi("TRAP", rezumat.getFilialaLivrare());
-                            eliminaArticolTransport(rezumat, viewHolder);
+                            eliminaArticoleServicii(rezumat, viewHolder);
                         }
-
                     }
-
-
                 }
-
             }
 
             @Override
@@ -324,8 +324,20 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         });
     }
 
+    private void eliminaArticoleServicii(RezumatComanda rezumatComanda, ViewHolder viewHolder){
+        eliminaArticolTransport(rezumatComanda, viewHolder);
+        eliminaArticolTaxeTransp(rezumatComanda, viewHolder);
+        eliminaAlteTaxe(rezumatComanda, viewHolder);
+    }
 
-    private void setTransportComenzi(String tipTransport, String filiala){
+    private void adaugaArticoleServicii(RezumatComanda rezumatComanda, ViewHolder viewHolder){
+        adaugaArticolTransport(rezumatComanda, viewHolder);
+        adaugaArticolTaxeTransp(rezumatComanda, viewHolder);
+        adaugaAlteTaxe(rezumatComanda, viewHolder);
+    }
+
+
+    private void setTransportComenzi(String tipTransport, String filiala) {
 
         if (!DateLivrare.getInstance().getTransport().equals("TCLI"))
             return;
@@ -338,8 +350,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         if (setT == null) {
             setT = new ArrayList<>();
             setT.add(transpComenzi);
-        }
-        else {
+        } else {
             Iterator<TranspComenzi> iterator = setT.iterator();
             while (iterator.hasNext()) {
                 TranspComenzi tr = iterator.next();
@@ -360,7 +371,6 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         Iterator<ArticolComanda> artIterator = rezumatComanda.getListArticole().iterator();
 
         while (artIterator.hasNext()) {
-
             ArticolComanda artCom = artIterator.next();
 
             if (isArtTransp(artCom.getNumeArticol())) {
@@ -376,7 +386,56 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
                 break;
             }
+        }
+    }
 
+    private void eliminaArticolTaxeTransp(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
+
+        Iterator<ArticolComanda> artIterator = rezumatComanda.getListArticole().iterator();
+
+        while (artIterator.hasNext()) {
+            ArticolComanda artCom = artIterator.next();
+
+            for (CostTransportMathaus costTranport : costTransport) {
+
+                if (HelperMathaus.isTaxaTransport(artCom, costTranport, rezumatComanda.getFilialaLivrare()) && !isArtTransp(artCom.getNumeArticol())) {
+                    adaugaTaxaTranspLista(artCom);
+                    artIterator.remove();
+                    calculeazaTotalComanda(rezumatComanda, viewHolder);
+                    notifyDataSetChanged();
+
+                    if (listener != null)
+                        listener.eliminaArticol(artCom);
+
+                }
+            }
+        }
+    }
+
+    private void eliminaAlteTaxe(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
+
+        Iterator<ArticolComanda> artIterator = rezumatComanda.getListArticole().iterator();
+
+        boolean isTaxaTransp = false;
+        while (artIterator.hasNext()) {
+            ArticolComanda artCom = artIterator.next();
+
+            for (CostTransportMathaus costTranport : costTransport) {
+                if (HelperMathaus.isTaxaTransport(artCom, costTranport, rezumatComanda.getFilialaLivrare())) {
+                    isTaxaTransp = true;
+                    break;
+                }
+            }
+
+            if (!isTaxaTransp && HelperMathaus.isCodArticolServiciuTRAP(artCom)){
+                adaugaAlteTaxeLista(artCom);
+                artIterator.remove();
+                calculeazaTotalComanda(rezumatComanda, viewHolder);
+                notifyDataSetChanged();
+
+                if (listener != null)
+                    listener.eliminaArticol(artCom);
+            }
         }
 
 
@@ -393,15 +452,15 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private boolean isArtTransp(String numeArticol) {
 
         if (numeArticol == null)
-            return  false;
+            return false;
 
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
     }
 
 
-    private boolean isArtTaxa(String numeArticol){
+    private boolean isArtTaxa(String numeArticol) {
         if (numeArticol == null)
-            return  false;
+            return false;
 
         return HelperMathaus.isArtTaxaAcces(numeArticol);
 
@@ -432,13 +491,61 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
     }
 
-    private void afisCostTransportComanda(RezumatComanda rezumatComanda, ViewHolder viewHolder, String filiala){
+    private void adaugaArticolTaxeTransp(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
+
+        Iterator<ArticolComanda> artTaxaIterator = getListTaxaTranspFiliala(rezumatComanda.getFilialaLivrare()).iterator();
+
+        while (artTaxaIterator.hasNext()) {
+
+            ArticolComanda articolTaxaTransp = artTaxaIterator.next();
+
+            if (articolTaxaTransp.getFilialaSite().equals(rezumatComanda.getFilialaLivrare())) {
+
+                rezumatComanda.getListArticole().add(articolTaxaTransp);
+                calculeazaTotalComanda(rezumatComanda, viewHolder);
+                notifyDataSetChanged();
+
+                if (listener != null)
+                    listener.adaugaArticol(articolTaxaTransp);
+            }
+
+        }
+
+        eliminaTaxaTranspFiliala(rezumatComanda.getFilialaLivrare());
+
+    }
+
+    private void adaugaAlteTaxe(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
+
+        Iterator<ArticolComanda> artTaxaIterator = getListAlteTaxeFiliala(rezumatComanda.getFilialaLivrare()).iterator();
+
+        while (artTaxaIterator.hasNext()) {
+
+            ArticolComanda articolTaxaTransp = artTaxaIterator.next();
+
+            if (articolTaxaTransp.getFilialaSite().equals(rezumatComanda.getFilialaLivrare())) {
+
+                rezumatComanda.getListArticole().add(articolTaxaTransp);
+                calculeazaTotalComanda(rezumatComanda, viewHolder);
+                notifyDataSetChanged();
+
+                if (listener != null)
+                    listener.adaugaArticol(articolTaxaTransp);
+            }
+
+        }
+
+        eliminaAlteTaxeFiliala(rezumatComanda.getFilialaLivrare());
+
+    }
+
+    private void afisCostTransportComanda(RezumatComanda rezumatComanda, ViewHolder viewHolder, String filiala) {
 
         ArticolComanda localArtTransport = getArticolTransportComanda(rezumatComanda, filiala);
 
         if (localArtTransport != null) {
             viewHolder.textTransport.setText("Val. transp: " + localArtTransport.getPret());
-        }else {
+        } else {
             viewHolder.textTransport.setText("Val. transp: 0");
             if (!isModifPretTransp(filiala))
                 viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
@@ -459,7 +566,6 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         return null;
 
     }
-
 
 
     private void clearTransportArticol(List<RezumatComanda> listComenzi) {
@@ -514,7 +620,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     }
 
 
-    private boolean isModifPretTransp(String filiala){
+    private boolean isModifPretTransp(String filiala) {
 
         boolean isPermitModifTransp = true;
 
@@ -724,6 +830,105 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         }
     }
 
+    private void eliminaTaxaTranspFiliala(String filiala) {
+
+        Iterator<ArticolComanda> artTaxaIterator = listArticoleTaxaTransp.iterator();
+
+        while (artTaxaIterator.hasNext()) {
+
+            ArticolComanda articolTaxaTransp = artTaxaIterator.next();
+
+            if (articolTaxaTransp.getFilialaSite().equals(filiala))
+                artTaxaIterator.remove();
+
+        }
+
+    }
+
+    private void eliminaAlteTaxeFiliala(String filiala) {
+
+        Iterator<ArticolComanda> artTaxaIterator = listAlteTaxe.iterator();
+
+        while (artTaxaIterator.hasNext()) {
+
+            ArticolComanda articolTaxaTransp = artTaxaIterator.next();
+
+            if (articolTaxaTransp.getFilialaSite().equals(filiala))
+                artTaxaIterator.remove();
+
+        }
+
+    }
+
+
+    private List<ArticolComanda> getListTaxaTranspFiliala(String filiala){
+
+        List<ArticolComanda> listTaxeFiliala = new ArrayList<>();
+
+        for (ArticolComanda artTaxaTransp : listArticoleTaxaTransp){
+            if (artTaxaTransp.getFilialaSite().equals(filiala))
+                listTaxeFiliala.add(artTaxaTransp);
+        }
+
+        return listTaxeFiliala;
+    }
+
+    private List<ArticolComanda> getListAlteTaxeFiliala(String filiala){
+
+        List<ArticolComanda> listTaxeFiliala = new ArrayList<>();
+
+        for (ArticolComanda artTaxaTransp : listAlteTaxe){
+            if (artTaxaTransp.getFilialaSite().equals(filiala))
+                listTaxeFiliala.add(artTaxaTransp);
+        }
+
+        return listTaxeFiliala;
+    }
+
+    private void adaugaTaxaTranspLista(ArticolComanda articolTransport) {
+
+        if (listArticoleTaxaTransp == null || listArticoleTaxaTransp.isEmpty())
+            listArticoleTaxaTransp.add(articolTransport);
+        else {
+
+            boolean artExista = false;
+
+            for (ArticolComanda artTransport : listArticoleTaxaTransp) {
+
+                if (HelperMathaus.isArticolIdentic(artTransport, articolTransport) && artTransport.getFilialaSite().equals(articolTransport.getFilialaSite()))
+                    artExista = true;
+
+            }
+
+            if (!artExista) {
+                listArticoleTaxaTransp.add(articolTransport);
+            }
+
+        }
+    }
+
+    private void adaugaAlteTaxeLista(ArticolComanda articolTransport) {
+
+        if (listAlteTaxe == null || listAlteTaxe.isEmpty())
+            listAlteTaxe.add(articolTransport);
+        else {
+
+            boolean artExista = false;
+
+            for (ArticolComanda artTransport : listAlteTaxe) {
+
+                if (HelperMathaus.isArticolIdentic(artTransport, articolTransport) && artTransport.getFilialaSite().equals(articolTransport.getFilialaSite()))
+                    artExista = true;
+
+            }
+
+            if (!artExista) {
+                listAlteTaxe.add(articolTransport);
+            }
+
+        }
+    }
+
     private ArticolComanda getArticolTransport(String filiala) {
 
         ArticolComanda articolTransport;
@@ -739,7 +944,6 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
             return null;
         }
-
 
     }
 
@@ -773,7 +977,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         return 0;
     }
 
-    public void setListRezumat(List<RezumatComanda> listComenzi){
+    public void setListRezumat(List<RezumatComanda> listComenzi) {
         this.listComenzi = listComenzi;
         notifyDataSetChanged();
 

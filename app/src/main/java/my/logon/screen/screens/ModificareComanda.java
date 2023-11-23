@@ -762,7 +762,11 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                                 return;
                             } else
                                 getTotalComenziNumerar();
-                        } else {
+                        } else if (isGreutateMaximaComanda()) {
+                            Toast.makeText(getApplicationContext(),Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        else {
                             getLivrariMathaus();
                         }
 
@@ -777,6 +781,16 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         }
     }
 
+    private boolean isGreutateMaximaComanda(){
+
+        double greutateComanda = UtilsComenzi.getGreutateKgArticole(listArticoleComanda);
+
+        if (greutateComanda > Constants.MAX_GREUTATE_CMD_KG && DateLivrare.getInstance().getTransport().equals("TRAP")){
+            return true;
+        }
+
+        return false;
+    }
 
     private void getOptiuniMasini() {
 

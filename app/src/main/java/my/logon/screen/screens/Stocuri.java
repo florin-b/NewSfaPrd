@@ -313,7 +313,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 		int selectedItem = 0, i = 1;
 
 		for (EnumFiliale enumF : EnumFiliale.values()) {
-			{
+
 				temp = new HashMap<String, String>();
 
 				temp.put("numeFiliala", enumF.getNume());
@@ -327,11 +327,16 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 				i++;
 			}
 
+			temp = new HashMap<String, String>();
+			temp.put("numeFiliala", "Brasov Central");
+			temp.put("codFiliala", "BV90");
+			listFiliale.add(temp);
+
 			spinnerFiliale.setAdapter(adapterFiliale);
 			spinnerFiliale.setSelection(selectedItem - 1);
 			spinnerFiliale.setVisibility(View.VISIBLE);
 
-		}
+
 	}
 
 	private void populateFilialeSDIP() {

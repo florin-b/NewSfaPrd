@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 import enums.EnumZona;
+import my.logon.screen.beans.BeanFilialaLivrare;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.DatePoligonLivrare;
@@ -95,7 +96,7 @@ public class DateLivrare {
 	private double limitaCredit;
 	private String prelucrareLemn;
 	private String tipPersAgent;
-	private String filialaLivrareTCLI;
+	private BeanFilialaLivrare filialaLivrareTCLI;
 	private List<TranspComenzi> transpComenzi;
 	private String filialaPlata;
 	private DatePoligonLivrare datePoligonLivrare;
@@ -691,11 +692,11 @@ public class DateLivrare {
 		this.tipPersAgent = tipPersAgent;
 	}
 
-	public String getFilialaLivrareTCLI() {
+	public BeanFilialaLivrare getFilialaLivrareTCLI() {
 		return filialaLivrareTCLI;
 	}
 
-	public void setFilialaLivrareTCLI(String filialaLivrareTCLI) {
+	public void setFilialaLivrareTCLI(BeanFilialaLivrare filialaLivrareTCLI) {
 		this.filialaLivrareTCLI = filialaLivrareTCLI;
 	}
 
@@ -801,7 +802,7 @@ public class DateLivrare {
 		limitaCredit = 0;
 		prelucrareLemn = "";
 		tipPersAgent = "";
-		filialaLivrareTCLI = "";
+		filialaLivrareTCLI = null;
 		transpComenzi = null;
 		filialaPlata = "";
 		datePoligonLivrare = null;

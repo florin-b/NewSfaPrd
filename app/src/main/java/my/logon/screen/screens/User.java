@@ -195,7 +195,7 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 			if (UtilsUser.isUserIP())
 				spinnerFiliala.setEnabled(false);
 
-			if (UtilsUser.isUserCVO() && !UserInfo.getInstance().getUnitLog().equals("NN10"))
+			if (UtilsUser.isUserCVO() && !UserInfo.getInstance().getInitUnitLog().equals("NN10"))
 				spinnerFiliala.setEnabled(false);
 
 		}

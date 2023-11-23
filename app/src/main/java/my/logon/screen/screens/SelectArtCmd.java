@@ -308,15 +308,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
             ((LinearLayout) findViewById(R.id.layoutHeaderArt)).setVisibility(View.VISIBLE);
         }
 
-        if (DateLivrare.getInstance().getTransport().equals("TCLI") && UtilsGeneral.isFilMareLivrTCLIDistrib()) {
-            spinnerDepoz.setEnabled(false);
-            if (UtilsGeneral.isUlDistrib(DateLivrare.getInstance().getFilialaLivrareTCLI())) {
-                spinnerDepoz.setSelection(0);
-            } else {
-                UtilsGeneral.setSpinnerSelectedItem(spinnerDepoz, "MAV1");
-            }
-        } else
-            spinnerDepoz.setEnabled(true);
+        spinnerDepoz.setEnabled(true);
 
         spinnerUnitMas = (Spinner) findViewById(R.id.spinnerUnitMas);
 
@@ -640,10 +632,10 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
         new DownloadImageTask(imageArt).execute(articol.getAdresaImgMare());
 
-        if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
+        if (DateLivrare.getInstance().getTransport().equals("TCLI") && !DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_DETERIORATE)) {
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");
-            performListArtStoc();
+            getStocDisponibilTCLI();
         } else if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_DETERIORATE)) {
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");
@@ -1717,7 +1709,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                         else if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
                             unArticol.setFilialaSite(DateLivrare.getInstance().getCodFilialaFasonate());
                         else if (HelperMathaus.isComandaVanzareTCLI())
-                            unArticol.setFilialaSite(DateLivrare.getInstance().getFilialaLivrareTCLI());
+                            unArticol.setFilialaSite(DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog());
                         else
                             unArticol.setFilialaSite(CreareComanda.filialaAlternativa);
 
@@ -1735,8 +1727,15 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
                         unArticol.setSintetic(articolDBSelected.getSintetic());
 
-                        if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+                        if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
+
+                            if (!UtilsComenzi.isDepozitUnitLog(unArticol.getDepozit(), DateLivrare.getInstance().getFilialaLivrareTCLI().getDepozite())) {
+                                Toast.makeText(getApplicationContext(), "Nu puteti folosi acest depozit pentru " + DateLivrare.getInstance().getFilialaLivrareTCLI().getNumeFiliala() +".", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
                             listStocTCLI = HelperMathaus.getStocTCLIDepozit(textStoc.getText().toString(), unArticol.getDepozit(), unArticol.getUm());
+                        }
 
                         unArticol.setListStocTCLI(listStocTCLI);
 
@@ -1954,6 +1953,54 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
     }
 
     private void listStocDisponibilTCLI(String stocResponse) {
+
+        resultLayout.setVisibility(View.VISIBLE);
+        listStocTCLI = new ArrayList<>();
+        List<BeanStocTCLI> listStocDepozit = new ArrayList<>();
+
+        if (!stocResponse.equals("-1")) {
+
+            String[] tokStocArt = stocResponse.split("!");
+            String[] tokenMain = tokStocArt[0].split("@@");
+            double stocTotalTCLI = 0;
+            String umStocTCLI = "BUC";
+
+            for (int i = 0; i < tokenMain.length; i++) {
+                String[] articol = tokenMain[i].toString().split("#");
+
+                if (UtilsComenzi.isDepozitUnitLog(articol[2], DateLivrare.getInstance().getFilialaLivrareTCLI().getDepozite())) {
+
+                    BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
+                    beanStocTCLI.setCantitate(Double.parseDouble(articol[0]));
+                    beanStocTCLI.setUm(umStocTCLI);
+                    beanStocTCLI.setDepozit(articol[2]);
+                    listStocDepozit.add(beanStocTCLI);
+
+
+                }
+            }
+
+            BeanStocTCLI stocMaxim = UtilsComenzi.getStocMaxim(listStocDepozit);
+            if (stocMaxim != null) {
+                listStocTCLI.add(stocMaxim);
+                stocTotalTCLI = stocMaxim.getCantitate();
+                umStocTCLI = stocMaxim.getUm();
+                globalDepozSel = stocMaxim.getDepozit();
+            }
+
+
+            listArtStoc(stocTotalTCLI + "#" + umStocTCLI + "#1");
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_SHORT).show();
+            textUM.setText("");
+            textStoc.setText("");
+        }
+
+    }
+
+
+    private void listStocDisponibilTCLI_old(String stocResponse) {
         resultLayout.setVisibility(View.VISIBLE);
 
         listStocTCLI = new ArrayList<>();
@@ -2027,6 +2074,20 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
             textStoc.setText("");
         }
 
+    }
+
+    private void getStocDisponibilTCLI() {
+
+
+        if (codArticol.length() == 8)
+            codArticol = "0000000000" + codArticol;
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("codArt", codArticol);
+        params.put("filiala", DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog());
+        params.put("showCmp", "0");
+        params.put("depart", UserInfo.getInstance().getCodDepart());
+        opArticol.getStocDisponibilTCLI(params);
     }
 
     @SuppressWarnings("unchecked")
@@ -2730,7 +2791,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
     }
 
 
-
     private void performListArtStoc() {
         try {
 
@@ -2746,12 +2806,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
             if (codArticol.length() == 8)
                 codArticol = "0000000000" + codArticol;
 
-            if (isDepartMathaus && DateLivrare.getInstance().getTransport().equals("TCLI")) {
-                if (UtilsGeneral.isUlDistrib(DateLivrare.getInstance().getFilialaLivrareTCLI()))
-                    globalDepozSel = articolDBSelected.getDepart().substring(0, 2) + "V1";
-                else
-                    globalDepozSel = "MAV1";
-            }
 
             String varLocalUnitLog;
 

@@ -54,11 +54,13 @@ import java.util.List;
 import java.util.Locale;
 
 import my.logon.screen.R;
+import my.logon.screen.adapters.AdapterFilialeLivrare;
 import my.logon.screen.beans.Address;
 import my.logon.screen.beans.BeanAdresaLivrare;
 import my.logon.screen.beans.BeanAdreseJudet;
 import my.logon.screen.beans.BeanClient;
 import my.logon.screen.beans.BeanDateLivrareClient;
+import my.logon.screen.beans.BeanFilialaLivrare;
 import my.logon.screen.beans.BeanLocalitate;
 import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.GeocodeAddress;
@@ -367,8 +369,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTransp.setAdapter(adapterSpinnerTransp);
             spinnerFilialeTCLI = (Spinner) findViewById(R.id.spinnerFiliale);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item, EnumFilialeLivrare.getFiliale());
-            spinnerFilialeTCLI.setAdapter(adapter);
             setSpinnerFilialeTCLIListener();
             addListenerTipTransport();
             setFilialaLivrareTCLI();
@@ -1319,16 +1319,19 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         if (isAdresaLivrareTCLI)
             return;
 
-        //aici pentru modificare comenzi ged TCLI
+
         if (tipTransp.equals("TCLI") ) {
             layoutAdr1.setVisibility(View.GONE);
             layoutAdr2.setVisibility(View.GONE);
             layoutAdr3.setVisibility(View.GONE);
-            if (ModificareComanda.selectedCmd.equals(""))
-            ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.VISIBLE);
+
+            if (ModificareComanda.selectedCmd.equals("")) {
+                ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.VISIBLE);
+                operatiiAdresa.getFilialeComenziTCLI();
+            }
 
         } else {
-            DateLivrare.getInstance().setFilialaLivrareTCLI("");
+            DateLivrare.getInstance().setFilialaLivrareTCLI(null);
             ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.GONE);
             layoutAdr1.setVisibility(View.VISIBLE);
             layoutAdr2.setVisibility(View.VISIBLE);
@@ -1343,8 +1346,9 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
                 if (arg2 > 0) {
 
-                    String filialaLivrareTCLI = EnumFilialeLivrare.getCodFiliala(spinnerFilialeTCLI.getSelectedItem().toString());
-                    DateLivrare.getInstance().setFilialaLivrareTCLI(filialaLivrareTCLI);
+                    BeanFilialaLivrare beanFilialaLivrare = (BeanFilialaLivrare) spinnerFilialeTCLI.getSelectedItem();
+                    String filialaLivrareTCLI = beanFilialaLivrare.getUnitLog();
+                    DateLivrare.getInstance().setFilialaLivrareTCLI(beanFilialaLivrare);
 
 
                     CreareComandaGed.filialaLivrareMathaus = filialaLivrareTCLI;
@@ -1385,7 +1389,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 }
             }
             spinnerFilialeTCLI.setEnabled(false);
-        } else if (DateLivrare.getInstance().getFilialaLivrareTCLI() != null && !DateLivrare.getInstance().getFilialaLivrareTCLI().isEmpty()) {
+        } else if (DateLivrare.getInstance().getFilialaLivrareTCLI() != null && !DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().isEmpty()) {
             for (int ii = 0; ii < spinnerFilialeTCLI.getAdapter().getCount(); ii++) {
                 if (EnumFilialeLivrare.getCodFiliala(spinnerFilialeTCLI.getItemAtPosition(ii).toString()).equals(DateLivrare.getInstance().getFilialaLivrareTCLI())) {
                     spinnerFilialeTCLI.setSelection(ii);
@@ -1438,7 +1442,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     private void getJudeteFilialaLivrare() {
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("filiala", DateLivrare.getInstance().getFilialaLivrareTCLI());
+        params.put("filiala", DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog());
 
         AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
         call.getCallResultsSyncActivity();
@@ -2070,6 +2074,17 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         }
     }
 
+    private void setFilialeTCLI (String strFilialeTCLI){
+        List<BeanFilialaLivrare> listFilialeLivrare = operatiiAdresa.deserializeFilialeLivrare(strFilialeTCLI);
+
+        BeanFilialaLivrare beanFilialaLivrare = new BeanFilialaLivrare();
+        beanFilialaLivrare.setNumeFiliala("Selectati filiala");
+        listFilialeLivrare.add(0,beanFilialaLivrare);
+        AdapterFilialeLivrare adapterLivrare = new AdapterFilialeLivrare(getApplicationContext(), listFilialeLivrare);
+        spinnerFilialeTCLI.setAdapter(adapterLivrare);
+
+    }
+
     public boolean isCondInfoRestrictiiTonaj() {
         return !UtilsUser.isUserIP() && DateLivrare.getInstance().getTransport().equals("TRAP") && (
                 DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_VANZARE) ||
@@ -2432,7 +2447,10 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             setAdresalivrareFiliala((String) result);
         } else if (numeComanda == EnumOperatiiAdresa.GET_DATE_POLIGON_LIVRARE) {
             setDatePoligonLivrare((String) result);
-        } else {
+        } else if (numeComanda == EnumOperatiiAdresa.GET_FILIALE_TCLI) {
+            setFilialeTCLI((String) result);
+        }
+        else {
             switch (tipLocalitate) {
                 case LOCALITATE_SEDIU:
                     populateListLocSediu(operatiiAdresa.deserializeListAdrese(result));
