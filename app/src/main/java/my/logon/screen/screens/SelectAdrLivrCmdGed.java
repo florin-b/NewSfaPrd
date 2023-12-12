@@ -1380,6 +1380,9 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     private void setFilialaLivrareTCLI() {
 
+        if (spinnerFilialeTCLI.getAdapter() == null)
+            return;
+
         if (DateLivrare.getInstance().getCodFilialaCLP() != null && !DateLivrare.getInstance().getCodFilialaCLP().isEmpty()) {
 
             for (int ii = 0; ii < spinnerFilialeTCLI.getAdapter().getCount(); ii++) {

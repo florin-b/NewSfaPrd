@@ -18,7 +18,7 @@ import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 
 public class UtilsComenzi {
 
@@ -55,15 +55,15 @@ public class UtilsComenzi {
 	}
 
 	public static boolean isComandaGed(String unitLog, String codClient) {
-		String distribUL = InfoStrings.getDistribUnitLog(unitLog);
+		String distribUL = ClientiGenericiGedInfoStrings.getDistribUnitLog(unitLog);
 
-		if (InfoStrings.getClientGenericGed(distribUL, "PF").equals(codClient) || InfoStrings.getClientGenericGed(distribUL, "PJ").equals(codClient)
-				|| InfoStrings.getClientGenericGedWood(distribUL, "PF").equals(codClient)
-				|| InfoStrings.getClientGenericGedWood(distribUL, "PJ").equals(codClient)
-				|| InfoStrings.getClientGenericGedWood_faraFact(distribUL, "PF").equals(codClient)
-				|| InfoStrings.getClientGenericGed_CONSGED_faraFactura(distribUL, "PF").equals(codClient)
-				|| InfoStrings.getClientCVO_cuFact_faraCnp(distribUL, "").equals(codClient)
-				|| InfoStrings.getClientGed_FaraFactura(distribUL).equals(codClient))
+		if (ClientiGenericiGedInfoStrings.getClientGenericGed(distribUL, "PF").equals(codClient) || ClientiGenericiGedInfoStrings.getClientGenericGed(distribUL, "PJ").equals(codClient)
+				|| ClientiGenericiGedInfoStrings.getClientGenericGedWood(distribUL, "PF").equals(codClient)
+				|| ClientiGenericiGedInfoStrings.getClientGenericGedWood(distribUL, "PJ").equals(codClient)
+				|| ClientiGenericiGedInfoStrings.getClientGenericGedWood_faraFact(distribUL, "PF").equals(codClient)
+				|| ClientiGenericiGedInfoStrings.getClientGenericGed_CONSGED_faraFactura(distribUL, "PF").equals(codClient)
+				|| ClientiGenericiGedInfoStrings.getClientCVO_cuFact_faraCnp(distribUL, "").equals(codClient)
+				|| ClientiGenericiGedInfoStrings.getClientGed_FaraFactura(distribUL).equals(codClient))
 
 			return true;
 		else
@@ -301,6 +301,9 @@ public class UtilsComenzi {
 			return true;
 
 		if (isComandaDl())
+			return true;
+
+		if (UtilsUser.isUserSite() || UtilsUser.isUserCVO())
 			return true;
 
 		if (!UtilsComenzi.getFilialaDistrib(filialaModifComanda).equals(filialaPoligon)) {

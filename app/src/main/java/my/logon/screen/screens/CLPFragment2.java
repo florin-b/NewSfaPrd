@@ -19,7 +19,7 @@ import my.logon.screen.listeners.ClpDAOListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ClpDAO;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
 import my.logon.screen.model.UserInfo;
@@ -1163,11 +1163,11 @@ public class CLPFragment2 extends Fragment implements AsyncTaskListener, ClpDAOL
 			if (UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18")
 					|| UserInfo.getInstance().getTipAcces().equals("44")) {
 				if (CLPFragment1.radioClientPF.isChecked()) {
-					localCodClient = InfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
+					localCodClient = ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
 				}
 
 				if (CLPFragment1.radioClientPJ.isChecked()) {
-					localCodClient = InfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PJ");
+					localCodClient = ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PJ");
 				}
 
 			}

@@ -13,9 +13,8 @@ import java.util.Locale;
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.CustomSpinnerClass;
 import my.logon.screen.listeners.CustomSpinnerListener;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.UserInfo;
-import my.logon.screen.screens.AsyncTaskWSCall;
 import my.logon.screen.R;
 
 import android.app.ActionBar;
@@ -338,7 +337,7 @@ public class AfisReduceri extends ListActivity implements AsyncTaskListener, Cus
 				temp.put("nrCrt", String.valueOf(i + 1) + ".");
 
 				if (tokenClient[3].length() == 2) {
-					temp.put("numeClient", InfoStrings.getTipClient(tokenClient[3]));
+					temp.put("numeClient", ClientiGenericiGedInfoStrings.getTipClient(tokenClient[3]));
 				} else
 					temp.put("numeClient", tokenClient[4]);
 

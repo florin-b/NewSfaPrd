@@ -13,7 +13,7 @@ import java.util.List;
 
 import my.logon.screen.R;
 import my.logon.screen.beans.BeanComandaCreata;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.utils.UtilsFormatting;
 
 public class CustodiiAdapter extends BaseAdapter {
@@ -51,7 +51,7 @@ public class CustodiiAdapter extends BaseAdapter {
 		viewHolder.textIdCmd.setText(comanda.getId());
 		viewHolder.textClient.setText(comanda.getNumeClient());
 		viewHolder.textData.setText(UtilsFormatting.formatDate(comanda.getData().split("#")[0]));
-		viewHolder.textStare.setText(InfoStrings.statusSAPMsg(Integer.valueOf(comanda.getCodStare())));
+		viewHolder.textStare.setText(ClientiGenericiGedInfoStrings.statusSAPMsg(Integer.valueOf(comanda.getCodStare())));
 		viewHolder.textCmdSap.setText(comanda.getCmdSap().equals("-1") ? " " : comanda.getCmdSap());
 		
 

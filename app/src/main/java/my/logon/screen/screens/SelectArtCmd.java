@@ -73,7 +73,7 @@ import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.DownloadImageTask;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
@@ -1576,7 +1576,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                     procentAprob = 0;
 
                     // exceptie material transport
-                    if (InfoStrings.isMatTransport(codArticol)) {
+                    if (ClientiGenericiGedInfoStrings.isMatTransport(codArticol)) {
                         initPrice = pretVanzare = finalPrice;
                     }
 
@@ -1727,7 +1727,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
                         unArticol.setSintetic(articolDBSelected.getSintetic());
 
-                        if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
+                        if (HelperMathaus.isComandaVanzareTCLI()) {
 
                             if (!UtilsComenzi.isDepozitUnitLog(unArticol.getDepozit(), DateLivrare.getInstance().getFilialaLivrareTCLI().getDepozite())) {
                                 Toast.makeText(getApplicationContext(), "Nu puteti folosi acest depozit pentru " + DateLivrare.getInstance().getFilialaLivrareTCLI().getNumeFiliala() +".", Toast.LENGTH_LONG).show();
@@ -2345,7 +2345,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                 textPretTVA.setVisibility(View.VISIBLE);
                 textMultipluArt.setVisibility(View.VISIBLE);
 
-                if (InfoStrings.isMatTransport(codArticol)) {
+                if (ClientiGenericiGedInfoStrings.isMatTransport(codArticol)) {
                     txtPretArt.setVisibility(View.INVISIBLE);
                 } else {
                     txtPretArt.setVisibility(View.VISIBLE);

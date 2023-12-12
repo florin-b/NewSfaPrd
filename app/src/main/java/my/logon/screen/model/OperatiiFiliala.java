@@ -3,7 +3,6 @@ package my.logon.screen.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsGeneral;
 
 public class OperatiiFiliala {
@@ -46,7 +45,7 @@ public class OperatiiFiliala {
 			for (int i = 0; i < tokenLinie.length; i++) {
 
 				temp = new HashMap<String, String>(30, 0.75f);
-				temp.put("numeFiliala", InfoStrings.getNumeUL(tokenLinie[i]));
+				temp.put("numeFiliala", ClientiGenericiGedInfoStrings.getNumeUL(tokenLinie[i]));
 				temp.put("codFiliala", tokenLinie[i]);
 
 				listFiliale.add(temp);

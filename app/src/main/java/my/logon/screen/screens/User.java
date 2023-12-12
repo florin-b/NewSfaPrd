@@ -38,7 +38,7 @@ import my.logon.screen.listeners.CodPinDialogListener;
 import my.logon.screen.listeners.HelperSiteListener;
 import my.logon.screen.listeners.OperatiiMeniuListener;
 import my.logon.screen.model.HelperUserSite;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiMeniu;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsUser;
@@ -443,7 +443,7 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 			HashMap<String, String> map = (HashMap<String, String>) adapterDepart.getItem(pos);
 
 			UserInfo.getInstance().setCodDepart(map.get("rowText").toString());
-			UserInfo.getInstance().setNumeDepart(InfoStrings.getNumeDepart(UserInfo.getInstance().getCodDepart()));
+			UserInfo.getInstance().setNumeDepart(ClientiGenericiGedInfoStrings.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
 		}
 

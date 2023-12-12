@@ -32,7 +32,7 @@ import my.logon.screen.beans.BeanComandaCreata;
 import my.logon.screen.enums.EnumComenziDAO;
 import my.logon.screen.listeners.ComenziDAOListener;
 import my.logon.screen.model.ComenziDAO;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.UserInfo;
 
 public class ComenziBlocateLimCredit extends Activity implements ComenziDAOListener {
@@ -349,7 +349,7 @@ public class ComenziBlocateLimCredit extends Activity implements ComenziDAOListe
 			textPersContact.setText(tokenAntet[0]);
 			textTelefon.setText(tokenAntet[1]);
 			textOrasModif.setText(tokenAntet[7]);
-			textJudetModif.setText(InfoStrings.numeJudet(tokenAntet[8]));
+			textJudetModif.setText(ClientiGenericiGedInfoStrings.numeJudet(tokenAntet[8]));
 
 			int nrArt = Integer.parseInt(tokenAntet[9]); // nr. articole comanda
 

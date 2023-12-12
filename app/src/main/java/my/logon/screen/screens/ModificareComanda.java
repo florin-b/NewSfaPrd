@@ -97,7 +97,7 @@ import my.logon.screen.model.Comanda;
 import my.logon.screen.model.ComenziDAO;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.ListaArticoleModificareComanda;
@@ -1478,16 +1478,16 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
     private boolean isComandaGed() {
 
-        String tempDistribUL = InfoStrings.getDistribUnitLog(selectedUnitLog);
+        String tempDistribUL = ClientiGenericiGedInfoStrings.getDistribUnitLog(selectedUnitLog);
 
-        if (InfoStrings.getClientGenericGed(tempDistribUL, "PF").equals(selectedClientCode)
-                || InfoStrings.getClientGenericGed(tempDistribUL, "PJ").equals(selectedClientCode)
-                || InfoStrings.getClientGenericGedWood(tempDistribUL, "PF").equals(selectedClientCode)
-                || InfoStrings.getClientGenericGedWood(tempDistribUL, "PJ").equals(selectedClientCode)
-                || InfoStrings.getClientGenericGedWood_faraFact(tempDistribUL, "PF").equals(selectedClientCode)
-                || InfoStrings.getClientGenericGed_CONSGED_faraFactura(tempDistribUL, "PF").equals(selectedClientCode)
-                || InfoStrings.getClientCVO_cuFact_faraCnp(tempDistribUL, "").equals(selectedClientCode)
-                || InfoStrings.getClientGed_FaraFactura(tempDistribUL).equals(selectedClientCode) || !isComandaDistrib)
+        if (ClientiGenericiGedInfoStrings.getClientGenericGed(tempDistribUL, "PF").equals(selectedClientCode)
+                || ClientiGenericiGedInfoStrings.getClientGenericGed(tempDistribUL, "PJ").equals(selectedClientCode)
+                || ClientiGenericiGedInfoStrings.getClientGenericGedWood(tempDistribUL, "PF").equals(selectedClientCode)
+                || ClientiGenericiGedInfoStrings.getClientGenericGedWood(tempDistribUL, "PJ").equals(selectedClientCode)
+                || ClientiGenericiGedInfoStrings.getClientGenericGedWood_faraFact(tempDistribUL, "PF").equals(selectedClientCode)
+                || ClientiGenericiGedInfoStrings.getClientGenericGed_CONSGED_faraFactura(tempDistribUL, "PF").equals(selectedClientCode)
+                || ClientiGenericiGedInfoStrings.getClientCVO_cuFact_faraCnp(tempDistribUL, "").equals(selectedClientCode)
+                || ClientiGenericiGedInfoStrings.getClientGed_FaraFactura(tempDistribUL).equals(selectedClientCode) || !isComandaDistrib)
 
             return true;
         else
@@ -1918,7 +1918,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
                 }
 
-                Toast.makeText(getApplicationContext(), InfoStrings.statusSAPMsg(Integer.parseInt(saveResponse)), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), ClientiGenericiGedInfoStrings.statusSAPMsg(Integer.parseInt(saveResponse)), Toast.LENGTH_LONG).show();
 
                 clearAllData();
                 loadListComenzi();

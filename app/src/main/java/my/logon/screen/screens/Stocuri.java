@@ -45,7 +45,7 @@ import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.listeners.PreturiListener;
 import my.logon.screen.model.Constants;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
 import my.logon.screen.model.Preturi;
@@ -277,7 +277,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 			for (int i = 0; i < tokenLinie.length; i++) {
 
 				temp = new HashMap<String, String>();
-				temp.put("numeFiliala", InfoStrings.getNumeUL(tokenLinie[i]));
+				temp.put("numeFiliala", ClientiGenericiGedInfoStrings.getNumeUL(tokenLinie[i]));
 				temp.put("codFiliala", tokenLinie[i]);
 
 				if (tokenLinie[i].substring(0, 2).equals("BU"))
@@ -350,7 +350,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 		for (String filiala : UserInfo.getInstance().getExtraFiliale()) {
 			temp = new HashMap<String, String>();
 
-			temp.put("numeFiliala", InfoStrings.getNumeUL(filiala));
+			temp.put("numeFiliala", ClientiGenericiGedInfoStrings.getNumeUL(filiala));
 			temp.put("codFiliala", filiala);
 
 			listFiliale.add(temp);
@@ -448,7 +448,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
 					localFilialaStoc = UserInfo.getInstance().getUnitLog().substring(0, 2) + "4" + UserInfo.getInstance().getUnitLog().substring(3, 4);
 				}
 
-				params.put("client", InfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF"));
+				params.put("client", ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF"));
 				params.put("articol", codArticol);
 				params.put("cantitate", "1");
 				params.put("depart", "11");

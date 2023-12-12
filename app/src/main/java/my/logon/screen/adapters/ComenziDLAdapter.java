@@ -11,7 +11,7 @@ import java.util.List;
 
 import my.logon.screen.R;
 import my.logon.screen.beans.BeanDocumentCLP;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.utils.UtilsFormatting;
 
 public class ComenziDLAdapter extends BaseAdapter {
@@ -74,7 +74,7 @@ public class ComenziDLAdapter extends BaseAdapter {
         viewHolder.textAgent.setText(documentDL.getNumeAgent());
         viewHolder.textStatusClp.setText(documentDL.getStatusDocument()
                 + System.getProperty("line.separator")
-                + InfoStrings.statusAprobCmd(Integer.valueOf(documentDL
+                + ClientiGenericiGedInfoStrings.statusAprobCmd(Integer.valueOf(documentDL
                         .getFurnizor())));
         viewHolder.textDepoz.setText(documentDL.getDepozit());
 

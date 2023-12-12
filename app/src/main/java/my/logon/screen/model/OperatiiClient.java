@@ -209,7 +209,7 @@ public class OperatiiClient implements AsyncTaskListener {
 				detaliiClient.setMotivBlocare(jsonObject.getString("motivBlocare"));
 				detaliiClient.setCursValutar(jsonObject.getString("cursValutar"));
 				detaliiClient.setTermenPlata(jsonObject.getString("termenPlata"));
-				detaliiClient.setTipClient(InfoStrings.getTipClient(jsonObject.getString("tipClient")));
+				detaliiClient.setTipClient(ClientiGenericiGedInfoStrings.getTipClient(jsonObject.getString("tipClient")));
 				detaliiClient.setFurnizor(Boolean.valueOf(jsonObject.getString("isFurnizor")));
 				detaliiClient.setDivizii(jsonObject.getString("divizii"));
 

@@ -43,7 +43,7 @@ import java.util.Timer;
 import my.logon.screen.R;
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.model.Constants;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiMeniu;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsDevice;
@@ -519,7 +519,7 @@ public class LogonScreen extends Activity implements AsyncTaskListener {
 						uInfo.setTipUser("WOOD");
 						uInfo.setTipUserSap("WOOD");
 					} else {
-						uInfo.setTipUser(InfoStrings.getTipUser(token[5].toString()));
+						uInfo.setTipUser(ClientiGenericiGedInfoStrings.getTipUser(token[5].toString()));
 						uInfo.setTipUserSap(token[10]);
 					}
 

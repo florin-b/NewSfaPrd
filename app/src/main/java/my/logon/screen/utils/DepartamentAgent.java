@@ -206,7 +206,7 @@ public class DepartamentAgent {
 			String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");
 
 			for (int i = 0; i < depExtra.length; i++) {
-				if (diviziiClient != null && diviziiClient.contains(depExtra[i].substring(0, 2)))
+				//if (diviziiClient != null && diviziiClient.contains(depExtra[i].substring(0, 2)))
 					depart.add(EnumDepartExtra.getNumeDepart(depExtra[i]));
 			}
 		}

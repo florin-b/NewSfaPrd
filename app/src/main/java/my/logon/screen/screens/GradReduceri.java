@@ -11,9 +11,8 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.UserInfo;
-import my.logon.screen.screens.AsyncTaskWSCall;
 import my.logon.screen.R;
 
 import android.app.ActionBar;
@@ -267,7 +266,7 @@ public class GradReduceri extends Activity implements AsyncTaskListener {
 
 					if (antet[5].length() == 2) {
 						temp.put("numeClient",
-								InfoStrings.getTipClient(antet[5]));
+								ClientiGenericiGedInfoStrings.getTipClient(antet[5]));
 					} else {
 						temp.put("numeClient", antet[3]);
 					}

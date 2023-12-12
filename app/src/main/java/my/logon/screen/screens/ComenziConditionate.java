@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.UserInfo;
-import my.logon.screen.screens.AsyncTaskWSCall;
 import my.logon.screen.R;
 
 import android.app.ActionBar;
@@ -308,7 +307,7 @@ public class ComenziConditionate extends Activity implements AsyncTaskListener {
 			textPersContact.setText(tokenAntet[0]);
 			textTelefon.setText(tokenAntet[1]);
 			textOras.setText(tokenAntet[7]);
-			textJudet.setText(InfoStrings.numeJudet(tokenAntet[8]));
+			textJudet.setText(ClientiGenericiGedInfoStrings.numeJudet(tokenAntet[8]));
 
 			int nrArt = Integer.parseInt(tokenAntet[9]); // nr. articole comanda
 

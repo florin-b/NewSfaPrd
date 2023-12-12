@@ -6,7 +6,7 @@ package my.logon.screen.model;
 
 import java.util.Locale;
 
-public class InfoStrings {
+public class ClientiGenericiGedInfoStrings {
 
 	public static String statusSAPMsg(Integer msgId) {
 		String retVal = "";
@@ -683,7 +683,7 @@ public class InfoStrings {
 			codClient = "4119000392";
 
 		else if (filiala.equals("SV10"))
-			codClient = "4119001376";
+			codClient = "4119001358";
 
 
 		return codClient;
@@ -835,7 +835,7 @@ public class InfoStrings {
 				codClient = "4119000252";
 
 			else if (filiala.equals("MM10"))
-				codClient = "4119000358";
+				codClient = "4119000354";
 
 			else if (filiala.equals("BU10"))
 				codClient = "4119000432";
@@ -846,6 +846,98 @@ public class InfoStrings {
 		}
 
 		return codClient;
+	}
+
+
+	public static String clientPJGenericWoodPlatitorTVA(String filiala){
+
+		String codClient = "00";
+
+		if (filiala.equals("AG10"))
+			codClient = "4119000226";
+
+		else if (filiala.equals("BH10"))
+			codClient = "4119000211";
+
+		else if (filiala.equals("BV10"))
+			codClient = "4119000202";
+
+		else if (filiala.equals("CJ10"))
+			codClient = "4119000180";
+
+		else if (filiala.equals("CT10"))
+			codClient = "4119000217";
+
+		else if (filiala.equals("DJ10"))
+			codClient = "4119000248";
+
+		else if (filiala.equals("GL10"))
+			codClient = "4119000176";
+
+		else if (filiala.equals("IS10"))
+			codClient = "4119000196";
+
+		else if (filiala.equals("TM10"))
+			codClient = "4119000252";
+
+		else if (filiala.equals("MM10"))
+			codClient = "4119000358";
+
+		else if (filiala.equals("BU10"))
+			codClient = "4119000432";
+
+		else if (filiala.equals("MS10"))
+			codClient = "4119001147";
+
+		else if (filiala.equals("SV10"))
+			codClient = "4119001363";
+
+		return codClient;
+
+	}
+
+	public static String clientPJGenericWoodNeplatitorTVA(String filiala){
+
+		String codClient = "00";
+
+		if (filiala.equals("AG10"))
+			codClient = "4119000310";
+
+		else if (filiala.equals("BH10"))
+			codClient = "4119000311";
+
+		else if (filiala.equals("CJ10"))
+			codClient = "4119000313";
+
+		else if (filiala.equals("CT10"))
+			codClient = "4119000314";
+
+		else if (filiala.equals("DJ10"))
+			codClient = "4119000315";
+
+		else if (filiala.equals("GL10"))
+			codClient = "4119000316";
+
+		else if (filiala.equals("IS10"))
+			codClient = "4119000317";
+
+		else if (filiala.equals("TM10"))
+			codClient = "4119000361";
+
+		else if (filiala.equals("MM10"))
+			codClient = "4119000354";
+
+		else if (filiala.equals("BU10"))
+			codClient = "4119000433";
+
+		else if (filiala.equals("MS10"))
+			codClient = "4119001148";
+
+		else if (filiala.equals("SV10"))
+			codClient = "4119001364";
+
+		return codClient;
+
 	}
 
 	public static String getClientGenericGed(String filiala, String tipClient) {
@@ -922,7 +1014,7 @@ public class InfoStrings {
 			else if (filiala.equals("SB10"))
 				codClient = "4119000360";
 			else if (filiala.equals("SV10"))
-				codClient = "4119001377";
+				codClient = "4119001355";
 
 		}
 
@@ -996,7 +1088,7 @@ public class InfoStrings {
 				codClient = "4119000410";
 
 			else if (filiala.equals("SV10"))
-				codClient = "4119001377";
+				codClient = "4119001356";
 
 		}
 
@@ -1078,7 +1170,7 @@ public class InfoStrings {
 			codClient = "4119000411";
 
 		else if (filiala.equals("SV10"))
-			codClient = "4119001383";
+			codClient = "4119001357";
 
 		return codClient;
 

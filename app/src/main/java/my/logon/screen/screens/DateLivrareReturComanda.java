@@ -24,7 +24,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -40,7 +39,7 @@ import my.logon.screen.R;
 import my.logon.screen.beans.Address;
 import my.logon.screen.beans.BeanAdresaLivrare;
 import my.logon.screen.beans.BeanPersoanaContact;
-import my.logon.screen.dialogs.MapAddressDialogF4;
+import my.logon.screen.dialogs.MapAddressDialog;
 import my.logon.screen.listeners.MapListener;
 import my.logon.screen.model.ClientReturListener;
 import my.logon.screen.utils.MapUtils;
@@ -195,12 +194,11 @@ public class DateLivrareReturComanda extends Fragment implements OnItemClickList
 				if (!isAdresaComplet())
 					return;
 
-				FragmentManager fm = getFragmentManager();
+				androidx.fragment.app.FragmentManager fm = getParentFragmentManager();
+				MapAddressDialog mapDialog = new MapAddressDialog(address, getActivity(), fm);
 
-				MapAddressDialogF4 mapDialog = new MapAddressDialogF4(address, getActivity(), fm);
-
+				mapDialog.setCoords(MapUtils.geocodeAddress(address, getActivity()).getCoordinates());
 				mapDialog.setMapListener(DateLivrareReturComanda.this);
-				mapDialog.show();
 			}
 		});
 	}

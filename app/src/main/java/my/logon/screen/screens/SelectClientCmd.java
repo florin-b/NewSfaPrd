@@ -39,7 +39,7 @@ import my.logon.screen.beans.DetaliiClient;
 import my.logon.screen.enums.EnumClienti;
 import my.logon.screen.listeners.OperatiiClientListener;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiClient;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsGeneral;
@@ -462,7 +462,7 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 		codClientVar = codClient;
 		numeClientVar = numeClient;
 
-		dateLivrareInstance.setDateLivrare(InfoStrings.numeJudet(dateLivrareInstance.getCodJudet()) + " " + dateLivrareInstance.getOras() + " "
+		dateLivrareInstance.setDateLivrare(ClientiGenericiGedInfoStrings.numeJudet(dateLivrareInstance.getCodJudet()) + " " + dateLivrareInstance.getOras() + " "
 				+ dateLivrareInstance.getStrada() + "#" + dateLivrareInstance.getPersContact() + "#" + dateLivrareInstance.getNrTel() + "#NU#O#TRAP#NU");
 
 		dateLivrareInstance.setMail(detaliiClient.getEmail());

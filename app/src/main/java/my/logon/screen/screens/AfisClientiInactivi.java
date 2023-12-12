@@ -12,10 +12,9 @@ import my.logon.screen.beans.BeanClientInactiv;
 
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.model.HandleJSONData;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.adapters.ClientiInactiviAdapter;
-import my.logon.screen.screens.AsyncTaskWSCall;
 import my.logon.screen.R;
 
 import android.app.Fragment;
@@ -148,7 +147,7 @@ public class AfisClientiInactivi extends Fragment implements AsyncTaskListener {
 					temp.put("codClient", clientiArray.get(i).getCodClient());
 					temp.put("numeAgent", clientiArray.get(i).getCodAgent());
 					temp.put("stare", clientiArray.get(i).getStareClient());
-					temp.put("tipClient", InfoStrings.getTipClient(clientiArray.get(i).getTipClient()));
+					temp.put("tipClient", ClientiGenericiGedInfoStrings.getTipClient(clientiArray.get(i).getTipClient()));
 
 					arrayListClInactivi.add(temp);
 				}

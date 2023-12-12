@@ -49,7 +49,7 @@ import my.logon.screen.listeners.CautaClientDialogListener;
 import my.logon.screen.listeners.DatePersListener;
 import my.logon.screen.listeners.OperatiiClientListener;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.OperatiiClient;
 import my.logon.screen.model.UserInfo;
@@ -845,12 +845,12 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 				if (!checkFacturaPF.isChecked()) {
 
 					if (UtilsUser.isConsWood()) {
-						CreareComandaGed.codClientVar = InfoStrings.getClientGenericGedWood_faraFact(UserInfo.getInstance().getUnitLog(), "PF");
+						CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGedWood_faraFact(UserInfo.getInstance().getUnitLog(), "PF");
 					} else {
 						if (UtilsUser.isUserExceptieCONSGED())
-							CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed_CONSGED_faraFactura(UserInfo.getInstance().getUnitLog(), "PF");
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGed_CONSGED_faraFactura(UserInfo.getInstance().getUnitLog(), "PF");
 						else
-							CreareComandaGed.codClientVar = InfoStrings.getClientGed_FaraFactura(UserInfo.getInstance().getUnitLog());
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGed_FaraFactura(UserInfo.getInstance().getUnitLog());
 
 					}
 
@@ -861,20 +861,20 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 					if (UtilsUser.isUserSite()) {
 
 						if (hasCnp())
-							CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
 						else
-							CreareComandaGed.codClientVar = InfoStrings.getClientCVO_cuFact_faraCnp(UserInfo.getInstance().getUnitLog(), "PF");
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientCVO_cuFact_faraCnp(UserInfo.getInstance().getUnitLog(), "PF");
 
 					}
 
 					else {
 						if (UtilsUser.isConsWood())
-							CreareComandaGed.codClientVar = InfoStrings.getClientGenericGedWood(UserInfo.getInstance().getUnitLog(), "PF");
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGedWood(UserInfo.getInstance().getUnitLog(), "PF");
 						else {
 							if (UtilsUser.isUserExceptieCONSGED())
-								CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed_CONSGED(UserInfo.getInstance().getUnitLog(), "PF");
+								CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGed_CONSGED(UserInfo.getInstance().getUnitLog(), "PF");
 							else
-								CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
+								CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
 						}
 					}
 
@@ -892,22 +892,27 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 				CreareComandaGed.cnpClient = txtCNPClient.getText().toString().trim();
 
-				if (UtilsUser.isConsWood())
-					CreareComandaGed.codClientVar = InfoStrings.getClientGenericGedWood(UserInfo.getInstance().getUnitLog(), "PJ");
+				if (UtilsUser.isConsWood()) {
+
+					if (checkPlatTva.isChecked())
+						CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.clientPJGenericWoodPlatitorTVA(UserInfo.getInstance().getUnitLog());
+					else
+						CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.clientPJGenericWoodNeplatitorTVA(UserInfo.getInstance().getUnitLog());
+				}
 				else {
 					if (checkPlatTva.isChecked()) {
 
 						CreareComandaGed.cnpClient = "RO" + txtCNPClient.getText().toString().trim();
 
 						if (UtilsUser.isUserExceptieCONSGED())
-							CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed_CONSGED(UserInfo.getInstance().getUnitLog(), "PJ");
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGed_CONSGED(UserInfo.getInstance().getUnitLog(), "PJ");
 						else
-							CreareComandaGed.codClientVar = InfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PJ");
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PJ");
 					} else {
 						if (UtilsUser.isUserExceptieCONSGED())
-							CreareComandaGed.codClientVar = InfoStrings.gedPJNeplatitorTVA_CONSGED(UserInfo.getInstance().getUnitLog());
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.gedPJNeplatitorTVA_CONSGED(UserInfo.getInstance().getUnitLog());
 						else
-							CreareComandaGed.codClientVar = InfoStrings.gedPJNeplatitorTVA(UserInfo.getInstance().getUnitLog());
+							CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.gedPJNeplatitorTVA(UserInfo.getInstance().getUnitLog());
 					}
 				}
 

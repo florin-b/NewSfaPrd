@@ -1935,7 +1935,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
                         articol.setSintetic(articolDBSelected.getSintetic());
 
-                        if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
+                        if (HelperMathaus.isComandaVanzareTCLI()) {
 
                             if (!UtilsComenzi.isDepozitUnitLog(articol.getDepozit(), DateLivrare.getInstance().getFilialaLivrareTCLI().getDepozite())) {
                                 Toast.makeText(getApplicationContext(), "Nu puteti folosi acest depozit pentru " + DateLivrare.getInstance().getFilialaLivrareTCLI().getNumeFiliala() +".", Toast.LENGTH_LONG).show();

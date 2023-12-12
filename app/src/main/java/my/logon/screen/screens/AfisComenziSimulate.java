@@ -66,7 +66,7 @@ import my.logon.screen.listeners.SelectClientListener;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ComenziDAO;
 import my.logon.screen.model.Constants;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolImpl;
 import my.logon.screen.model.UserInfo;
@@ -270,7 +270,7 @@ public class AfisComenziSimulate extends Activity implements AsyncTaskListener, 
 		while (iterator.hasNext()) {
 			ArticolComanda articolComanda = iterator.next();
 
-			if (!InfoStrings.isMatTransport(articolComanda.getCodArticol()) && !InfoStrings.isMatTransportNume(articolComanda.getNumeArticol())) {
+			if (!ClientiGenericiGedInfoStrings.isMatTransport(articolComanda.getCodArticol()) && !ClientiGenericiGedInfoStrings.isMatTransportNume(articolComanda.getNumeArticol())) {
 				BeanArticolSimulat articolStoc = new BeanArticolSimulat();
 
 				if (articolComanda.getCodArticol().length() == 8)
@@ -686,7 +686,7 @@ public class AfisComenziSimulate extends Activity implements AsyncTaskListener, 
 		textTipPlata.setText(UtilsGeneral.getDescTipPlata(dateLivrareCmdCurent.getTipPlata(), dateLivrareCmdCurent.getTermenPlata()));
 		textTransport.setText(UtilsGeneral.getDescTipTransport(dateLivrareCmdCurent.getTransport()));
 		textOras.setText(dateLivrareCmdCurent.getOras());
-		textJudet.setText(InfoStrings.numeJudet(dateLivrareCmdCurent.getCodJudet()));
+		textJudet.setText(ClientiGenericiGedInfoStrings.numeJudet(dateLivrareCmdCurent.getCodJudet()));
 		textAdrLivr.setText(dateLivrareCmdCurent.getDateLivrare());
 		textPersContact.setText(dateLivrareCmdCurent.getPersContact());
 		textTelefon.setText(dateLivrareCmdCurent.getNrTel());
@@ -802,7 +802,7 @@ public class AfisComenziSimulate extends Activity implements AsyncTaskListener, 
 
 		for (ArticolSimulat articol : listArticole) {
 
-			if (InfoStrings.isMatTransport(articol.getCodArticol()) || InfoStrings.isMatTransportNume(articol.getNumeArticol()))
+			if (ClientiGenericiGedInfoStrings.isMatTransport(articol.getCodArticol()) || ClientiGenericiGedInfoStrings.isMatTransportNume(articol.getNumeArticol()))
 				articol.setExceptie(true);
 			else
 				articol.setExceptie(false);

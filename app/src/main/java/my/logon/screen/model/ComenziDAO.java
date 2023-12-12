@@ -652,14 +652,14 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                     comanda.setCodClient(comandaObject.getString("codClient"));
                     comanda.setData(comandaObject.getString("dataComanda"));
                     comanda.setSuma(comandaObject.getString("sumaComanda"));
-                    comanda.setStare(InfoStrings.statusAprobCmd(Integer.valueOf(comandaObject.getString("stareComanda"))));
+                    comanda.setStare(ClientiGenericiGedInfoStrings.statusAprobCmd(Integer.valueOf(comandaObject.getString("stareComanda"))));
                     comanda.setCodStare(comandaObject.getString("stareComanda"));
                     comanda.setMoneda(comandaObject.getString("monedaComanda"));
                     comanda.setSumaTva(comandaObject.getString("sumaTVA"));
                     comanda.setMonedaTva(comandaObject.getString("monedaTVA"));
                     comanda.setCmdSap(comandaObject.getString("cmdSap"));
                     comanda.setCanalDistrib(comandaObject.getString("canalDistrib"));
-                    comanda.setTipClient(InfoStrings.getTipClient(comandaObject.getString("tipClient")));
+                    comanda.setTipClient(ClientiGenericiGedInfoStrings.getTipClient(comandaObject.getString("tipClient")));
                     comanda.setDivizieAgent(comandaObject.getString("divizieAgent"));
                     comanda.setFiliala(comandaObject.getString("filiala"));
                     comanda.setFactRed(comandaObject.getString("factRed"));

@@ -3,7 +3,7 @@ package my.logon.screen.adapters;
 import java.util.List;
 
 import my.logon.screen.R;
-import my.logon.screen.model.InfoStrings;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.utils.UtilsFormatting;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -63,7 +63,7 @@ public class ComenziCLPAdapter extends BaseAdapter {
 
 		statusClp = "";
 		if (0 == restrictiiAfisare) {
-			statusClp = InfoStrings.statusAprobCmd(Integer.parseInt(documentClp.getStatusDocument()));
+			statusClp = ClientiGenericiGedInfoStrings.statusAprobCmd(Integer.parseInt(documentClp.getStatusDocument()));
 		}
 		viewHolder.textStatusClp.setText("Furnizor: " + documentClp.getFurnizor() + System.getProperty("line.separator") + statusClp);
 		viewHolder.textAgent.setText(documentClp.getNumeAgent());

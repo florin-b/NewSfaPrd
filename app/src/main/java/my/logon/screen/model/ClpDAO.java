@@ -6,7 +6,6 @@ import java.util.List;
 
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.ClpDAOListener;
-import my.logon.screen.model.IClpDAO;
 import my.logon.screen.screens.AsyncTaskWSCall;
 
 import org.json.JSONArray;
@@ -92,15 +91,15 @@ public class ClpDAO implements IClpDAO, AsyncTaskListener {
 				dateLivrare.setTelefon(jsonLivrare.getString("telefon"));
 				dateLivrare.setAdrLivrare(jsonLivrare.getString("adrLivrare"));
 				dateLivrare.setOras(jsonLivrare.getString("oras"));
-				dateLivrare.setJudet(InfoStrings.numeJudet(jsonLivrare.getString("codJudet")));
+				dateLivrare.setJudet(ClientiGenericiGedInfoStrings.numeJudet(jsonLivrare.getString("codJudet")));
 				dateLivrare.setData(jsonLivrare.getString("data"));
 				dateLivrare.setTipMarfa(jsonLivrare.getString("tipMarfa"));
 				dateLivrare.setMasa(jsonLivrare.getString("masa"));
 				dateLivrare.setTipCamion(jsonLivrare.getString("tipCamion"));
 				dateLivrare.setTipIncarcare(jsonLivrare.getString("tipIncarcare"));
-				dateLivrare.setTipPlata(InfoStrings.getTipPlata(jsonLivrare.getString("tipPlata")));
-				dateLivrare.setMijlocTransport(InfoStrings.getTipTransport(jsonLivrare.getString("mijlocTransport")));
-				dateLivrare.setAprobatOC(InfoStrings.getTipAprobare(jsonLivrare.getString("aprobatOC")));
+				dateLivrare.setTipPlata(ClientiGenericiGedInfoStrings.getTipPlata(jsonLivrare.getString("tipPlata")));
+				dateLivrare.setMijlocTransport(ClientiGenericiGedInfoStrings.getTipTransport(jsonLivrare.getString("mijlocTransport")));
+				dateLivrare.setAprobatOC(ClientiGenericiGedInfoStrings.getTipAprobare(jsonLivrare.getString("aprobatOC")));
 				dateLivrare.setDeSters(jsonLivrare.getString("deSters"));
 				dateLivrare.setStatusAprov(jsonLivrare.getString("statusAprov"));
 				dateLivrare.setValComanda(jsonLivrare.getString("valComanda"));
