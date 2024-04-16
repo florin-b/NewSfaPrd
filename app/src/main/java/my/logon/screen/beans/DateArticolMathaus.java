@@ -1,5 +1,7 @@
 package my.logon.screen.beans;
 
+import my.logon.screen.enums.EnumTipStoc;
+
 public class DateArticolMathaus {
 
 	private String deliveryWarehouse;
@@ -15,6 +17,8 @@ public class DateArticolMathaus {
 
 	private double quantity50;
 	private String unit50;
+
+	private EnumTipStoc tipStoc;
 
 	public String getDeliveryWarehouse() {
 		return deliveryWarehouse;
@@ -111,4 +115,14 @@ public class DateArticolMathaus {
 	public void setCantUmb(double cantUmb) {
 		this.cantUmb = cantUmb;
 	}
+
+	public EnumTipStoc getTipStoc() {
+		return tipStoc;
+	}
+
+	public void setTipStoc(EnumTipStoc tipStoc) {
+		this.tipStoc = tipStoc;
+	}
+
+
 }

@@ -1,9 +1,11 @@
 package my.logon.screen.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import my.logon.screen.beans.StatusIntervalLivrare;
@@ -160,13 +162,42 @@ public class UtilsDates {
 			return Constants.NR_ZILE_LIVRARE_CVA;
 	}
 
-	public Date addDaysToDate(Date date, int days) {
+	public static Date addDaysToDate(Date date, int days) {
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.add(Calendar.DATE, days);
 		return cal.getTime();
 
+	}
+
+
+
+	public static List<String> getZileLivrare() {
+		List<String> datesInRange = new ArrayList<>();
+		Calendar calendar = getCalendarWithoutTime(new Date());
+		Calendar endCalendar = getCalendarWithoutTime(addDaysToDate(new Date(), 6));
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+		while (calendar.before(endCalendar)) {
+			Date result = calendar.getTime();
+			datesInRange.add(simpleDateFormat.format(result));
+			calendar.add(Calendar.DATE, 1);
+		}
+
+		return datesInRange;
+	}
+
+	private static Calendar getCalendarWithoutTime(Date date) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar;
 	}
 
 	public static int dateDiffDays(Date dateStart, Date dateStop) {

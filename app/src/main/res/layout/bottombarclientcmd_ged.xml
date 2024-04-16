@@ -9,10 +9,10 @@
 
     <Button
         android:id="@+id/saveClntBtn"
-        style="@style/button_text_1"
+        style="@style/ok_button"
         android:layout_width="wrap_content"
-        android:layout_height="45dip"
-        android:background="@drawable/button_style_1"
+        android:layout_height="40dip"
+        android:background="@drawable/ok_button_style"
         android:paddingLeft="15dip"
         android:paddingRight="15dip"
         android:text="@string/strSelecteaza" />

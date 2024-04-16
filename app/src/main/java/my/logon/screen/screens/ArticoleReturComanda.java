@@ -389,8 +389,8 @@ public class ArticoleReturComanda extends Fragment implements ListaArtReturListe
             if ((codMotiv.equals("4") || codMotiv.equals("6") || codMotiv.equals("7")) && dateDiff > 30) {
                 showInfoMotivReturDialog(30);
                 return false;
-            } else if ((codMotiv.equals("1") || codMotiv.equals("2") || codMotiv.equals("3") || codMotiv.equals("5")) && dateDiff > 4) {
-                showInfoMotivReturDialog(4);
+            } else if ((codMotiv.equals("1") || codMotiv.equals("2") || codMotiv.equals("3") || codMotiv.equals("5")) && dateDiff > 10) {
+                showInfoMotivReturDialog(10);
                 return false;
             }
 

@@ -922,7 +922,6 @@ public class MainMenu extends Activity {
                 if (Float.parseFloat(buildVer) < Float.parseFloat(tokenVer[3])) {
 
                     // exista update
-
                     downloadUpdate download = new downloadUpdate(this);
                     download.execute("dummy");
 
@@ -1013,6 +1012,7 @@ public class MainMenu extends Activity {
             } catch (Exception e) {
                 appNotInstalledDialog();
             } finally {
+                this.dialog.cancel();
                 if (mFTPClient.isConnected()) {
                     {
                         try {

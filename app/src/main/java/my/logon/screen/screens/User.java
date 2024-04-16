@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
@@ -45,7 +44,7 @@ import my.logon.screen.utils.UtilsUser;
 
 public class User extends Activity implements HelperSiteListener, CodPinDialogListener, OperatiiMeniuListener {
 
-	Button buttonUpdate, buttonInstall;
+
 	String filiala = "", nume = "", cod = "";
 	public static String unitLog = "";
 	public static String numeDepart = "";

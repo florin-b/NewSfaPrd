@@ -105,4 +105,8 @@ public interface OperatiiArticol {
 
 	public void getStocDisponibilTCLI(HashMap<String, String> params);
 
+	public void getStocSap(HashMap<String, String> params);
+
 }
+
+

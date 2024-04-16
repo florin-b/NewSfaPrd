@@ -905,6 +905,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         antetComanda.setOptiuniCamion(stareOptiuniCamion);
         antetComanda.setGreutateComanda(UtilsComenzi.getGreutateKgArticole(listArticoleComanda));
         antetComanda.setTipComandaCamion(UtilsComenzi.isComandaEnergofaga(listArticoleComanda) ? "ENERGOFAGA" : "NORMALA");
+        antetComanda.setComandaDL(isComandaDL());
 
 
         HashMap<String, String> params = new HashMap<String, String>();
@@ -1027,7 +1028,8 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
         String localCanalDistrib = isComandaDistrib ? "10" : "20";
 
-        rezumatComanda = new RezumatComandaDialog(this, ListaArticoleComanda.getInstance().getListArticoleLivrare(), localCanalDistrib, costTransport, DateLivrare.getInstance().getTransport(), ModificareComanda.filialaAlternativaM, selectTransp);
+        rezumatComanda = new RezumatComandaDialog(this, ListaArticoleComanda.getInstance().getListArticoleLivrare(), localCanalDistrib, costTransport,
+                DateLivrare.getInstance().getTransport(), ModificareComanda.filialaAlternativaM, selectTransp);
         rezumatComanda.setRezumatListener(this);
         rezumatComanda.getWindow().setLayout(width, height);
         rezumatComanda.show();
@@ -1803,6 +1805,8 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             obj.put("refClient", DateLivrare.getInstance().getRefClient());
             obj.put("prelucrareLemn", DateLivrare.getInstance().getPrelucrareLemn());
             obj.put("filialaPlata", DateLivrare.getInstance().getFilialaPlata());
+            obj.put("codPostal", DateLivrare.getInstance().getCodPostal());
+            obj.put("isComandaCustodie", DateLivrare.getInstance().isComandaCustodie());
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();

@@ -49,7 +49,8 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
     private NumberFormat nf2 = new DecimalFormat("#,##0.00");
     private AdapterRezumatComanda adapterRezumat;
 
-    public RezumatComandaDialog(Context context, List<ArticolComanda> listArticole, String canal, List<CostTransportMathaus> costTransport, String tipTransport, String filialeArondate, boolean selectTransp) {
+    public RezumatComandaDialog(Context context, List<ArticolComanda> listArticole, String canal, List<CostTransportMathaus> costTransport, String tipTransport,
+                                String filialeArondate, boolean selectTransp) {
         super(context);
         this.context = context;
         this.listArticole = listArticole;
@@ -58,6 +59,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
         this.tipTransport = tipTransport;
         this.filialeArondate = filialeArondate;
         this.selectTransp = selectTransp;
+
 
         setContentView(R.layout.rezumat_comanda_dialog);
         setTitle("Rezumat comanda");
@@ -71,7 +73,11 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
         listViewComenzi = (ListView) findViewById(R.id.listComenzi);
 
-        adapterRezumat = new AdapterRezumatComanda(context, getRezumatComanda(), costTransport, tipTransport, filialeArondate, selectTransp, canalDistrib);
+        if (DateLivrare.getInstance().isComandaCustodie())
+            selectTransp = false;
+
+        adapterRezumat = new AdapterRezumatComanda(context, getRezumatComanda(), costTransport, tipTransport, filialeArondate,
+                selectTransp, canalDistrib);
         adapterRezumat.setRezumatListener(this);
         listViewComenzi.setAdapter(adapterRezumat);
 
@@ -247,7 +253,6 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
         getTotalComenzi();
 
 
-
     }
 
     private boolean isCom1() {
@@ -260,11 +265,11 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
         return false;
     }
 
-    private void getTotalComenzi(){
+    private void getTotalComenzi() {
 
         double valoareTotal = 0;
 
-        for (RezumatComanda rezumatComanda : getRezumatComanda()){
+        for (RezumatComanda rezumatComanda : getRezumatComanda()) {
             valoareTotal += getTotalComanda(rezumatComanda);
         }
 
@@ -309,7 +314,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
     }
 
-    public void setListArticole(List<ArticolComanda> listArticole){
+    public void setListArticole(List<ArticolComanda> listArticole) {
         this.listArticole = listArticole;
         adapterRezumat.setListRezumat(getRezumatComanda());
     }

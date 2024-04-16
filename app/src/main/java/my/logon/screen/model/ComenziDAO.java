@@ -472,6 +472,17 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                 if (jsonLivrare.has("filialaPlata"))
                     dateLivrare.setFilialaPlata(jsonLivrare.getString("filialaPlata"));
 
+                if (jsonLivrare.has("codPostal"))
+                    dateLivrare.setCodPostal(jsonLivrare.getString("codPostal"));
+
+                dateLivrare.setComandaCustodie(Boolean.parseBoolean(jsonLivrare.getString("isComandaCustodie")));
+                dateLivrare.setValoareIncasare(jsonLivrare.getString("valoareIncasare"));
+
+                if (Double.parseDouble(dateLivrare.getValoareIncasare()) > 0)
+                    dateLivrare.setValIncModif(true);
+                else
+                    dateLivrare.setValIncModif(false);
+
                 dateLivrare.setTonaj(jsonLivrare.getString("tonaj"));
 
                 JSONArray jsonArticole = jsonObject.getJSONArray("articoleComanda");

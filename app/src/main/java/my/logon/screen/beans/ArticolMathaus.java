@@ -2,6 +2,8 @@ package my.logon.screen.beans;
 
 import java.io.Serializable;
 
+import my.logon.screen.enums.EnumTipStoc;
+
 public class ArticolMathaus extends ArticolDB implements Serializable {
 	private String cod;
 	private String nume;
@@ -15,6 +17,7 @@ public class ArticolMathaus extends ArticolDB implements Serializable {
 	private String tip1;
 	private String tip2;
 	private String planificator;
+	private EnumTipStoc tipStoc;
 
 	public ArticolMathaus(){
 
@@ -33,6 +36,7 @@ public class ArticolMathaus extends ArticolDB implements Serializable {
 		this.tip1 = articolMathaus.getTip1();
 		this.tip2 = articolMathaus.getTip2();
 		this.planificator = articolMathaus.getPlanificator();
+		this.tipStoc = articolMathaus.getTipStoc();
 	}
 
 	public String getCod() {
@@ -129,5 +133,13 @@ public class ArticolMathaus extends ArticolDB implements Serializable {
 
 	public void setPlanificator(String planificator) {
 		this.planificator = planificator;
+	}
+
+	public EnumTipStoc getTipStoc() {
+		return tipStoc;
+	}
+
+	public void setTipStoc(EnumTipStoc tipStoc) {
+		this.tipStoc = tipStoc;
 	}
 }

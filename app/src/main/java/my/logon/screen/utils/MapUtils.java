@@ -20,6 +20,16 @@ public class MapUtils {
 
 		GeocodeAddress geoAddress = new GeocodeAddress();
 
+		if (address.getSector() == null || address.getSector().equals("Nedefinit")){
+			Toast.makeText(context, "Completati judetul.", Toast.LENGTH_LONG).show();
+			return geoAddress;
+		}
+
+		if (address.getCity() == null || address.getCity().trim().isEmpty()){
+			Toast.makeText(context, "Completati localitatea.", Toast.LENGTH_LONG).show();
+			return geoAddress;
+		}
+
 		double latitude = 0;
 		double longitude = 0;
 

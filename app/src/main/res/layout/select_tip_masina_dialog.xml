@@ -28,15 +28,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Camion scurt"
-            android:textSize="17sp"
             android:typeface="sans" />
 
         <CheckBox
             android:id="@+id/checkbox_civeco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="30dp"
             android:text="Camioneta IVECO"
+            android:typeface="sans" />
+
+        <CheckBox
+            android:id="@+id/checkbox_orice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Orice tip de camion"
             android:typeface="sans" />
     </LinearLayout>
 

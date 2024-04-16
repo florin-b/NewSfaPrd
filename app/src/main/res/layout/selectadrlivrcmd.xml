@@ -39,8 +39,7 @@
                 <View
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                     />
+                    android:layout_weight="0.3" />
 
                 <CheckBox
                     android:id="@+id/checkCustodie"
@@ -50,7 +49,6 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="20dip"
                     android:layout_weight="0.6"
-                    android:visibility="invisible"
                     android:text="Comanda plasata in custodie client" />
 
             </LinearLayout>
@@ -273,6 +271,55 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutAdr3"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:gravity="left"
+                    android:paddingLeft="5dip"
+                    android:text="Cod postal"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+
+                <EditText
+                    android:id="@+id/textCodPostal"
+                    android:layout_width="0dp"
+                    android:layout_height="45dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="10dip"
+                    android:layout_weight="0.05"
+                    android:inputType="number|phone"
+                    android:maxLength="10"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btnCodPostal"
+                    style="@style/ok_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginRight="180dip"
+                    android:background="@drawable/cancel_button_style"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:text="Cauta cod postal" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/layoutBlocScara"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
@@ -295,12 +342,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|left"
                     android:layout_marginRight="180dip"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.05"
                     android:gravity="left"
                     android:inputType="textNoSuggestions"
                     android:maxLength="65"
                     android:singleLine="true"
                     android:textSize="18sp" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -403,7 +452,7 @@
                 android:id="@+id/layoutMail"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="170dp"

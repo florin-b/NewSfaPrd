@@ -40,7 +40,7 @@ public class UtilsGeneral {
 
     public static String[] numeJudete = {"Selectati un judet", "ALBA", "ARAD", "ARGES", "BACAU", "BIHOR", "BISTRITA-NASAUD", "BOTOSANI", "BRAILA", "BRASOV",
             "BUCURESTI", "BUZAU", "CALARASI", "CARAS-SEVERIN", "CLUJ", "CONSTANTA", "COVASNA", "DAMBOVITA", "DOLJ", "GALATI", "GIURGIU", "GORJ", "HARGHITA",
-            "HUNEDOARA", "IALOMITA", "IASI", "ILFOV", "MARAMURES", "MEHEDINTI", "MURES", "NEAMT", "OLT", "PRAHOVA", "SALAJ", "SATU MARE", "SIBIU", "SUCEAVA",
+            "HUNEDOARA", "IALOMITA", "IASI", "ILFOV", "MARAMURES", "MEHEDINTI", "MURES", "NEAMT", "OLT", "PRAHOVA", "SALAJ", "SATU-MARE", "SIBIU", "SUCEAVA",
             "TELEORMAN", "TIMIS", "TULCEA", "VALCEA", "VASLUI", "VRANCEA"};
 
     public static String[] codJudete = {" ", "01", "02", "03", "04", "05", "06", "07", "09", "08", "40", "10", "51", "11", "12", "13", "14", "15", "16", "17",
@@ -202,7 +202,7 @@ public class UtilsGeneral {
         if (codPlata.equals("B")) {
             tipPlata = "Bilet la ordin";
         } else if (codPlata.equals("C")) {
-            tipPlata = "Card bancar";
+            tipPlata = "Cec";
         } else if (codPlata.equals("E")) {
             tipPlata = "Plata in numerar";
         } else if (codPlata.equals("L")) {

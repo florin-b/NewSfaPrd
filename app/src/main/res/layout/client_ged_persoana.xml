@@ -2,48 +2,29 @@
     android:id="@+id/layoutClientPersoana"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:layout_height="60dip"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="170dip"
             android:layout_height="wrap_content"
-            android:layout_weight="0.02" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="0.9"
+            android:layout_gravity="left|center"
             android:gravity="left"
             android:text="Nume client"
-            android:textColor="#A2B5CD"
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
             android:typeface="serif" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="45dip"
-            android:layout_weight="0.02" />
 
         <EditText
             android:id="@+id/txtNumeClient"
             android:layout_width="0dp"
             android:layout_height="45dip"
             android:layout_weight="0.4"
-            android:background="@drawable/edittext_style_1"
             android:inputType=""
             android:maxLength="30"
             android:singleLine="true"
@@ -56,6 +37,7 @@
             style="@style/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="40dip"
+            android:layout_marginLeft="50dip"
             android:background="@drawable/ok_button_style"
             android:paddingLeft="50dip"
             android:paddingRight="50dip"
@@ -76,20 +58,22 @@
             android:layout_marginLeft="20dip"
             android:layout_weight="0.35"
             android:orientation="vertical"
-            android:visibility="invisible" >
+            android:visibility="invisible">
 
             <RadioButton
                 android:id="@+id/radio_ag_lista"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Selecteaza un agent din lista" />
+                android:text="Selecteaza un agent din lista"
+                android:textColor="@color/labelColor" />
 
             <RadioButton
                 android:id="@+id/radio_ag_det"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Determina automat un agent" />
+                android:text="Determina automat un agent"
+                android:textColor="@color/labelColor" />
         </RadioGroup>
 
         <TextView
@@ -98,282 +82,231 @@
             android:layout_weight="0.01" />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.02" />
+        android:layout_height="60dip"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/labelIdClient"
-            android:layout_width="0dp"
+            android:layout_width="170dip"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="0.9"
+            android:layout_gravity="left|center"
             android:gravity="left"
-            android:textColor="#A2B5CD"
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
             android:typeface="serif" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutDateClient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="45dip"
-            android:layout_weight="0.02" />
-
-        <EditText
-            android:id="@+id/txtCNPClient"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:background="@drawable/edittext_style_1"
-            android:inputType="text"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:textColor="@color/editTextColor1"
-            android:textSize="19sp"
-            android:typeface="monospace" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="40dip"
-            android:layout_weight="0.05" />
-
-        <CheckBox
-            android:id="@+id/checkPlatTva"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layoutDateClient"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dip"
-            android:checked="true"
-            android:text="Platitor de TVA"
-            android:textColor="@color/detColor4" />
+            android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/checkFacturaPF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dip"
-            android:checked="true"
-            android:text="Se emite factura"
-            android:textColor="@color/detColor4" />
+            <EditText
+                android:id="@+id/txtCNPClient"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@color/editTextColor1"
+                android:textSize="19sp"
+                android:typeface="monospace" />
 
-        <Button
-            android:id="@+id/verificaId"
-            style="@style/ok_button"
-            android:layout_width="wrap_content"
-            android:layout_height="40dip"
-            android:background="@drawable/ok_button_style"
-            android:paddingLeft="50dip"
-            android:paddingRight="50dip"
-            android:text="Verifica cnp" />
 
-        <Button
-            android:id="@+id/verificaTva"
-            style="@style/ok_button"
-            android:layout_width="wrap_content"
-            android:layout_height="40dip"
-            android:background="@drawable/ok_button_style"
-            android:paddingLeft="50dip"
-            android:paddingRight="50dip"
-            android:text="Verifica tva" />
+            <CheckBox
+                android:id="@+id/checkPlatTva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dip"
+                android:checked="true"
+                android:text="Platitor de TVA"
+                android:textColor="@color/labelColor" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dip"
-            android:layout_weight="0.4" />
+            <CheckBox
+                android:id="@+id/checkFacturaPF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dip"
+                android:checked="true"
+                android:text="Se emite factura"
+                android:textColor="@color/labelColor" />
+
+            <Button
+                android:id="@+id/verificaId"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="50dip"
+                android:paddingRight="50dip"
+                android:text="Verifica cnp" />
+
+            <Button
+                android:id="@+id/verificaTva"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="50dip"
+                android:paddingRight="50dip"
+                android:text="Verifica tva" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dip"
+                android:layout_weight="0.3" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutLabelJ"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:layout_height="60dip"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.02" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="0.9"
+            android:layout_gravity="center|left"
             android:gravity="left"
-            android:maxLength="30"
+            android:paddingLeft="5dip"
+            android:layout_marginLeft="10dp"
             android:text="@string/nr_inreg_reg_comertului"
-            android:textColor="#A2B5CD"
-            android:textSize="16sp"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
             android:typeface="serif" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutTextJ"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="45dip"
-            android:layout_weight="0.02" />
+        <LinearLayout
+            android:id="@+id/layoutTextJ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/txtCodJ"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:background="@drawable/edittext_style_1"
-            android:inputType="text"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:textColor="@color/editTextColor1"
-            android:textSize="19sp"
-            android:typeface="monospace" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dip"
-            android:layout_weight="0.6" />
+            <EditText
+                android:id="@+id/txtCodJ"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@color/editTextColor1"
+                android:textSize="19sp"
+                android:typeface="monospace" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dip"
+                android:layout_weight="0.6" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutLabelRefClient"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-         >
+        android:layout_height="60dip"
+        android:orientation="horizontal">
+
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.02" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="0.9"
+            android:layout_gravity="center|left"
             android:gravity="left"
-            android:maxLength="30"
+            android:paddingLeft="5dip"
             android:text="Referinta client"
-            android:textColor="#A2B5CD"
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
             android:typeface="serif" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutTextRefClient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-         >
+        <LinearLayout
+            android:id="@+id/layoutTextRefClient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="45dip"
-            android:layout_weight="0.02" />
+            <EditText
+                android:id="@+id/textRefClient"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@color/editTextColor1"
+                android:textSize="19sp"
+                android:typeface="monospace" />
 
-        <EditText
-            android:id="@+id/textRefClient"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:background="@drawable/edittext_style_1"
-            android:inputType="text"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:textColor="@color/editTextColor1"
-            android:textSize="19sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dip"
-            android:layout_weight="0.6" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dip"
+                android:layout_weight="0.6" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutTipComanda"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:layout_height="60dip"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.02" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="0.9"
+            android:layout_gravity="center|left"
             android:gravity="left"
+            android:paddingLeft="5dip"
             android:text="Tip comanda"
-            android:textColor="#A2B5CD"
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
             android:typeface="serif" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutRadioTipComanda"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.02" />
+        <LinearLayout
+            android:id="@+id/layoutRadioTipComanda"
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/radioTipComanda"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="0.9"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/radioCmdNormala"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/radioTipComanda"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Comanda ferma"
-                android:textColor="@color/detColor4"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:typeface="serif" />
+                android:layout_gravity="left|center"
+                android:layout_weight="0.9"
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radioCmdSimulata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Comanda simulata"
-                android:textColor="@color/detColor4"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:typeface="serif" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radioCmdNormala"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Comanda ferma"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+
+                <RadioButton
+                    android:id="@+id/radioCmdSimulata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comanda simulata"
+                    android:textColor="@color/labelColor"
+                    android:textSize="17sp"
+                    android:typeface="serif" />
+            </RadioGroup>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -381,7 +314,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
         <TextView
             android:layout_width="0dp"
@@ -405,7 +340,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
         <TextView
             android:layout_width="0dp"
@@ -418,7 +355,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_weight="0.9"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioRezervStocDa"
@@ -429,8 +366,8 @@
                 android:textColor="@color/detColor4"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                android:typeface="serif" />
+                android:typeface="serif"
+                android:visibility="gone" />
 
             <RadioButton
                 android:id="@+id/radioRezervStocNu"

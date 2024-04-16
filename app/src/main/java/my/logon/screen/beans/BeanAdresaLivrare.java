@@ -12,6 +12,7 @@ public class BeanAdresaLivrare {
 	private boolean isOras;
     private int razaKm;
     private String coordsCentru;
+    private String codPostal;
 
 	public BeanAdresaLivrare() {
 
@@ -97,6 +98,11 @@ public class BeanAdresaLivrare {
 		this.coordsCentru = coordsCentru;
 	}
 
-	
+	public String getCodPostal() {
+		return codPostal;
+	}
 
+	public void setCodPostal(String codPostal) {
+		this.codPostal = codPostal;
+	}
 }

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.beans.BeanAdreseJudet;
+import my.logon.screen.beans.BeanCodPostal;
 import my.logon.screen.beans.BeanDateLivrareClient;
 import my.logon.screen.beans.BeanFilialaLivrare;
 import my.logon.screen.beans.BeanLocalitate;
@@ -27,267 +28,308 @@ import my.logon.screen.utils.UtilsFormatting;
 
 public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 
-	private Context context;
-	private EnumOperatiiAdresa numeComanda;
-	private HashMap<String, String> params;
-	private OperatiiAdresaListener listener;
-	private EnumLocalitate tipLocalitate;
+    private Context context;
+    private EnumOperatiiAdresa numeComanda;
+    private HashMap<String, String> params;
+    private OperatiiAdresaListener listener;
+    private EnumLocalitate tipLocalitate;
 
-	public OperatiiAdresaImpl(Context context) {
-		this.context = context;
-	}
+    public OperatiiAdresaImpl(Context context) {
+        this.context = context;
+    }
 
-	public void getLocalitatiJudet(HashMap<String, String> params, EnumLocalitate tipLocalitate) {
+    public void getLocalitatiJudet(HashMap<String, String> params, EnumLocalitate tipLocalitate) {
 
-		numeComanda = EnumOperatiiAdresa.GET_LOCALITATI_JUDET;
-		this.params = params;
-		this.tipLocalitate = tipLocalitate;
-		performOperation();
+        numeComanda = EnumOperatiiAdresa.GET_LOCALITATI_JUDET;
+        this.params = params;
+        this.tipLocalitate = tipLocalitate;
+        performOperation();
 
-	}
+    }
 
-	public void getAdreseJudet(HashMap<String, String> params, EnumLocalitate tipLocalitate) {
+    public void getAdreseJudet(HashMap<String, String> params, EnumLocalitate tipLocalitate) {
 
-		numeComanda = EnumOperatiiAdresa.GET_ADRESE_JUDET;
-		this.params = params;
-		this.tipLocalitate = tipLocalitate;
-		performOperation();
+        numeComanda = EnumOperatiiAdresa.GET_ADRESE_JUDET;
+        this.params = params;
+        this.tipLocalitate = tipLocalitate;
+        performOperation();
 
-	}
+    }
 
-	public void isAdresaValida(HashMap<String, String> params, EnumLocalitate tipLocalitate) {
-		numeComanda = EnumOperatiiAdresa.IS_ADRESA_VALIDA;
-		this.params = params;
-		this.tipLocalitate = tipLocalitate;
-		performOperation();
+    public void isAdresaValida(HashMap<String, String> params, EnumLocalitate tipLocalitate) {
+        numeComanda = EnumOperatiiAdresa.IS_ADRESA_VALIDA;
+        this.params = params;
+        this.tipLocalitate = tipLocalitate;
+        performOperation();
 
-	}
+    }
 
-	@Override
-	public void getDateLivrare(HashMap<String, String> params) {
-		numeComanda = EnumOperatiiAdresa.GET_DATE_LIVRARE;
-		this.params = params;
-		performOperation();
+    @Override
+    public void getDateLivrare(HashMap<String, String> params) {
+        numeComanda = EnumOperatiiAdresa.GET_DATE_LIVRARE;
+        this.params = params;
+        performOperation();
 
-	}
+    }
 
-	@Override
-	public void getAdreseLivrareClient(HashMap<String, String> params) {
-		numeComanda = EnumOperatiiAdresa.GET_ADRESE_LIVR_CLIENT;
-		this.params = params;
-		performOperation();
+    @Override
+    public void getAdreseLivrareClient(HashMap<String, String> params) {
+        numeComanda = EnumOperatiiAdresa.GET_ADRESE_LIVR_CLIENT;
+        this.params = params;
+        performOperation();
 
-	}
+    }
 
-	@Override
-	public void getLocalitatiLivrareRapida() {
-		numeComanda = EnumOperatiiAdresa.GET_LOCALITATI_LIVRARE_RAPIDA;
-		performOperation();
+    @Override
+    public void getLocalitatiLivrareRapida() {
+        numeComanda = EnumOperatiiAdresa.GET_LOCALITATI_LIVRARE_RAPIDA;
+        performOperation();
 
-	}
+    }
 
-	public void getDateLivrareClient(HashMap<String, String> params) {
-		this.params = params;
-		numeComanda = EnumOperatiiAdresa.GET_DATE_LIVRARE_CLIENT;
-		performOperation();
+    public void getDateLivrareClient(HashMap<String, String> params) {
+        this.params = params;
+        numeComanda = EnumOperatiiAdresa.GET_DATE_LIVRARE_CLIENT;
+        performOperation();
 
-	}
-	
-	public void getFilialaLivrareMathaus(HashMap<String, String> params) {
-		this.params = params;
-		numeComanda = EnumOperatiiAdresa.GET_FILIALA_MATHAUS;
-		performOperation();
+    }
 
-	}
+    public void getFilialaLivrareMathaus(HashMap<String, String> params) {
+        this.params = params;
+        numeComanda = EnumOperatiiAdresa.GET_FILIALA_MATHAUS;
+        performOperation();
 
-	public void getAdresaFiliala(HashMap<String, String> params) {
-		this.params = params;
-		numeComanda = EnumOperatiiAdresa.GET_ADRESA_FILIALA;
-		performOperation();
+    }
 
-	}
+    public void getAdresaFiliala(HashMap<String, String> params) {
+        this.params = params;
+        numeComanda = EnumOperatiiAdresa.GET_ADRESA_FILIALA;
+        performOperation();
 
-	public void getDatePoligonLivrare(HashMap<String, String> params){
-		this.params = params;
-		numeComanda = EnumOperatiiAdresa.GET_DATE_POLIGON_LIVRARE;
-		performOperation();
-	}
+    }
 
-	public void getFilialeComenziTCLI(){
-		numeComanda = EnumOperatiiAdresa.GET_FILIALE_TCLI;
-		performOperation();
-	}
+    public void getDatePoligonLivrare(HashMap<String, String> params) {
+        this.params = params;
+        numeComanda = EnumOperatiiAdresa.GET_DATE_POLIGON_LIVRARE;
+        performOperation();
+    }
 
-	public List<String> deserializeListLocalitati(Object resultList) {
+    public void getFilialeComenziTCLI() {
+        numeComanda = EnumOperatiiAdresa.GET_FILIALE_TCLI;
+        performOperation();
+    }
 
-		List<String> listLocalitati = new ArrayList<String>();
+    public void getZileLivrareFiliala(HashMap<String, String> params) {
+        this.params = params;
+        numeComanda = EnumOperatiiAdresa.GET_ZILE_LIVRARE;
+        performOperation();
+    }
 
-		try {
-			Object json = new JSONTokener((String) resultList).nextValue();
+    public void getCoduriPostale(HashMap<String, String> params) {
+        this.params = params;
+        numeComanda = EnumOperatiiAdresa.GET_CODURI_POSTALE;
+        performOperation();
+    }
 
-			if (json instanceof JSONArray) {
-				JSONArray jsonObject = new JSONArray((String) resultList);
+    public List<String> deserializeListLocalitati(Object resultList) {
 
-				for (int i = 0; i < jsonObject.length(); i++) {
-					listLocalitati.add(jsonObject.get(i).toString());
-				}
-			}
+        List<String> listLocalitati = new ArrayList<String>();
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
+        try {
+            Object json = new JSONTokener((String) resultList).nextValue();
 
-		return listLocalitati;
-	}
+            if (json instanceof JSONArray) {
+                JSONArray jsonObject = new JSONArray((String) resultList);
 
-	public List<BeanFilialaLivrare> deserializeFilialeLivrare(String resultList){
+                for (int i = 0; i < jsonObject.length(); i++) {
+                    listLocalitati.add(jsonObject.get(i).toString());
+                }
+            }
 
-		//{"nume":"Bacau Depozit Materiale grele","werks":"BC10","depozite":["01V2","02V2","03V2","04V2","04V3","05V2","06V2","07V2","09V2"]}
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-		List<BeanFilialaLivrare> listFilialeLivrare = new ArrayList<>();
+        return listLocalitati;
+    }
 
-		try {
-			Object json = new JSONTokener((String) resultList).nextValue();
+    public List<BeanCodPostal> deserializeCoduriPostale(String result) {
+        List<BeanCodPostal> listCoduri = new ArrayList<>();
 
-			if (json instanceof JSONArray) {
-				JSONArray jsonObject = new JSONArray((String) resultList);
+        try {
+            Object json = new JSONTokener((String) result).nextValue();
 
-				for (int i = 0; i < jsonObject.length(); i++) {
+            if (json instanceof JSONArray) {
+                JSONArray jsonObject = new JSONArray((String) result);
 
-					BeanFilialaLivrare filialaLivrare = new BeanFilialaLivrare();
-					JSONObject filialaObject = jsonObject.getJSONObject(i);
+                for (int i = 0; i < jsonObject.length(); i++) {
 
-					if (!filialaObject.toString().contains("nume"))
-						break;
+                    JSONObject codObject = jsonObject.getJSONObject(i);
 
-					filialaLivrare.setNumeFiliala(filialaObject.getString("nume"));
-					filialaLivrare.setUnitLog(filialaObject.getString("werks"));
-					String listDepozite[] = filialaObject.getString("depozite").replace("[","").replace("]","").replace("\"","").split(",");
-					filialaLivrare.setDepozite(Arrays.asList(listDepozite));
-					listFilialeLivrare.add(filialaLivrare);
-				}
-			}
+                    BeanCodPostal codPostal = new BeanCodPostal();
+                    codPostal.setLocalitate(codObject.getString("localitate"));
+                    codPostal.setStrada(codObject.getString("strada"));
+                    codPostal.setNrStrada(codObject.getString("nrStrada"));
+                    codPostal.setCodPostal(codObject.getString("codPostal"));
+                    listCoduri.add(codPostal);
+                }
+            }
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-		return listFilialeLivrare;
-	}
+        return listCoduri;
+    }
 
-	public BeanAdreseJudet deserializeListAdrese(Object resultList) {
+    public List<BeanFilialaLivrare> deserializeFilialeLivrare(String resultList) {
 
-		BeanAdreseJudet adreseJudet = new BeanAdreseJudet();
-		List<BeanLocalitate> listLocalitati = new ArrayList<BeanLocalitate>();
-		List<String> listStrazi = new ArrayList<String>();
+        //{"nume":"Bacau Depozit Materiale grele","werks":"BC10","depozite":["01V2","02V2","03V2","04V2","04V3","05V2","06V2","07V2","09V2"]}
 
-		adreseJudet.setListLocalitati(listLocalitati);
-		adreseJudet.setListStrazi(listStrazi);
+        List<BeanFilialaLivrare> listFilialeLivrare = new ArrayList<>();
 
-		if (((String) resultList).length() == 2) {
-			return adreseJudet;
-		}
+        try {
+            Object json = new JSONTokener((String) resultList).nextValue();
 
-		try {
-			JSONObject jsonObject = new JSONObject((String) resultList);
+            if (json instanceof JSONArray) {
+                JSONArray jsonObject = new JSONArray((String) resultList);
 
-			if (!jsonObject.toString().contains("listLocalitati"))
-				return adreseJudet;
+                for (int i = 0; i < jsonObject.length(); i++) {
 
-			JSONArray jsonArrayLoc = new JSONArray(jsonObject.getString("listLocalitati"));
+                    BeanFilialaLivrare filialaLivrare = new BeanFilialaLivrare();
+                    JSONObject filialaObject = jsonObject.getJSONObject(i);
 
-			for (int i = 0; i < jsonArrayLoc.length(); i++) {
+                    if (!filialaObject.toString().contains("nume"))
+                        break;
 
-				JSONObject articolObject = jsonArrayLoc.getJSONObject(i);
+                    filialaLivrare.setNumeFiliala(filialaObject.getString("nume"));
+                    filialaLivrare.setUnitLog(filialaObject.getString("werks"));
+                    String listDepozite[] = filialaObject.getString("depozite").replace("[", "").replace("]", "").replace("\"", "").split(",");
+                    filialaLivrare.setDepozite(Arrays.asList(listDepozite));
+                    listFilialeLivrare.add(filialaLivrare);
+                }
+            }
 
-				BeanLocalitate loc = new BeanLocalitate();
-				loc.setLocalitate(UtilsFormatting.flattenToAscii(articolObject.getString("localitate")));
-				loc.setOras(Boolean.parseBoolean(articolObject.getString("isOras")));
-				loc.setRazaKm(Integer.parseInt(articolObject.getString("razaKm")));
-				loc.setCoordonate(articolObject.getString("coordonate"));
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-				listLocalitati.add(loc);
-			}
+        return listFilialeLivrare;
+    }
 
-			if (!jsonObject.toString().contains("listStrazi"))
-				return adreseJudet;
+    public BeanAdreseJudet deserializeListAdrese(Object resultList) {
 
-			JSONArray jsonArrayStrazi = new JSONArray(jsonObject.getString("listStrazi"));
+        BeanAdreseJudet adreseJudet = new BeanAdreseJudet();
+        List<BeanLocalitate> listLocalitati = new ArrayList<BeanLocalitate>();
+        List<String> listStrazi = new ArrayList<String>();
 
-			for (int i = 0; i < jsonArrayStrazi.length(); i++) {
-				listStrazi.add(UtilsFormatting.flattenToAscii(jsonArrayStrazi.getString(i).toString()));
-			}
+        adreseJudet.setListLocalitati(listLocalitati);
+        adreseJudet.setListStrazi(listStrazi);
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
+        if (((String) resultList).length() == 2) {
+            return adreseJudet;
+        }
 
-		adreseJudet.setListLocalitati(listLocalitati);
-		adreseJudet.setListStrazi(listStrazi);
+        try {
+            JSONObject jsonObject = new JSONObject((String) resultList);
 
-		return adreseJudet;
-	}
+            if (!jsonObject.toString().contains("listLocalitati"))
+                return adreseJudet;
 
-	public BeanDateLivrareClient deserializeDateLivrareClient(String result) {
-		BeanDateLivrareClient dateLivrare = new BeanDateLivrareClient();
+            JSONArray jsonArrayLoc = new JSONArray(jsonObject.getString("listLocalitati"));
 
-		try {
+            for (int i = 0; i < jsonArrayLoc.length(); i++) {
 
-			JSONObject jsonObject = new JSONObject((String) result);
+                JSONObject articolObject = jsonArrayLoc.getJSONObject(i);
 
-			if (jsonObject instanceof JSONObject) {
+                BeanLocalitate loc = new BeanLocalitate();
+                loc.setLocalitate(UtilsFormatting.flattenToAscii(articolObject.getString("localitate")));
+                loc.setOras(Boolean.parseBoolean(articolObject.getString("isOras")));
+                loc.setRazaKm(Integer.parseInt(articolObject.getString("razaKm")));
+                loc.setCoordonate(articolObject.getString("coordonate"));
 
-				dateLivrare.setCodJudet(jsonObject.getString("codJudet"));
-				dateLivrare.setLocalitate(jsonObject.getString("localitate"));
-				dateLivrare.setStrada(jsonObject.getString("strada"));
-				dateLivrare.setNrStrada(jsonObject.getString("nrStrada"));
-				dateLivrare.setNumePersContact(jsonObject.getString("numePersContact"));
-				dateLivrare.setTelPersContact(jsonObject.getString("telPersContact"));
-				dateLivrare.setTermenPlata(jsonObject.getString("termenPlata"));
+                listLocalitati.add(loc);
+            }
 
-			}
+            if (!jsonObject.toString().contains("listStrazi"))
+                return adreseJudet;
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
-		return dateLivrare;
-	}
+            JSONArray jsonArrayStrazi = new JSONArray(jsonObject.getString("listStrazi"));
 
-	public DatePoligonLivrare deserializePoligonLivrare(String result){
-		DatePoligonLivrare poligonLivrare = new DatePoligonLivrare();
+            for (int i = 0; i < jsonArrayStrazi.length(); i++) {
+                listStrazi.add(UtilsFormatting.flattenToAscii(jsonArrayStrazi.getString(i).toString()));
+            }
 
-		try {
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-			JSONObject jsonObject = new JSONObject((String) result);
-			poligonLivrare.setFilialaPrincipala(jsonObject.getString("filialaPrincipala"));
-			poligonLivrare.setFilialaSecundara(jsonObject.getString("filialaSecundara"));
-			poligonLivrare.setTipZona(jsonObject.getString("tipZona"));
-			poligonLivrare.setLimitareTonaj(jsonObject.getString("limitareTonaj"));
-			poligonLivrare.setNume(jsonObject.getString("nume"));
-			poligonLivrare.setRestrictionat(Boolean.parseBoolean(jsonObject.getString("isRestrictionat")));
+        adreseJudet.setListLocalitati(listLocalitati);
+        adreseJudet.setListStrazi(listStrazi);
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
+        return adreseJudet;
+    }
 
-		return poligonLivrare;
-	}
+    public BeanDateLivrareClient deserializeDateLivrareClient(String result) {
+        BeanDateLivrareClient dateLivrare = new BeanDateLivrareClient();
 
-	public void setOperatiiAdresaListener(OperatiiAdresaListener listener) {
-		this.listener = listener;
-	}
+        try {
 
-	private void performOperation() {
-		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getNumeComanda(), params, (AsyncTaskListener) this, context);
-		call.getCallResultsFromFragment();
-	}
+            JSONObject jsonObject = new JSONObject((String) result);
 
-	public void onTaskComplete(String methodName, Object result) {
+            if (jsonObject instanceof JSONObject) {
 
-		if (listener != null) {
-			listener.operatiiAdresaComplete(numeComanda, result, tipLocalitate);
-		}
+                dateLivrare.setCodJudet(jsonObject.getString("codJudet"));
+                dateLivrare.setLocalitate(jsonObject.getString("localitate"));
+                dateLivrare.setStrada(jsonObject.getString("strada"));
+                dateLivrare.setNrStrada(jsonObject.getString("nrStrada"));
+                dateLivrare.setNumePersContact(jsonObject.getString("numePersContact"));
+                dateLivrare.setTelPersContact(jsonObject.getString("telPersContact"));
+                dateLivrare.setTermenPlata(jsonObject.getString("termenPlata"));
 
-	}
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        return dateLivrare;
+    }
+
+    public DatePoligonLivrare deserializePoligonLivrare(String result) {
+        DatePoligonLivrare poligonLivrare = new DatePoligonLivrare();
+
+        try {
+
+            JSONObject jsonObject = new JSONObject((String) result);
+            poligonLivrare.setFilialaPrincipala(jsonObject.getString("filialaPrincipala"));
+            poligonLivrare.setFilialaSecundara(jsonObject.getString("filialaSecundara"));
+            poligonLivrare.setTipZona(jsonObject.getString("tipZona"));
+            poligonLivrare.setLimitareTonaj(jsonObject.getString("limitareTonaj"));
+            poligonLivrare.setNume(jsonObject.getString("nume"));
+            poligonLivrare.setRestrictionat(Boolean.parseBoolean(jsonObject.getString("isRestrictionat")));
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return poligonLivrare;
+    }
+
+    public void setOperatiiAdresaListener(OperatiiAdresaListener listener) {
+        this.listener = listener;
+    }
+
+    private void performOperation() {
+        AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getNumeComanda(), params, (AsyncTaskListener) this, context);
+        call.getCallResultsFromFragment();
+    }
+
+    public void onTaskComplete(String methodName, Object result) {
+
+        if (listener != null) {
+            listener.operatiiAdresaComplete(numeComanda, result, tipLocalitate);
+        }
+
+    }
 
 }

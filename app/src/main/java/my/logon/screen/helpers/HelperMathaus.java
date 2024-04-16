@@ -454,6 +454,10 @@ public class HelperMathaus {
         else if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
             dateArticol.setUlStoc(DateLivrare.getInstance().getCodFilialaFasonate());
 
+        if (artCmd.getArticolMathaus() != null && artCmd.getArticolMathaus().getTipStoc() != null)
+            dateArticol.setTipStoc(artCmd.getArticolMathaus().getTipStoc());
+
+
         return dateArticol;
 
     }

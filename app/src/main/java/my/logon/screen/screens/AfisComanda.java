@@ -58,9 +58,9 @@ import my.logon.screen.listeners.DivizieDialogListener;
 import my.logon.screen.listeners.IntervalDialogListener;
 import my.logon.screen.listeners.OperatiiAgentListener;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.ComandaCreata;
 import my.logon.screen.model.ComenziDAO;
-import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiAgent;
 import my.logon.screen.model.OperatiiFiliala;
 import my.logon.screen.model.UserInfo;
@@ -671,9 +671,6 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 		textTransport.setText(UtilsGeneral.getDescTipTransport(dateLivrare.getTransport()));
 		textDataLivrare.setText(dateLivrare.getDataLivrare());
 		textCantar.setText(dateLivrare.getCantar().equals("1") ? "Cu cantarire" : "Fara cantarire");
-		//textOras.setText(dateLivrare.getOras());
-		//textJudet.setText(InfoStrings.numeJudet(dateLivrare.getCodJudet()));
-		//textAdrLivr.setText(dateLivrare.getDateLivrare());
 		textPersContact.setText(dateLivrare.getPersContact());
 		textTelefon.setText(dateLivrare.getNrTel());
 		textObsLivrare.setText(dateLivrare.getObsLivrare());
@@ -903,8 +900,6 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 	}
 
 	private void showStareComanda(String stareComanda) {
-
-
 		CustomInfoDialog infoDialog = new CustomInfoDialog(this, "Stare comanda");
 		infoDialog.setInfoText(stareComanda);
 		infoDialog.show();

@@ -16,6 +16,7 @@ public class AntetCmdMathaus {
     private List<OptiuneCamion> optiuniCamion;
     private double greutateComanda;
     private String tipComandaCamion;
+    private boolean isComandaDL;
 
 
     public String getLocalitate() {
@@ -112,5 +113,13 @@ public class AntetCmdMathaus {
 
     public void setTipComandaCamion(String tipComandaCamion) {
         this.tipComandaCamion = tipComandaCamion;
+    }
+
+    public boolean isComandaDL() {
+        return isComandaDL;
+    }
+
+    public void setComandaDL(boolean comandaDL) {
+        isComandaDL = comandaDL;
     }
 }

@@ -1,14 +1,15 @@
 package my.logon.screen.model;
 
-import java.util.ArrayList;
+import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.content.Context;
-import android.widget.Toast;
+import java.util.ArrayList;
+
 import my.logon.screen.beans.BeanAdresaGpsClient;
 import my.logon.screen.beans.BeanAdresaLivrare;
 import my.logon.screen.beans.BeanArticolVanzari;
@@ -267,9 +268,12 @@ public class HandleJSONData {
 					oAdresa.setOras(Boolean.parseBoolean(clienObject.getString("isOras")));
 					oAdresa.setRazaKm(Integer.parseInt(clienObject.getString("razaKm")));
 					oAdresa.setCoordsCentru(clienObject.getString("coordsCentru"));
+					
 
 					if (clienObject.getString("coords") != null && !clienObject.getString("coords").equals("null"))
 						oAdresa.setCoords(clienObject.getString("coords"));
+
+					oAdresa.setCodPostal(clienObject.getString("codPostal"));
 
 					objectsList.add(oAdresa);
 

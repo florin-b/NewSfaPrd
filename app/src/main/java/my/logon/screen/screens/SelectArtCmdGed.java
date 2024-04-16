@@ -71,6 +71,7 @@ import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
 import my.logon.screen.enums.EnumTipClientIP;
 import my.logon.screen.enums.EnumTipComanda;
+import my.logon.screen.enums.EnumTipStoc;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.filters.DecimalDigitsInputFilter;
 import my.logon.screen.helpers.HelperComenzi;
@@ -884,7 +885,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         } else {
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");
-            performListArtStoc();
+            articolMathaus.setTipStoc(EnumTipStoc.SAP);
+            performGetStocSap();
         }
 
     }
@@ -2885,7 +2887,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     }
 
     private boolean userCannotModifyPrice() {
-        return (UserInfo.getInstance().getTipUserSap().equals("CONS-GED") || UtilsUser.isCGED() || UtilsUser.isSSCM()) && !UtilsComenzi.isComandaInstPublica()
+        return (UserInfo.getInstance().getTipUserSap().equals("CONS-GED") || UtilsUser.isCGED()) && !UtilsComenzi.isComandaInstPublica()
                 || CreareComandaGed.tipComandaGed == TipCmdGed.COMANDA_AMOB;
     }
 
@@ -3113,6 +3115,35 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     }
 
 
+    private void performGetStocSap() {
+
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        if (articolModificat != null) {
+            codArticol = articolModificat.getCodArticol();
+        }
+
+        if (codArticol.length() == 8)
+            codArticol = "0000000000" + codArticol;
+
+        String varLocalUnitLog;
+
+        if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_LIVRARE || isComandaClp()) {
+            varLocalUnitLog = DateLivrare.getInstance().getCodFilialaCLP();
+        } else
+            varLocalUnitLog = CreareComandaGed.filialaAlternativa;
+
+        if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
+            varLocalUnitLog = DateLivrare.getInstance().getCodFilialaFasonate();
+
+        params.put("codArt", codArticol);
+        params.put("filiala", varLocalUnitLog);
+        params.put("um", articolMathaus.getUmVanz());
+        params.put("tipUser", UserInfo.getInstance().getTipUserSap());
+
+        opArticol.getStocSap(params);
+    }
+
     private void performListArtStoc() {
 
         HashMap<String, String> params = new HashMap<String, String>();
@@ -3215,6 +3246,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             case GET_ARTICOLE_ACZC:
                 populateListViewArticol(opArticol.deserializeArticoleVanzare((String) result));
                 break;
+            case GET_STOC_SAP:
             case GET_STOC_DEPOZIT:
                 listArtStoc((String) result);
                 break;

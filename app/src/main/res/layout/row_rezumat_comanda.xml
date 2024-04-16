@@ -113,18 +113,18 @@
             android:id="@+id/layoutTransport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_weight="0.2"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="0.1"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textTipTransp"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
-                android:layout_weight="0.1"
                 android:gravity="left"
-                android:text="Transp: "
+                android:text="Transp:"
+                android:layout_marginRight="10dp"
                 android:textColor="@color/rowColor1"
                 android:textSize="17sp"
                 android:typeface="sans" />
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
                 android:layout_marginBottom="2dp"
-                android:layout_weight="0.1"
+                android:layout_weight="0.05"
                 android:gravity="left" />
 
             <TextView
@@ -143,13 +143,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
-                android:layout_weight="0.2"
+                android:layout_weight="0.1"
                 android:gravity="left"
                 android:textColor="@color/rowColor1"
                 android:textSize="17sp"
                 android:typeface="sans" />
-
-
         </LinearLayout>
 
         <TextView

@@ -77,6 +77,7 @@ public class DateLivrareAfisare {
     private String tipPersAgent;
     private String filialaPlata;
     private boolean isComandaCustodie;
+    private String codPostal;
 
     public DateLivrareAfisare() {
 
@@ -650,4 +651,14 @@ public class DateLivrareAfisare {
     public void setComandaCustodie(boolean comandaCustodie) {
         isComandaCustodie = comandaCustodie;
     }
+
+    public String getCodPostal() {
+        return codPostal;
+    }
+
+    public void setCodPostal(String codPostal) {
+        this.codPostal = codPostal;
+    }
+
+
 }

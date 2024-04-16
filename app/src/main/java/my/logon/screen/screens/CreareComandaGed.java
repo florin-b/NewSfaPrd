@@ -949,9 +949,100 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         alertDialog.show();
     }
 
+    public void showModifPretDialogBox(boolean canModifyPrice) {
+        dialogModifPret = new Dialog(CreareComandaGed.this);
+        dialogModifPret.setContentView(R.layout.modifpretclientdialogbox);
+        dialogModifPret.setTitle("Modificare pret articol " + selectedCodArticol);
+        dialogModifPret.setCancelable(false);
+        dialogModifPret.show();
 
+        NumberFormat nf2 = NumberFormat.getInstance(new Locale("en", "US"));
+        nf2.setMinimumFractionDigits(2);
+        nf2.setMaximumFractionDigits(2);
+        nf2.setGroupingUsed(false);
 
+        final EditText textPretClient = (EditText) dialogModifPret.findViewById(R.id.txtPretClient);
 
+        textPretClient.setText(nf2.format(Double.valueOf(selectedPretClient)));
+        textPretClient.setSelection(textPretClient.getText().length(), textPretClient.getText().length());
+
+        if (!canModifyPrice)
+            textPretClient.setEnabled(false);
+        else
+            textPretClient.setEnabled(true);
+
+        Button btnOkPret = (Button) dialogModifPret.findViewById(R.id.btnOkPret);
+        btnOkPret.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (textPretClient.getText().toString().trim().length() > 0) {
+                    if (Double.parseDouble(textPretClient.getText().toString().trim()) > 0) {
+
+                        updatePretClient(listViewSelPos, Double.parseDouble(textPretClient.getText().toString().trim()));
+                        dialogModifPret.dismiss();
+
+                        recalculTotal();
+                        calculProcente();
+
+                        selectedPretClient = "";
+
+                    }
+
+                }
+
+            }
+        });
+
+        Button btnCancelPret = (Button) dialogModifPret.findViewById(R.id.btnCancelPret);
+        btnCancelPret.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                dialogModifPret.dismiss();
+
+            }
+        });
+
+    }
+
+    public void showModifCantDialogBox() {
+        dialogModifCant = new Dialog(CreareComandaGed.this);
+        dialogModifCant.setContentView(R.layout.modifcantclientdialogbox);
+        dialogModifCant.setTitle("Modificare cantitate articol " + selectedCodArticol);
+        dialogModifCant.setCancelable(false);
+        dialogModifCant.show();
+
+        textCantClient = (EditText) dialogModifCant.findViewById(R.id.txtCantClient);
+
+        textCantClient.setText(selectedCantClient);
+        textCantClient.setSelection(textCantClient.getText().length(), textCantClient.getText().length());
+
+        Button btnOkCant = (Button) dialogModifCant.findViewById(R.id.btnOkCant);
+        btnOkCant.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (textCantClient.getText().toString().trim().length() > 0) {
+                    if (Double.parseDouble(textCantClient.getText().toString().trim()) > 0) {
+
+                        performGetArtStoc();
+
+                    }
+                }
+
+            }
+        });
+
+        Button btnCancelCant = (Button) dialogModifCant.findViewById(R.id.btnCancelCant);
+        btnCancelCant.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                dialogModifCant.dismiss();
+
+            }
+        });
+
+    }
 
     public void performGetArtStoc() {
 
@@ -1529,6 +1620,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         antetComanda.setOptiuniCamion(stareOptiuniCamion);
         antetComanda.setGreutateComanda(ListaArticoleComandaGed.getInstance().getGreutateKgArticole());
         antetComanda.setTipComandaCamion(ListaArticoleComandaGed.getInstance().isComandaEnergofaga() ? "ENERGOFAGA" : "NORMALA");
+        antetComanda.setComandaDL(DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.DISPOZITIE_LIVRARE) ||
+                DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_COMANDA));
 
         copyLivrareMathaus(antetComanda, comandaMathaus);
 
@@ -1790,7 +1883,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.99);
         int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.95);
 
-        rezumatComanda = new RezumatComandaDialog(this, ListaArticoleComandaGed.getInstance().getListArticoleLivrare(), "20", costTransport, DateLivrare.getInstance().getTransport(), CreareComandaGed.filialeArondateMathaus, selectTransp);
+        rezumatComanda = new RezumatComandaDialog(this, ListaArticoleComandaGed.getInstance().getListArticoleLivrare(), "20", costTransport,
+                DateLivrare.getInstance().getTransport(), CreareComandaGed.filialeArondateMathaus, selectTransp);
         rezumatComanda.setRezumatListener(this);
         rezumatComanda.getWindow().setLayout(width, height);
         rezumatComanda.show();
@@ -2161,6 +2255,16 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     }
 
+    private String getFilialaGed(String filiala) {
+        return filiala.substring(0, 2) + "2" + filiala.substring(3, 4);
+    }
+
+    private String getFilialaDistrib(String filiala) {
+        if (!filiala.equals("BV90"))
+            return filiala.substring(0, 2) + "1" + filiala.substring(3, 4);
+        else
+            return filiala;
+    }
 
     private String serializeComanda(Comanda comanda) {
         JSONObject obj = new JSONObject();
@@ -2257,6 +2361,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             obj.put("isComandaACZC", isComandaACZC());
             obj.put("prelucrareLemn", DateLivrare.getInstance().getPrelucrareLemn());
             obj.put("filialaPlata", DateLivrare.getInstance().getFilialaPlata());
+            obj.put("codPostal", DateLivrare.getInstance().getCodPostal());
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();

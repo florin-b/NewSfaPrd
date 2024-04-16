@@ -44,6 +44,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,7 @@ import my.logon.screen.adapters.AdapterObiective;
 import my.logon.screen.beans.Address;
 import my.logon.screen.beans.BeanAdresaLivrare;
 import my.logon.screen.beans.BeanAdreseJudet;
+import my.logon.screen.beans.BeanCodPostal;
 import my.logon.screen.beans.BeanFilialaLivrare;
 import my.logon.screen.beans.BeanLocalitate;
 import my.logon.screen.beans.BeanObiectivDepartament;
@@ -63,6 +65,7 @@ import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.GeocodeAddress;
 import my.logon.screen.beans.StatusIntervalLivrare;
+import my.logon.screen.dialogs.CoduriPostaleDialog;
 import my.logon.screen.dialogs.MapAddressDialog;
 import my.logon.screen.dialogs.SelectDateDialog;
 import my.logon.screen.enums.EnumFiliale;
@@ -74,9 +77,11 @@ import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.helpers.HelperAdreseLivrare;
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.AutocompleteDialogListener;
+import my.logon.screen.listeners.CodPostalListener;
 import my.logon.screen.listeners.MapListener;
 import my.logon.screen.listeners.ObiectiveListener;
 import my.logon.screen.listeners.OperatiiAdresaListener;
+import my.logon.screen.listeners.ZileLivrareListener;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
@@ -93,7 +98,7 @@ import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
 public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements OnTouchListener, OnItemClickListener, OperatiiAdresaListener, ObiectiveListener, MapListener,
-        AutocompleteDialogListener, AsyncTaskListener {
+        AutocompleteDialogListener, AsyncTaskListener, ZileLivrareListener, CodPostalListener {
 
     private Button saveAdrLivrBtn;
     private EditText txtPers, txtTel, txtObservatii, txtValoareIncasare;
@@ -117,7 +122,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
     private Spinner spinnerPlata, spinnerTransp, spinnerJudet, spinnerTermenPlata, spinnerAdreseLivrare, spinnerTipReducere, spinnerResponsabil;
     private static ArrayList<HashMap<String, String>> listJudete = null, listAdreseLivrare = null;
     private ArrayAdapter<String> adapterDataLivrare, adapterTermenPlata, adapterResponsabil;
-    private LinearLayout layoutAdrese, layoutAdr1, layoutAdr2, layoutValoareIncasare;
+    private LinearLayout layoutAdrese, layoutAdr1, layoutAdr2, layoutAdr3, layoutValoareIncasare;
     private String globalCodClient = "";
 
     private RadioButton radioLista, radioText, radioObiectiv;
@@ -162,6 +167,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
     private String ulLivrareModifCmd;
     private EditText textMail;
     private CheckBox checkCustodie;
+    private Button btnCodPostal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -205,6 +211,12 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
         this.layoutAdr1 = (LinearLayout) findViewById(R.id.layoutAdr1);
         this.layoutAdr2 = (LinearLayout) findViewById(R.id.layoutAdr2);
+        this.layoutAdr3 = (LinearLayout) findViewById(R.id.layoutAdr3);
+
+        btnCodPostal = findViewById(R.id.btnCodPostal);
+        setListenerBtnCodPostal();
+
+        ((EditText) findViewById(R.id.textCodPostal)).setText(DateLivrare.getInstance().getCodPostal());
 
         layoutHarta = (LinearLayout) findViewById(R.id.layoutHarta);
         layoutHarta.setVisibility(View.GONE);
@@ -250,7 +262,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         nf2.setMinimumFractionDigits(2);
         nf2.setMaximumFractionDigits(2);
 
-        if (DateLivrare.getInstance().isValIncModif()) {
+        if (DateLivrare.getInstance().isValIncModif() || !ModificareComanda.codClientVar.equals("")) {
             txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
             checkModifValInc.setChecked(true);
         } else {
@@ -338,8 +350,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         setSpinnerFilialeTCLIListener();
         addSpinnerTranspListener();
         setTipTranspInfoAgent();
-        //de verificat
-        //setFilialaLivrareTCLI();
+
 
         spinnerJudet = (Spinner) findViewById(R.id.spinnerJudet);
         spinnerJudet.setOnItemSelectedListener(new regionSelectedListener());
@@ -514,6 +525,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         layoutAdrese.setVisibility(View.VISIBLE);
         layoutAdr1.setVisibility(View.GONE);
         layoutAdr2.setVisibility(View.GONE);
+        layoutAdr3.setVisibility(View.GONE);
 
         textDataLivrare = (TextView) findViewById(R.id.textDataLivrare);
 
@@ -561,13 +573,9 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             textStrada.setText(DateLivrare.getInstance().getStrada());
         }
 
-        checkCustodie = (CheckBox) findViewById(R.id.checkCustodie);
-        checkCustodie.setVisibility(View.INVISIBLE);
+        checkCustodie = findViewById(R.id.checkCustodie);
         setListenerCustodie();
-        if (isConditiiCustodie()) {
-            checkCustodie.setVisibility(View.INVISIBLE);
-            checkCustodie.setChecked(DateLivrare.getInstance().isComandaCustodie());
-        }
+        trateazaOptiuneCustodie();
 
         isAdresaLivrareTCLI = false;
         if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("CreareComanda")) {
@@ -579,9 +587,30 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
     }
 
+    private void trateazaOptiuneCustodie(){
+        checkCustodie.setVisibility(View.INVISIBLE);
+
+        if (isConditiiCustodie()) {
+            checkCustodie.setVisibility(View.VISIBLE);
+            checkCustodie.setChecked(DateLivrare.getInstance().isComandaCustodie());
+
+            checkCustodie.setEnabled(true);
+            if (UtilsComenzi.comandaAreArticole("10")) {
+                checkCustodie.setEnabled(false);
+            }
+        }
+
+        if (DateLivrare.getInstance().isComandaCustodie() && !ModificareComanda.selectedCmd.equals("")) {
+            checkCustodie.setVisibility(View.VISIBLE);
+            checkCustodie.setChecked(DateLivrare.getInstance().isComandaCustodie());
+            checkCustodie.setEnabled(false);
+            spinnerTransp.setEnabled(false);
+        }
+    }
+
     private boolean isConditiiCustodie() {
-        return ModificareComanda.selectedCmd.equals("") || DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE)
-                || DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_LIVRARE);
+        return ModificareComanda.selectedCmd.equals("") && (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE)
+                || DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_LIVRARE));
     }
 
     private void setListenerCustodie() {
@@ -702,24 +731,77 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         }
     }
 
+
     private void addListenerDataLivrare() {
         btnDataLivrare.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
-                Locale.setDefault(new Locale("ro"));
-
-                int year = Calendar.getInstance().get(Calendar.YEAR);
-                int month = Calendar.getInstance().get(Calendar.MONTH);
-                int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-                SelectDateDialog datePickerDialog = new SelectDateDialog(SelectAdrLivrCmd.this, datePickerListener, year, month, day);
-                datePickerDialog.setTitle("Data livrare");
-
-                datePickerDialog.show();
-
+                getDateLivrareFiliala();
             }
         });
+
+    }
+
+    private void getDateLivrareFiliala() {
+
+        String tipTransp = UtilsComenzi.getSpinnerTipTransp(spinnerTransp.getSelectedItem().toString());
+
+        if (tipTransp.equals("TRAP")) {
+
+            if (!isAdresaCorecta()) {
+                Toast.makeText(getApplicationContext(), "Completati adresa corect sau pozitionati adresa pe harta.", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("coords", DateLivrare.getInstance().getCoordonateAdresa().latitude + "," + DateLivrare.getInstance().getCoordonateAdresa().longitude);
+            operatiiAdresa.getZileLivrareFiliala(params);
+        } else {
+            afisDateLivrareDialog(UtilsDates.getZileLivrare().toArray(new String[0]));
+        }
+
+    }
+
+    private void afisZileLivrare(String result) {
+
+        String[] arrayDate;
+        if (result != null && !result.trim().isEmpty() && !result.trim().equals("[]"))
+            arrayDate = result.replace("[", "").replace("]", "").replace("\"", "").split((","));
+        else
+            arrayDate = UtilsDates.getZileLivrare().toArray(new String[0]);
+
+        afisDateLivrareDialog(arrayDate);
+
+    }
+
+    private void afisDateLivrareDialog(String[] dateLivrare){
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", new Locale("ro"));
+
+        try {
+            Date minDate = formatter.parse(dateLivrare[0]);
+            Date maxDate = formatter.parse(dateLivrare[dateLivrare.length - 1]);
+
+            Locale.setDefault(new Locale("ro"));
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(minDate);
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            SelectDateDialog datePickerDialog = new SelectDateDialog(SelectAdrLivrCmd.this, datePickerListener, year, month, day);
+            datePickerDialog.setTitle("Data livrare");
+            datePickerDialog.getDatePicker().setMinDate(minDate.getTime());
+            datePickerDialog.getDatePicker().setMaxDate(maxDate.getTime());
+            datePickerDialog.show();
+        }
+        catch(Exception ex){
+            Toast.makeText(getApplicationContext(), "Eroare afisare date livrare.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
@@ -727,34 +809,36 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
             if (view.isShown()) {
-
-                Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay);
-
-                Calendar calendarNow = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar
-                        .getInstance().get(Calendar.DAY_OF_MONTH));
-
-                int dayLivrare = calendar.get(Calendar.DAY_OF_WEEK);
-                int dayNow = calendarNow.get(Calendar.DAY_OF_WEEK);
-
-                String tipTransp = UtilsComenzi.getSpinnerTipTransp(spinnerTransp.getSelectedItem().toString());
-
-                if (tipTransp.toLowerCase().contains("trap")) {
-                    if ((dayNow == 5 || dayNow == 6) && dayLivrare == 6) {
-                        showDialogLivrareSambata(calendar);
-                        setDataLivrare(calendar);
-                    } else {
-                        if (calendar.getTime().getTime() == calendarNow.getTime().getTime())
-                            showDialogLivrareAstazi(calendar);
-                        else
-                            setDataLivrare(calendar);
-                    }
-                } else
-                    setDataLivrare(calendar);
-
+                validateDataLivrare(selectedYear, selectedMonth, selectedDay);
             }
 
         }
     };
+
+    private void validateDataLivrare(int selectedYear, int selectedMonth, int selectedDay) {
+        Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay);
+
+        Calendar calendarNow = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar
+                .getInstance().get(Calendar.DAY_OF_MONTH));
+
+        int dayLivrare = calendar.get(Calendar.DAY_OF_WEEK);
+        int dayNow = calendarNow.get(Calendar.DAY_OF_WEEK);
+
+        String tipTransp = UtilsComenzi.getSpinnerTipTransp(spinnerTransp.getSelectedItem().toString());
+
+        if (tipTransp.toLowerCase().contains("trap")) {
+            if ((dayNow == 5 || dayNow == 6) && dayLivrare == 6) {
+                showDialogLivrareSambata(calendar);
+                setDataLivrare(calendar);
+            } else {
+                if (calendar.getTime().getTime() == calendarNow.getTime().getTime())
+                    showDialogLivrareAstazi(calendar);
+                else
+                    setDataLivrare(calendar);
+            }
+        } else
+            setDataLivrare(calendar);
+    }
 
     private void showDialogLivrareAstazi(final Calendar dataLivrare) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -930,6 +1014,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             layoutAdrese.setVisibility(View.GONE);
             layoutAdr1.setVisibility(View.GONE);
             layoutAdr2.setVisibility(View.GONE);
+            layoutAdr3.setVisibility(View.GONE);
             layoutHarta.setVisibility(View.GONE);
             ((LinearLayout) findViewById(R.id.layoutRadioAdrese)).setVisibility(View.GONE);
             ((LinearLayout) findViewById(R.id.layoutBlocScara)).setVisibility(View.GONE);
@@ -1151,7 +1236,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
     }
 
 
-
     private boolean isComandaACZC() {
         return DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_COMANDA);
     }
@@ -1280,6 +1364,61 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         });
     }
 
+    private void setListenerBtnCodPostal() {
+        btnCodPostal.setOnClickListener(v -> {
+
+            String codJudet, localitate, strada;
+
+            if (radioText.isChecked()) {
+
+                if (textLocalitate.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Completati localitatea.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (textStrada.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Completati strada.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                codJudet = DateLivrare.getInstance().getCodJudet();
+                localitate = textLocalitate.getText().toString().trim();
+                strada = textStrada.getText().toString().trim();
+
+            } else {
+                codJudet = adresaLivrareSelected.getCodJudet();
+                localitate = adresaLivrareSelected.getOras();
+                strada = adresaLivrareSelected.getStrada();
+            }
+
+            HashMap<String, String> params = new HashMap<>();
+            params.put("codJudet", codJudet);
+            params.put("localitate", localitate);
+            params.put("strada", strada);
+            operatiiAdresa.getCoduriPostale(params);
+        });
+
+    }
+
+    private void afisCoduriPostaleDialog(String result) {
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.65);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.6);
+
+        List<BeanCodPostal> listCoduri = operatiiAdresa.deserializeCoduriPostale(result);
+
+        if (listCoduri.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Nu exista inregistrari.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        CoduriPostaleDialog coduriPostaleDialog = new CoduriPostaleDialog(this, listCoduri);
+        coduriPostaleDialog.getWindow().setLayout(width, height);
+        coduriPostaleDialog.setCodPostalListener(this);
+        coduriPostaleDialog.show();
+
+    }
+
     private void addListenerResponsabil() {
         spinnerResponsabil.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -1347,6 +1486,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                     layoutAdrese.setVisibility(View.VISIBLE);
                     layoutAdr1.setVisibility(View.GONE);
                     layoutAdr2.setVisibility(View.GONE);
+                    layoutAdr3.setVisibility(View.GONE);
                     layoutHarta.setVisibility(View.GONE);
 
                     if (adreseList == null || adreseList.isEmpty())
@@ -1381,6 +1521,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                     layoutAdrese.setVisibility(View.GONE);
                     layoutAdr1.setVisibility(View.VISIBLE);
                     layoutAdr2.setVisibility(View.VISIBLE);
+                    layoutAdr3.setVisibility(View.VISIBLE);
                     layoutHarta.setVisibility(View.VISIBLE);
 
                 }
@@ -1408,6 +1549,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                     layoutAdrese.setVisibility(View.GONE);
                     layoutAdr1.setVisibility(View.GONE);
                     layoutAdr2.setVisibility(View.GONE);
+                    layoutAdr3.setVisibility(View.GONE);
                     layoutHarta.setVisibility(View.GONE);
 
                 }
@@ -1642,6 +1784,30 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    public void dataLivrareSelected(String dataLivrare) {
+
+        if (dataLivrare == null)
+            return;
+
+        String[] arrayData = dataLivrare.split("\\.");
+
+        if (arrayData.length != 3)
+            return;
+
+        int selectedYear = Integer.parseInt(arrayData[2]);
+        int selectedMonth = Integer.parseInt(arrayData[1]) - 1;
+        int selectedDay = Integer.parseInt(arrayData[0]);
+
+        validateDataLivrare(selectedYear, selectedMonth, selectedDay);
+
+    }
+
+    @Override
+    public void codPostalSelected(String codPostal) {
+        ((EditText) findViewById(R.id.textCodPostal)).setText(codPostal);
     }
 
 
@@ -1900,8 +2066,12 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             dateLivrareInstance.setStrada(textStrada.getText().toString().trim() + nrStrada);
             dateLivrareInstance.setAdrLivrNoua(true);
             dateLivrareInstance.setAddrNumber(" ");
-
         }
+
+        if (((EditText) findViewById(R.id.textCodPostal)).getVisibility() == View.VISIBLE)
+            dateLivrareInstance.setCodPostal(((EditText) findViewById(R.id.textCodPostal)).getText().toString().trim());
+        else
+            dateLivrareInstance.setCodPostal("");
 
         setAdresaLivrareFromObiectiv();
 
@@ -2099,6 +2269,10 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
 
     private boolean adresaNouaExista() {
+
+        if (adreseList == null)
+            return false;
+
         int posAdresa = HelperAdreseLivrare.verificaDistantaAdresaNoua(adreseList, DateLivrare.getInstance().getCoordonateAdresa());
 
         int adresaExista = HelperAdreseLivrare.adresaExista(adreseList);
@@ -2134,7 +2308,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         if (UtilsComenzi.isModifTCLIinTRAP(poligonLivrare)) {
             UtilsComenzi.showFilialaLivrareDialog(this, DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog());
             return;
-        } else if ( DateLivrare.getInstance().getTransport().equals("TRAP") && UtilsComenzi.isComandaClp()
+        } else if (DateLivrare.getInstance().getTransport().equals("TRAP") && UtilsComenzi.isComandaClp()
                 && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaPrincipala())
                 && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaSecundara())) {
             UtilsComenzi.showFilialaLivrareDialog(this, DateLivrare.getInstance().getCodFilialaCLP());
@@ -2320,6 +2494,14 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                 BeanAdresaLivrare adresaLivrare = (BeanAdresaLivrare) spinnerAdreseLivrare.getAdapter().getItem(position);
                 setAdresaLivrareFromList(adresaLivrare);
 
+
+                if (adresaLivrare.getCodPostal().trim().isEmpty()) {
+                    layoutAdr3.setVisibility(View.VISIBLE);
+                    ((EditText)findViewById(R.id.textCodPostal)).setText("");
+                }
+                else
+                    layoutAdr3.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -2420,6 +2602,12 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             case GET_FILIALE_TCLI:
                 setFilialeTCLI((String) result);
                 break;
+            case GET_ZILE_LIVRARE:
+                afisZileLivrare((String) result);
+                break;
+            case GET_CODURI_POSTALE:
+                afisCoduriPostaleDialog((String) result);
+                return;
             default:
                 break;
         }

@@ -333,8 +333,6 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
         return unDocument;
     }
 
-
-
     private void performSaveRetur() {
 
         removeArticolTransport();

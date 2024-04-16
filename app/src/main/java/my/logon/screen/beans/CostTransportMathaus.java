@@ -10,7 +10,6 @@ public class CostTransportMathaus {
 	private String numeCost;
 
 
-
 	public String getFiliala() {
 		return filiala;
 	}

@@ -105,6 +105,7 @@ public class DateLivrare {
 	private String tipMasina = "";
 	private String codFilialaFasonate;
 	private boolean isComandaCustodie;
+	private String codPostal;
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -168,6 +169,8 @@ public class DateLivrare {
 		this.filialaPlata = dateLivrareAfisare.getFilialaPlata();
 
 		this.isComandaCustodie = dateLivrareAfisare.isComandaCustodie();
+		this.codPostal = dateLivrareAfisare.getCodPostal();
+
 	}
 
 	public boolean isClientRaft() {
@@ -754,6 +757,14 @@ public class DateLivrare {
 		isComandaCustodie = comandaCustodie;
 	}
 
+	public String getCodPostal() {
+		return codPostal;
+	}
+
+	public void setCodPostal(String codPostal) {
+		this.codPostal = codPostal;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -820,6 +831,7 @@ public class DateLivrare {
 		tipMasina = "";
 		codFilialaFasonate = "";
 		isComandaCustodie = false;
+		codPostal = "";
 
 	}
 

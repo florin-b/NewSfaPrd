@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.beans.BeanAdreseJudet;
+import my.logon.screen.beans.BeanCodPostal;
 import my.logon.screen.beans.BeanDateLivrareClient;
 import my.logon.screen.beans.BeanFilialaLivrare;
 import my.logon.screen.beans.DatePoligonLivrare;
@@ -44,5 +45,11 @@ public interface OperatiiAdresa {
 	public void getFilialeComenziTCLI();
 
 	public List<BeanFilialaLivrare> deserializeFilialeLivrare(String result);
+
+	public void getZileLivrareFiliala(HashMap<String, String> params);
+
+	public void getCoduriPostale(HashMap<String, String> params);
+
+	public List<BeanCodPostal> deserializeCoduriPostale(String result);
 
 }
