@@ -3,71 +3,80 @@ package my.logon.screen.beans;
 import java.util.List;
 
 public class BeanDocumentRetur {
-	private String numar;
-	private String data;
-	private String tipTransport;
-	private String dataLivrare;
-	private List<BeanAdresaLivrare> listAdrese;
-	private List<BeanPersoanaContact> listPersoane;
-	private boolean isCmdACZC;
+    private String numar;
+    private String data;
+    private String tipTransport;
+    private String dataLivrare;
+    private List<BeanAdresaLivrare> listAdrese;
+    private List<BeanPersoanaContact> listPersoane;
+    private boolean isCmdACZC;
+    private boolean isSelectat;
 
-	public BeanDocumentRetur() {
+    public BeanDocumentRetur() {
 
-	}
+    }
 
-	public String getNumar() {
-		return numar;
-	}
+    public String getNumar() {
+        return numar;
+    }
 
-	public void setNumar(String numar) {
-		this.numar = numar;
-	}
+    public void setNumar(String numar) {
+        this.numar = numar;
+    }
 
-	public String getData() {
-		return data;
-	}
+    public String getData() {
+        return data;
+    }
 
-	public void setData(String data) {
-		this.data = data;
-	}
+    public void setData(String data) {
+        this.data = data;
+    }
 
-	public String getTipTransport() {
-		return tipTransport;
-	}
+    public String getTipTransport() {
+        return tipTransport;
+    }
 
-	public void setTipTransport(String tipTransport) {
-		this.tipTransport = tipTransport;
-	}
+    public void setTipTransport(String tipTransport) {
+        this.tipTransport = tipTransport;
+    }
 
-	public String getDataLivrare() {
-		return dataLivrare;
-	}
+    public String getDataLivrare() {
+        return dataLivrare;
+    }
 
-	public void setDataLivrare(String dataLivrare) {
-		this.dataLivrare = dataLivrare;
-	}
+    public void setDataLivrare(String dataLivrare) {
+        this.dataLivrare = dataLivrare;
+    }
 
-	public List<BeanAdresaLivrare> getListAdrese() {
-		return listAdrese;
-	}
+    public List<BeanAdresaLivrare> getListAdrese() {
+        return listAdrese;
+    }
 
-	public void setListAdrese(List<BeanAdresaLivrare> listAdrese) {
-		this.listAdrese = listAdrese;
-	}
+    public void setListAdrese(List<BeanAdresaLivrare> listAdrese) {
+        this.listAdrese = listAdrese;
+    }
 
-	public List<BeanPersoanaContact> getListPersoane() {
-		return listPersoane;
-	}
+    public List<BeanPersoanaContact> getListPersoane() {
+        return listPersoane;
+    }
 
-	public void setListPersoane(List<BeanPersoanaContact> listPersoane) {
-		this.listPersoane = listPersoane;
-	}
+    public void setListPersoane(List<BeanPersoanaContact> listPersoane) {
+        this.listPersoane = listPersoane;
+    }
 
-	public boolean isCmdACZC() {
-		return isCmdACZC;
-	}
+    public boolean isCmdACZC() {
+        return isCmdACZC;
+    }
 
-	public void setCmdACZC(boolean cmdACZC) {
-		isCmdACZC = cmdACZC;
-	}
+    public void setCmdACZC(boolean cmdACZC) {
+        isCmdACZC = cmdACZC;
+    }
+
+    public boolean isSelectat() {
+        return isSelectat;
+    }
+
+    public void setSelectat(boolean selectat) {
+        isSelectat = selectat;
+    }
 }

@@ -18,9 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.R;
+import my.logon.screen.beans.BeanArticolRetur;
 import my.logon.screen.beans.BeanDocumentRetur;
 import my.logon.screen.enums.EnumRetur;
 import my.logon.screen.enums.EnumTipComanda;
+import my.logon.screen.enums.EnumTipOp;
 import my.logon.screen.listeners.DocumentReturListener;
 import my.logon.screen.listeners.ListaArtReturListener;
 import my.logon.screen.listeners.ListaDocReturListener;
@@ -42,11 +44,12 @@ public class ReturPaleti extends FragmentActivity implements ClientReturListener
 	ListaArtReturListener artReturListener;
 
 	ClientReturMarfa clientiReturMarfa;
-	DocumenteReturMarfa documenteReturMarfa;
+	DocumenteReturPaleti documenteReturMarfa;
 	DateLivrareReturPaleti dateLivrareReturMarfa;
 	ArticoleReturPaleti articoleReturMarfa;
 	private String numeClient, codClient;
 	private String nrDocument;
+	static List<BeanArticolRetur> listPaletiComenzi;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class ReturPaleti extends FragmentActivity implements ClientReturListener
 		opRetur.setOperatiiReturListener(this);
 
 		clientiReturMarfa = ClientReturMarfa.newInstance();
-		documenteReturMarfa = DocumenteReturMarfa.newInstance();
+		documenteReturMarfa = DocumenteReturPaleti.newInstance();
 		dateLivrareReturMarfa = DateLivrareReturPaleti.newInstance();
 		articoleReturMarfa = ArticoleReturPaleti.newInstance();
 
@@ -76,6 +79,8 @@ public class ReturPaleti extends FragmentActivity implements ClientReturListener
 
 		viewPager.setAdapter(returAdapter);
 		viewPager.setOffscreenPageLimit(4);
+
+		listPaletiComenzi = new ArrayList<>();
 
 	}
 
@@ -177,12 +182,31 @@ public class ReturPaleti extends FragmentActivity implements ClientReturListener
 
 	}
 
+	@Override
+	public void documentSelected(String nrDocument, EnumTipOp tipOp) {
+		if (tipOp.equals(EnumTipOp.ADAUGA))
+			documentSelected(nrDocument);
+		else if (tipOp.equals(EnumTipOp.ELIMINA))
+			docReturListener.setListArtDocRetur(nrDocument, null, EnumTipOp.ELIMINA, codClient, numeClient, artReturListener);
+
+
+	}
+
 	private void displayDocumenteRetur(List<BeanDocumentRetur> listaDocumente) {
 		if (listaDocumente.size() > 0) {
 			docReturListener.setListDocRetur(numeClient, listaDocumente);
 			viewPager.setCurrentItem(1, true);
 		} else {
-			Toast.makeText(this, "Nu exista documente", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Nu exista documente.", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void displayArticoleDocumentRetur(List<BeanArticolRetur> listArticoleRetur){
+		if (listArticoleRetur.size() > 0) {
+			docReturListener.setListArtDocRetur(nrDocument, listArticoleRetur, EnumTipOp.ADAUGA, codClient, numeClient, artReturListener);
+			viewPager.setCurrentItem(1, true);
+		} else {
+			Toast.makeText(this, "Nu exista articole.", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -202,17 +226,16 @@ public class ReturPaleti extends FragmentActivity implements ClientReturListener
 			displayDocumenteRetur(opRetur.deserializeListDocumente((String) result));
 			break;
 		case GET_ARTICOLE_DOCUMENT:
-			artReturListener.setListArtRetur(nrDocument, opRetur.deserializeListArticole((String) result), codClient, numeClient);
 			dateLivrareReturMarfa.setListAdreseLivrare(opRetur.getListAdrese());
 			dateLivrareReturMarfa.setPersoaneContact(opRetur.getListPersoane());
-			viewPager.setCurrentItem(2, true);
+			displayArticoleDocumentRetur(opRetur.deserializeListArticole((String) result));
 			break;
 		default:
 			break;
 		}
 
 	}
-	
+
 	@Override
 	public void documentSelected(BeanDocumentRetur documentRetur) {
 		this.nrDocument = documentRetur.getNumar();

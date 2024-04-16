@@ -1,22 +1,21 @@
 package my.logon.screen.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.OperatiiSalarizareListener;
-import my.logon.screen.screens.AsyncTaskWSCall;
+import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import my.logon.screen.beans.BeanSalarizareAgent;
 import my.logon.screen.beans.BeanSalarizareAgentAfis;
+import my.logon.screen.beans.BeanSalarizareCVA;
 import my.logon.screen.beans.BeanSalarizareSD;
+import my.logon.screen.beans.SalarizareCVABazaCL;
 import my.logon.screen.beans.SalarizareDatePrincipale;
 import my.logon.screen.beans.SalarizareDetaliiBaza;
 import my.logon.screen.beans.SalarizareDetaliiCVS;
@@ -25,298 +24,361 @@ import my.logon.screen.beans.SalarizareDetaliiInc08;
 import my.logon.screen.beans.SalarizareDetaliiMalus;
 import my.logon.screen.beans.SalarizareDetaliiTCF;
 import my.logon.screen.enums.EnumOperatiiSalarizare;
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.OperatiiSalarizareListener;
+import my.logon.screen.screens.AsyncTaskWSCall;
 
 public class OperatiiSalarizare implements AsyncTaskListener {
 
-	private Context context;
-	private EnumOperatiiSalarizare numeComanda;
-	private HashMap<String, String> params;
-	private OperatiiSalarizareListener listener;
-
-	public OperatiiSalarizare(Context context) {
-		this.context = context;
-	}
-
-	public void getSalarizareAgent(HashMap<String, String> params) {
-		this.params = params;
-		this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_AGENT;
-		performOperation();
-	}
-
-	public void getSalarizareDepartament(HashMap<String, String> params) {
-		this.params = params;
-		this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_DEPART;
-		performOperation();
-	}
-
-	public void getSalarizareSD(HashMap<String, String> params) {
-		this.params = params;
-		this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_SD;
-		performOperation();
-	}
-
-	public void getSalarizareSDKA(HashMap<String, String> params) {
-		this.params = params;
-		this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_SDKA;
-		performOperation();
-	}
+    private Context context;
+    private EnumOperatiiSalarizare numeComanda;
+    private HashMap<String, String> params;
+    private OperatiiSalarizareListener listener;
+
+    public OperatiiSalarizare(Context context) {
+        this.context = context;
+    }
+
+    public void getSalarizareAgent(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_AGENT;
+        performOperation();
+    }
+
+    public void getSalarizareDepartament(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_DEPART;
+        performOperation();
+    }
+
+    public void getSalarizareSD(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_SD;
+        performOperation();
+    }
+
+    public void getSalarizareSDKA(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_SDKA;
+        performOperation();
+    }
+
+    public void getSalarizareKA(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_KA;
+        performOperation();
+    }
+
+    public void getSalarizareDepartamentKA(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_DEPART_KA;
+        performOperation();
+    }
 
-	public void getSalarizareKA(HashMap<String, String> params) {
-		this.params = params;
-		this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_KA;
-		performOperation();
-	}
+    public void getSalarizareCVA(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_CVA;
+        performOperation();
+    }
+
+    private void performOperation() {
+        AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getNumeComanda(), params, (AsyncTaskListener) this, context);
+        call.getCallResultsFromFragment();
+    }
+
+    public BeanSalarizareAgent deserializeSalarizareAgent(String result) {
+        BeanSalarizareAgent salarizare = new BeanSalarizareAgent();
+
+        try {
+            JSONObject jsonObject = new JSONObject((String) result);
+
+            SalarizareDatePrincipale datePrincipale = new SalarizareDatePrincipale();
+
+            JSONObject jsonDatePrinc = new JSONObject(jsonObject.getString("datePrincipale"));
+            datePrincipale.setVenitMJ_T1(Double.valueOf(jsonDatePrinc.getString("venitMJ_T1")));
+            datePrincipale.setVenitTCF(Double.valueOf(jsonDatePrinc.getString("venitTCF")));
+            datePrincipale.setCorectieIncasare(Double.valueOf(jsonDatePrinc.getString("corectieIncasare")));
+            datePrincipale.setVenitFinal(Double.valueOf(jsonDatePrinc.getString("venitFinal")));
+
+            salarizare.setDatePrincipale(datePrincipale);
 
-	public void getSalarizareDepartamentKA(HashMap<String, String> params) {
-		this.params = params;
-		this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_DEPART_KA;
-		performOperation();
-	}
+            List<SalarizareDetaliiBaza> listDetaliiBaza = new ArrayList<SalarizareDetaliiBaza>();
 
-	private void performOperation() {
-		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getNumeComanda(), params, (AsyncTaskListener) this, context);
-		call.getCallResultsFromFragment();
-	}
-
-	public BeanSalarizareAgent deserializeSalarizareAgent(String result) {
-		BeanSalarizareAgent salarizare = new BeanSalarizareAgent();
-
-		try {
-			JSONObject jsonObject = new JSONObject((String) result);
-
-			SalarizareDatePrincipale datePrincipale = new SalarizareDatePrincipale();
-
-			JSONObject jsonDatePrinc = new JSONObject(jsonObject.getString("datePrincipale"));
-			datePrincipale.setVenitMJ_T1(Double.valueOf(jsonDatePrinc.getString("venitMJ_T1")));
-			datePrincipale.setVenitTCF(Double.valueOf(jsonDatePrinc.getString("venitTCF")));
-			datePrincipale.setCorectieIncasare(Double.valueOf(jsonDatePrinc.getString("corectieIncasare")));
-			datePrincipale.setVenitFinal(Double.valueOf(jsonDatePrinc.getString("venitFinal")));
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("detaliiBaza"));
 
-			salarizare.setDatePrincipale(datePrincipale);
+            for (int i = 0; i < jsonArray.length(); i++) {
 
-			List<SalarizareDetaliiBaza> listDetaliiBaza = new ArrayList<SalarizareDetaliiBaza>();
+                JSONObject detObject = jsonArray.getJSONObject(i);
+                SalarizareDetaliiBaza detaliiBaza = new SalarizareDetaliiBaza();
 
-			JSONArray jsonArray = new JSONArray(jsonObject.getString("detaliiBaza"));
+                detaliiBaza.setNumeClient(detObject.getString("numeClient"));
+                detaliiBaza.setCodSintetic(detObject.getString("codSintetic"));
+                detaliiBaza.setNumeSintetic(detObject.getString("numeSintetic"));
+                detaliiBaza.setValoareNeta(Double.valueOf(detObject.getString("valoareNeta")));
+                detaliiBaza.setT0(Double.valueOf(detObject.getString("T0")));
+                detaliiBaza.setT1A(Double.valueOf(detObject.getString("T1A")));
+                detaliiBaza.setT1D(Double.valueOf(detObject.getString("T1D")));
+                detaliiBaza.setT1(Double.valueOf(detObject.getString("T1")));
+                detaliiBaza.setVenitBaza(Double.valueOf(detObject.getString("venitBaza")));
 
-			for (int i = 0; i < jsonArray.length(); i++) {
+                listDetaliiBaza.add(detaliiBaza);
 
-				JSONObject detObject = jsonArray.getJSONObject(i);
-				SalarizareDetaliiBaza detaliiBaza = new SalarizareDetaliiBaza();
+            }
 
-				detaliiBaza.setNumeClient(detObject.getString("numeClient"));
-				detaliiBaza.setCodSintetic(detObject.getString("codSintetic"));
-				detaliiBaza.setNumeSintetic(detObject.getString("numeSintetic"));
-				detaliiBaza.setValoareNeta(Double.valueOf(detObject.getString("valoareNeta")));
-				detaliiBaza.setT0(Double.valueOf(detObject.getString("T0")));
-				detaliiBaza.setT1A(Double.valueOf(detObject.getString("T1A")));
-				detaliiBaza.setT1D(Double.valueOf(detObject.getString("T1D")));
-				detaliiBaza.setT1(Double.valueOf(detObject.getString("T1")));
-				detaliiBaza.setVenitBaza(Double.valueOf(detObject.getString("venitBaza")));
+            salarizare.setDetaliiBaza(listDetaliiBaza);
 
-				listDetaliiBaza.add(detaliiBaza);
+            SalarizareDetaliiTCF detaliiTCF = new SalarizareDetaliiTCF();
+            JSONObject jsonDetaliiTCF = new JSONObject(jsonObject.getString("detaliiTCF"));
+            detaliiTCF.setVenitBaza(Double.valueOf(jsonDetaliiTCF.getString("venitBaza")));
+            detaliiTCF.setClientiAnterior(jsonDetaliiTCF.getString("clientiAnterior"));
+            detaliiTCF.setTarget(jsonDetaliiTCF.getString("target"));
+            detaliiTCF.setClientiCurent(jsonDetaliiTCF.getString("clientiCurent"));
+            detaliiTCF.setCoeficient(Double.valueOf(jsonDetaliiTCF.getString("coeficient")));
+            detaliiTCF.setVenitTcf(Double.valueOf(jsonDetaliiTCF.getString("venitTcf")));
 
-			}
+            salarizare.setDetaliiTCF(detaliiTCF);
 
-			salarizare.setDetaliiBaza(listDetaliiBaza);
+            SalarizareDetaliiCorectie detaliiCorectie = new SalarizareDetaliiCorectie();
+            JSONObject jsonDetaliiCorectie = new JSONObject(jsonObject.getString("detaliiCorectie"));
+            detaliiCorectie.setVenitBaza(Double.valueOf(jsonDetaliiCorectie.getString("venitBaza")));
+            detaliiCorectie.setIncasari08(Double.valueOf(jsonDetaliiCorectie.getString("incasari08")));
+            detaliiCorectie.setMalus(Double.valueOf(jsonDetaliiCorectie.getString("malus")));
+            detaliiCorectie.setVenitCorectat(Double.valueOf(jsonDetaliiCorectie.getString("venitCorectat")));
 
-			SalarizareDetaliiTCF detaliiTCF = new SalarizareDetaliiTCF();
-			JSONObject jsonDetaliiTCF = new JSONObject(jsonObject.getString("detaliiTCF"));
-			detaliiTCF.setVenitBaza(Double.valueOf(jsonDetaliiTCF.getString("venitBaza")));
-			detaliiTCF.setClientiAnterior(jsonDetaliiTCF.getString("clientiAnterior"));
-			detaliiTCF.setTarget(jsonDetaliiTCF.getString("target"));
-			detaliiTCF.setClientiCurent(jsonDetaliiTCF.getString("clientiCurent"));
-			detaliiTCF.setCoeficient(Double.valueOf(jsonDetaliiTCF.getString("coeficient")));
-			detaliiTCF.setVenitTcf(Double.valueOf(jsonDetaliiTCF.getString("venitTcf")));
+            salarizare.setDetaliiCorectie(detaliiCorectie);
 
-			salarizare.setDetaliiTCF(detaliiTCF);
+            List<SalarizareDetaliiInc08> listDetaliiInc08 = new ArrayList<SalarizareDetaliiInc08>();
+            JSONArray jsonDetaliiInc08 = new JSONArray(jsonObject.getString("detaliiIncasari08"));
 
-			SalarizareDetaliiCorectie detaliiCorectie = new SalarizareDetaliiCorectie();
-			JSONObject jsonDetaliiCorectie = new JSONObject(jsonObject.getString("detaliiCorectie"));
-			detaliiCorectie.setVenitBaza(Double.valueOf(jsonDetaliiCorectie.getString("venitBaza")));
-			detaliiCorectie.setIncasari08(Double.valueOf(jsonDetaliiCorectie.getString("incasari08")));
-			detaliiCorectie.setMalus(Double.valueOf(jsonDetaliiCorectie.getString("malus")));
-			detaliiCorectie.setVenitCorectat(Double.valueOf(jsonDetaliiCorectie.getString("venitCorectat")));
+            for (int i = 0; i < jsonDetaliiInc08.length(); i++) {
 
-			salarizare.setDetaliiCorectie(detaliiCorectie);
+                SalarizareDetaliiInc08 detaliiInc08 = new SalarizareDetaliiInc08();
+                JSONObject detObject08 = jsonDetaliiInc08.getJSONObject(i);
 
-			List<SalarizareDetaliiInc08> listDetaliiInc08 = new ArrayList<SalarizareDetaliiInc08>();
-			JSONArray jsonDetaliiInc08 = new JSONArray(jsonObject.getString("detaliiIncasari08"));
+                detaliiInc08.setNumeClient(detObject08.getString("numeClient"));
+                detaliiInc08.setValoareIncasare(Double.valueOf(detObject08.getString("valoareIncasare")));
+                detaliiInc08.setVenitCorectat(Double.valueOf(detObject08.getString("venitCorectat")));
+                listDetaliiInc08.add(detaliiInc08);
 
-			for (int i = 0; i < jsonDetaliiInc08.length(); i++) {
+            }
 
-				SalarizareDetaliiInc08 detaliiInc08 = new SalarizareDetaliiInc08();
-				JSONObject detObject08 = jsonDetaliiInc08.getJSONObject(i);
+            salarizare.setDetaliiInc08(listDetaliiInc08);
 
-				detaliiInc08.setNumeClient(detObject08.getString("numeClient"));
-				detaliiInc08.setValoareIncasare(Double.valueOf(detObject08.getString("valoareIncasare")));
-				detaliiInc08.setVenitCorectat(Double.valueOf(detObject08.getString("venitCorectat")));
-				listDetaliiInc08.add(detaliiInc08);
+            List<SalarizareDetaliiMalus> listDetaliiMalus = new ArrayList<SalarizareDetaliiMalus>();
+            JSONArray jsonDetaliiMalus = new JSONArray(jsonObject.getString("detaliiMalus"));
 
-			}
+            for (int i = 0; i < jsonDetaliiMalus.length(); i++) {
 
-			salarizare.setDetaliiInc08(listDetaliiInc08);
+                SalarizareDetaliiMalus detaliiMalus = new SalarizareDetaliiMalus();
+                JSONObject detObjectMalus = jsonDetaliiMalus.getJSONObject(i);
 
-			List<SalarizareDetaliiMalus> listDetaliiMalus = new ArrayList<SalarizareDetaliiMalus>();
-			JSONArray jsonDetaliiMalus = new JSONArray(jsonObject.getString("detaliiMalus"));
+                detaliiMalus.setNumeClient(detObjectMalus.getString("numeClient"));
+                detaliiMalus.setCodClient(detObjectMalus.getString("codClient"));
+                detaliiMalus.setValoareFactura(Double.valueOf(detObjectMalus.getString("valoareFactura")));
+                detaliiMalus.setPenalizare(Double.valueOf(detObjectMalus.getString("penalizare")));
 
-			for (int i = 0; i < jsonDetaliiMalus.length(); i++) {
+                detaliiMalus.setNrFactura(detObjectMalus.getString("nrFactura"));
+                detaliiMalus.setDataFactura(detObjectMalus.getString("dataFactura"));
+                detaliiMalus.setTpFact(Integer.parseInt(detObjectMalus.getString("tpFact")));
+                detaliiMalus.setTpAgreat(Integer.parseInt(detObjectMalus.getString("tpAgreat")));
+                detaliiMalus.setTpIstoric(Integer.parseInt(detObjectMalus.getString("tpIstoric")));
+                detaliiMalus.setValIncasare(Double.parseDouble(detObjectMalus.getString("valIncasare")));
+                detaliiMalus.setDataIncasare(detObjectMalus.getString("dataIncasare"));
+                detaliiMalus.setZileIntarziere(Integer.parseInt(detObjectMalus.getString("zileIntarziere")));
+                detaliiMalus.setCoefPenalizare(Double.parseDouble(detObjectMalus.getString("coefPenalizare")));
 
-				SalarizareDetaliiMalus detaliiMalus = new SalarizareDetaliiMalus();
-				JSONObject detObjectMalus = jsonDetaliiMalus.getJSONObject(i);
+                listDetaliiMalus.add(detaliiMalus);
+            }
 
-				detaliiMalus.setNumeClient(detObjectMalus.getString("numeClient"));
-				detaliiMalus.setCodClient(detObjectMalus.getString("codClient"));
-				detaliiMalus.setValoareFactura(Double.valueOf(detObjectMalus.getString("valoareFactura")));
-				detaliiMalus.setPenalizare(Double.valueOf(detObjectMalus.getString("penalizare")));
+            salarizare.setDetaliiMalus(listDetaliiMalus);
 
-				detaliiMalus.setNrFactura(detObjectMalus.getString("nrFactura"));
-				detaliiMalus.setDataFactura(detObjectMalus.getString("dataFactura"));
-				detaliiMalus.setTpFact(Integer.parseInt(detObjectMalus.getString("tpFact")));
-				detaliiMalus.setTpAgreat(Integer.parseInt(detObjectMalus.getString("tpAgreat")));
-				detaliiMalus.setTpIstoric(Integer.parseInt(detObjectMalus.getString("tpIstoric")));
-				detaliiMalus.setValIncasare(Double.parseDouble(detObjectMalus.getString("valIncasare")));
-				detaliiMalus.setDataIncasare(detObjectMalus.getString("dataIncasare"));
-				detaliiMalus.setZileIntarziere(Integer.parseInt(detObjectMalus.getString("zileIntarziere")));
-				detaliiMalus.setCoefPenalizare(Double.parseDouble(detObjectMalus.getString("coefPenalizare")));
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-				listDetaliiMalus.add(detaliiMalus);
-			}
+        return salarizare;
+    }
 
-			salarizare.setDetaliiMalus(listDetaliiMalus);
+    public List<BeanSalarizareAgentAfis> deserializeSalarizareDepartament(String result) {
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
+        List<BeanSalarizareAgentAfis> listAgenti = new ArrayList<BeanSalarizareAgentAfis>();
 
-		return salarizare;
-	}
+        try {
 
-	public List<BeanSalarizareAgentAfis> deserializeSalarizareDepartament(String result) {
+            JSONArray jsonAgenti = new JSONArray(result);
 
-		List<BeanSalarizareAgentAfis> listAgenti = new ArrayList<BeanSalarizareAgentAfis>();
+            for (int i = 0; i < jsonAgenti.length(); i++) {
 
-		try {
+                BeanSalarizareAgentAfis salarizareAg = new BeanSalarizareAgentAfis();
 
-			JSONArray jsonAgenti = new JSONArray(result);
+                JSONObject objAgent = jsonAgenti.getJSONObject(i);
 
-			for (int i = 0; i < jsonAgenti.length(); i++) {
+                salarizareAg.setCodAgent(objAgent.getString("codAgent"));
+                salarizareAg.setNumeAgent(objAgent.getString("numeAgent"));
 
-				BeanSalarizareAgentAfis salarizareAg = new BeanSalarizareAgentAfis();
+                SalarizareDatePrincipale datePrincipale = new SalarizareDatePrincipale();
 
-				JSONObject objAgent = jsonAgenti.getJSONObject(i);
+                JSONObject jsonDatePrinc = new JSONObject(objAgent.getString("datePrincipale"));
 
-				salarizareAg.setCodAgent(objAgent.getString("codAgent"));
-				salarizareAg.setNumeAgent(objAgent.getString("numeAgent"));
+                datePrincipale.setVenitMJ_T1(Double.valueOf(jsonDatePrinc.getString("venitMJ_T1")));
+                datePrincipale.setVenitTCF(Double.valueOf(jsonDatePrinc.getString("venitTCF")));
+                datePrincipale.setCorectieIncasare(Double.valueOf(jsonDatePrinc.getString("corectieIncasare")));
+                datePrincipale.setVenitFinal(Double.valueOf(jsonDatePrinc.getString("venitFinal")));
 
-				SalarizareDatePrincipale datePrincipale = new SalarizareDatePrincipale();
+                salarizareAg.setDatePrincipale(datePrincipale);
+                listAgenti.add(salarizareAg);
 
-				JSONObject jsonDatePrinc = new JSONObject(objAgent.getString("datePrincipale"));
+            }
 
-				datePrincipale.setVenitMJ_T1(Double.valueOf(jsonDatePrinc.getString("venitMJ_T1")));
-				datePrincipale.setVenitTCF(Double.valueOf(jsonDatePrinc.getString("venitTCF")));
-				datePrincipale.setCorectieIncasare(Double.valueOf(jsonDatePrinc.getString("corectieIncasare")));
-				datePrincipale.setVenitFinal(Double.valueOf(jsonDatePrinc.getString("venitFinal")));
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-				salarizareAg.setDatePrincipale(datePrincipale);
-				listAgenti.add(salarizareAg);
+        return listAgenti;
+    }
 
-			}
+    public BeanSalarizareSD deserializeSalarizareSD(String result) {
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
+        BeanSalarizareSD salarizareSD = new BeanSalarizareSD();
+        BeanSalarizareAgent salarizareAgent = deserializeSalarizareAgent(result);
+        List<SalarizareDetaliiCVS> listCVS = new ArrayList<SalarizareDetaliiCVS>();
 
-		return listAgenti;
-	}
+        try {
 
-	public BeanSalarizareSD deserializeSalarizareSD(String result) {
+            JSONObject jsonObject = new JSONObject((String) result);
 
-		BeanSalarizareSD salarizareSD = new BeanSalarizareSD();
-		BeanSalarizareAgent salarizareAgent = deserializeSalarizareAgent(result);
-		List<SalarizareDetaliiCVS> listCVS = new ArrayList<SalarizareDetaliiCVS>();
+            JSONObject jsonDatePrinc = new JSONObject(jsonObject.getString("datePrincipale"));
 
-		try {
+            SalarizareDatePrincipale datePrincipale = salarizareAgent.getDatePrincipale();
+            datePrincipale.setVenitCVS(Double.valueOf(jsonDatePrinc.getString("venitCVS")));
+            salarizareSD.setDatePrincipale(datePrincipale);
 
-			JSONObject jsonObject = new JSONObject((String) result);
+            JSONArray jsonCSV = new JSONArray(jsonObject.getString("detaliiCVS"));
 
-			JSONObject jsonDatePrinc = new JSONObject(jsonObject.getString("datePrincipale"));
+            for (int i = 0; i < jsonCSV.length(); i++) {
 
-			SalarizareDatePrincipale datePrincipale = salarizareAgent.getDatePrincipale();
-			datePrincipale.setVenitCVS(Double.valueOf(jsonDatePrinc.getString("venitCVS")));
-			salarizareSD.setDatePrincipale(datePrincipale);
+                SalarizareDetaliiCVS detaliuCVS = new SalarizareDetaliiCVS();
+                JSONObject objCsv = jsonCSV.getJSONObject(i);
 
-			JSONArray jsonCSV = new JSONArray(jsonObject.getString("detaliiCVS"));
+                detaliuCVS.setAgent(objCsv.getString("agent"));
+                detaliuCVS.setPondere(Double.valueOf(objCsv.getString("pondere")));
+                detaliuCVS.setTargetValoric(Double.valueOf(objCsv.getString("targetValoric")));
+                detaliuCVS.setValoareFTVA(Double.valueOf(objCsv.getString("valoareFTVA")));
+                detaliuCVS.setValoareP6V(Double.valueOf(objCsv.getString("valoareP6V")));
+                detaliuCVS.setVenitBaza(Double.valueOf(objCsv.getString("venitBaza")));
+                detaliuCVS.setVenitCvs(Double.valueOf(objCsv.getString("venitCvs")));
+                detaliuCVS.setCvs(Double.valueOf(objCsv.getString("cvs")));
 
-			for (int i = 0; i < jsonCSV.length(); i++) {
+                listCVS.add(detaliuCVS);
 
-				SalarizareDetaliiCVS detaliuCVS = new SalarizareDetaliiCVS();
-				JSONObject objCsv = jsonCSV.getJSONObject(i);
+            }
 
-				detaliuCVS.setAgent(objCsv.getString("agent"));
-				detaliuCVS.setPondere(Double.valueOf(objCsv.getString("pondere")));
-				detaliuCVS.setTargetValoric(Double.valueOf(objCsv.getString("targetValoric")));
-				detaliuCVS.setValoareFTVA(Double.valueOf(objCsv.getString("valoareFTVA")));
-				detaliuCVS.setValoareP6V(Double.valueOf(objCsv.getString("valoareP6V")));
-				detaliuCVS.setVenitBaza(Double.valueOf(objCsv.getString("venitBaza")));
-				detaliuCVS.setVenitCvs(Double.valueOf(objCsv.getString("venitCvs")));
-				detaliuCVS.setCvs(Double.valueOf(objCsv.getString("cvs")));
+            List<SalarizareDetaliiMalus> listDetaliiMalus = new ArrayList<SalarizareDetaliiMalus>();
+            JSONArray jsonDetaliiMalus = new JSONArray(jsonObject.getString("detaliiMalus"));
 
-				listCVS.add(detaliuCVS);
+            for (int i = 0; i < jsonDetaliiMalus.length(); i++) {
 
-			}
+                SalarizareDetaliiMalus detaliiMalus = new SalarizareDetaliiMalus();
+                JSONObject detObjectMalus = jsonDetaliiMalus.getJSONObject(i);
 
-			List<SalarizareDetaliiMalus> listDetaliiMalus = new ArrayList<SalarizareDetaliiMalus>();
-			JSONArray jsonDetaliiMalus = new JSONArray(jsonObject.getString("detaliiMalus"));
+                detaliiMalus.setNumeClient(detObjectMalus.getString("numeClient"));
+                detaliiMalus.setCodClient(detObjectMalus.getString("codClient"));
+                detaliiMalus.setValoareFactura(Double.valueOf(detObjectMalus.getString("valoareFactura")));
+                detaliiMalus.setPenalizare(Double.valueOf(detObjectMalus.getString("penalizare")));
 
-			for (int i = 0; i < jsonDetaliiMalus.length(); i++) {
+                detaliiMalus.setNrFactura(detObjectMalus.getString("nrFactura"));
+                detaliiMalus.setDataFactura(detObjectMalus.getString("dataFactura"));
+                detaliiMalus.setTpFact(Integer.parseInt(detObjectMalus.getString("tpFact")));
+                detaliiMalus.setTpAgreat(Integer.parseInt(detObjectMalus.getString("tpAgreat")));
+                detaliiMalus.setTpIstoric(Integer.parseInt(detObjectMalus.getString("tpIstoric")));
+                detaliiMalus.setValIncasare(Double.parseDouble(detObjectMalus.getString("valIncasare")));
+                detaliiMalus.setDataIncasare(detObjectMalus.getString("dataIncasare"));
+                detaliiMalus.setZileIntarziere(Integer.parseInt(detObjectMalus.getString("zileIntarziere")));
+                detaliiMalus.setCoefPenalizare(Double.parseDouble(detObjectMalus.getString("coefPenalizare")));
 
-				SalarizareDetaliiMalus detaliiMalus = new SalarizareDetaliiMalus();
-				JSONObject detObjectMalus = jsonDetaliiMalus.getJSONObject(i);
+                listDetaliiMalus.add(detaliiMalus);
+            }
 
-				detaliiMalus.setNumeClient(detObjectMalus.getString("numeClient"));
-				detaliiMalus.setCodClient(detObjectMalus.getString("codClient"));
-				detaliiMalus.setValoareFactura(Double.valueOf(detObjectMalus.getString("valoareFactura")));
-				detaliiMalus.setPenalizare(Double.valueOf(detObjectMalus.getString("penalizare")));
+            salarizareSD.setDetaliiMalus(listDetaliiMalus);
 
-				detaliiMalus.setNrFactura(detObjectMalus.getString("nrFactura"));
-				detaliiMalus.setDataFactura(detObjectMalus.getString("dataFactura"));
-				detaliiMalus.setTpFact(Integer.parseInt(detObjectMalus.getString("tpFact")));
-				detaliiMalus.setTpAgreat(Integer.parseInt(detObjectMalus.getString("tpAgreat")));
-				detaliiMalus.setTpIstoric(Integer.parseInt(detObjectMalus.getString("tpIstoric")));
-				detaliiMalus.setValIncasare(Double.parseDouble(detObjectMalus.getString("valIncasare")));
-				detaliiMalus.setDataIncasare(detObjectMalus.getString("dataIncasare"));
-				detaliiMalus.setZileIntarziere(Integer.parseInt(detObjectMalus.getString("zileIntarziere")));
-				detaliiMalus.setCoefPenalizare(Double.parseDouble(detObjectMalus.getString("coefPenalizare")));
+            salarizareSD.setDatePrincipale(salarizareAgent.getDatePrincipale());
+            salarizareSD.setDetaliiBaza(salarizareAgent.getDetaliiBaza());
+            salarizareSD.setDetaliiCorectie(salarizareAgent.getDetaliiCorectie());
+            salarizareSD.setDetaliiCvs(listCVS);
+            salarizareSD.setDetaliiInc08(salarizareAgent.getDetaliiInc08());
+            salarizareSD.setDetaliiTCF(salarizareAgent.getDetaliiTCF());
 
-				listDetaliiMalus.add(detaliiMalus);
-			}
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-			salarizareSD.setDetaliiMalus(listDetaliiMalus);
+        return salarizareSD;
 
-			salarizareSD.setDatePrincipale(salarizareAgent.getDatePrincipale());
-			salarizareSD.setDetaliiBaza(salarizareAgent.getDetaliiBaza());
-			salarizareSD.setDetaliiCorectie(salarizareAgent.getDetaliiCorectie());
-			salarizareSD.setDetaliiCvs(listCVS);
-			salarizareSD.setDetaliiInc08(salarizareAgent.getDetaliiInc08());
-			salarizareSD.setDetaliiTCF(salarizareAgent.getDetaliiTCF());
+    }
 
-		} catch (JSONException e) {
-			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-		}
+    public BeanSalarizareCVA deserializeSalarizareCVA(String result) {
+        BeanSalarizareCVA beanSalarizareCVA = new BeanSalarizareCVA();
+        List<SalarizareCVABazaCL> listSalarizareBaza = new ArrayList<>();
 
-		return salarizareSD;
+        try {
+            JSONObject jsonObject = new JSONObject(result);
 
-	}
+            JSONArray jsonGT_EXP = new JSONArray(jsonObject.getString("GT_EXP"));
+            if (jsonGT_EXP.length() > 0) {
+                beanSalarizareCVA.setVenitBaza(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("VENIT_BAZA")));
+                beanSalarizareCVA.setNruf(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("NRUF")));
+                beanSalarizareCVA.setCoef(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("COEF")));
+                beanSalarizareCVA.setVenitNruf(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("VENIT_NRUF")));
+            }
 
-	public void setListener(OperatiiSalarizareListener listener) {
-		this.listener = listener;
-	}
+            JSONArray jsonGT_OUTTAB_AV = new JSONArray(jsonObject.getString("GT_OUTTAB_AV"));
+            if (jsonGT_OUTTAB_AV.length() > 0) {
+                beanSalarizareCVA.setVenitTcf(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("VENITTCF")));
+                beanSalarizareCVA.setCorectIncas(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("CORECT_INCAS")));
+                beanSalarizareCVA.setVenitFinal(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("VENITFINAL")));
+            }
 
-	@Override
-	public void onTaskComplete(String methodName, Object result) {
-		if (listener != null)
-			listener.operatiiSalarizareComplete(numeComanda, result);
+            JSONArray jsonCVA = new JSONArray(jsonObject.getString("GT_BAZACL_EXP"));
 
-	}
+            for (int i = 0; i < jsonCVA.length(); i++) {
+
+                SalarizareCVABazaCL salCVABazaCL = new SalarizareCVABazaCL();
+                JSONObject detBazaCl = jsonCVA.getJSONObject(i);
+
+                salCVABazaCL.setKDGRP(detBazaCl.getString("KDGRP"));
+                salCVABazaCL.setKUNNR(detBazaCl.getString("KUNNR"));
+                salCVABazaCL.setNAME1(detBazaCl.getString("NAME1"));
+                salCVABazaCL.setMATKL(detBazaCl.getString("MATKL"));
+                salCVABazaCL.setWGBEZ(detBazaCl.getString("WGBEZ"));
+                salCVABazaCL.setVAL_NET(Double.parseDouble(detBazaCl.getString("VAL_NET")));
+                salCVABazaCL.setT0(Double.parseDouble(detBazaCl.getString("T0")));
+                salCVABazaCL.setT1A(Double.parseDouble(detBazaCl.getString("T1A")));
+                salCVABazaCL.setT1(Double.parseDouble(detBazaCl.getString("T1")));
+                salCVABazaCL.setVENIT_BAZA(Double.parseDouble(detBazaCl.getString("VENIT_BAZA")));
+                salCVABazaCL.setCOEF_X(detBazaCl.getString("COEF_X").trim());
+                salCVABazaCL.setT1A_PROC(detBazaCl.getString("T1A_PROC").trim());
+                salCVABazaCL.setT1D_PROC(detBazaCl.getString("T1D_PROC").trim());
+                listSalarizareBaza.add(salCVABazaCL);
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
+        beanSalarizareCVA.setListSalarizareCVABaza(listSalarizareBaza);
+        return beanSalarizareCVA;
+    }
+
+    public void setListener(OperatiiSalarizareListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onTaskComplete(String methodName, Object result) {
+        if (listener != null)
+            listener.operatiiSalarizareComplete(numeComanda, result);
+
+    }
 
 }

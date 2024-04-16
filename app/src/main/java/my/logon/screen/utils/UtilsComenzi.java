@@ -14,11 +14,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.beans.BeanStocTCLI;
+import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.ClientiGenericiGedInfoStrings;
+import my.logon.screen.model.ListaArticoleComanda;
+import my.logon.screen.model.ListaArticoleComandaGed;
+import my.logon.screen.model.ListaArticoleModificareComanda;
 
 public class UtilsComenzi {
 
@@ -292,12 +296,12 @@ public class UtilsComenzi {
 	}
 
 
-	public static boolean isAdresaUnitLogModifCmd(Context context, String filialaModifComanda, String filialaPoligon){
+	public static boolean isAdresaUnitLogModifCmd(Context context, String filialaModifComanda, DatePoligonLivrare poligonLivrareon){
 
 		if (filialaModifComanda == null || filialaModifComanda.trim().isEmpty())
 			return true;
 
-		if (filialaPoligon == null)
+		if (poligonLivrareon == null)
 			return true;
 
 		if (isComandaDl())
@@ -306,7 +310,14 @@ public class UtilsComenzi {
 		if (UtilsUser.isUserSite() || UtilsUser.isUserCVO())
 			return true;
 
-		if (!UtilsComenzi.getFilialaDistrib(filialaModifComanda).equals(filialaPoligon)) {
+		if (!DateLivrare.getInstance().getTransport().equals("TRAP"))
+			return true;
+
+		if (isComandaModifBV90())
+			return true;
+
+		if (!UtilsComenzi.getFilialaDistrib(filialaModifComanda).equals(poligonLivrareon.getFilialaPrincipala()) &&
+				!UtilsComenzi.getFilialaDistrib(filialaModifComanda).equals(poligonLivrareon.getFilialaSecundara())) {
 
 			StringBuilder infoMsg = new StringBuilder();
 			infoMsg.append("\n");
@@ -320,6 +331,44 @@ public class UtilsComenzi {
 
 		return true;
 
+	}
+
+	private static boolean isComandaModifBV90() {
+
+		List<ArticolComanda> listArtCmdModif = null;
+
+		if (ListaArticoleComandaGed.getInstance() != null && ListaArticoleComandaGed.getInstance().getListArticoleComanda()!= null &&
+				ListaArticoleComandaGed.getInstance().getListArticoleComanda().size() > 0)
+			listArtCmdModif = ListaArticoleComandaGed.getInstance().getListArticoleComanda();
+		else
+		if (ListaArticoleModificareComanda.getInstance() != null && ListaArticoleModificareComanda.getInstance().getListArticoleComanda()!= null &&
+				ListaArticoleModificareComanda.getInstance().getListArticoleComanda().size() > 0)
+			listArtCmdModif = ListaArticoleModificareComanda.getInstance().getListArticoleComanda();
+
+		if (listArtCmdModif == null)
+			return false;
+
+		boolean isBV90 = false;
+
+		for (ArticolComanda articol : listArtCmdModif) {
+			if (articol.getFilialaSite().equals("BV90")) {
+				isBV90 = true;
+				break;
+			}
+		}
+
+		return isBV90;
+	}
+
+
+
+	public static void showFilialaLivrareDialog(Context context, String filiala){
+		StringBuilder infoMsg = new StringBuilder();
+		infoMsg.append("\n");
+		infoMsg.append("Completati o adresa de livrare arondata filialei " + filiala + ".");
+		infoMsg.append("\n");
+
+		UtilsComenzi.showAlertDialog(context, infoMsg.toString());
 	}
 
 
@@ -339,6 +388,38 @@ public class UtilsComenzi {
 		dlgAlert.create().show();
 	}
 
+	public static boolean isArticolCustodieDistrib(ArticolComanda articolComanda){
 
+		if (!DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.LIVRARE_CUSTODIE))
+			return false;
+
+		if (!articolComanda.isUmPalet() && !articolComanda.getCodArticol().replaceFirst("^0*", "").startsWith("30"))
+			return true;
+
+		return false;
+
+
+
+	}
+
+	public static boolean isModifTCLIinTRAP(DatePoligonLivrare poligonLivrare){
+		return DateLivrare.getInstance().getTransport().equals("TRAP") && DateLivrare.getInstance().getFilialaLivrareTCLI() != null &&
+				!DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().equals(poligonLivrare.getFilialaPrincipala());
+
+	}
+
+	public static String getSpinnerTipTransp(String tipTransport){
+		if (tipTransport.toLowerCase().contains("livrare"))
+			return "TRAP";
+
+		return "TCLI";
+	}
+
+	public static boolean comandaAreArticole(String canal){
+		if (canal.equals("10"))
+			return ListaArticoleComanda.getInstance().getListArticoleComanda() != null && ListaArticoleComanda.getInstance().getListArticoleComanda().size() > 0;
+		else
+			return ListaArticoleComandaGed.getInstance().getListArticoleComanda() != null && ListaArticoleComandaGed.getInstance().getListArticoleComanda().size() > 0;
+	}
 
 }

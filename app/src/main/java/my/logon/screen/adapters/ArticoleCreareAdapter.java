@@ -13,6 +13,7 @@ import java.util.List;
 
 import my.logon.screen.R;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.utils.UtilsComenzi;
 
 public class ArticoleCreareAdapter extends BaseAdapter {
 
@@ -56,9 +57,19 @@ public class ArticoleCreareAdapter extends BaseAdapter {
 		viewHolder.textNumeArt.setText(articol.getNumeArticol());
 		viewHolder.textCodArt.setText(articol.getCodArticol());
 		viewHolder.textCantArt.setText(numberFormat.format(articol.getCantitate()));
-		viewHolder.textPretUnit.setText(numberFormat.format(articol.getPretUnit()));
+
+		if (UtilsComenzi.isArticolCustodieDistrib(articol))
+			viewHolder.textPretUnit.setText("0.00");
+		else
+			viewHolder.textPretUnit.setText(numberFormat.format(articol.getPretUnit()));
+
 		viewHolder.textUmArt.setText(articol.getUm());
-		viewHolder.textPretArt.setText(numberFormat.format(articol.getPret()));
+
+		if (UtilsComenzi.isArticolCustodieDistrib(articol))
+			viewHolder.textPretArt.setText("0.00");
+		else
+			viewHolder.textPretArt.setText(numberFormat.format(articol.getPret()));
+
 		viewHolder.textProcRed.setText(numberFormat.format(articol.getProcent()));
 		viewHolder.textUmBaza.setText(articol.getUmb());
 

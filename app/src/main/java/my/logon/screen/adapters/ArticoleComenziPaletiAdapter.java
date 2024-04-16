@@ -12,16 +12,17 @@ import java.util.List;
 import my.logon.screen.R;
 import my.logon.screen.beans.BeanArticolRetur;
 
-public class ArticoleReturAdapter extends BaseAdapter {
+//articole comenzi retur paleti selectate
+public class ArticoleComenziPaletiAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<BeanArticolRetur> listArticole;
 
 	public static class ViewHolder {
-		TextView textCrt, textNumeArticol, textCodArticol, textCantitate, textUm, textCantitateRetur, labelRetur, textNrComanda;
+		TextView textCrt, textNumeArticol, textCodArticol, textCantitate, textUm, textNrComanda;
 	}
 
-	public ArticoleReturAdapter(Context context, List<BeanArticolRetur> listArticole) {
+	public ArticoleComenziPaletiAdapter(Context context, List<BeanArticolRetur> listArticole) {
 		this.context = context;
 		this.listArticole = listArticole;
 	}
@@ -33,14 +34,12 @@ public class ArticoleReturAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
-			convertView = LayoutInflater.from(context).inflate(R.layout.articol_retur_item, parent, false);
+			convertView = LayoutInflater.from(context).inflate(R.layout.articol_retur_palet_comanda, parent, false);
 			viewHolder.textCrt = (TextView) convertView.findViewById(R.id.textCrt);
 			viewHolder.textNumeArticol = (TextView) convertView.findViewById(R.id.textNumeArticol);
 			viewHolder.textCodArticol = (TextView) convertView.findViewById(R.id.textCodArticol);
 			viewHolder.textCantitate = (TextView) convertView.findViewById(R.id.textCantitate);
 			viewHolder.textUm = (TextView) convertView.findViewById(R.id.textUm);
-			viewHolder.textCantitateRetur = (TextView) convertView.findViewById(R.id.textCantitateRetur);
-			viewHolder.labelRetur = (TextView) convertView.findViewById(R.id.labelRetur);
 			viewHolder.textNrComanda = (TextView) convertView.findViewById(R.id.textNrComanda);
 
 			convertView.setTag(viewHolder);
@@ -56,17 +55,7 @@ public class ArticoleReturAdapter extends BaseAdapter {
 		viewHolder.textCodArticol.setText(articol.getCod());
 		viewHolder.textCantitate.setText(String.valueOf(articol.getCantitate()));
 		viewHolder.textUm.setText(articol.getUm());
-		viewHolder.textCantitateRetur.setText(String.valueOf(articol.getCantitateRetur()));
-
-		if (articol.getCantitateRetur() > 0) {
-			viewHolder.textCantitateRetur.setVisibility(View.VISIBLE);
-			viewHolder.labelRetur.setVisibility(View.VISIBLE);
-		} else {
-			viewHolder.textCantitateRetur.setVisibility(View.INVISIBLE);
-			viewHolder.labelRetur.setVisibility(View.INVISIBLE);
-		}
-
-		viewHolder.textNrComanda.setText(articol.getNrDocument() != null ? articol.getNrDocument() : "");
+		viewHolder.textNrComanda.setText(articol.getNrDocument());
 
 		if (cPos % 2 == 0)
 			convertView.setBackgroundResource(R.drawable.shadow_dark);

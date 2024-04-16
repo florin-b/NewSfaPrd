@@ -177,6 +177,9 @@ public class OperatiiClient implements AsyncTaskListener {
 					if (object.has("strada") && object.getString("strada") != "null")
 						client.setStrada(object.getString("strada"));
 
+					if (object.has("diviziiClient") && object.getString("diviziiClient") != "null")
+						client.setDiviziiClient(object.getString("diviziiClient"));
+
 					listClienti.add(client);
 				}
 
@@ -302,6 +305,8 @@ public class OperatiiClient implements AsyncTaskListener {
 				platitorTva.setCodJudet(jsonObject.getString("codJudet"));
 				platitorTva.setLocalitate(jsonObject.getString("localitate"));
 				platitorTva.setStrada(jsonObject.getString("strada"));
+				platitorTva.setStareInregistrare(jsonObject.getString("stareInregistrare"));
+				platitorTva.setDiviziiClient(jsonObject.getString("diviziiClient"));
 
 			}
 
@@ -353,6 +358,8 @@ public class OperatiiClient implements AsyncTaskListener {
 
 					if (dateObject.has("codClient") && dateObject.getString("codClient") != "null")
 						datePersonale.setCodClient(dateObject.getString("codClient"));
+
+					datePersonale.setDivizii(dateObject.getString("divizii"));
 
 					listDate.add(datePersonale);
 

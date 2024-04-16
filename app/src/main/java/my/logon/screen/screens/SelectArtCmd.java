@@ -51,9 +51,11 @@ import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.beans.ArticolMathaus;
 import my.logon.screen.beans.BeanArticolCautare;
 import my.logon.screen.beans.BeanCablu05;
+import my.logon.screen.beans.BeanParametruPretGed;
 import my.logon.screen.beans.BeanStocTCLI;
 import my.logon.screen.beans.ComandaMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
+import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.dialogs.ArticoleCantDialog;
 import my.logon.screen.dialogs.Cabluri05Dialog;
 import my.logon.screen.dialogs.CategoriiMathausDialogNew;
@@ -70,10 +72,10 @@ import my.logon.screen.listeners.ArticolMathausListener;
 import my.logon.screen.listeners.Cablu05SelectedListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.DownloadImageTask;
-import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
@@ -1408,6 +1410,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
         String numeArticol = txtNumeArticol.getText().toString().trim();
         String tipCautare = "", tipArticol = "", tipComanda = "";
+        String departCautare = DepartamentAgent.getDepartArticole(selectedDepartamentAgent);
 
         if (tglButton.isChecked())
             tipCautare = "C";
@@ -1426,7 +1429,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         params.put("searchString", numeArticol);
         params.put("tipArticol", tipArticol);
         params.put("tipCautare", tipCautare);
-        params.put("departament", selectedDepartamentAgent);
+        params.put("departament", departCautare);
         params.put("filiala", UserInfo.getInstance().getUnitLog());
         params.put("codUser", UserInfo.getInstance().getCod());
         params.put("tipComanda", tipComanda);
@@ -1879,6 +1882,106 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         return globalCodDepartSelectetItem.equals("01") || globalCodDepartSelectetItem.equals("02");
     }
 
+    private void getPretArtCustodie(){
+
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        if (codArticol.length() == 8)
+            codArticol = "0000000000" + codArticol;
+
+        String paramUnitMas = textUM.getText().toString();
+        String uLog = UserInfo.getInstance().getUnitLog().substring(0, 2) + "2" + UserInfo.getInstance().getUnitLog().substring(3, 4);
+
+        BeanParametruPretGed paramPret = new BeanParametruPretGed();
+        paramPret.setClient(CreareComanda.codClientVar);
+        paramPret.setArticol(codArticol);
+
+        paramPret.setCantitate(textCant.getText().toString().trim());
+        paramPret.setDepart(globalCodDepartSelectetItem.substring(0, 2));
+        paramPret.setUm(paramUnitMas);
+        paramPret.setUl(uLog);
+        paramPret.setDepoz("");
+        paramPret.setCodUser(UserInfo.getInstance().getCod());
+        paramPret.setCanalDistrib("20");
+        paramPret.setTipUser(UserInfo.getInstance().getTipUser());
+        paramPret.setMetodaPlata(DateLivrare.getInstance().getTipPlata());
+        paramPret.setTermenPlata(DateLivrare.getInstance().getTermenPlata());
+        paramPret.setCodJudet(DateLivrare.getInstance().getCodJudet());
+        paramPret.setLocalitate(DateLivrare.getInstance().getOras());
+        paramPret.setFilialaAlternativa(CreareComanda.filialaAlternativa);
+        paramPret.setCodClientParavan("");
+        paramPret.setFilialaClp(DateLivrare.getInstance().getCodFilialaCLP());
+        paramPret.setTipTransport(DateLivrare.getInstance().getTransport());
+
+        params.put("parametruPret", opArticol.serializeParamPretGed(paramPret));
+        opArticol.getPretGedJson(params);
+
+    }
+
+    private void listPretArticolCustodie(PretArticolGed pretArticol){
+
+        if (codArticol.length() == 18)
+            codArticol = codArticol.substring(10, 18);
+
+        String cantArticol = textCant.getText().toString().trim();
+
+        double initPriceCust = Double.valueOf(pretArticol.getPret());
+        double valMultipluCust = Double.valueOf(pretArticol.getMultiplu());
+        double cantCust = Double.valueOf(cantArticol);
+
+        double priceArtCust = (initPriceCust / cantCust) * valMultipluCust;
+
+        ArticolComanda unArticol = new ArticolComanda();
+        unArticol.setNumeArticol(numeArticol);
+        unArticol.setCodArticol(codArticol);
+        unArticol.setCantitate(Double.valueOf(cantArticol));
+        unArticol.setDepozit(globalDepozSel);
+        unArticol.setPretUnit(priceArtCust);
+        unArticol.setProcent(0);
+        unArticol.setUm(textUM.getText().toString());
+        unArticol.setProcentFact(0);
+        unArticol.setConditie(false);
+        unArticol.setDiscClient(0);
+        unArticol.setProcAprob(0);
+        unArticol.setMultiplu(1);
+        unArticol.setPret(priceArtCust * unArticol.getCantitate());
+        unArticol.setMoneda("RON");
+        unArticol.setInfoArticol("");
+        unArticol.setCantUmb(cantCust);
+        unArticol.setUmb(pretArticol.getUmBaza());
+        unArticol.setAlteValori("");
+        unArticol.setDepart(globalCodDepartSelectetItem);
+        unArticol.setTipArt("");
+        unArticol.setPromotie(0);
+        unArticol.setObservatii("");
+        unArticol.setDepartAprob(articolDBSelected.getDepartAprob());
+        unArticol.setUmPalet(false);
+        unArticol.setCategorie("");
+        unArticol.setLungime(0);
+        unArticol.setCmp(Double.valueOf(pretArticol.getCmp()));
+        unArticol.setGreutate(pretArticol.getGreutate());
+        unArticol.setCantitate50(unArticol.getCantitate50());
+        unArticol.setUm50(unArticol.getUm50());
+        unArticol.setFilialaSite(CreareComanda.filialaAlternativa);
+        unArticol.setTipMarfa(pretArticol.getTipMarfa());
+        unArticol.setGreutateBruta(pretArticol.getGreutateBruta());
+        unArticol.setLungimeArt(pretArticol.getLungimeArt());
+
+        ListaArticoleComanda listaComanda = ListaArticoleComanda.getInstance();
+        listaComanda.addArticolComanda(unArticol);
+
+        textNumeArticol.setText("");
+        textCodArticol.setText("");
+        textUM.setText("");
+        textStoc.setText("");
+        textCant.setText("");
+        txtNumeArticol.setText("");
+        resultLayout.setVisibility(View.INVISIBLE);
+
+    }
+
+
+
     private void saveArticolCustodie() {
 
         if (textCant.getText().toString().isEmpty()) {
@@ -1896,6 +1999,10 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
             return;
         }
 
+        getPretArtCustodie();
+
+        /*
+
         String cantArticol = textCant.getText().toString().trim();
         String localUnitMas = textUM.getText().toString().trim();
 
@@ -1906,8 +2013,8 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         unArticol.setNumeArticol(numeArticol);
         unArticol.setCodArticol(codArticol);
         unArticol.setCantitate(Double.valueOf(cantArticol));
-        unArticol.setDepozit("");
-        unArticol.setPretUnit(0);
+        unArticol.setDepozit(globalDepozSel);
+        unArticol.setPretUnit(initPrice);
         unArticol.setProcent(0);
         unArticol.setUm(localUnitMas);
         unArticol.setProcentFact(0);
@@ -1915,7 +2022,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         unArticol.setDiscClient(0);
         unArticol.setProcAprob(0);
         unArticol.setMultiplu(1);
-        unArticol.setPret(0);
+        unArticol.setPret(initPrice * unArticol.getCantitate());
         unArticol.setMoneda("RON");
         unArticol.setInfoArticol("");
         unArticol.setCantUmb(Double.valueOf(cantArticol));
@@ -1930,6 +2037,14 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         unArticol.setCategorie("");
         unArticol.setLungime(0);
         unArticol.setCmp(0);
+        unArticol.setGreutate(greutateBruta);
+        unArticol.setCantitate50(unArticol.getCantitate());
+        unArticol.setUm50(unArticol.getUm());
+        unArticol.setFilialaSite(CreareComanda.filialaAlternativa);
+        unArticol.setTipMarfa(tipMarfa);
+        unArticol.setGreutateBruta(greutateBruta);
+        unArticol.setLungimeArt(lungimeArt);
+
 
         ListaArticoleComanda listaComanda = ListaArticoleComanda.getInstance();
         listaComanda.addArticolComanda(unArticol);
@@ -1941,6 +2056,9 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         textCant.setText("");
         txtNumeArticol.setText("");
         resultLayout.setVisibility(View.INVISIBLE);
+
+
+         */
 
     }
 
@@ -1972,7 +2090,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
                     BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
                     beanStocTCLI.setCantitate(Double.parseDouble(articol[0]));
-                    beanStocTCLI.setUm(umStocTCLI);
+                    beanStocTCLI.setUm(articol[1]);
                     beanStocTCLI.setDepozit(articol[2]);
                     listStocDepozit.add(beanStocTCLI);
 
@@ -2205,6 +2323,11 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
             textUM.setText(tokenStoc[1]);
             textStoc.setText(nf2.format(Double.valueOf(tokenStoc[0])));
+
+            initPrice = Double.parseDouble(tokenStoc[3].trim());
+            greutateBruta = Double.parseDouble(tokenStoc[4].trim());
+            lungimeArt = tokenStoc[5];
+            tipMarfa = tokenStoc[6];
 
             saveArtBtn.setVisibility(View.VISIBLE);
 
@@ -2937,6 +3060,9 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                 break;
             case GET_CABLURI_05:
                 afisCabluri05(opArticol.deserializeCabluri05((String) result));
+                break;
+            case GET_PRET_GED_JSON:
+                listPretArticolCustodie(opArticol.deserializePretGed(result));
                 break;
             default:
                 break;

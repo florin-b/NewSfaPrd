@@ -5,9 +5,10 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dip" >
+        android:layout_marginTop="3dip" >
 
         <TextView
             android:id="@+id/textCrt"
@@ -32,6 +33,7 @@
     </LinearLayout>
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -73,9 +75,9 @@
     </LinearLayout>
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dip" >
+        android:layout_height="wrap_content" >
 
         <View
             android:layout_width="30dip"
@@ -92,33 +94,7 @@
             android:textSize="17sp"
             android:typeface="sans" />
 
-        <TextView
-            android:id="@+id/labelRetur"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_weight="0.5"
-            android:gravity="right"
-            android:text="Retur"
-            android:textColor="#EE7600"
-            android:textSize="16sp"
-            android:typeface="sans" />
 
-        <TextView
-            android:id="@+id/textCantitateRetur"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="right"
-            android:textColor="#EE7600"
-            android:textSize="17sp"
-            android:typeface="monospace" />
-
-        <View
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_weight="0.1" />
     </LinearLayout>
 
 </LinearLayout>

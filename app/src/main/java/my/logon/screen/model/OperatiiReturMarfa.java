@@ -57,6 +57,13 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 
 	}
 
+	public void saveListComenziRetur(HashMap<String, String> params) {
+		numeComanda = EnumRetur.SAVE_LIST_COMENZI_RETUR;
+		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
+		call.getCallResultsFromFragment();
+
+	}
+
 	public void getListaComenziSalvate(HashMap<String, String> params) {
 		numeComanda = EnumRetur.GET_COMENZI_SALVATE;
 		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
@@ -74,7 +81,7 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
 		call.getCallResultsFromFragment();
 	}
-	
+
 	public void getStocReturAvansat(HashMap<String, String> params) {
 		numeComanda = EnumRetur.GET_STOC_RETUR_AVANSAT;
 		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
@@ -118,10 +125,11 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 					docRetur.setData(jsonObj.getString("data"));
 					docRetur.setTipTransport(jsonObj.getString("tipTransport"));
 					docRetur.setDataLivrare(jsonObj.getString("dataLivrare"));
+
 					docRetur.setCmdACZC(Boolean.parseBoolean(jsonObj.getString("isCmdACZC")));
-					
+
 					JSONObject objectExtra = new JSONObject(jsonObj.getString("extraDate"));
-					
+
 					List<BeanAdresaLivrare> listAdreseDoc = new ArrayList<BeanAdresaLivrare>();
 					BeanAdresaLivrare adresaDoc = new BeanAdresaLivrare();
 					adresaDoc.setCodAdresa(objectExtra.getString("codAdresa"));
@@ -131,15 +139,14 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 					adresaDoc.setNrStrada("");
 					listAdreseDoc.add(adresaDoc);
 					docRetur.setListAdrese(listAdreseDoc);
-					
+
 					List<BeanPersoanaContact> listPersoaneDoc = new ArrayList<BeanPersoanaContact>();
 					BeanPersoanaContact persoanaDoc = new BeanPersoanaContact();
 					persoanaDoc.setNume(objectExtra.getString("numeContact"));
 					persoanaDoc.setTelefon(objectExtra.getString("telContact"));
 					listPersoaneDoc.add(persoanaDoc);
 					docRetur.setListPersoane(listPersoaneDoc);
-					
-					
+
 					listDocumente.add(docRetur);
 
 				}
@@ -226,6 +233,16 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 		return listArticole;
 	}
 
+	public String serializeListComenziRetur(List<BeanComandaRetur> listComenzi) {
+		JSONArray jsonArray = new JSONArray();
+
+		for (BeanComandaRetur comandaRetur : listComenzi)
+			jsonArray.put(serializeComandaReturJSON(comandaRetur));
+
+		return jsonArray.toString();
+
+	}
+
 	public String serializeListArticole(List<BeanArticolRetur> listArticole) {
 
 		JSONArray jsonArray = new JSONArray();
@@ -276,6 +293,37 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 		}
 
 		return jsonPoze.toString();
+	}
+
+
+	public JSONObject serializeComandaReturJSON(BeanComandaRetur comandaRetur) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		try {
+			jsonObject.put("nrDocument", comandaRetur.getNrDocument());
+			jsonObject.put("dataLivrare", comandaRetur.getDataLivrare());
+			jsonObject.put("tipTransport", comandaRetur.getTipTransport());
+			jsonObject.put("codAgent", comandaRetur.getCodAgent());
+			jsonObject.put("tipAgent", comandaRetur.getTipAgent());
+			jsonObject.put("motivRetur", comandaRetur.getMotivRespingere());
+			jsonObject.put("numePersContact", comandaRetur.getNumePersContact());
+			jsonObject.put("telPersContact", comandaRetur.getTelPersContact());
+			jsonObject.put("adresaCodJudet", comandaRetur.getAdresaCodJudet());
+			jsonObject.put("adresaOras", comandaRetur.getAdresaOras());
+			jsonObject.put("adresaStrada", comandaRetur.getAdresaStrada());
+			jsonObject.put("adresaCodAdresa", comandaRetur.getAdresaCodAdresa());
+			jsonObject.put("listaArticole", comandaRetur.getListArticole());
+			jsonObject.put("observatii", comandaRetur.getObservatii());
+			jsonObject.put("codclient", comandaRetur.getCodClient());
+			jsonObject.put("numeclient", comandaRetur.getNumeClient());
+			jsonObject.put("transpBack", comandaRetur.isTransBack());
+
+		} catch (Exception ex) {
+			Toast.makeText(context, ex.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return jsonObject;
 	}
 
 	public String serializeComandaRetur(BeanComandaRetur comandaRetur) {

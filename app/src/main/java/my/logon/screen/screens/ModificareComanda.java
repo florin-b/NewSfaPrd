@@ -93,11 +93,11 @@ import my.logon.screen.listeners.TipMasinaLivrareListener;
 import my.logon.screen.model.AlgoritmComandaGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ArticolComandaGed;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.Comanda;
 import my.logon.screen.model.ComenziDAO;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.ListaArticoleModificareComanda;
@@ -561,7 +561,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
         for (ArticolComanda articol : listArticoleComanda) {
 
-            if (articol.getTipArt().equalsIgnoreCase("B"))
+            if (articol.getTipArt() != null && articol.getTipArt().equalsIgnoreCase("B"))
                 totalArtB += articol.getPret();
 
             localTotalComanda += articol.getPretUnit() * articol.getCantUmb();
@@ -763,11 +763,11 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                             } else
                                 getTotalComenziNumerar();
                         } else if (isGreutateMaximaComanda()) {
-                            Toast.makeText(getApplicationContext(),Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
                             return;
                         }
                         else {
-                            getLivrariMathaus();
+                                getLivrariMathaus();
                         }
 
                     }
@@ -782,6 +782,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     }
 
     private boolean isGreutateMaximaComanda(){
+
+        if (1==1)
+            return false;
 
         double greutateComanda = UtilsComenzi.getGreutateKgArticole(listArticoleComanda);
 
@@ -835,7 +838,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     }
 
     private boolean isConditiiAfisOptiuniMasini() {
-        return !isComandaDL() && DateLivrare.getInstance().getTransport().equals("TRAP") && DateLivrare.getInstance().getDatePoligonLivrare() != null;
+        return DateLivrare.getInstance().getTransport().equals("TRAP") && DateLivrare.getInstance().getDatePoligonLivrare() != null;
     }
 
     private void getLivrariMathaus() {
@@ -1143,6 +1146,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         params.put("codClient", codClientNumerar);
         params.put("dataLivrare", DateLivrare.getInstance().getDataLivrare());
         params.put("tipClient", tipPers);
+        params.put("idComanda", selectedCmd);
         operatiiComenzi.getTotalComenziNumerar(params);
 
     }
@@ -1669,7 +1673,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                 obj.put("greutate", artComanda.getGreutate());
                 obj.put("greutateBruta", artComanda.getGreutateBruta());
                 obj.put("cantitateInit", artComanda.getCantitateInit());
-
+                obj.put("tipTransport", artComanda.getTipTransport());
                 obj.put("cantitate50", artComanda.getCantitate50());
                 obj.put("um50", artComanda.getUm50());
 

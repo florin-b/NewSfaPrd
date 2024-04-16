@@ -411,7 +411,7 @@ public class HelperMathaus {
         double valPozArt = artCmd.getPret();
 
         if (valPozArt == 0)
-            valPozArt = (artCmd.getPretUnitarClient() / artCmd.getMultiplu()) * artCmd.getCantitate();
+            valPozArt = (artCmd.getPretUnitarClient() / artCmd.getMultiplu()) * artCmd.getCantUmb();
 
         dateArticol.setValPoz(valPozArt);
         dateArticol.setGreutate(artCmd.getGreutateBruta());
@@ -431,7 +431,7 @@ public class HelperMathaus {
 
         dateArticol.setUnit50(artCmd.getUm50());
 
-        if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()) || isDepozitExceptie(artCmd.getDepozit()))
+        if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()) || isDepozitExceptie(artCmd.getDepozit()) || UtilsComenzi.isLivrareCustodie())
             dateArticol.setDepozit(artCmd.getDepozit());
         else if (stocTCLI != null && !stocTCLI.getDepozit().trim().isEmpty())
             dateArticol.setDepozit(stocTCLI.getDepozit());

@@ -21,6 +21,7 @@ import my.logon.screen.R;
 import my.logon.screen.beans.BeanDocumentRetur;
 import my.logon.screen.enums.EnumRetur;
 import my.logon.screen.enums.EnumTipComanda;
+import my.logon.screen.enums.EnumTipOp;
 import my.logon.screen.listeners.DocumentReturListener;
 import my.logon.screen.listeners.ListaArtReturListener;
 import my.logon.screen.listeners.ListaDocReturListener;
@@ -183,6 +184,11 @@ public class ReturComanda extends FragmentActivity implements ClientReturListene
         params.put("nrDocument", nrDocument);
         params.put("tipDocument", "CMD");
         opRetur.getArticoleDocument(params);
+
+    }
+
+    @Override
+    public void documentSelected(String nrDocument, EnumTipOp tipOp) {
 
     }
 

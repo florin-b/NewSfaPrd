@@ -371,7 +371,10 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 		ArticolComanda articolComanda = getItem(pozitieArticolSelectat);
 		BeanConditiiArticole articolConditie = getConditieArticol(articolComanda.getCodArticol());
 
-		double finalPrice = articolComanda.getPret();
+		double finalPrice = articolComanda.getPretUnit();
+		if (comanda.getCanalDistrib().equals("20"))
+			finalPrice  = articolComanda.getPretUnitarClient();
+
 		double initPrice = Double.parseDouble(tokenPret[1]);
 		double listPrice = Double.parseDouble(tokenPret[8]);
 		double valMultiplu = Double.parseDouble(tokenPret[13].toString().trim());
@@ -388,6 +391,8 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 
 		listArticole.get(pozitieArticolSelectat).setCantitate(articolConditie.getCantitate());
 		listArticole.get(pozitieArticolSelectat).setCantUmb(cantUmB);
+		listArticole.get(pozitieArticolSelectat).setCantitateInit(cantUmB);
+		listArticole.get(pozitieArticolSelectat).setCantitate50(cantUmB);
 		listArticole.get(pozitieArticolSelectat).setInfoArticol(tokenPret[9].replace(',', '.'));
 		listArticole.get(pozitieArticolSelectat).setProcentFact(procRedFact);
 
@@ -432,6 +437,7 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 		double pretInit = articolComanda.getPretUnit() / (1 - articolComanda.getProcent() / 100);
 
 		listArticole.get(pozitieArticolSelectat).setPretUnit(articolConditie.getValoare());
+		listArticole.get(pozitieArticolSelectat).setPretUnitarClient(articolConditie.getValoare());
 
 		double valoareArticol = listArticole.get(pozitieArticolSelectat).getCantitate() * articolConditie.getValoare();
 

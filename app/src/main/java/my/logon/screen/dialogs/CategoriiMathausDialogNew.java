@@ -36,6 +36,7 @@ import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.OperatiiMathaus;
 import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.DepartamentAgent;
 
 public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathausListener, AdapterMathausListener {
 
@@ -308,15 +309,17 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
             tipComanda = "fasonate";
 
+        String departCautare = DepartamentAgent.getDepartArticole(UserInfo.getInstance().getCodDepart());
+
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("codArticol", textCodArticol.getText().toString().trim().toLowerCase());
         params.put("tipCautare", tipCautare);
         params.put("filiala", filialaLivrareMathaus);
-        params.put("depart", UserInfo.getInstance().getCodDepart());
+        params.put("depart", departCautare);
         params.put("pagina", String.valueOf(this.paginaCurenta));
         params.put("tipComanda", tipComanda);
 
-        if (this.categorieCurenta != null && this.categorieCurenta.equals("0")) // ND-uri neclasificate
+        if (this.categorieCurenta != null && this.categorieCurenta.equals("0"))
             opMathaus.cautaArticoleLocal(params);
         else
             opMathaus.cautaArticole(params);
@@ -511,10 +514,12 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
             tipComanda = "fasonate";
 
+        String departCautare = DepartamentAgent.getDepartArticole(UserInfo.getInstance().getCodDepart());
+
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("codCategorie", codCategorie);
         params.put("filiala", UserInfo.getInstance().getUnitLog());
-        params.put("depart", UserInfo.getInstance().getCodDepart());
+        params.put("depart", departCautare);
         params.put("pagina", String.valueOf(nrPagina));
         params.put("tipArticol", tipArticolAfis.toString());
         params.put("tipComanda", tipComanda);

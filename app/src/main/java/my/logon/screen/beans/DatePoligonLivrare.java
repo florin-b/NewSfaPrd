@@ -7,6 +7,7 @@ public class DatePoligonLivrare {
     private String tipZona;
     private String limitareTonaj;
     private String nume;
+    private boolean isRestrictionat;
 
     public String getFilialaPrincipala() {
         return filialaPrincipala;
@@ -46,5 +47,13 @@ public class DatePoligonLivrare {
 
     public void setNume(String nume) {
         this.nume = nume;
+    }
+
+    public boolean isRestrictionat() {
+        return isRestrictionat;
+    }
+
+    public void setRestrictionat(boolean restrictionat) {
+        isRestrictionat = restrictionat;
     }
 }

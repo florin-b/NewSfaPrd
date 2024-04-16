@@ -95,7 +95,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="40dip"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.01" />
     </LinearLayout>
 
     <LinearLayout
@@ -251,8 +251,7 @@
             android:layout_weight="0.6" />
     </LinearLayout>
 
-    
-     <LinearLayout
+    <LinearLayout
         android:id="@+id/layoutLabelRefClient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -309,9 +308,7 @@
             android:layout_height="40dip"
             android:layout_weight="0.6" />
     </LinearLayout>
-    
-    
-    
+
     <LinearLayout
         android:id="@+id/layoutTipComanda"
         android:layout_width="match_parent"
@@ -432,6 +429,7 @@
                 android:textColor="@color/detColor4"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:typeface="serif" />
 
             <RadioButton

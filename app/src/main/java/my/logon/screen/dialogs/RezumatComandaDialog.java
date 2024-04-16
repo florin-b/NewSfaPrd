@@ -27,6 +27,7 @@ import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
+import my.logon.screen.utils.UtilsComenzi;
 
 public class RezumatComandaDialog extends Dialog implements RezumatListener {
 
@@ -274,13 +275,19 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
     private double getTotalComanda(RezumatComanda rezumat) {
 
         double valoareTotal = 0;
-
+        double valoarePozitie = 0;
         for (ArticolComanda art : rezumat.getListArticole()) {
 
             if (art instanceof ArticolComandaGed)
-                valoareTotal += canalDistrib.equals("10") ? art.getPret() : art.getPretUnitarClient() * art.getCantUmb();
+                valoarePozitie = canalDistrib.equals("10") ? art.getPret() : art.getPretUnitarClient() * art.getCantUmb();
             else
-                valoareTotal += art.getPret();
+                valoarePozitie = art.getPret();
+
+            if (UtilsComenzi.isArticolCustodieDistrib(art))
+                valoarePozitie = 0;
+
+            valoareTotal += valoarePozitie;
+
         }
 
         return valoareTotal;

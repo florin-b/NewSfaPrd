@@ -598,6 +598,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     private void addSpinnerDepartamente() {
 
+        if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_AMOB)
+            return;
+
         List<String> departamenteComanda = DepartamentAgent.getDepartamenteAgentGED();
 
         if (isComandaDL() || tipComanda.equals("S"))
@@ -1605,6 +1608,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         String numeArticol = txtNumeArticol.getText().toString().trim();
         String tipCautare = "", tipArticol = "", tipComanda = "";
 
+
         if (tglButton.isChecked())
             tipCautare = "C";
         else
@@ -1619,6 +1623,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         if (CreareComandaGed.tipComandaGed == TipCmdGed.COMANDA_LIVRARE && !CreareComandaGed.selectedDepartCod.equals("-1"))
             departCautare = CreareComandaGed.selectedDepartCod;
+
+        if (UtilsUser.isAV())
+            departCautare = DepartamentAgent.getDepartArticole(departCautare);
 
         if (isCV())
             departCautare = "";
@@ -1937,7 +1944,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
                         if (HelperMathaus.isComandaVanzareTCLI()) {
 
-                            if (!UtilsComenzi.isDepozitUnitLog(articol.getDepozit(), DateLivrare.getInstance().getFilialaLivrareTCLI().getDepozite())) {
+                            if (!UtilsUser.isConsWood() && !UtilsComenzi.isDepozitUnitLog(articol.getDepozit(), DateLivrare.getInstance().getFilialaLivrareTCLI().getDepozite())) {
                                 Toast.makeText(getApplicationContext(), "Nu puteti folosi acest depozit pentru " + DateLivrare.getInstance().getFilialaLivrareTCLI().getNumeFiliala() +".", Toast.LENGTH_LONG).show();
                                 return;
                             }
@@ -2121,7 +2128,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
                     BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
                     beanStocTCLI.setCantitate(Double.parseDouble(articol[0]));
-                    beanStocTCLI.setUm(umStocTCLI);
+                    beanStocTCLI.setUm(articol[1]);
                     beanStocTCLI.setDepozit(articol[2]);
                     listStocDepozit.add(beanStocTCLI);
 

@@ -21,6 +21,8 @@ public class Constants {
 
 	public static final double MAX_GREUTATE_CMD_KG = 22000;
 	public static String MSG_MASA_MAXIMA_CMD = "Masa comenzii este mai mare de 22 t si nu se poate salva.";
+	public static String ADRESA_ZONA_RESTRICTIONATA = "Adresa se afla intr-o zona restrictionata si nu se poate livra cu TRAP.";
+
 
 
 }

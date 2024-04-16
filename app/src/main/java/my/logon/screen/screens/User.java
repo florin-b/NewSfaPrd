@@ -37,8 +37,8 @@ import my.logon.screen.enums.EnumOperatiiMeniu;
 import my.logon.screen.listeners.CodPinDialogListener;
 import my.logon.screen.listeners.HelperSiteListener;
 import my.logon.screen.listeners.OperatiiMeniuListener;
-import my.logon.screen.model.HelperUserSite;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
+import my.logon.screen.model.HelperUserSite;
 import my.logon.screen.model.OperatiiMeniu;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsUser;
@@ -96,7 +96,7 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 		labelFiliala = (TextView) findViewById(R.id.labelFiliala);
 		labelFiliala.setVisibility(View.GONE);
 
-		if (UtilsUser.isAgentOrSD() || UtilsUser.isKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK()) {
+		if (UtilsUser.isAgentOrSD() || UtilsUser.isKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK() || UtilsUser.isCVA()) {
 			((LinearLayout) findViewById(R.id.layoutSalarizare)).setVisibility(View.VISIBLE);
 
 			radioSalPermis = (RadioButton) findViewById(R.id.radioSalPermis);

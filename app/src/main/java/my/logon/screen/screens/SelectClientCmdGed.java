@@ -45,11 +45,12 @@ import my.logon.screen.dialogs.CautaClientDialog;
 import my.logon.screen.dialogs.DatePersClientDialog;
 import my.logon.screen.enums.EnumClienti;
 import my.logon.screen.enums.TipCmdGed;
+import my.logon.screen.helpers.DialogHelper;
 import my.logon.screen.listeners.CautaClientDialogListener;
 import my.logon.screen.listeners.DatePersListener;
 import my.logon.screen.listeners.OperatiiClientListener;
-import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
+import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.OperatiiClient;
 import my.logon.screen.model.UserInfo;
@@ -100,6 +101,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 	private Spinner spinnerAgenti;
 	private RadioGroup radioSelectAgent;
 	private String codCuiIp;
+	private String codCuiPJ;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -322,15 +324,18 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 	private void performVerificareTVA() {
 
 		String strCui = "";
+		codCuiPJ = "";
 
 		if (radioClientInstPub.isChecked()) {
 			strCui = codCuiIp;
 		} else if (!txtCNPClient.getText().toString().isEmpty()) {
 			strCui = txtCNPClient.getText().toString().trim();
+			codCuiPJ = strCui;
 		}
 
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cuiClient", strCui);
+		params.put("codAgent", UserInfo.getInstance().getCod());
 		operatiiClient.getStarePlatitorTva(params);
 
 	}
@@ -427,6 +432,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("numeClient", textClient);
 		params.put("tipClient", getTipClient());
+		params.put("codAgent", UserInfo.getInstance().getCod());
 		operatiiClient.getCnpClient(params);
 
 	}
@@ -509,6 +515,13 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 	private void updateStareTva(PlatitorTva platitorTva) {
 
+
+		if (platitorTva.getStareInregistrare() != null && platitorTva.getStareInregistrare().toLowerCase().contains("radiere")) {
+			pressedTVAButton = false;
+			new DialogHelper().showInfoDialog(this,"\nAcest client este radiat.\n");
+			return;
+		}
+
 		String stare = "";
 
 		if (platitorTva.isPlatitor()) {
@@ -534,6 +547,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 				DateLivrare.getInstance().setOrasD(platitorTva.getLocalitate());
 				DateLivrare.getInstance().setAdresaD(platitorTva.getStrada());
 			}
+
+			DateLivrare.getInstance().setDiviziiClient(platitorTva.getDiviziiClient());
 
 		}
 
@@ -732,6 +747,9 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_DETERIORATE)
 			return;
 
+		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_AMOB)
+			return;
+
 		String filialaClp = "";
 
 		if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_LIVRARE) {
@@ -887,13 +905,18 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			}
 
 			if (radioClPJ.isChecked() && !UtilsUser.isCGED() && !UtilsUser.isSSCM()) {
+
+				if (codCuiPJ != null && !codCuiPJ.isEmpty() && !codCuiPJ.equals(txtCNPClient.getText().toString().trim())) {
+					Toast.makeText(getApplicationContext(), "CUI client invalid!", Toast.LENGTH_SHORT).show();
+					return;
+				}
+
 				CreareComandaGed.tipClient = "PJ";
 				DateLivrare.getInstance().setTipPersClient("PJ");
 
 				CreareComandaGed.cnpClient = txtCNPClient.getText().toString().trim();
 
 				if (UtilsUser.isConsWood()) {
-
 					if (checkPlatTva.isChecked())
 						CreareComandaGed.codClientVar = ClientiGenericiGedInfoStrings.clientPJGenericWoodPlatitorTVA(UserInfo.getInstance().getUnitLog());
 					else
@@ -1256,6 +1279,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 			DateLivrare.getInstance().setCodJudetD(client.getCodJudet());
 			DateLivrare.getInstance().setOrasD(client.getLocalitate());
 			DateLivrare.getInstance().setAdresaD(client.getStrada());
+			DateLivrare.getInstance().setDiviziiClient(client.getDiviziiClient());
 
 			CreareComandaGed.tipPlataContract = client.getTipPlata();
 			DateLivrare.getInstance().setClientBlocat(client.isClientBlocat());
@@ -1295,6 +1319,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 		DateLivrare.getInstance().setCodJudetD(datePersonale.getCodjudet());
 		DateLivrare.getInstance().setOrasD(datePersonale.getLocalitate());
 		DateLivrare.getInstance().setAdresaD(datePersonale.getStrada());
+		DateLivrare.getInstance().setDiviziiClient(datePersonale.getDivizii());
 
 	}
 

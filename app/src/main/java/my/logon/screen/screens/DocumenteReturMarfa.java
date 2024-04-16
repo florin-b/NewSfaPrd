@@ -1,14 +1,7 @@
 package my.logon.screen.screens;
 
-import java.util.List;
-
-import my.logon.screen.listeners.DocumentReturListener;
-import my.logon.screen.listeners.ListaDocReturListener;
-import my.logon.screen.model.CriteriuNrDocRetur;
-import my.logon.screen.adapters.DocumenteReturAdapter;
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,8 +12,20 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import my.logon.screen.beans.BeanDocumentRetur;
+
+import androidx.fragment.app.Fragment;
+
+import java.util.List;
+
 import my.logon.screen.R;
+import my.logon.screen.adapters.DocumenteReturAdapter;
+import my.logon.screen.beans.BeanArticolRetur;
+import my.logon.screen.beans.BeanDocumentRetur;
+import my.logon.screen.enums.EnumTipOp;
+import my.logon.screen.listeners.DocumentReturListener;
+import my.logon.screen.listeners.ListaArtReturListener;
+import my.logon.screen.listeners.ListaDocReturListener;
+import my.logon.screen.model.CriteriuNrDocRetur;
 
 public class DocumenteReturMarfa extends Fragment implements ListaDocReturListener {
 
@@ -61,12 +66,12 @@ public class DocumenteReturMarfa extends Fragment implements ListaDocReturListen
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onAttach(Context context) {
+		super.onAttach(context);
 		try {
 			documentListener = (DocumentReturListener) getActivity();
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString());
+			throw new ClassCastException(context.toString());
 		}
 	}
 
@@ -116,6 +121,12 @@ public class DocumenteReturMarfa extends Fragment implements ListaDocReturListen
 
 		this.listDocumente = (List<BeanDocumentRetur>) listDocumente;
 		updateListDocumente(this.listDocumente);
+
+	}
+
+	@Override
+	public void setListArtDocRetur(String nrDocument, List<BeanArticolRetur> listaArticole, EnumTipOp tipOp, String codClient, String numeClient, ListaArtReturListener artReturListener) {
+
 
 	}
 

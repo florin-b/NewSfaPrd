@@ -33,14 +33,25 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="left|bottom"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.3"
                     android:gravity="left" />
 
                 <View
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.3"
                      />
+
+                <CheckBox
+                    android:id="@+id/checkCustodie"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="20dip"
+                    android:layout_weight="0.6"
+                    android:visibility="invisible"
+                    android:text="Comanda plasata in custodie client" />
 
             </LinearLayout>
 

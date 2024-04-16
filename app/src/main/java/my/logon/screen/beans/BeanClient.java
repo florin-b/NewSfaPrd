@@ -5,7 +5,6 @@ import java.util.List;
 import my.logon.screen.enums.EnumTipClientIP;
 import my.logon.screen.model.UserInfo;
 
-
 public class BeanClient {
 
 	private String numeClient;
@@ -21,6 +20,7 @@ public class BeanClient {
 	private String codJudet;
 	private String localitate;
 	private String strada;
+	private String diviziiClient;
 
 	public BeanClient() {
 
@@ -133,5 +133,13 @@ public class BeanClient {
 
 	public void setStrada(String strada) {
 		this.strada = strada;
+	}
+
+	public String getDiviziiClient() {
+		return diviziiClient;
+	}
+
+	public void setDiviziiClient(String diviziiClient) {
+		this.diviziiClient = diviziiClient;
 	}
 }

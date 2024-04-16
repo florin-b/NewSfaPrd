@@ -94,15 +94,21 @@ public class DepartamentAgent {
 		}
 
 		else if (isAG()) {
-			depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
-			if (UserInfo.getInstance().getDepartExtra().length() > 0) {
-				String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");
+			if (isExtraDiviziiAgent() ){
+				depart.add(EnumDepartExtra.getNumeDepart("00"));
+			}
+			else {
+				depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
-				for (int i = 0; i < depExtra.length; i++) {
+				if (UserInfo.getInstance().getDepartExtra().length() > 0) {
+					String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");
 
-					if (isConditiiAdaugaDepart(depExtra[i]))
-						depart.add(EnumDepartExtra.getNumeDepart(depExtra[i]));
+					for (int i = 0; i < depExtra.length; i++) {
+
+						if (isConditiiAdaugaDepart(depExtra[i]))
+							depart.add(EnumDepartExtra.getNumeDepart(depExtra[i]));
+					}
 				}
 			}
 			depart.add(EnumDepartExtra.getNumeDepart("11"));
@@ -127,6 +133,23 @@ public class DepartamentAgent {
 		}
 
 		return isConditii;
+	}
+
+	public static boolean isExtraDiviziiAgent(){
+
+		String diviziiClient = DateLivrare.getInstance().getDiviziiClient();
+
+		return diviziiClient != null && diviziiClient.split(";").length > 1;
+	}
+
+	public static String getDepartArticole(String departImplicit){
+
+		if (UtilsUser.isAV() && DepartamentAgent.isExtraDiviziiAgent()){
+			return "EXTRA:" + DateLivrare.getInstance().getDiviziiClient();
+		}
+		else
+			return departImplicit;
+
 	}
 
 	public static List<String> getDepartamenteAgentNerestr() {
@@ -174,13 +197,19 @@ public class DepartamentAgent {
 		}
 
 		else if (isAG()) {
-			depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
-			if (UserInfo.getInstance().getCodDepart().startsWith("04") && UserInfo.getInstance().getDepartExtra().length() > 0) {
-				String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");
+			if (isExtraDiviziiAgent() ){
+				depart.add(EnumDepartExtra.getNumeDepart("00"));
+			}
+			else {
+				depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
-				for (int i = 0; i < depExtra.length; i++) {
-					depart.add(EnumDepartExtra.getNumeDepart(depExtra[i]));
+				if (UserInfo.getInstance().getCodDepart().startsWith("04") && UserInfo.getInstance().getDepartExtra().length() > 0) {
+					String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");
+
+					for (int i = 0; i < depExtra.length; i++) {
+						depart.add(EnumDepartExtra.getNumeDepart(depExtra[i]));
+					}
 				}
 			}
 

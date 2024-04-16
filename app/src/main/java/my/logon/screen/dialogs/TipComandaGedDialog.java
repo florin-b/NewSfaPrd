@@ -190,6 +190,7 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
                 spinnerComenziAmob.setVisibility(View.VISIBLE);
                 spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
                 spinnerFilialeClp.setVisibility(View.GONE);
+                textInfoClp.setVisibility(View.INVISIBLE);
                 getComenziAMOB();
 
             }

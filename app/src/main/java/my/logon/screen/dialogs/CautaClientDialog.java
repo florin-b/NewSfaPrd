@@ -1,18 +1,5 @@
 package my.logon.screen.dialogs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.CautaClientDialogListener;
-import my.logon.screen.listeners.OperatiiClientListener;
-import my.logon.screen.model.OperatiiClient;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.R;
-import my.logon.screen.utils.ScreenUtils;
-import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
-import my.logon.screen.adapters.CautareClientiAdapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -22,9 +9,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import my.logon.screen.R;
+import my.logon.screen.adapters.CautareClientiAdapter;
 import my.logon.screen.beans.BeanClient;
 import my.logon.screen.enums.EnumClienti;
 import my.logon.screen.enums.EnumTipClientIP;
+import my.logon.screen.listeners.CautaClientDialogListener;
+import my.logon.screen.listeners.OperatiiClientListener;
+import my.logon.screen.model.OperatiiClient;
+import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.ScreenUtils;
+import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class CautaClientDialog extends Dialog implements OperatiiClientListener {
 
@@ -69,7 +70,7 @@ public class CautaClientDialog extends Dialog implements OperatiiClientListener 
 		setListenerRadioClientIP();
 
 		textNumeClient = (EditText) findViewById(R.id.textNumeClient);
-		textNumeClient.setHint("Nume client");
+
 		listClientiObiective = (ListView) findViewById(R.id.listClientiObiective);
 		setListenerListClienti();
 
@@ -157,6 +158,7 @@ public class CautaClientDialog extends Dialog implements OperatiiClientListener 
 		params.put("depart", "00");
 		params.put("departAg", UserInfo.getInstance().getCodDepart());
 		params.put("unitLog", localUnitLog);
+		params.put("codUser", UserInfo.getInstance().getCod());
 		params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
 
 		opClient.getListClienti(params);
@@ -230,6 +232,7 @@ public class CautaClientDialog extends Dialog implements OperatiiClientListener 
 			textNumeClient.setHint("Nume client sau CIF");
 		} else
 			textNumeClient.setHint("Nume client");
+
 	}
 
 	public String getNumeClient() {
@@ -249,7 +252,6 @@ public class CautaClientDialog extends Dialog implements OperatiiClientListener 
 			textNumeClient.setText(numeClient);
 			cautaClient();
 		}
-
 	}
 
 }

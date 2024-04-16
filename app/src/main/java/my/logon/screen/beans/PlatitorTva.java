@@ -9,6 +9,8 @@ public class PlatitorTva {
 	private String codJudet;
 	private String localitate;
 	private String strada;
+	private String stareInregistrare;
+	private String diviziiClient;
 
 	public boolean isPlatitor() {
 		return isPlatitor;
@@ -64,5 +66,21 @@ public class PlatitorTva {
 
 	public void setStrada(String strada) {
 		this.strada = strada;
+	}
+
+	public String getStareInregistrare() {
+		return stareInregistrare;
+	}
+
+	public void setStareInregistrare(String stareInregistrare) {
+		this.stareInregistrare = stareInregistrare;
+	}
+
+	public String getDiviziiClient() {
+		return diviziiClient;
+	}
+
+	public void setDiviziiClient(String diviziiClient) {
+		this.diviziiClient = diviziiClient;
 	}
 }

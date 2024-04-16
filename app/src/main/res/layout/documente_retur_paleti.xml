@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textClient"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="0.2"
+            android:text="Selectati un client"
+            android:textColor="#7D9E7D"
+            android:textSize="19sp"
+            android:typeface="sans" />
+
+        <EditText
+            android:id="@+id/textNumarDocument"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="15dp"
+            android:layout_weight="0.2"
+            android:gravity="left"
+            android:inputType="number"
+            android:maxLength="15"
+            android:singleLine="true"
+            android:textColor="@color/editTextColor1"
+            android:textSize="19sp" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/listDocumenteRetur"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="0.4"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false"
+            android:drawSelectorOnTop="true" />
+
+        <TextView
+            android:id="@+id/selectIcon"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_weight="0.1"
+            android:drawableLeft="@drawable/select_item" />
+
+        <ListView
+            android:id="@+id/listPaletiRetur"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="0.4"
+            android:choiceMode="singleChoice"
+            android:fadeScrollbars="false"
+            android:drawSelectorOnTop="true" />
+    </LinearLayout>
+
+</LinearLayout>

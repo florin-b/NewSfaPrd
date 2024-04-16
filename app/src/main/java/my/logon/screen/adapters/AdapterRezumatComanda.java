@@ -31,6 +31,7 @@ import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsGeneral;
 
 public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTransportListener {
@@ -43,6 +44,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private RezumatListener listener;
     private List<CostTransportMathaus> costTransport;
     private String[] tipTransportArray = {"TRAP", "TCLI"};
+    private String[] tipTransportDL = {"TRAP", "TFRN"};
     private String[] tipTransportTertArray = {"TERT", "TCLI"};
     private String tipTransportCmd;
     private String filialeArondate;
@@ -132,7 +134,10 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
             viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
 
 
-            if (filialeArondate.contains(UtilsGeneral.getUnitLogDistrib(rezumat.getFilialaLivrare())) || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
+            if (UtilsComenzi.isComandaDl() || filialeArondate.contains(UtilsGeneral.getUnitLogDistrib(rezumat.getFilialaLivrare())) || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
+
+                if (UtilsComenzi.isComandaDl())
+                    tipTransportArray = tipTransportDL;
 
                 ArrayAdapter<String> adapterSpinnerTransp = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, tipTransportArray);
                 adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -150,10 +155,13 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 if (DateLivrare.getInstance().getTransport().equals("TCLI"))
                     tipTranspArt = "TCLI";
 
-                if (tipTranspArt.equals("TCLI"))
-                    viewHolder.spinnerTransport.setSelection(1);
-                else if (tipTranspArt.equals("TRAP"))
-                    viewHolder.spinnerTransport.setSelection(0);
+
+                for (int ii = 0; ii < viewHolder.spinnerTransport.getAdapter().getCount(); ii++) {
+                    if (viewHolder.spinnerTransport.getAdapter().getItem(ii).toString().equals(tipTranspArt)) {
+                        viewHolder.spinnerTransport.setSelection(ii);
+                        break;
+                    }
+                }
 
 
             } else {
@@ -181,11 +189,6 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 } else if (tipTransportCmd.equals("TCLI")) {
 
                     String[] tipTransportTCLIArray;
-                    if (!tipTranspArt.isEmpty()) {
-                        tipTransportTCLIArray = new String[]{tipTranspArt, "TCLI"};
-                    } else
-                        tipTransportTCLIArray = new String[]{"TCLI"};
-
 
                     tipTransportTCLIArray = new String[]{"TRAP", "TCLI"};
 
@@ -265,23 +268,6 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
     }
 
-    private boolean isExceptieTransportBV90(String filialaLivrare) {
-        return UserInfo.getInstance().getUnitLog().equals("BV10") && filialaLivrare.equals("BV90") && isLivrareBV10();
-    }
-
-    private boolean isLivrareBV10() {
-
-        if (!UserInfo.getInstance().getUnitLog().equals("BV10"))
-            return false;
-
-        for (int ii = 0; ii < listComenzi.size(); ii++) {
-            for (int jj = 0; jj < listComenzi.get(ii).getListArticole().size(); jj++) {
-                if (listComenzi.get(ii).getFilialaLivrare().equals("BV10"))
-                    return true;
-            }
-        }
-        return false;
-    }
 
     private void setListenerSpinnerTransport(Spinner spinnerTransport, RezumatComanda rezumat, ViewHolder viewHolder) {
 
@@ -291,7 +277,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 String tipTransportSelected = (String) parent.getAdapter().getItem(position);
                 setTransportArticole(rezumat, tipTransportSelected);
 
-                if (tipTransportSelected.equals("TCLI")) {
+                if (tipTransportSelected.equals("TCLI") || tipTransportSelected.equals("TFRN")) {
                     eliminaArticoleServicii(rezumat, viewHolder);
                     viewHolder.textTransport.setVisibility(View.INVISIBLE);
                     viewHolder.btnPretTransport.setVisibility(View.INVISIBLE);
@@ -324,13 +310,13 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         });
     }
 
-    private void eliminaArticoleServicii(RezumatComanda rezumatComanda, ViewHolder viewHolder){
+    private void eliminaArticoleServicii(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
         eliminaArticolTransport(rezumatComanda, viewHolder);
         eliminaArticolTaxeTransp(rezumatComanda, viewHolder);
         eliminaAlteTaxe(rezumatComanda, viewHolder);
     }
 
-    private void adaugaArticoleServicii(RezumatComanda rezumatComanda, ViewHolder viewHolder){
+    private void adaugaArticoleServicii(RezumatComanda rezumatComanda, ViewHolder viewHolder) {
         adaugaArticolTransport(rezumatComanda, viewHolder);
         adaugaArticolTaxeTransp(rezumatComanda, viewHolder);
         adaugaAlteTaxe(rezumatComanda, viewHolder);
@@ -427,7 +413,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 }
             }
 
-            if (!isTaxaTransp && HelperMathaus.isCodArticolServiciuTRAP(artCom)){
+            if (!isTaxaTransp && HelperMathaus.isCodArticolServiciuTRAP(artCom)) {
                 adaugaAlteTaxeLista(artCom);
                 artIterator.remove();
                 calculeazaTotalComanda(rezumatComanda, viewHolder);
@@ -754,15 +740,21 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         StringBuilder str = new StringBuilder();
 
         valoareTotal = 0;
+        double valoarePozitie = 0;
 
         for (ArticolComanda art : rezumat.getListArticole()) {
             str.append(art.getNumeArticol());
             str.append("\n");
 
             if (art instanceof ArticolComandaGed)
-                valoareTotal += canalDistrib.equals("10") ? art.getPret() : art.getPretUnitarClient() * art.getCantUmb();
+                valoarePozitie = canalDistrib.equals("10") ? art.getPret() : art.getPretUnitarClient() * art.getCantUmb();
             else
-                valoareTotal += art.getPret();
+                valoarePozitie = art.getPret();
+
+            if (UtilsComenzi.isArticolCustodieDistrib(art))
+                valoarePozitie = 0;
+
+            valoareTotal += valoarePozitie;
         }
 
         return str.toString();
@@ -796,6 +788,9 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 valoareArticol = canalDistrib.equals("10") ? art.getPret() : art.getPretUnitarClient() * art.getCantUmb();
             else
                 valoareArticol = art.getPret();
+
+            if (UtilsComenzi.isArticolCustodieDistrib(art))
+                valoareArticol = 0;
 
             str.append(nf.format(valoareArticol));
             str.append(" ");
@@ -861,11 +856,11 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     }
 
 
-    private List<ArticolComanda> getListTaxaTranspFiliala(String filiala){
+    private List<ArticolComanda> getListTaxaTranspFiliala(String filiala) {
 
         List<ArticolComanda> listTaxeFiliala = new ArrayList<>();
 
-        for (ArticolComanda artTaxaTransp : listArticoleTaxaTransp){
+        for (ArticolComanda artTaxaTransp : listArticoleTaxaTransp) {
             if (artTaxaTransp.getFilialaSite().equals(filiala))
                 listTaxeFiliala.add(artTaxaTransp);
         }
@@ -873,11 +868,11 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         return listTaxeFiliala;
     }
 
-    private List<ArticolComanda> getListAlteTaxeFiliala(String filiala){
+    private List<ArticolComanda> getListAlteTaxeFiliala(String filiala) {
 
         List<ArticolComanda> listTaxeFiliala = new ArrayList<>();
 
-        for (ArticolComanda artTaxaTransp : listAlteTaxe){
+        for (ArticolComanda artTaxaTransp : listAlteTaxe) {
             if (artTaxaTransp.getFilialaSite().equals(filiala))
                 listTaxeFiliala.add(artTaxaTransp);
         }

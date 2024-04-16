@@ -1,5 +1,16 @@
 package my.logon.screen.utils;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
@@ -12,19 +23,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import my.logon.screen.model.Constants;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import my.logon.screen.enums.EnumJudete;
 import my.logon.screen.enums.EnumTipComanda;
+import my.logon.screen.model.Constants;
 
 public class UtilsFormatting {
 
@@ -246,5 +247,14 @@ public class UtilsFormatting {
 		}
 
 		return formatted.toString();
+	}
+
+	public static String addSpace(int nrCars) {
+		String retVal = "";
+
+		for (int i = 0; i < nrCars; i++)
+			retVal += " ";
+
+		return retVal;
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Observable;
 
 import my.logon.screen.beans.ArticolMathaus;
+import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.screens.CreareComanda;
 
 public class ListaArticoleComanda extends Observable {
@@ -216,6 +217,9 @@ public class ListaArticoleComanda extends Observable {
 			totalComanda += articol.getPretUnit() / articol.getMultiplu() * Double.valueOf(articol.getCantUmb());
 
 		}
+
+		if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.LIVRARE_CUSTODIE))
+			totalComanda = 0;
 
 		return totalComanda;
 

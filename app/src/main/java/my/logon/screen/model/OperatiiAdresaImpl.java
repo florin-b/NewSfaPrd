@@ -156,6 +156,10 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 
 					BeanFilialaLivrare filialaLivrare = new BeanFilialaLivrare();
 					JSONObject filialaObject = jsonObject.getJSONObject(i);
+
+					if (!filialaObject.toString().contains("nume"))
+						break;
+
 					filialaLivrare.setNumeFiliala(filialaObject.getString("nume"));
 					filialaLivrare.setUnitLog(filialaObject.getString("werks"));
 					String listDepozite[] = filialaObject.getString("depozite").replace("[","").replace("]","").replace("\"","").split(",");
@@ -260,6 +264,7 @@ public class OperatiiAdresaImpl implements OperatiiAdresa, AsyncTaskListener {
 			poligonLivrare.setTipZona(jsonObject.getString("tipZona"));
 			poligonLivrare.setLimitareTonaj(jsonObject.getString("limitareTonaj"));
 			poligonLivrare.setNume(jsonObject.getString("nume"));
+			poligonLivrare.setRestrictionat(Boolean.parseBoolean(jsonObject.getString("isRestrictionat")));
 
 		} catch (JSONException e) {
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();

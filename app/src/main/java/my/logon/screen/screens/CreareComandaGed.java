@@ -106,11 +106,11 @@ import my.logon.screen.listeners.ValoareNegociataDialogListener;
 import my.logon.screen.model.AlgoritmComandaGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ArticolComandaGed;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.Comanda;
 import my.logon.screen.model.ComenziDAO;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
@@ -949,100 +949,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         alertDialog.show();
     }
 
-    public void showModifPretDialogBox(boolean canModifyPrice) {
-        dialogModifPret = new Dialog(CreareComandaGed.this);
-        dialogModifPret.setContentView(R.layout.modifpretclientdialogbox);
-        dialogModifPret.setTitle("Modificare pret articol " + selectedCodArticol);
-        dialogModifPret.setCancelable(false);
-        dialogModifPret.show();
 
-        NumberFormat nf2 = NumberFormat.getInstance(new Locale("en", "US"));
-        nf2.setMinimumFractionDigits(2);
-        nf2.setMaximumFractionDigits(2);
-        nf2.setGroupingUsed(false);
 
-        final EditText textPretClient = (EditText) dialogModifPret.findViewById(R.id.txtPretClient);
 
-        textPretClient.setText(nf2.format(Double.valueOf(selectedPretClient)));
-        textPretClient.setSelection(textPretClient.getText().length(), textPretClient.getText().length());
-
-        if (!canModifyPrice)
-            textPretClient.setEnabled(false);
-        else
-            textPretClient.setEnabled(true);
-
-        Button btnOkPret = (Button) dialogModifPret.findViewById(R.id.btnOkPret);
-        btnOkPret.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-
-                if (textPretClient.getText().toString().trim().length() > 0) {
-                    if (Double.parseDouble(textPretClient.getText().toString().trim()) > 0) {
-
-                        updatePretClient(listViewSelPos, Double.parseDouble(textPretClient.getText().toString().trim()));
-                        dialogModifPret.dismiss();
-
-                        recalculTotal();
-                        calculProcente();
-
-                        selectedPretClient = "";
-
-                    }
-
-                }
-
-            }
-        });
-
-        Button btnCancelPret = (Button) dialogModifPret.findViewById(R.id.btnCancelPret);
-        btnCancelPret.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-                dialogModifPret.dismiss();
-
-            }
-        });
-
-    }
-
-    public void showModifCantDialogBox() {
-        dialogModifCant = new Dialog(CreareComandaGed.this);
-        dialogModifCant.setContentView(R.layout.modifcantclientdialogbox);
-        dialogModifCant.setTitle("Modificare cantitate articol " + selectedCodArticol);
-        dialogModifCant.setCancelable(false);
-        dialogModifCant.show();
-
-        textCantClient = (EditText) dialogModifCant.findViewById(R.id.txtCantClient);
-
-        textCantClient.setText(selectedCantClient);
-        textCantClient.setSelection(textCantClient.getText().length(), textCantClient.getText().length());
-
-        Button btnOkCant = (Button) dialogModifCant.findViewById(R.id.btnOkCant);
-        btnOkCant.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-
-                if (textCantClient.getText().toString().trim().length() > 0) {
-                    if (Double.parseDouble(textCantClient.getText().toString().trim()) > 0) {
-
-                        performGetArtStoc();
-
-                    }
-                }
-
-            }
-        });
-
-        Button btnCancelCant = (Button) dialogModifCant.findViewById(R.id.btnCancelCant);
-        btnCancelCant.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-                dialogModifCant.dismiss();
-
-            }
-        });
-
-    }
 
     public void performGetArtStoc() {
 
@@ -1359,10 +1268,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                             } else
                                 getTotalComenziNumerar();
                         } else if (isGreutateMaximaComanda()) {
-                            Toast.makeText(getApplicationContext(),Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
                             return;
-                        }
-                        else
+                        } else
                             valideazaFinal();
 
                     }
@@ -1376,11 +1284,14 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         }
     }
 
-    private boolean isGreutateMaximaComanda(){
+    private boolean isGreutateMaximaComanda() {
+
+        if (1 == 1)
+            return false;
 
         double greutateComanda = ListaArticoleComandaGed.getInstance().getGreutateKgArticole();
 
-        if (greutateComanda > Constants.MAX_GREUTATE_CMD_KG && DateLivrare.getInstance().getTransport().equals("TRAP")){
+        if (greutateComanda > Constants.MAX_GREUTATE_CMD_KG && DateLivrare.getInstance().getTransport().equals("TRAP")) {
             return true;
         }
 
@@ -1461,12 +1372,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         } else if (HelperCreareComanda.isConditiiAlertaIndoire(ListaArticoleComandaGed.getInstance().getListArticoleComanda())) {
             HelperDialog.showInfoDialog(CreareComandaGed.this, "Atentie!", "Selectati tipul de prelucrare (indoire sau debitare).");
         } else {
-
-            if (tipComandaGed.equals(TipCmdGed.COMANDA_AMOB))
-                verificaPretMacara();
-            else
-                getLivrariMathaus();
-
+            getLivrariMathaus();
         }
 
     }
@@ -1556,7 +1462,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private boolean isConditiiCostTransport() {
         return DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_VANZARE) ||
                 DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_LIVRARE) || isComandaDL_TRAP() ||
-                DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_DETERIORATE);
+                DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_DETERIORATE) ||
+                DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_AMOB);
     }
 
     private void getLivrariMathaus() {
@@ -2254,16 +2161,6 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     }
 
-    private String getFilialaGed(String filiala) {
-        return filiala.substring(0, 2) + "2" + filiala.substring(3, 4);
-    }
-
-    private String getFilialaDistrib(String filiala) {
-        if (!filiala.equals("BV90"))
-            return filiala.substring(0, 2) + "1" + filiala.substring(3, 4);
-        else
-            return filiala;
-    }
 
     private String serializeComanda(Comanda comanda) {
         JSONObject obj = new JSONObject();
@@ -2437,17 +2334,11 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private void saveCmdStatus(String saveResponse) {
         if (!saveResponse.equals("-1")) {
 
-            if (tipComandaGed == TipCmdGed.COMANDA_AMOB) {
-                String[] varResp = saveResponse.split("#");
-                nrCmdGED = varResp[2];
-                displayDlgPretTransp(saveResponse);
-            } else {
-                Toast.makeText(getApplicationContext(), ClientiGenericiGedInfoStrings.statusSAPMsg(Integer.parseInt(saveResponse)), Toast.LENGTH_SHORT).show();
-                clearAllData();
+            Toast.makeText(getApplicationContext(), ClientiGenericiGedInfoStrings.statusSAPMsg(Integer.parseInt(saveResponse)), Toast.LENGTH_SHORT).show();
+            clearAllData();
 
-                ActionBar actionBar = getActionBar();
-                actionBar.setTitle("Comanda GED");
-            }
+            ActionBar actionBar = getActionBar();
+            actionBar.setTitle("Comanda GED");
 
         } else {
             saveComandaMathaus = false;
@@ -2949,7 +2840,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         if (btnSaveCmd) {
 
             //comanda simulata
-            if (tipComandaGed == TipCmdGed.ARTICOLE_COMANDA || tipComandaGed == TipCmdGed.DISPOZITIE_LIVRARE || tipComandaGed == TipCmdGed.COMANDA_AMOB) {
+            if (tipComandaGed == TipCmdGed.ARTICOLE_COMANDA || tipComandaGed == TipCmdGed.DISPOZITIE_LIVRARE) {
                 performSaveCmd();
             } else {
                 afisRezumatComandaDialog(livrareMathaus.getCostTransport(), true);
@@ -3024,14 +2915,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
         calculProcente();
 
-        // transport
-        if (DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT")) {
-            // valTranspBtn.setVisibility(View.VISIBLE);
-            //valTranspBtn.setText("Transp: " + String.valueOf(DateLivrare.getInstance().getValTransport()));
-        } else {
-            valTranspBtn.setVisibility(View.INVISIBLE);
-            valTransport = 0;
-        }
+        valTranspBtn.setVisibility(View.INVISIBLE);
+        valTransport = 0;
 
     }
 

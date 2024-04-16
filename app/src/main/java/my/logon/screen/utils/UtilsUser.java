@@ -41,6 +41,10 @@ public class UtilsUser {
 		return UserInfo.getInstance().getTipUser().equals("AV") || UserInfo.getInstance().getTipUser().equals("SD");
 	}
 
+	public static boolean isCVA() {
+		return UserInfo.getInstance().getTipUserSap().equals("CVA") || UserInfo.getInstance().getTipUserSap().equals("SDCVA");
+	}
+
 	public static boolean hasObiective() {
 		return UserInfo.getInstance().getTipUser().equals("AV") || UserInfo.getInstance().getTipUser().equals("KA");
 	}

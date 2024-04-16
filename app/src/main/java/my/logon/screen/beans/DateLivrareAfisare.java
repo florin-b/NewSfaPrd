@@ -76,6 +76,7 @@ public class DateLivrareAfisare {
 
     private String tipPersAgent;
     private String filialaPlata;
+    private boolean isComandaCustodie;
 
     public DateLivrareAfisare() {
 
@@ -640,5 +641,13 @@ public class DateLivrareAfisare {
 
     public void setProcMarjaBrutaTot(double procMarjaBrutaTot) {
         this.procMarjaBrutaTot = procMarjaBrutaTot;
+    }
+
+    public boolean isComandaCustodie() {
+        return isComandaCustodie;
+    }
+
+    public void setComandaCustodie(boolean comandaCustodie) {
+        isComandaCustodie = comandaCustodie;
     }
 }

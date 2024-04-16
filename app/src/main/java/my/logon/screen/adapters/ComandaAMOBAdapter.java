@@ -18,7 +18,7 @@ public class ComandaAMOBAdapter extends BaseAdapter {
 	private List<ComandaAmobAfis> listComenzi;
 
 	static class ViewHolder {
-		public TextView textIdCmd, textSuma, textData, textMoneda;
+		public TextView textIdCmd, textSuma, textData, textMoneda, textIDComanda;
 	}
 
 	public ComandaAMOBAdapter(Context context, List<ComandaAmobAfis> listComenzi) {
@@ -39,6 +39,7 @@ public class ComandaAMOBAdapter extends BaseAdapter {
 			viewHolder.textSuma = (TextView) convertView.findViewById(R.id.textSuma);
 			viewHolder.textData = (TextView) convertView.findViewById(R.id.textData);
 			viewHolder.textMoneda = (TextView) convertView.findViewById(R.id.textMoneda);
+			viewHolder.textIDComanda = (TextView) convertView.findViewById(R.id.textIdComanda);
 
 			convertView.setTag(viewHolder);
 		} else {
@@ -51,6 +52,7 @@ public class ComandaAMOBAdapter extends BaseAdapter {
 		viewHolder.textSuma.setText(comanda.getValoare());
 		viewHolder.textData.setText(comanda.getDataCreare());
 		viewHolder.textMoneda.setText(comanda.getMoneda());
+		viewHolder.textIDComanda.setText(comanda.getId().equals("-1") ? " " : comanda.getId());
 
 		return convertView;
 
