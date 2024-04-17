@@ -2274,7 +2274,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                 String[] tokenPret = pretResponse.split("#");
 
                 valMultiplu = Double.parseDouble(tokenPret[13].trim());
-                greutateArt = Double.parseDouble(tokenPret[24].trim());
+                greutateArt = Double.parseDouble(tokenPret[23].trim());
                 tipMarfa = tokenPret[26];
                 greutateBruta = Double.parseDouble(tokenPret[27].trim());
                 lungimeArt = tokenPret[28];
@@ -2323,8 +2323,8 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                 procReducereCmp = Double.parseDouble(tokenPret[21]);
                 ((TextView) findViewById(R.id.textPretGed)).setText(tokenPret[22]);
 
-                dataExpPret = tokenPret[23];
-                ((TextView) findViewById(R.id.textDataExp)).setText(UtilsDates.formatDataExp(tokenPret[23]));
+                dataExpPret = tokenPret[24];
+                ((TextView) findViewById(R.id.textDataExp)).setText(UtilsDates.formatDataExp(tokenPret[24]));
 
                 procDiscClient = 0;
                 minimKAPrice = 0;
