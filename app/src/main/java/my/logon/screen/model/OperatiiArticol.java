@@ -18,6 +18,7 @@ import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.PretArticolGed;
+import my.logon.screen.beans.TaxaComanda;
 import my.logon.screen.listeners.OperatiiArticolListener;
 
 public interface OperatiiArticol {
@@ -106,6 +107,10 @@ public interface OperatiiArticol {
 	public void getStocDisponibilTCLI(HashMap<String, String> params);
 
 	public void getStocSap(HashMap<String, String> params);
+
+	public void getPretUnic(HashMap<String, String> params);
+
+	public String serializeTaxeComanda(List<TaxaComanda> listTaxe);
 
 }
 

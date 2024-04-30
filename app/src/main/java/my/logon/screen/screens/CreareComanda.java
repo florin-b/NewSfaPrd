@@ -1052,7 +1052,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                         if (isReducere())
                             localRedSeparat = "X";
 
-                        if (dateLivrareInstance.getObsPlata().equals("SO") && dateLivrareInstance.getTipPlata().equals("E")) {
+                        if (dateLivrareInstance.getObsPlata().equals("SO") && dateLivrareInstance.getTipPlata().equals("R")) {
                             if (!dateLivrareInstance.isValIncModif()) {
                                 dateLivrareInstance.setValoareIncasare(nf3.format(CreareComanda.totalComanda * Constants.TVA));
                             }
@@ -1586,6 +1586,9 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                 articolCmd.setCantitate50(articol.getCantitate50());
                 articolCmd.setUm50(articol.getUm50());
 
+                articolCmd.setCmpCorectat(articol.getCmpCorectat());
+                articolCmd.setPretMinim(articol.getPretMinim());
+
                 if (isArtGedExceptie(articol))
                     articolCmd.setObservatii(articol.getObservatii());
 
@@ -1696,6 +1699,9 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
                 obj.put("cantitate50", listArticole.get(i).getCantitate50());
                 obj.put("um50", listArticole.get(i).getUm50());
+
+                obj.put("cmpCorectat", listArticole.get(i).getCmpCorectat());
+                obj.put("pretMinim", listArticole.get(i).getPretMinim());
 
                 myArray.put(obj);
             }
@@ -1809,6 +1815,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             obj.put("filialaPlata", DateLivrare.getInstance().getFilialaPlata());
             obj.put("codPostal", DateLivrare.getInstance().getCodPostal());
             obj.put("isComandaCustodie", DateLivrare.getInstance().isComandaCustodie());
+            obj.put("taxeComanda", opArticol.serializeTaxeComanda(DateLivrare.getInstance().getTaxeComanda()));
 
         } catch (JSONException ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
@@ -1938,6 +1945,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
                     ArticolComanda articolLivrare = ListaArticoleComanda.getInstance().genereazaArticolLivrare(articolComanda);
                     articolLivrare.setCantitate(articolMathaus.getQuantity());
+                    articolLivrare.setCmpCorectat(articolMathaus.getCmpCorectat());
                     articolLivrare.setPret((articolComanda.getPret() / articolComanda.getCantitate()) * articolMathaus.getQuantity());
 
                     articolLivrare.setCantitate50(HelperMathaus.getCantitateCanal50(articolMathaus, articolComanda));

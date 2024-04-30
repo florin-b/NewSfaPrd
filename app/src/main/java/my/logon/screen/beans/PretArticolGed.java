@@ -44,6 +44,9 @@ public class PretArticolGed {
 	private String um50;
 	private String cantitate50;
 
+	private double pretMinim;
+	private boolean promo;
+
 	public String getPret() {
 		return pret;
 	}
@@ -338,5 +341,21 @@ public class PretArticolGed {
 
 	public void setCantitate50(String cantitate50) {
 		this.cantitate50 = cantitate50;
+	}
+
+	public double getPretMinim() {
+		return pretMinim;
+	}
+
+	public void setPretMinim(double pretMinim) {
+		this.pretMinim = pretMinim;
+	}
+
+	public boolean isPromo() {
+		return promo;
+	}
+
+	public void setPromo(boolean promo) {
+		this.promo = promo;
 	}
 }

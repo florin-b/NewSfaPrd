@@ -16,6 +16,7 @@ import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.FurnizorComanda;
 import my.logon.screen.beans.ObiectivConsilier;
+import my.logon.screen.beans.TaxaComanda;
 import my.logon.screen.beans.TranspComenzi;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
@@ -106,6 +107,7 @@ public class DateLivrare {
 	private String codFilialaFasonate;
 	private boolean isComandaCustodie;
 	private String codPostal;
+	private List<TaxaComanda> taxeComanda;
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -765,6 +767,14 @@ public class DateLivrare {
 		this.codPostal = codPostal;
 	}
 
+	public List<TaxaComanda> getTaxeComanda() {
+		return taxeComanda;
+	}
+
+	public void setTaxeComanda(List<TaxaComanda> taxeComanda) {
+		this.taxeComanda = taxeComanda;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -832,6 +842,7 @@ public class DateLivrare {
 		codFilialaFasonate = "";
 		isComandaCustodie = false;
 		codPostal = "";
+		taxeComanda = null;
 
 	}
 

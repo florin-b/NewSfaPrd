@@ -115,6 +115,9 @@ public class ArticolComanda implements Comparable<ArticolComanda>, Serializable 
 
 	private String sintetic;
 
+	private double pretMinim;
+	private double cmpCorectat;
+
 	private List<BeanStocTCLI> listStocTCLI;
 
 	public int getNrCrt() {
@@ -770,6 +773,22 @@ public class ArticolComanda implements Comparable<ArticolComanda>, Serializable 
 
 	public void setSintetic(String sintetic) {
 		this.sintetic = sintetic;
+	}
+
+	public double getPretMinim() {
+		return pretMinim;
+	}
+
+	public void setPretMinim(double pretMinim) {
+		this.pretMinim = pretMinim;
+	}
+
+	public double getCmpCorectat() {
+		return cmpCorectat;
+	}
+
+	public void setCmpCorectat(double cmpCorectat) {
+		this.cmpCorectat = cmpCorectat;
 	}
 
 	@Override

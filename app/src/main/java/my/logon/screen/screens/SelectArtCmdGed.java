@@ -311,7 +311,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         txtImpachetare = (TextView) findViewById(R.id.txtImpachetare);
 
         textPromo = (TextView) findViewById(R.id.textPromo);
-        addListenerTextPromo();
+
 
         txtNumeArticol.setHint("Introduceti cod articol");
 
@@ -1168,15 +1168,6 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     }
 
-    public void addListenerTextPromo() {
-        textPromo.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                if (!artPromoText.equals(""))
-                    showPromoWindow(artPromoText);
-
-            }
-        });
-    }
 
     public void addListenerTglProc() {
         tglProc.setOnClickListener(new OnClickListener() {
@@ -1435,11 +1426,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             codArticol = "0000000000" + codArticol;
 
         String uLog = UserInfo.getInstance().getUnitLog().substring(0, 2) + "2" + UserInfo.getInstance().getUnitLog().substring(3, 4);
-        String tipUser = UserInfo.getInstance().getTipUser();
 
         if (isWood()) {
             uLog = UserInfo.getInstance().getUnitLog().substring(0, 2) + "4" + UserInfo.getInstance().getUnitLog().substring(3, 4);
-            tipUser = "CV";
         }
 
         String paramUnitMas = textUM.getText().toString();
@@ -1466,7 +1455,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         paramPret.setDepoz(paramDepozit);
         paramPret.setCodUser(UserInfo.getInstance().getCod());
         paramPret.setCanalDistrib("20");
-        paramPret.setTipUser(tipUser);
+        paramPret.setTipUser(UserInfo.getInstance().getTipUserSap());
         paramPret.setMetodaPlata(DateLivrare.getInstance().getTipPlata());
         paramPret.setTermenPlata(DateLivrare.getInstance().getTermenPlata());
         paramPret.setCodJudet(getCodJudetPret());
@@ -1478,8 +1467,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         params.put("parametruPret", opArticol.serializeParamPretGed(paramPret));
 
-        opArticol.getPretGedJson(params);
-
+        opArticol.getPretUnic(params);
 
     }
 
@@ -1943,6 +1931,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                         articol.setUm50(selectedArticol.getUm50());
 
                         articol.setSintetic(articolDBSelected.getSintetic());
+                        articol.setPretMinim(selectedArticol.getPretMinim());
 
                         if (HelperMathaus.isComandaVanzareTCLI()) {
 
@@ -2542,6 +2531,12 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         procDiscClient = 0;
         saveArtBtn.setVisibility(View.VISIBLE);
         textPromo.setText("");
+        textPromo.setVisibility(View.INVISIBLE);
+
+        if (pretArticol.isPromo()) {
+            textPromo.setVisibility(View.VISIBLE);
+            textPromo.setText("Articol cu promotie.");
+        }
 
         valMultiplu = Double.valueOf(pretArticol.getMultiplu());
         coefCorectie = pretArticol.getCoefCorectie();
@@ -2597,13 +2592,14 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         String stringCondPret = "";
         Double valCondPret = 0.0;
 
-        // ZSTA taxa verde
+
         for (ii = 0; ii < condPret.length; ii++) {
             tokPret = condPret[ii].split(":");
             valCondPret = Double.valueOf(tokPret[1].replace(',', '.').trim());
-            if (valCondPret != 0 && tokPret[0].equalsIgnoreCase("ZSTA")) {
-                stringCondPret += "Taxa verde" + addSpace(15 - "Taxa verde".length()) + ":" + addSpace(10 - String.valueOf(nf2.format(valCondPret)).length())
-                        + nf2.format(valCondPret) + System.getProperty("line.separator");
+            if (valCondPret != 0) {
+                stringCondPret += tokPret[0] + addSpace(20 - tokPret[0].length()) + ":"
+                        + addSpace(10 - String.valueOf(nf2.format(valCondPret)).length()) + nf2.format(valCondPret)
+                        + System.getProperty("line.separator");
 
             }
 
@@ -3250,6 +3246,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             case GET_STOC_DEPOZIT:
                 listArtStoc((String) result);
                 break;
+            case GET_PRET_UNIC:
             case GET_PRET_GED_JSON:
                 listPretArticol(opArticol.deserializePretGed(result));
                 break;

@@ -29,6 +29,7 @@ import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.PretArticolGed;
+import my.logon.screen.beans.TaxaComanda;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumUnitMas;
 import my.logon.screen.listeners.AsyncTaskListener;
@@ -197,6 +198,13 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
         performOperation();
     }
 
+    public void getPretUnic(HashMap<String, String> params) {
+        numeComanda = EnumArticoleDAO.GET_PRET_UNIC;
+        this.params = params;
+        performOperation();
+
+    }
+
     @Override
     public Object getDepartBV90(String codArticol) {
         numeComanda = EnumArticoleDAO.GET_DEP_BV90;
@@ -321,6 +329,29 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
         return cabluArray.toString();
 
+    }
+
+    public String serializeTaxeComanda(List<TaxaComanda> listTaxe) {
+
+        JSONArray taxeArray = new JSONArray();
+
+        if (listTaxe == null)
+            return "";
+
+        try {
+
+            for (TaxaComanda taxa : listTaxe) {
+                JSONObject obj = new JSONObject();
+                obj.put("filiala", taxa.getFiliala());
+                obj.put("valoare", taxa.getValoare());
+                taxeArray.put(obj);
+            }
+
+        } catch (Exception ex) {
+            Toast.makeText(context, ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return taxeArray.toString();
     }
 
     public ArrayList<ArticolDB> deserializeArticoleVanzare(String serializedListArticole) {
@@ -599,6 +630,14 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 pretArticol.setUm50(jsonObject.getString("um50"));
                 pretArticol.setCantitate50(jsonObject.getString("cantitate50"));
 
+                double pretMinUnitar = Double.valueOf(pretArticol.getPret());
+                if (jsonObject.getString("pretMinim") != null && jsonObject.getString("pretMinim") != "null")
+                    pretMinUnitar = (Double.valueOf(jsonObject.getString("pretMinim")) / Double.valueOf(pretArticol.getCantitate()))
+                            * Double.valueOf(pretArticol.getMultiplu());
+
+                pretArticol.setPretMinim(pretMinUnitar);
+                pretArticol.setPromo(jsonObject.getString("promo").equals("X"));
+
 
             }
 
@@ -786,6 +825,12 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 articol.setUnit(articolObject.getString("unit"));
                 articol.setDepozit(articolObject.getString("depozit"));
                 articol.setCantUmb(Double.parseDouble(articolObject.getString("cantUmb")));
+
+                if (articolObject.getString("cmpCorectat") != null && articolObject.getString("cmpCorectat") != "null")
+                    articol.setCmpCorectat(Double.parseDouble(articolObject.getString("cmpCorectat")));
+                else
+                    articol.setCmpCorectat(0);
+
                 listArticole.add(articol);
             }
 

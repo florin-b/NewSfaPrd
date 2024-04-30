@@ -584,6 +584,7 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
                     articol.setUm50(articolObject.getString("um50"));
                     articol.setCantitate50(Double.valueOf(articolObject.getString("cantitate50")));
+                    articol.setPretMinim(Double.valueOf(articolObject.getString("pretMinim")));
 
                     listArticole.add(articol);
 

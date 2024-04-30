@@ -72,6 +72,7 @@ import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.beans.RezumatComanda;
+import my.logon.screen.beans.TaxaComanda;
 import my.logon.screen.dialogs.ArtComplDialog;
 import my.logon.screen.dialogs.CostMacaraDialog;
 import my.logon.screen.dialogs.CostPaletiDialog;
@@ -232,6 +233,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private AntetCmdMathaus antetMathausTCLI;
     private boolean redirectDateLivrareTCLI = false;
     private double costTransportIP = 0;
+    private List<TaxaComanda> taxeComandaIP;
 
     private RezumatComandaDialog rezumatComanda;
     private boolean isAfisOptiuniMasini = false;
@@ -885,6 +887,10 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     }
 
     public void calculProcente() {
+        return;
+    }
+
+    public void calculProcente_old() {
 
         if (UtilsUser.isAgentOrSD() || UtilsUser.isConsWood() || UtilsComenzi.isComandaInstPublica() || isTotalNegociat)
             return;
@@ -1644,6 +1650,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         livrareMathaus = opArticol.deserializeLivrareMathaus(result);
 
         costTransportIP = 0;
+        taxeComandaIP = new ArrayList<>();
         if (isExceptieComandaIP())
             eliminaCostTransport();
 
@@ -1656,7 +1663,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 HelperMathaus.adaugaArticolTransport(livrareMathaus.getCostTransport(), "20", null);
 
             if (isExceptieComandaIP()) {
-                getMarjaComenziIP();
+                verificaAprobareIP();
                 isAfisOptiuniMasini = false;
                 return;
             }
@@ -1684,6 +1691,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
             if (articolComanda.getArticolMathaus() == null) {
                 ArticolComandaGed articolLivrare = ListaArticoleComandaGed.getInstance().genereazaArticolLivrare((ArticolComandaGed) articolComanda);
+                articolLivrare.setCmpCorectat(HelperMathaus.getCmpCorectat(articolComanda.getCodArticol(), livrareMathaus));
                 ListaArticoleComandaGed.getInstance().getListArticoleLivrare().add(articolLivrare);
                 continue;
             }
@@ -1700,6 +1708,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
                     ArticolComandaGed articolLivrare = ListaArticoleComandaGed.getInstance().genereazaArticolLivrare((ArticolComandaGed) articolComanda);
                     articolLivrare.setCantitate(articolMathaus.getQuantity());
+                    articolLivrare.setCmpCorectat(articolMathaus.getCmpCorectat());
 
                     articolLivrare.setCantitate50(HelperMathaus.getCantitateCanal50(articolMathaus, articolComanda));
                     articolLivrare.setUm50(articolComanda.getUm50());
@@ -1823,18 +1832,17 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private void eliminaCostTransport() {
         if (livrareMathaus.getCostTransport() != null && !livrareMathaus.getCostTransport().isEmpty())
             for (CostTransportMathaus costTrans : livrareMathaus.getCostTransport()) {
+
+                TaxaComanda taxa = new TaxaComanda();
+                taxa.setFiliala(costTrans.getFiliala());
+                taxa.setValoare(Double.valueOf(costTrans.getValTransp()));
+                taxeComandaIP.add(taxa);
+
                 costTransportIP += Double.valueOf(costTrans.getValTransp());
                 costTrans.setValTransp("0");
             }
     }
 
-    private void getMarjaComenziIP() {
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("codAgent", UserInfo.getInstance().getCod());
-        params.put("codClient", CreareComandaGed.codClientVar);
-        comandaDAO.getProcMarjaIP(params);
-    }
 
     private void setProcentMarjaIP(String marjaIP) {
         double procMinMarja = Double.valueOf(marjaIP.split("#")[0]);
@@ -1858,6 +1866,59 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             afisCostServiciiComandaIP(isBlocat);
         else
             afisRezumatComandaDialog(livrareMathaus.getCostTransport(), true);
+
+    }
+
+    public void verificaAprobareIP() {
+
+        //doar valoarea taxelor, nu si a serviciilor
+        /*
+        if (costDescarcare != null && costDescarcare.getArticolePaleti() != null) {
+
+            for (ArticolPalet palet : costDescarcare.getArticolePaleti()) {
+                TaxaComanda taxa = new TaxaComanda();
+                taxa.setValoare(palet.getCantitate() * palet.getPretUnit());
+                taxa.setFiliala(palet.getFiliala());
+                taxeComandaIP.add(taxa);
+            }
+        }
+
+        if (DateLivrare.getInstance().isMasinaMacara() && costDescarcare != null && costDescarcare.getArticoleDescarcare() != null) {
+
+            for (ArticolDescarcare artDesc : costDescarcare.getArticoleDescarcare()) {
+                TaxaComanda taxa = new TaxaComanda();
+                taxa.setValoare(Double.valueOf(artDesc.getValoare() * artDesc.getCantitate()));
+                taxa.setFiliala(artDesc.getFiliala());
+                taxeComandaIP.add(taxa);
+            }
+        }
+
+         */
+
+        double totalAdaos = 0;
+        double adaosArticol = 0;
+        for (ArticolComanda articolComanda : ListaArticoleComandaGed.getInstance().getListArticoleLivrare()) {
+
+            if (articolComanda.getPretMinim() == 0 || articolComanda.getCmpCorectat() == 0)
+                continue;
+
+            adaosArticol = (articolComanda.getPretUnitarClient() / articolComanda.getMultiplu() -
+                    articolComanda.getPretMinim() / articolComanda.getMultiplu()) * articolComanda.getCantitate();
+            totalAdaos += adaosArticol;
+
+        }
+
+        DateLivrare.getInstance().setTaxeComanda(taxeComandaIP);
+
+        double totalTaxe = 0;
+        for (TaxaComanda taxaComanda : taxeComandaIP) {
+            totalTaxe += taxaComanda.getValoare();
+        }
+
+        if (totalAdaos >= totalTaxe)
+            afisRezumatComandaDialog(livrareMathaus.getCostTransport(), true);
+        else
+            afisCostServiciiComandaIP(false);
 
     }
 
@@ -2200,6 +2261,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 obj.put("cantitate50", listArticole.get(i).getCantitate50());
                 obj.put("um50", listArticole.get(i).getUm50());
 
+                obj.put("cmpCorectat", listArticole.get(i).getCmpCorectat());
+                obj.put("pretMinim", listArticole.get(i).getPretMinim());
+
                 myArray.put(obj);
 
                 if ((listArticole.get(i).getNumeArticol() != null && listArticole.get(i).getPonderare() == 1) || UtilsComenzi.isComandaInstPublica()
@@ -2253,17 +2317,6 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
         return myArray.toString();
 
-    }
-
-    private String getFilialaGed(String filiala) {
-        return filiala.substring(0, 2) + "2" + filiala.substring(3, 4);
-    }
-
-    private String getFilialaDistrib(String filiala) {
-        if (!filiala.equals("BV90"))
-            return filiala.substring(0, 2) + "1" + filiala.substring(3, 4);
-        else
-            return filiala;
     }
 
     private String serializeComanda(Comanda comanda) {
@@ -2362,6 +2415,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             obj.put("prelucrareLemn", DateLivrare.getInstance().getPrelucrareLemn());
             obj.put("filialaPlata", DateLivrare.getInstance().getFilialaPlata());
             obj.put("codPostal", DateLivrare.getInstance().getCodPostal());
+            obj.put("taxeComanda", opArticol.serializeTaxeComanda(DateLivrare.getInstance().getTaxeComanda()));
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
