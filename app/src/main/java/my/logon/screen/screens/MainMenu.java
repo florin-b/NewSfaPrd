@@ -92,14 +92,14 @@ public class MainMenu extends Activity {
             R.drawable.constraints, R.drawable.client_info, R.drawable.payment, R.drawable.clients, R.drawable.location_icon, R.drawable.blank,
             R.drawable.despre_icon, R.drawable.exit_icon, R.drawable.blank};
 
-    public String[] btnNamesSDIP = {"Utilizator", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate",
-            "Cmz.blocate limita credit", "Creare CLP", "Afisare CLP", "Retur paleti", "Stare retur", "Retur comenzi", "Obiective", "Modificare data livrare",
-            "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Info client", "Delegatii", "Despre", "Iesire"};
+    public String[] btnNamesSDIP = {"Utilizator", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate", "Cmz.blocate limita credit",
+            "Creare CLP", "Afisare CLP", "Retur paleti", "Stare retur", "Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari",
+            "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Salarizare", "Info client", "Delegatii", "Despre", "Iesire"};
 
     public int[] btnImageSDIP = new int[]{R.drawable.id_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon, R.drawable.preview_icon,
             R.drawable.simulate, R.drawable.cmd_bloc, R.drawable.clp, R.drawable.afis_clp, R.drawable.retur_marfa, R.drawable.status_retur_48,
-            R.drawable.retur_comanda, R.drawable.colosseum, R.drawable.data_icon, R.drawable.vanzari, R.drawable.neincasate, R.drawable.stoc_icon, R.drawable.dollar_icon,
-            R.drawable.status, R.drawable.client_info, R.drawable.blank, R.drawable.despre_icon, R.drawable.exit_icon};
+            R.drawable.retur_comanda, R.drawable.colosseum, R.drawable.data_icon, R.drawable.vanzari, R.drawable.neincasate, R.drawable.stoc_icon,
+            R.drawable.dollar_icon, R.drawable.status, R.drawable.money_gold_48, R.drawable.client_info, R.drawable.blank, R.drawable.despre_icon, R.drawable.exit_icon};
 
     public String[] btnNamesDV = {"Utilizator", "Aprobare comanda", "Comenzi conditionate", "Afisare comanda", "Aprobare CLP", "Afisare CLP",
             "Cmz.blocate limita credit", "Obiective", "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Preturi concurenta",
@@ -140,15 +140,14 @@ public class MainMenu extends Activity {
             R.drawable.data_icon, R.drawable.vanzari, R.drawable.neincasate, R.drawable.stoc_icon, R.drawable.dollar_icon, R.drawable.status, R.drawable.money_gold_48,
             R.drawable.client_info, R.drawable.blank, R.drawable.despre_icon, R.drawable.exit_icon};
 
-    public String[] btnNamesSM = {"Utilizator", "Creare comanda", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate",
-            "Creare CLP", "Aprobare CLP", "Afisare CLP", "Retur paleti", "Stare retur", "Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari",
-            "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Info client", "Delegatii", "Despre", "Iesire"};
+    public String[] btnNamesSM = {"Utilizator", "Creare comanda", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate", "Creare CLP",
+            "Aprobare CLP", "Afisare CLP", "Retur paleti", "Stare retur", "Retur comenzi", "Obiective", "Modificare data livrare", "Vanzari",
+            "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Salarizare",  "Info client", "Delegatii", "Despre", "Iesire"};
 
-    public int[] btnImageSM = new int[]{R.drawable.id_icon, R.drawable.new_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon,
-            R.drawable.preview_icon, R.drawable.simulate, R.drawable.clp, R.drawable.aprob_clp, R.drawable.afis_clp, R.drawable.retur_marfa,
-            R.drawable.status_retur_48, R.drawable.retur_comanda, R.drawable.colosseum, R.drawable.data_icon, R.drawable.vanzari, R.drawable.neincasate, R.drawable.stoc_icon,
-            R.drawable.dollar_icon, R.drawable.status, R.drawable.client_info, R.drawable.blank, R.drawable.despre_icon, R.drawable.exit_icon,
-            R.drawable.blank};
+    public int[] btnImageSM = new int[]{R.drawable.id_icon, R.drawable.new_icon, R.drawable.blue_basket_icon, R.drawable.modif_icon, R.drawable.preview_icon,
+            R.drawable.simulate, R.drawable.clp, R.drawable.aprob_clp, R.drawable.afis_clp, R.drawable.retur_marfa, R.drawable.status_retur_48,
+            R.drawable.retur_comanda, R.drawable.colosseum, R.drawable.data_icon, R.drawable.vanzari, R.drawable.neincasate, R.drawable.stoc_icon,
+            R.drawable.dollar_icon, R.drawable.status, R.drawable.money_gold_48, R.drawable.client_info,  R.drawable.blank, R.drawable.despre_icon, R.drawable.exit_icon, R.drawable.blank};
 
     public String[] btnNamesCONSGED = {"Utilizator", "Creare cmd GED", "Modificare comanda", "Afisare comanda", "Comenzi simulate", "Retur paleti",
             "Stare retur", "Modificare data livrare", "Vanzari", "Neincasate", "Stocuri", "Preturi", "Stare comenzi", "Preturi concurenta",
@@ -647,7 +646,7 @@ public class MainMenu extends Activity {
                 if (selectedBtnName.equalsIgnoreCase("Salarizare")) {
 
                     Intent nextScreen = null;
-                    if (UtilsUser.isCVA())
+                    if (UtilsUser.isCVA() || UtilsUser.isSMR() || UtilsUser.isUserIP())
                         nextScreen = new Intent(MainMenu.this, SalarizareCVA.class);
                     else
                         nextScreen = new Intent(MainMenu.this, Salarizare.class);
