@@ -12,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,6 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -397,18 +395,6 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 
 		agent.getListaAgenti(selectedFiliala, selectedCodDepart, this, true, tipAgent);
 
-	}
-
-	boolean isDateValid(String date) {
-		try {
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-			df.setLenient(false);
-			df.parse(date);
-			return true;
-		} catch (Exception e) {
-			Log.e("Error", e.toString());
-			return false;
-		}
 	}
 
 	private void populateSpinnerTipUser() {

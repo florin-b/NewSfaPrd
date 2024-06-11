@@ -1,13 +1,15 @@
 package my.logon.screen.dialogs;
 
-import my.logon.screen.listeners.SituatieSalarizareListener;
-import my.logon.screen.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+
+import my.logon.screen.R;
 import my.logon.screen.enums.EnumSituatieSalarizare;
+import my.logon.screen.listeners.SituatieSalarizareListener;
+import my.logon.screen.model.UserInfo;
 
 public class SelectSituatiiSalarizareDialog extends Dialog {
 
@@ -40,6 +42,10 @@ public class SelectSituatiiSalarizareDialog extends Dialog {
 
 	private void setUpLayout() {
 		radioAgenti = (RadioButton) findViewById(R.id.radioAgenti);
+
+		if (UserInfo.getInstance().getTipUserSap().equals("SDCVA") || UserInfo.getInstance().getTipUserSap().equals("SDIP"))
+			radioAgenti.setText("Consilieri");
+
 		btnOkSituatie = (Button) findViewById(R.id.btnOkSituatie);
 		setBtnOkListener();
 

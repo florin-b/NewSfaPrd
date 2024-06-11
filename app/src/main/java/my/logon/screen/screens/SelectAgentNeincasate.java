@@ -23,7 +23,6 @@ import my.logon.screen.listeners.CustomSpinnerClass;
 import my.logon.screen.listeners.CustomSpinnerListener;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsGeneral;
-import my.logon.screen.utils.UtilsUser;
 
 public class SelectAgentNeincasate extends Fragment implements CustomSpinnerListener, AsyncTaskListener {
 
@@ -65,8 +64,8 @@ public class SelectAgentNeincasate extends Fragment implements CustomSpinnerList
 			textAgentiVanzAg = (TextView) v.findViewById(R.id.textAgentiVanzAg);
 			textAgentiVanzAg.setVisibility(View.VISIBLE);
 
-			if ( !UtilsUser.isSDIP() && (UserInfo.getInstance().getTipAcces().equals("9") || UserInfo.getInstance().getTipAcces().equals("27")
-					|| UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("41"))) // ag,
+			if (UserInfo.getInstance().getTipAcces().equals("9") || UserInfo.getInstance().getTipAcces().equals("27")
+					|| UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("41")) // ag,
 			// ka,
 			// cv
 			{
@@ -75,7 +74,7 @@ public class SelectAgentNeincasate extends Fragment implements CustomSpinnerList
 				spinnerFiliale.setVisibility(View.GONE);
 			} else {
 				if (UserInfo.getInstance().getTipAcces().equals("10") || UserInfo.getInstance().getTipAcces().equals("18")
-						|| UserInfo.getInstance().getTipAcces().equals("32") || UserInfo.getInstance().getTipAcces().equals("39") || UtilsUser.isSDIP()) // sd,
+						|| UserInfo.getInstance().getTipAcces().equals("32") || UserInfo.getInstance().getTipAcces().equals("39")) // sd,
 				// sm
 				{
 					spinnerAgenti.setVisibility(View.VISIBLE);
@@ -146,20 +145,21 @@ public class SelectAgentNeincasate extends Fragment implements CustomSpinnerList
 				localDepart = "10";
 			}
 
-			if (UserInfo.getInstance().getTipAcces().equals("18") || UserInfo.getInstance().getTipAcces().equals("39") || UtilsUser.isSDIP()) // sef
+			if (UserInfo.getInstance().getTipAcces().equals("18") || UserInfo.getInstance().getTipAcces().equals("39")) // sef
 																	// magazin
 			{
 				localDepart = "11";
 			}
-
-			if (UtilsUser.isDV() && localDepart.equals("00"))
-				localDepart= UserInfo.getInstance().getInitDivizie();
+			
+			if (UserInfo.getInstance().getCod().equals("00010281") || UserInfo.getInstance().getCod().equals("00018768")
+					|| UserInfo.getInstance().getCod().equals("00086469"))
+				localDepart = "11";
 			
 			String filialaNeincasate = Neincasate.selectedFiliala;
-			
+
 			if (UserInfo.getInstance().getTipUserSap().equals("SDIP"))
 				filialaNeincasate = UserInfo.getInstance().getInitUnitLog();
-			
+
 			params.put("filiala", filialaNeincasate);
 			params.put("depart", localDepart);
 			params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());

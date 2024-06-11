@@ -2110,6 +2110,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             UtilsComenzi.showFilialaLivrareDialog(this, DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog());
             return;
         } else if (DateLivrare.getInstance().getTransport().equals("TRAP") && UtilsComenzi.isComandaClp()
+                && !DateLivrare.getInstance().getTranspInit().equals("TERT")
                 && !DateLivrare.getInstance().getCodFilialaCLP().equals("BV90")
                 && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaPrincipala())
                 && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaSecundara())) {

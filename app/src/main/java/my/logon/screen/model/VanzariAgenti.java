@@ -1,9 +1,9 @@
 package my.logon.screen.model;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONObject;
 
 public class VanzariAgenti {
 
@@ -44,7 +44,7 @@ public class VanzariAgenti {
 			selectedDepart = "11";
 		}
 		
-		if (UserInfo.getInstance().getCod().equals("00010281") || UserInfo.getInstance().getCod().equals("00018768"))
+		if (UserInfo.getInstance().getCod().equals("00010281") || UserInfo.getInstance().getCod().equals("00018768") || UserInfo.getInstance().getCod().equals("00086469"))
 			selectedDepart = "11";
 
 		JSONObject obj = null;

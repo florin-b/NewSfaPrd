@@ -6,6 +6,7 @@ public class ValoriComanda {
 	double total;
 	double pondereB;
 	double marja;
+	String moneda;
 
 	public ValoriComanda() {
 	}
@@ -33,5 +34,15 @@ public class ValoriComanda {
 	public void setMarja(double marja) {
 		this.marja = marja;
 	}
+
+	public String getMoneda() {
+		return moneda;
+	}
+
+	public void setMoneda(String moneda) {
+		this.moneda = moneda;
+	}
+	
+	
 
 }

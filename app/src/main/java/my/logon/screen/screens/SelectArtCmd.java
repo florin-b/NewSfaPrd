@@ -1701,15 +1701,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                             }
                         }
 
-                        if ((finalPrice / valMultiplu) < cmpArt) {
-
-                            Toast.makeText(getApplicationContext(), "Procentul de reducere este mai mare decat cel acceptat.", Toast.LENGTH_LONG).show();
-
-                            subCmp = "1";
-                            return;
-
-                        }
-
                         if ((UtilsUser.isASDL() || UtilsUser.isOIVPD())
                                 && Math.round(procentAprob * 1000.0) / 1000.0 <= Math.round(discountASDL * 1000.0) / 1000.0) {
                             tipAlert = " ";
@@ -1970,7 +1961,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         paramPret.setTipTransport(DateLivrare.getInstance().getTransport());
 
         params.put("parametruPret", opArticol.serializeParamPretGed(paramPret));
-        opArticol.getPretGedJson(params);
+        opArticol.getPretUnic(params);
 
     }
 
@@ -2423,10 +2414,8 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         if (globalDepozSel.substring(2, 3).equals("V")) {
 
             if (initPrice / globalCantArt * valMultiplu < cmpArt) {
-                Toast.makeText(getApplicationContext(), "Pret sub cmp!", Toast.LENGTH_LONG).show();
-                return;
+                Toast.makeText(getApplicationContext(), "Pret sub cmp.", Toast.LENGTH_LONG).show();
             }
-
         }
 
         finalPrice = initPrice;
@@ -2701,20 +2690,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
                 }
 
-                if (globalDepozSel.substring(2, 3).equals("V")) {
-                    // pentru depozitele de vanzari se verifica cmp-ul
 
-                    if (initPrice / globalCantArt * valMultiplu < cmpArt) {
-
-                        Toast.makeText(getApplicationContext(), "Pret sub cmp!", Toast.LENGTH_LONG).show();
-
-                        if (layoutPretMaxKA.getVisibility() == View.VISIBLE)
-                            layoutPretMaxKA.setVisibility(View.INVISIBLE);
-
-                        return;
-                    }
-
-                }
 
                 finalPrice = initPrice;
 

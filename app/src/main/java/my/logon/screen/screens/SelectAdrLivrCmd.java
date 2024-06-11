@@ -101,7 +101,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         AutocompleteDialogListener, AsyncTaskListener, ZileLivrareListener, CodPostalListener {
 
     private Button saveAdrLivrBtn;
-    private EditText txtPers, txtTel, txtObservatii, txtValoareIncasare;
+    private EditText txtPers, txtTel, txtObservatii;
 
     private static final String METHOD_NAME = "getClientJud";
     int posJudetSel = 0;
@@ -122,7 +122,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
     private Spinner spinnerPlata, spinnerTransp, spinnerJudet, spinnerTermenPlata, spinnerAdreseLivrare, spinnerTipReducere, spinnerResponsabil;
     private static ArrayList<HashMap<String, String>> listJudete = null, listAdreseLivrare = null;
     private ArrayAdapter<String> adapterDataLivrare, adapterTermenPlata, adapterResponsabil;
-    private LinearLayout layoutAdrese, layoutAdr1, layoutAdr2, layoutAdr3, layoutValoareIncasare;
+    private LinearLayout layoutAdrese, layoutAdr1, layoutAdr2, layoutAdr3;
     private String globalCodClient = "";
 
     private RadioButton radioLista, radioText, radioObiectiv;
@@ -134,7 +134,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
     private ListPopupWindow lpw;
     private String[] listPersCont, listTel;
-    CheckBox checkModifValInc;
+
     NumberFormat nf2;
     private OperatiiAdresa operatiiAdresa;
     private OperatiiObiective operatiiObiective;
@@ -249,33 +249,12 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         txtPers.setText(listPersCont[0]);
         txtPers.setOnTouchListener(this);
 
-        layoutValoareIncasare = (LinearLayout) findViewById(R.id.layoutValoareIncasare);
-        layoutValoareIncasare.setVisibility(View.GONE);
-
-        txtValoareIncasare = (EditText) findViewById(R.id.txtValoareIncasare);
-        txtValoareIncasare.setFocusable(false);
-
-        checkModifValInc = (CheckBox) findViewById(R.id.checkboxModifValInc);
-        addListenerModifValInc();
 
         nf2 = NumberFormat.getInstance();
         nf2.setMinimumFractionDigits(2);
         nf2.setMaximumFractionDigits(2);
 
-        if (DateLivrare.getInstance().isValIncModif() || !ModificareComanda.codClientVar.equals("")) {
-            txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
-            checkModifValInc.setChecked(true);
-        } else {
 
-            double localValCmd = 0;
-            if (!CreareComanda.codClientVar.equals(""))
-                localValCmd = CreareComanda.totalComanda * Constants.TVA;
-            else
-                localValCmd = ModificareComanda.totalComanda * Constants.TVA;
-
-            txtValoareIncasare.setText(nf2.format(localValCmd));
-            checkModifValInc.setChecked(false);
-        }
 
         txtTel.setText(listTel[0]);
 
@@ -295,7 +274,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         spinnerResponsabil = (Spinner) findViewById(R.id.spinnerResponsabil);
         adapterResponsabil = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipResponsabil);
         adapterResponsabil.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        addListenerResponsabil();
         spinnerResponsabil.setAdapter(adapterResponsabil);
 
         for (int ii = 0; ii < adapterResponsabil.getCount(); ii++) {
@@ -1182,33 +1160,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         });
     }
 
-    private void addListenerModifValInc() {
-        checkModifValInc.setOnClickListener(new OnClickListener() {
 
-            public void onClick(View v) {
-
-                if (checkModifValInc.isChecked()) {
-                    DateLivrare.getInstance().setValIncModif(true);
-                    txtValoareIncasare.setFocusableInTouchMode(true);
-                    txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
-
-                } else {
-                    DateLivrare.getInstance().setValIncModif(false);
-                    txtValoareIncasare.setFocusable(false);
-
-                    double localValCmd = 0;
-                    if (!CreareComanda.codClientVar.equals(""))
-                        localValCmd = CreareComanda.totalComanda * Constants.TVA;
-                    else
-                        localValCmd = ModificareComanda.totalComanda * Constants.TVA;
-
-                    txtValoareIncasare.setText(nf2.format(localValCmd));
-
-                }
-            }
-        });
-
-    }
 
     private void performGetJudete() {
 
@@ -1324,29 +1276,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                 }
 
 
-                if (spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("R") && spinnerResponsabil.getSelectedItemPosition() == 1) {
-                    layoutValoareIncasare.setVisibility(View.VISIBLE);
 
-                    if (DateLivrare.getInstance().isValIncModif()) {
-                        txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
-
-                    } else {
-                        double localValCmd = 0;
-                        if (!CreareComanda.codClientVar.equals("")) {
-                            if (CreareComanda.canalDistrib.equals("10"))
-                                localValCmd = CreareComanda.totalComanda * Constants.TVA;
-                            else if (CreareComanda.canalDistrib.equals("20"))
-                                localValCmd = CreareComanda.totalComanda;
-                        } else
-                            localValCmd = ModificareComanda.totalComanda * Constants.TVA;
-
-                        txtValoareIncasare.setText(nf2.format(localValCmd));
-
-                    }
-
-                } else {
-                    layoutValoareIncasare.setVisibility(View.GONE);
-                }
 
                 if (rawTipPlataStr.toLowerCase().contains("numerar") || rawTipPlataStr.toLowerCase().contains("ramburs")) {
                     checkAviz.setChecked(false);
@@ -1419,42 +1349,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
     }
 
-    private void addListenerResponsabil() {
-        spinnerResponsabil.setOnItemSelectedListener(new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-                if (pos == 1 && spinnerPlata.getSelectedItem().toString().substring(0, 1).equals("R")) {
-                    layoutValoareIncasare.setVisibility(View.VISIBLE);
-
-                    if (DateLivrare.getInstance().isValIncModif()) {
-                        txtValoareIncasare.setText(DateLivrare.getInstance().getValoareIncasare());
-
-                    } else {
-                        double localValCmd = 0;
-                        if (!CreareComanda.codClientVar.equals("")) {
-                            if (CreareComanda.canalDistrib.equals("10"))
-                                localValCmd = CreareComanda.totalComanda * Constants.TVA;
-                            else if (CreareComanda.canalDistrib.equals("20"))
-                                localValCmd = CreareComanda.totalComanda;
-                        } else
-                            localValCmd = ModificareComanda.totalComanda * Constants.TVA;
-
-                        txtValoareIncasare.setText(nf2.format(localValCmd));
-
-                    }
-
-                } else {
-                    layoutValoareIncasare.setVisibility(View.GONE);
-                }
-
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-
-            }
-
-        });
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -1741,24 +1636,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             txtObservatii.setText(tokLivrare[10]);
 
             DateLivrare.getInstance().setValoareIncasare(tokLivrare[16]);
-
-            double localValCmd = Double.parseDouble(DateLivrare.getInstance().getValoareIncasare());
-
-            if (tokLivrare[17].equals("X")) {
-                DateLivrare.getInstance().setValIncModif(true);
-                checkModifValInc.setChecked(true);
-            } else {
-                DateLivrare.getInstance().setValIncModif(false);
-                checkModifValInc.setChecked(false);
-
-                if (!CreareComanda.codClientVar.equals(""))
-                    localValCmd = CreareComanda.totalComanda * Constants.TVA;
-                else
-                    localValCmd = ModificareComanda.totalComanda * Constants.TVA;
-
-            }
-
-            txtValoareIncasare.setText(nf2.format(localValCmd));
 
             // obs. plata (responsabil livrare)
             spinnerResponsabil.setSelection(0);
@@ -2123,10 +2000,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             return;
         }
 
-        if (layoutValoareIncasare.getVisibility() == View.VISIBLE && txtValoareIncasare.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Completati valoarea incasarii!", Toast.LENGTH_LONG).show();
-            return;
-        }
+
 
         if (((LinearLayout) findViewById(R.id.layoutFilLivrare)).getVisibility() == View.VISIBLE && spinnerFilialeTCLI.getSelectedItemPosition() == 0) {
             Toast.makeText(getApplicationContext(), "Selectati filiala care livreaza.", Toast.LENGTH_LONG).show();
@@ -2175,10 +2049,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             dateLivrareInstance.setRedSeparat("R");
         }
 
-        if (layoutValoareIncasare.getVisibility() == View.VISIBLE)
-            dateLivrareInstance.setValoareIncasare(txtValoareIncasare.getText().toString());
-        else
-            dateLivrareInstance.setValoareIncasare("0");
+        dateLivrareInstance.setValoareIncasare("0");
 
         adresa = dateLivrareInstance.getNumeJudet() + " " + dateLivrareInstance.getOras() + " " + dateLivrareInstance.getStrada();
 

@@ -1,443 +1,623 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textDataSalarizare"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_marginTop="10dip"
-        android:layout_marginLeft="30dip"
-        android:gravity="left"
-        android:paddingLeft="5dip"
-        android:textColor="@color/salarizareHeaderTotal"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        android:typeface="monospace" />
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ScrollView
+        android:id="@+id/mainScroll"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
 
-    <LinearLayout
-        android:id="@+id/layoutVenitBaza"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:layout_marginTop="10dip"
-
-        android:visibility="invisible"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:text="Venit baza"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/antetVenitBaza"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutNruf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:visibility="invisible"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:text="Nruf"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/antetNruf"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutCoef"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:visibility="invisible"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:text="Coef"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/antetCoef"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutVenitNruf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:visibility="invisible"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:text="Venit nruf"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/venitNruf"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutVenitTcf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:visibility="invisible"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:text="Venit tcf"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/venitTcf"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutCorectIncas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:visibility="invisible"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:text="Corect incas"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/corectIncas"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutVenitFinal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:layout_marginBottom="5dip"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        >
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:text="Venit final"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/venitFinal"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:gravity="left"
-            android:paddingLeft="5dip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/headerDetaliiBaza"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="30dip"
-        android:layout_marginRight="30dip"
-        android:layout_marginTop="10dip"
-        android:background="#D6DBDF"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-
-
-        <TextView
-            android:id="@+id/textKDGRP"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.05"
-            android:gravity="center"
-            android:text="Tip"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textKUNNR"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.1"
-            android:gravity="center"
-            android:text="Client"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textName1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.15"
-            android:gravity="left"
-            android:text="Nume"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textMATKL"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.05"
-            android:gravity="left"
-            android:text="Cod"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textWGBEZ"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.15"
-            android:gravity="left"
-            android:text="Nume"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textValNet"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="Val net"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textT0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="T0"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textT1A"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="T1A"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textT1D"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="T1D"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textT1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="T1"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textVenitBaza"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="Venit baza"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textCoefX"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="Coef X"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textT1AProc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="T1A proc"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textT1DProc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.08"
-            android:gravity="right"
-            android:text="T1D proc"
-            android:textColor="@color/salarizareHeaderTotal"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/mainLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.6"
-        android:layout_marginLeft="30dip"
-        android:layout_marginRight="30dip"
-        android:layout_marginBottom="30dip"
-        android:orientation="horizontal">
-
-
-        <ListView
-            android:id="@+id/listDetaliiBaza"
+        <LinearLayout
+            android:id="@+id/mainScrollLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:choiceMode="singleChoice"
-            android:drawSelectorOnTop="true"
-            android:fadeScrollbars="false"
-            android:scrollbarStyle="outsideInset" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
 
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textDataSalarizare"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="30dip"
+                android:layout_marginTop="30dip"
+                android:gravity="left"
+                android:paddingLeft="5dip"
+                android:textColor="@color/salarizareHeaderTotal"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/headerSalAgenti"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginRight="100dip"
+                android:background="#D6DBDF"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textNumeAgent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.15"
+                    android:gravity="center"
+                    android:text="Agent"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:text="Venit baza"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:text="Venit nruf"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:text="Venit tcf"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:text="Venit stoc nociv"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:text="Corect incas"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:text="Venit final"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/textDetalii"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.05"
+                    android:gravity="center"
+                    android:textColor="@color/salarizareHeaderTotal"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutListAgenti"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginLeft="30dip"
+                android:layout_marginRight="100dip"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ListView
+                    android:id="@+id/listAgenti"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:choiceMode="singleChoice"
+                    android:drawSelectorOnTop="true" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textAgentSelectat"
+                android:layout_width="400dip"
+                android:layout_height="35dip"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="30dip"
+                android:layout_marginTop="30dip"
+                android:background="#E0E0E0"
+                android:paddingLeft="5dip"
+                android:paddingTop="5dip"
+                android:paddingBottom="5dip"
+                android:gravity="left"
+                android:textColor="@color/salarizareHeaderTotal"
+                android:textSize="17sp"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:id="@+id/layoutDateGenerale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TableLayout
+                    android:id="@+id/table_venit_general"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginRight="100dip"
+                    android:layout_marginBottom="50dip">
+
+                    <TableRow android:background="#D6DBDF">
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Venit baza"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Nruf"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Coef"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Venit nruf"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Venit tcf"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Venit stoc nociv"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Corect incas"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:text="Venit final"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="sans" />
+
+
+                    </TableRow>
+
+                    <TableRow android:background="#EFF0F1">
+
+                        <TextView
+                            android:id="@+id/antetVenitBaza"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/antetNruf"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/antetCoef"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/venitNruf"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+                        <TextView
+                            android:id="@+id/venitTcf"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+
+                        <TextView
+                            android:id="@+id/venitStocNociv"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+
+                        <TextView
+                            android:id="@+id/corectIncas"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+
+                        <TextView
+                            android:id="@+id/venitFinal"
+                            android:layout_width="0dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.1"
+                            android:gravity="center"
+                            android:textColor="@color/salarizareHeaderTotal"
+                            android:textSize="17sp"
+                            android:typeface="monospace" />
+
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/layoutDetalii"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="30dip"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/labelDetalii"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="30dip"
+                        android:layout_weight="0.6"
+                        android:gravity="left"
+                        android:text="Detalii "
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:typeface="sans" />
+
+                    <LinearLayout
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginRight="30dip"
+                            android:src="@drawable/vscroll_32" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/headerDetaliiBaza"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="30dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginRight="100dip"
+                    android:background="#D6DBDF"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
+
+
+                    <TextView
+                        android:id="@+id/textKDGRP"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.05"
+                        android:gravity="center"
+                        android:text="Tip"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textKUNNR"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:text="Client"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textName1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.15"
+                        android:gravity="left"
+                        android:text="Nume"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textMATKL"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.05"
+                        android:gravity="left"
+                        android:text="Cod"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textWGBEZ"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.15"
+                        android:gravity="left"
+                        android:text="Nume"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textValNet"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="Val net"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textT0"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="T0"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textT1A"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="T1A"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textT1D"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="T1D"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textT1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="T1"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textVenitBaza"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="Venit baza"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textCoefX"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="Coef X"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textT1AProc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="T1A proc"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textT1DProc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.08"
+                        android:gravity="right"
+                        android:text="T1D proc"
+                        android:textColor="@color/salarizareHeaderTotal"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_marginLeft="30dip"
+                    android:layout_marginRight="100dip"
+                    android:layout_marginBottom="30dip"
+                    android:layout_weight="0.6"
+                    android:orientation="horizontal">
+
+
+                    <ListView
+                        android:id="@+id/listDetaliiBaza"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:choiceMode="singleChoice"
+                        android:drawSelectorOnTop="true"
+                        android:fadeScrollbars="false"
+                        android:scrollbarStyle="outsideInset" />
+
+
+                </LinearLayout>
+
+                <include
+                    layout="@layout/detalii_stoc_nociv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="100dip" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</merge>

@@ -4,14 +4,18 @@ import java.util.List;
 
 public class BeanSalarizareCVA {
 
+    private String codAgent;
+    private String numeAgent;
     private List<SalarizareCVABazaCL> listSalarizareCVABaza;
     private double venitBaza;
     private double nruf;
     private double coef;
     private double venitNruf;
     private double venitTcf;
+    private double venitStocNociv;
     private double corectIncas;
     private double venitFinal;
+    private List<BeanVanzariVS> detaliiVS;
 
     public double getVenitBaza() {
         return venitBaza;
@@ -75,5 +79,37 @@ public class BeanSalarizareCVA {
 
     public void setListSalarizareCVABaza(List<SalarizareCVABazaCL> listSalarizareCVABaza) {
         this.listSalarizareCVABaza = listSalarizareCVABaza;
+    }
+
+    public List<BeanVanzariVS> getDetaliiVS() {
+        return detaliiVS;
+    }
+
+    public void setDetaliiVS(List<BeanVanzariVS> detaliiVS) {
+        this.detaliiVS = detaliiVS;
+    }
+
+    public double getVenitStocNociv() {
+        return venitStocNociv;
+    }
+
+    public void setVenitStocNociv(double venitStocNociv) {
+        this.venitStocNociv = venitStocNociv;
+    }
+
+    public String getCodAgent() {
+        return codAgent;
+    }
+
+    public void setCodAgent(String codAgent) {
+        this.codAgent = codAgent;
+    }
+
+    public String getNumeAgent() {
+        return numeAgent;
+    }
+
+    public void setNumeAgent(String numeAgent) {
+        this.numeAgent = numeAgent;
     }
 }

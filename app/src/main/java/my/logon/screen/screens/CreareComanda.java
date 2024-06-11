@@ -1052,11 +1052,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                         if (isReducere())
                             localRedSeparat = "X";
 
-                        if (dateLivrareInstance.getObsPlata().equals("SO") && dateLivrareInstance.getTipPlata().equals("R")) {
-                            if (!dateLivrareInstance.isValIncModif()) {
-                                dateLivrareInstance.setValoareIncasare(nf3.format(CreareComanda.totalComanda * Constants.TVA));
-                            }
-                        }
 
                         String userSiteMail = " ", isValIncModif = " ", codJ = "", adrLivrareGED = "";
 

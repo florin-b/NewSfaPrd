@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerIncrucisate"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="left"
+    android:layout_marginLeft="40dp"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:id="@+id/labelDetaliiIncrucisate"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dip"
+            android:layout_weight="0.6"
+            android:gravity="left"
+            android:text="Detalii vanzari incrucisate"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="30dip"
+                android:src="@drawable/vscroll_32" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_detalii_incrucisate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginRight="100dip"
+        android:background="#D6DBDF">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="center_vertical"
+            android:padding="3dip"
+            android:text="An"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="center"
+            android:padding="3dip"
+            android:text="Luna"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:padding="3dip"
+            android:text="Agent"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:padding="3dip"
+            android:text="Client"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="center"
+            android:padding="3dip"
+            android:text="Depart. av"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="center"
+            android:padding="3dip"
+            android:text="Depart. cl"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.05"
+            android:gravity="center"
+            android:padding="3dip"
+            android:text="Facturat"
+            android:textColor="@color/salarizareHeaderTotal"
+            android:textSize="17sp"
+            android:typeface="sans" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutListIncrucisate"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginLeft="30dip"
+        android:layout_marginRight="100dip"
+        android:layout_marginBottom="100dip"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/listIncrucisate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="true"
+            android:fadeScrollbars="false"
+            android:scrollbarStyle="outsideInset" />
+    </LinearLayout>
+
+</LinearLayout>

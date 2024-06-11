@@ -1,13 +1,5 @@
 package my.logon.screen.adapters;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.Locale;
-
-import my.logon.screen.listeners.OperatiiSalarizareListener;
-import my.logon.screen.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+
+import my.logon.screen.R;
 import my.logon.screen.beans.BeanSalarizareAgentAfis;
+import my.logon.screen.listeners.OperatiiSalarizareListener;
+import my.logon.screen.utils.UtilsUser;
 
 public class SalarizareDepartAdapter extends BaseAdapter {
 
@@ -25,6 +24,7 @@ public class SalarizareDepartAdapter extends BaseAdapter {
 	private NumberFormat numberFormat;
 	private int[] colors = new int[] { 0x30FFFFFF, 0x30D7DBDD };
 	private OperatiiSalarizareListener listener;
+	private String tipUserSap;
 
 	public void setSalarizareDepartListener(OperatiiSalarizareListener listener) {
 		this.listener = listener;
@@ -40,7 +40,7 @@ public class SalarizareDepartAdapter extends BaseAdapter {
 	}
 
 	static class ViewHolder {
-		public TextView textNumeAgent, textVenitT1, textVenitTCF, textCorectieInc, textVenitFinal, textDetalii;
+		public TextView textNumeAgent, textVenitT1, textVenitTCF, textCorectieInc, textVenitFinal, textDetalii, textVenitVS, textVenitIncrucisate;
 		public Button detaliiBtn;
 	}
 
@@ -56,6 +56,8 @@ public class SalarizareDepartAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.textNumeAgent = (TextView) convertView.findViewById(R.id.textNumeAgent);
 			viewHolder.textVenitT1 = (TextView) convertView.findViewById(R.id.textVenitT1);
+			viewHolder.textVenitVS = (TextView) convertView.findViewById(R.id.textVenitVS);
+			viewHolder.textVenitIncrucisate = (TextView) convertView.findViewById(R.id.textVenitIncrucisate);
 			viewHolder.textVenitTCF = (TextView) convertView.findViewById(R.id.textVenitTCF);
 			viewHolder.textCorectieInc = (TextView) convertView.findViewById(R.id.textCorectieInc);
 			viewHolder.textVenitFinal = (TextView) convertView.findViewById(R.id.textVenitFinal);
@@ -71,8 +73,14 @@ public class SalarizareDepartAdapter extends BaseAdapter {
 		viewHolder.textNumeAgent.setText(agent.getNumeAgent());
 		viewHolder.textVenitT1.setText(numberFormat.format(agent.getDatePrincipale().getVenitMJ_T1()));
 		viewHolder.textVenitTCF.setText(numberFormat.format(agent.getDatePrincipale().getVenitTCF()));
+		viewHolder.textVenitVS.setText(numberFormat.format(agent.getDatePrincipale().getVenitStocNociv()));
+		viewHolder.textVenitIncrucisate.setText(numberFormat.format(agent.getDatePrincipale().getVenitIncrucisate()));
 		viewHolder.textCorectieInc.setText(numberFormat.format(agent.getDatePrincipale().getCorectieIncasare()));
 		viewHolder.textVenitFinal.setText(numberFormat.format(agent.getDatePrincipale().getVenitFinal()));
+
+		if (UtilsUser.isUserSDKA()) {
+			viewHolder.textVenitIncrucisate.setVisibility(View.GONE);
+		}
 
 		viewHolder.detaliiBtn.setOnClickListener(new View.OnClickListener() {
 

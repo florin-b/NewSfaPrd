@@ -108,6 +108,7 @@ public class DateLivrare {
 	private boolean isComandaCustodie;
 	private String codPostal;
 	private List<TaxaComanda> taxeComanda;
+	private String transpInit = "";
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -172,6 +173,7 @@ public class DateLivrare {
 
 		this.isComandaCustodie = dateLivrareAfisare.isComandaCustodie();
 		this.codPostal = dateLivrareAfisare.getCodPostal();
+		this.transpInit = dateLivrareAfisare.getTransport();
 
 	}
 
@@ -775,6 +777,14 @@ public class DateLivrare {
 		this.taxeComanda = taxeComanda;
 	}
 
+	public String getTranspInit() {
+		return transpInit;
+	}
+
+	public void setTranspInit(String transpInit) {
+		this.transpInit = transpInit;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -843,6 +853,7 @@ public class DateLivrare {
 		isComandaCustodie = false;
 		codPostal = "";
 		taxeComanda = null;
+		transpInit = "";
 
 	}
 

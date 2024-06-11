@@ -318,6 +318,7 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         params.put("depart", departCautare);
         params.put("pagina", String.valueOf(this.paginaCurenta));
         params.put("tipComanda", tipComanda);
+        params.put("transpTert", String.valueOf(DateLivrare.getInstance().getTranspInit().equals("TERT")));
 
         if (this.categorieCurenta != null && this.categorieCurenta.equals("0"))
             opMathaus.cautaArticoleLocal(params);
@@ -523,6 +524,7 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         params.put("pagina", String.valueOf(nrPagina));
         params.put("tipArticol", tipArticolAfis.toString());
         params.put("tipComanda", tipComanda);
+        params.put("transpTert", String.valueOf(DateLivrare.getInstance().getTranspInit().equals("TERT")));
         opMathaus.getArticole(params);
 
     }

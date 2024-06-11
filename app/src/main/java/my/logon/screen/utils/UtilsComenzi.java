@@ -316,6 +316,9 @@ public class UtilsComenzi {
 		if (isComandaModifBV90())
 			return true;
 
+		if (DateLivrare.getInstance().getTranspInit().equals("TERT"))
+			return true;
+
 		if (!UtilsComenzi.getFilialaDistrib(filialaModifComanda).equals(poligonLivrareon.getFilialaPrincipala()) &&
 				!UtilsComenzi.getFilialaDistrib(filialaModifComanda).equals(poligonLivrareon.getFilialaSecundara())) {
 

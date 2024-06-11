@@ -15,6 +15,8 @@ import my.logon.screen.beans.BeanSalarizareAgent;
 import my.logon.screen.beans.BeanSalarizareAgentAfis;
 import my.logon.screen.beans.BeanSalarizareCVA;
 import my.logon.screen.beans.BeanSalarizareSD;
+import my.logon.screen.beans.BeanVanzariIncr;
+import my.logon.screen.beans.BeanVanzariVS;
 import my.logon.screen.beans.SalarizareCVABazaCL;
 import my.logon.screen.beans.SalarizareDatePrincipale;
 import my.logon.screen.beans.SalarizareDetaliiBaza;
@@ -81,6 +83,24 @@ public class OperatiiSalarizare implements AsyncTaskListener {
         performOperation();
     }
 
+    public void getSalarizareDepartCVA(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_DEPART_CVA;
+        performOperation();
+    }
+
+    public void getSalarizareCVIP(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_CVIP;
+        performOperation();
+    }
+
+    public void getSalarizareDepartCVIP(HashMap<String, String> params) {
+        this.params = params;
+        this.numeComanda = EnumOperatiiSalarizare.GET_SALARIZARE_DEPART_CVIP;
+        performOperation();
+    }
+
     private void performOperation() {
         AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getNumeComanda(), params, (AsyncTaskListener) this, context);
         call.getCallResultsFromFragment();
@@ -92,6 +112,9 @@ public class OperatiiSalarizare implements AsyncTaskListener {
         try {
             JSONObject jsonObject = new JSONObject((String) result);
 
+            if (jsonObject.getString("datePrincipale").equals("null"))
+                return salarizare;
+
             SalarizareDatePrincipale datePrincipale = new SalarizareDatePrincipale();
 
             JSONObject jsonDatePrinc = new JSONObject(jsonObject.getString("datePrincipale"));
@@ -99,6 +122,8 @@ public class OperatiiSalarizare implements AsyncTaskListener {
             datePrincipale.setVenitTCF(Double.valueOf(jsonDatePrinc.getString("venitTCF")));
             datePrincipale.setCorectieIncasare(Double.valueOf(jsonDatePrinc.getString("corectieIncasare")));
             datePrincipale.setVenitFinal(Double.valueOf(jsonDatePrinc.getString("venitFinal")));
+            datePrincipale.setVenitStocNociv(Double.valueOf(jsonDatePrinc.getString("venitStocNociv")));
+            datePrincipale.setVenitIncrucisate(Double.valueOf(jsonDatePrinc.getString("venitIncrucisate")));
 
             salarizare.setDatePrincipale(datePrincipale);
 
@@ -191,12 +216,81 @@ public class OperatiiSalarizare implements AsyncTaskListener {
             }
 
             salarizare.setDetaliiMalus(listDetaliiMalus);
+            salarizare.setDetaliiVS(getDetaliiVanzariVS(jsonObject.getString("detaliiVanzariVS")));
+            salarizare.setDetaliiVanzariIncr(getDetaliiVanzariIncrucisate(jsonObject.getString("detaliiIncrAlocat")));
 
         } catch (JSONException e) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         return salarizare;
+    }
+
+    private List<BeanVanzariVS> getDetaliiVanzariVS(String jsonVanzariVS) {
+
+        List<BeanVanzariVS> listVanzariVS = new ArrayList<>();
+
+        if (jsonVanzariVS == null || jsonVanzariVS.equals("null"))
+            return listVanzariVS;
+
+        try {
+
+            JSONArray jsonArray = new JSONArray(jsonVanzariVS);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject detObject = jsonArray.getJSONObject(i);
+                BeanVanzariVS vanzariVS = new BeanVanzariVS();
+                vanzariVS.setCoefSal(Double.valueOf(detObject.getString("COEF_SAL")));
+                vanzariVS.setEname(detObject.getString("ENAME"));
+                vanzariVS.setMatnr(detObject.getString("MATNR").replaceFirst("^0*", ""));
+                vanzariVS.setPernr(detObject.getString("PERNR"));
+                vanzariVS.setShortStr(detObject.getString("SHORT"));
+                vanzariVS.setNetwrCalc(Double.valueOf(detObject.getString("NETWR_CALC")));
+                vanzariVS.setVenitBaza(Double.valueOf(detObject.getString("VENIT_BAZA")));
+                listVanzariVS.add(vanzariVS);
+
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return listVanzariVS;
+    }
+
+
+    private List<BeanVanzariIncr> getDetaliiVanzariIncrucisate(String jsonVanzariIncr) {
+
+        List<BeanVanzariIncr> listVanzariIncr = new ArrayList<>();
+
+        if (jsonVanzariIncr == null || jsonVanzariIncr.equals("null"))
+            return listVanzariIncr;
+
+        try {
+
+            JSONArray jsonArray = new JSONArray(jsonVanzariIncr);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject detObject = jsonArray.getJSONObject(i);
+                BeanVanzariIncr vanzariIncr = new BeanVanzariIncr();
+                vanzariIncr.setAnv(detObject.getString("Anv"));
+                vanzariIncr.setLuna(detObject.getString("Luna"));
+                vanzariIncr.setPernr(detObject.getString("Pernr"));
+                vanzariIncr.setSpartAv(detObject.getString("SpartAv"));
+                vanzariIncr.setSpartCl(detObject.getString("SpartCl"));
+                vanzariIncr.setKunnr(detObject.getString("Kunnr"));
+                vanzariIncr.setFacturat(detObject.getString("Facturat"));
+                listVanzariIncr.add(vanzariIncr);
+
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return listVanzariIncr;
     }
 
     public List<BeanSalarizareAgentAfis> deserializeSalarizareDepartament(String result) {
@@ -224,6 +318,8 @@ public class OperatiiSalarizare implements AsyncTaskListener {
                 datePrincipale.setVenitTCF(Double.valueOf(jsonDatePrinc.getString("venitTCF")));
                 datePrincipale.setCorectieIncasare(Double.valueOf(jsonDatePrinc.getString("corectieIncasare")));
                 datePrincipale.setVenitFinal(Double.valueOf(jsonDatePrinc.getString("venitFinal")));
+                datePrincipale.setVenitStocNociv(Double.valueOf(jsonDatePrinc.getString("venitStocNociv")));
+                datePrincipale.setVenitIncrucisate(Double.valueOf(jsonDatePrinc.getString("venitIncrucisate")));
 
                 salarizareAg.setDatePrincipale(datePrincipale);
                 listAgenti.add(salarizareAg);
@@ -308,11 +404,104 @@ public class OperatiiSalarizare implements AsyncTaskListener {
             salarizareSD.setDetaliiInc08(salarizareAgent.getDetaliiInc08());
             salarizareSD.setDetaliiTCF(salarizareAgent.getDetaliiTCF());
 
+            salarizareSD.setDetaliiVS(getDetaliiVanzariVS(jsonObject.getString("detaliiVanzariVS")));
+            salarizareSD.setDetaliiVanzariIncr(getDetaliiVanzariIncrucisate(jsonObject.getString("detaliiIncrAlocat")));
+
         } catch (JSONException e) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         return salarizareSD;
+
+    }
+
+
+    public BeanSalarizareCVA deserializeSalarizareCVIP(String result) {
+        BeanSalarizareCVA beanSalarizareCVA = new BeanSalarizareCVA();
+        List<SalarizareCVABazaCL> listSalarizareBaza = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+
+
+            JSONArray jsonGT_OUTTAB_AV = new JSONArray(jsonObject.getString("GtOuttabAv"));
+            if (jsonGT_OUTTAB_AV.length() > 0) {
+                beanSalarizareCVA.setVenitTcf(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("Venittcf")));
+                beanSalarizareCVA.setCorectIncas(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("CorectIncas")));
+                beanSalarizareCVA.setVenitFinal(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("Venitfinal")));
+                beanSalarizareCVA.setVenitStocNociv(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("VenitVanzVs")));
+
+                beanSalarizareCVA.setVenitBaza(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("Baza")));
+                beanSalarizareCVA.setVenitNruf(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("VenitNruf")));
+            }
+
+            JSONArray jsonCVA = new JSONArray(jsonObject.getString("GtBazaclExp"));
+
+            for (int i = 0; i < jsonCVA.length(); i++) {
+
+                SalarizareCVABazaCL salCVABazaCL = new SalarizareCVABazaCL();
+                JSONObject detBazaCl = jsonCVA.getJSONObject(i);
+
+                salCVABazaCL.setKDGRP(detBazaCl.getString("Kdgrp"));
+                salCVABazaCL.setKUNNR(detBazaCl.getString("Kunnr"));
+                salCVABazaCL.setNAME1(detBazaCl.getString("Name1"));
+                salCVABazaCL.setMATKL(detBazaCl.getString("Matkl"));
+                salCVABazaCL.setWGBEZ(detBazaCl.getString("Wgbez"));
+                salCVABazaCL.setVAL_NET(Double.parseDouble(detBazaCl.getString("ValNet")));
+                salCVABazaCL.setT0(Double.parseDouble(detBazaCl.getString("t0")));
+                salCVABazaCL.setT1A(Double.parseDouble(detBazaCl.getString("T1a")));
+                salCVABazaCL.setT1(Double.parseDouble(detBazaCl.getString("t1")));
+                salCVABazaCL.setVENIT_BAZA(Double.parseDouble(detBazaCl.getString("VenitBaza")));
+                salCVABazaCL.setCOEF_X(detBazaCl.getString("CoefX").trim());
+                salCVABazaCL.setT1A_PROC(detBazaCl.getString("T1aProc").trim());
+                salCVABazaCL.setT1D_PROC(detBazaCl.getString("T1dProc").trim());
+                listSalarizareBaza.add(salCVABazaCL);
+            }
+
+            beanSalarizareCVA.setDetaliiVS(getDetaliiVanzariVS(jsonObject.getString("GtVenVs")));
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
+        beanSalarizareCVA.setListSalarizareCVABaza(listSalarizareBaza);
+        return beanSalarizareCVA;
+    }
+
+    public List<BeanSalarizareCVA> deserializeSalarizareDepartCVA(String result) {
+
+        List<BeanSalarizareCVA> listConsilieri = new ArrayList<>();
+
+        try {
+
+            JSONArray jsonAgenti = new JSONArray(result);
+
+            for (int i = 0; i < jsonAgenti.length(); i++) {
+
+                BeanSalarizareCVA unConsilier = new BeanSalarizareCVA();
+
+                JSONObject objAgent = jsonAgenti.getJSONObject(i);
+
+                unConsilier.setCodAgent(objAgent.getString("Pernr"));
+                unConsilier.setNumeAgent(objAgent.getString("Ename"));
+                unConsilier.setVenitBaza(Double.parseDouble(objAgent.getString("Baza")));
+                unConsilier.setVenitTcf(Double.parseDouble(objAgent.getString("Venittcf")));
+                unConsilier.setCorectIncas(Double.parseDouble(objAgent.getString("CorectIncas")));
+                unConsilier.setVenitNruf(Double.parseDouble(objAgent.getString("VenitNruf")));
+                unConsilier.setVenitStocNociv(Double.parseDouble(objAgent.getString("VenitVanzVs")));
+                unConsilier.setVenitFinal(Double.parseDouble(objAgent.getString("Venitfinal")));
+                listConsilieri.add(unConsilier);
+
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return listConsilieri;
+
+
 
     }
 
@@ -323,43 +512,46 @@ public class OperatiiSalarizare implements AsyncTaskListener {
         try {
             JSONObject jsonObject = new JSONObject(result);
 
-            JSONArray jsonGT_EXP = new JSONArray(jsonObject.getString("GT_EXP"));
+            JSONArray jsonGT_EXP = new JSONArray(jsonObject.getString("GtExp"));
             if (jsonGT_EXP.length() > 0) {
-                beanSalarizareCVA.setVenitBaza(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("VENIT_BAZA")));
-                beanSalarizareCVA.setNruf(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("NRUF")));
-                beanSalarizareCVA.setCoef(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("COEF")));
-                beanSalarizareCVA.setVenitNruf(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("VENIT_NRUF")));
+                beanSalarizareCVA.setVenitBaza(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("VenitBaza")));
+                beanSalarizareCVA.setNruf(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("Nruf")));
+                beanSalarizareCVA.setCoef(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("Coef")));
+                beanSalarizareCVA.setVenitNruf(Double.parseDouble(jsonGT_EXP.getJSONObject(0).getString("VenitNruf")));
             }
 
-            JSONArray jsonGT_OUTTAB_AV = new JSONArray(jsonObject.getString("GT_OUTTAB_AV"));
+            JSONArray jsonGT_OUTTAB_AV = new JSONArray(jsonObject.getString("GtOuttabAv"));
             if (jsonGT_OUTTAB_AV.length() > 0) {
-                beanSalarizareCVA.setVenitTcf(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("VENITTCF")));
-                beanSalarizareCVA.setCorectIncas(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("CORECT_INCAS")));
-                beanSalarizareCVA.setVenitFinal(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("VENITFINAL")));
+                beanSalarizareCVA.setVenitTcf(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("Venittcf")));
+                beanSalarizareCVA.setCorectIncas(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("CorectIncas")));
+                beanSalarizareCVA.setVenitFinal(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("Venitfinal")));
+                beanSalarizareCVA.setVenitStocNociv(Double.parseDouble(jsonGT_OUTTAB_AV.getJSONObject(0).getString("VenitVanzVs")));
             }
 
-            JSONArray jsonCVA = new JSONArray(jsonObject.getString("GT_BAZACL_EXP"));
+            JSONArray jsonCVA = new JSONArray(jsonObject.getString("GtBazaclExp"));
 
             for (int i = 0; i < jsonCVA.length(); i++) {
 
                 SalarizareCVABazaCL salCVABazaCL = new SalarizareCVABazaCL();
                 JSONObject detBazaCl = jsonCVA.getJSONObject(i);
 
-                salCVABazaCL.setKDGRP(detBazaCl.getString("KDGRP"));
-                salCVABazaCL.setKUNNR(detBazaCl.getString("KUNNR"));
-                salCVABazaCL.setNAME1(detBazaCl.getString("NAME1"));
-                salCVABazaCL.setMATKL(detBazaCl.getString("MATKL"));
-                salCVABazaCL.setWGBEZ(detBazaCl.getString("WGBEZ"));
-                salCVABazaCL.setVAL_NET(Double.parseDouble(detBazaCl.getString("VAL_NET")));
-                salCVABazaCL.setT0(Double.parseDouble(detBazaCl.getString("T0")));
-                salCVABazaCL.setT1A(Double.parseDouble(detBazaCl.getString("T1A")));
-                salCVABazaCL.setT1(Double.parseDouble(detBazaCl.getString("T1")));
-                salCVABazaCL.setVENIT_BAZA(Double.parseDouble(detBazaCl.getString("VENIT_BAZA")));
-                salCVABazaCL.setCOEF_X(detBazaCl.getString("COEF_X").trim());
-                salCVABazaCL.setT1A_PROC(detBazaCl.getString("T1A_PROC").trim());
-                salCVABazaCL.setT1D_PROC(detBazaCl.getString("T1D_PROC").trim());
+                salCVABazaCL.setKDGRP(detBazaCl.getString("Kdgrp"));
+                salCVABazaCL.setKUNNR(detBazaCl.getString("Kunnr"));
+                salCVABazaCL.setNAME1(detBazaCl.getString("Name1"));
+                salCVABazaCL.setMATKL(detBazaCl.getString("Matkl"));
+                salCVABazaCL.setWGBEZ(detBazaCl.getString("Wgbez"));
+                salCVABazaCL.setVAL_NET(Double.parseDouble(detBazaCl.getString("ValNet")));
+                salCVABazaCL.setT0(Double.parseDouble(detBazaCl.getString("t0")));
+                salCVABazaCL.setT1A(Double.parseDouble(detBazaCl.getString("T1a")));
+                salCVABazaCL.setT1(Double.parseDouble(detBazaCl.getString("t1")));
+                salCVABazaCL.setVENIT_BAZA(Double.parseDouble(detBazaCl.getString("VenitBaza")));
+                salCVABazaCL.setCOEF_X(detBazaCl.getString("CoefX").trim());
+                salCVABazaCL.setT1A_PROC(detBazaCl.getString("T1aProc").trim());
+                salCVABazaCL.setT1D_PROC(detBazaCl.getString("T1dProc").trim());
                 listSalarizareBaza.add(salCVABazaCL);
             }
+
+            beanSalarizareCVA.setDetaliiVS(getDetaliiVanzariVS(jsonObject.getString("GtVenVs")));
 
         } catch (JSONException e) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();

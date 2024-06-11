@@ -442,7 +442,7 @@
                     android:layout_marginRight="180dip"
                     android:layout_weight="0.25"
                     android:gravity="left"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="number"
                     android:maxLength="65"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -660,47 +660,6 @@
                     android:layout_marginRight="180dip"
                     android:layout_weight="0.25" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutValoareIncasare"
-                android:layout_width="match_parent"
-                android:layout_height="60dip"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|left"
-                    android:gravity="left"
-                    android:paddingLeft="5dip"
-                    android:text="Valoare incasare"
-                    android:textColor="@color/labelColor"
-                    android:textSize="17sp"
-                    android:typeface="serif" />
-
-                <EditText
-                    android:id="@+id/txtValoareIncasare"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|left"
-                    android:layout_weight="0.1"
-                    android:gravity="left"
-                    android:inputType="numberDecimal"
-                    android:maxLength="100"
-                    android:singleLine="true"
-                    android:textSize="18sp" />
-
-                <CheckBox
-                    android:id="@+id/checkboxModifValInc"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="180dip"
-                    android:layout_weight="0.15"
-                    android:text="Modifica" />
-            </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

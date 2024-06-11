@@ -1631,6 +1631,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         params.put("departament", departCautare);
         params.put("codUser", UserInfo.getInstance().getCod());
         params.put("tipComanda", tipComanda);
+        params.put("transpTert", String.valueOf(DateLivrare.getInstance().getTranspInit().equals("TERT")));
 
         opArticol.getArticoleDistributie(params);
 
@@ -2573,16 +2574,13 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         if (globalDepozSel.substring(2, 3).equals("V")) {
 
             if (initPrice / globalCantArt * valMultiplu < cmpArt && !UtilsArticole.isArticolPermitSubCmp(codArticol)) {
-                Toast.makeText(getApplicationContext(), "Pret sub cmp!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Pret sub cmp.", Toast.LENGTH_LONG).show();
 
                 if (CreareComandaGed.tipComandaGed == TipCmdGed.COMANDA_AMOB && importAllAmob) {
                     setProcesatArticolAmob(codArticol, globalDepozSel);
                     proceseazaArticoleAmob();
                 }
-
-                return;
             }
-
         }
 
         String[] condPret = pretArticol.getConditiiPret().split(";");

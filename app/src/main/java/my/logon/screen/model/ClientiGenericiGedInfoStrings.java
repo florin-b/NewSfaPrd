@@ -575,6 +575,9 @@ public class ClientiGenericiGedInfoStrings {
 			else if (filiala.equals("BU10"))
 				codClient = "4119000430";
 
+			else if (filiala.equals("SV10"))
+				codClient = "4119001361";
+
 
 		}
 
@@ -804,6 +807,9 @@ public class ClientiGenericiGedInfoStrings {
 			else if (filiala.equals("MS10"))
 				codClient = "4119001146";
 
+			else if (filiala.equals("SV10"))
+				codClient = "4119001362";
+
 		}
 
 		if (tipClient.equals("PJ")) {
@@ -842,6 +848,9 @@ public class ClientiGenericiGedInfoStrings {
 
 			else if (filiala.equals("MS10"))
 				codClient = "4119001147";
+
+			else if (filiala.equals("SV10"))
+				codClient = "4119001364";
 
 		}
 

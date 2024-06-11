@@ -723,12 +723,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                         nf3.setMinimumFractionDigits(2);
                         nf3.setMaximumFractionDigits(2);
 
-                        if (dateLivrareInstance.getObsPlata().equals("SO") && dateLivrareInstance.getTipPlata().equals("R")) {
-                            {
-                                dateLivrareInstance.setValoareIncasare(nf3.format(ModificareComanda.totalComanda * Constants.TVA));
-                            }
-                        }
-
                         String userSiteMail = " ", isValIncModif = " ", codJ = "", adrLivrareGED = "";
 
                         if (dateLivrareInstance.isValIncModif())

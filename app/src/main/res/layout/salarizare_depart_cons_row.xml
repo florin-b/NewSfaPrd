@@ -16,41 +16,41 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/textVenitT1"
+        android:id="@+id/textVenitBaza"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.08"
+        android:layout_weight="0.1"
         android:gravity="center"
         android:textColor="#616A6B"
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/textVenitTCF"
+        android:id="@+id/textVenitNruf"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.08"
+        android:layout_weight="0.1"
         android:gravity="center"
         android:textColor="#616A6B"
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/textVenitVS"
+        android:id="@+id/textVenitTcf"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.08"
+        android:layout_weight="0.1"
         android:gravity="center"
         android:textColor="#616A6B"
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/textVenitIncrucisate"
+        android:id="@+id/textVenitStocNociv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.08"
+        android:layout_weight="0.1"
         android:gravity="center"
         android:textColor="#616A6B"
         android:textSize="15sp" />
@@ -60,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.08"
+        android:layout_weight="0.1"
         android:gravity="center"
         android:textColor="#616A6B"
         android:textSize="15sp" />

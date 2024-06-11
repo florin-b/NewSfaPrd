@@ -878,6 +878,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
             params.put("departament", departCautare);
             params.put("filiala", UserInfo.getInstance().getUnitLog());
             params.put("codUser", UserInfo.getInstance().getCod());
+            params.put("transpTert", String.valueOf(DateLivrare.getInstance().getTranspInit().equals("TERT")));
 
             opArticol.getArticoleDistributie(params);
 
@@ -1009,17 +1010,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                         } else {// agenti
                             if (procentAprob > discMaxSD) {
                                 tipAlert = "DV";
-                            }
-                        }
-
-                        if (ModificareComanda.isComandaDistrib) {
-                            if ((finalPrice / valMultiplu) < cmpArt) {
-
-                                Toast.makeText(getApplicationContext(), "Procentul de reducere este mai mare decat cel acceptat.", Toast.LENGTH_LONG).show();
-
-                                subCmp = "1";
-                                return;
-
                             }
                         }
 
@@ -1423,14 +1413,11 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
             if (initPrice / globalCantArt * valMultiplu < cmpArt) {
 
-                Toast.makeText(getApplicationContext(), "Pret sub cmp!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Pret sub cmp.", Toast.LENGTH_LONG).show();
 
                 if (layoutPretMaxKA.getVisibility() == View.VISIBLE)
                     layoutPretMaxKA.setVisibility(View.INVISIBLE);
-
-                return;
             }
-
         }
 
         finalPrice = initPrice;
@@ -1602,20 +1589,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
                 }
 
-                if (globalDepozSel.substring(2, 3).equals("V")) {
-                    // pentru depozitele de vanzari se verifica cmp-ul
 
-                    if (initPrice / globalCantArt * valMultiplu < cmpArt) {
-
-                        Toast.makeText(getApplicationContext(), "Pret sub cmp!", Toast.LENGTH_LONG).show();
-
-                        if (layoutPretMaxKA.getVisibility() == View.VISIBLE)
-                            layoutPretMaxKA.setVisibility(View.INVISIBLE);
-
-                        return;
-                    }
-
-                }
 
                 finalPrice = initPrice;
 

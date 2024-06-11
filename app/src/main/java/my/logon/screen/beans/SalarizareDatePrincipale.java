@@ -6,6 +6,8 @@ public class SalarizareDatePrincipale {
 	private double corectieIncasare;
 	private double venitFinal;
 	private double venitCVS;
+	private double venitStocNociv;
+	private double venitIncrucisate;
 
 	public double getVenitMJ_T1() {
 		return venitMJ_T1;
@@ -47,4 +49,19 @@ public class SalarizareDatePrincipale {
 		this.venitCVS = venitCVS;
 	}
 
+	public double getVenitStocNociv() {
+		return venitStocNociv;
+	}
+
+	public void setVenitStocNociv(double venitStocNociv) {
+		this.venitStocNociv = venitStocNociv;
+	}
+
+	public double getVenitIncrucisate() {
+		return venitIncrucisate;
+	}
+
+	public void setVenitIncrucisate(double venitIncrucisate) {
+		this.venitIncrucisate = venitIncrucisate;
+	}
 }
