@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/agent"
@@ -16,7 +16,18 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/marjaT1"
+        android:id="@+id/valNociv"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.08"
+        android:gravity="right"
+        android:padding="3dip"
+        android:textColor="#616A6B"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/valTotal"
         android:layout_width="0dip"
         android:layout_height="40dip"
         android:layout_gravity="center_vertical"
@@ -27,33 +38,11 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/valoareStoc"
+        android:id="@+id/prag"
         android:layout_width="0dip"
         android:layout_height="40dip"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.1"
-        android:gravity="right"
-        android:padding="3dip"
-        android:textColor="#616A6B"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/targetRealizat"
-        android:layout_width="0dip"
-        android:layout_height="40dip"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.1"
-        android:gravity="right"
-        android:padding="3dip"
-        android:textColor="#616A6B"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/venitFTVA"
-        android:layout_width="0dip"
-        android:layout_height="40dip"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.1"
+        android:layout_weight="0.07"
         android:gravity="right"
         android:padding="3dip"
         android:textColor="#616A6B"
@@ -64,18 +53,18 @@
         android:layout_width="0dip"
         android:layout_height="40dip"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.05"
+        android:layout_weight="0.07"
         android:gravity="right"
         android:padding="3dip"
         android:textColor="#616A6B"
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/CVS"
+        android:id="@+id/venitBaza"
         android:layout_width="0dip"
         android:layout_height="40dip"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.05"
+        android:layout_weight="0.08"
         android:gravity="right"
         android:padding="3dip"
         android:textColor="#616A6B"
@@ -86,7 +75,7 @@
         android:layout_width="0dip"
         android:layout_height="40dip"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.06"
+        android:layout_weight="0.08"
         android:gravity="right"
         android:padding="3dip"
         android:textColor="#616A6B"

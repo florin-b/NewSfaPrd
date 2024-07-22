@@ -357,13 +357,12 @@ public class OperatiiSalarizare implements AsyncTaskListener {
                 JSONObject objCsv = jsonCSV.getJSONObject(i);
 
                 detaliuCVS.setAgent(objCsv.getString("agent"));
-                detaliuCVS.setPondere(Double.valueOf(objCsv.getString("pondere")));
-                detaliuCVS.setTargetValoric(Double.valueOf(objCsv.getString("targetValoric")));
-                detaliuCVS.setValoareFTVA(Double.valueOf(objCsv.getString("valoareFTVA")));
-                detaliuCVS.setValoareP6V(Double.valueOf(objCsv.getString("valoareP6V")));
                 detaliuCVS.setVenitBaza(Double.valueOf(objCsv.getString("venitBaza")));
+                detaliuCVS.setValTotal(Double.valueOf(objCsv.getString("valTotal")));
+                detaliuCVS.setValNociv(Double.valueOf(objCsv.getString("valNociv")));
+                detaliuCVS.setPrag(Double.valueOf(objCsv.getString("prag")));
+                detaliuCVS.setProcent(Double.valueOf(objCsv.getString("procent")));
                 detaliuCVS.setVenitCvs(Double.valueOf(objCsv.getString("venitCvs")));
-                detaliuCVS.setCvs(Double.valueOf(objCsv.getString("cvs")));
 
                 listCVS.add(detaliuCVS);
 

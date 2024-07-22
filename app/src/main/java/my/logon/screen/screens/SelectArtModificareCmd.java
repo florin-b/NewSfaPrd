@@ -35,7 +35,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,17 +52,16 @@ import my.logon.screen.dialogs.Cabluri05Dialog;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
 import my.logon.screen.enums.EnumTipComanda;
+import my.logon.screen.helpers.HelperPreturi;
 import my.logon.screen.listeners.Cablu05SelectedListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.model.ArticolComandaGed;
-import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleModificareComanda;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.DepartamentAgent;
-import my.logon.screen.utils.UtilsDates;
 import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
 
@@ -78,7 +76,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
     String depart = "";
     String codClientVar = "";
     String numeClientVar = "";
-    LinearLayout redBtnTable, layoutStocKA, layoutPretMaxKA, layoutPretMediuKA;
+    LinearLayout redBtnTable, layoutStocKA;
     EditText valRedIntText, valRedDecText;
     public String globalDepozSel = "", artPromoText = "", cantUmb = "", Umb = "", selectedUnitMas = "", globalCodDepartSelectetItem = "";
     private String cantitate50 = "", um50 = "";
@@ -94,8 +92,8 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
     private TextView textStoc;
     private TextView textCant;
 
-    private TextView textUM, procDisc, textPretTVA, textMultipluArt;
-    private TextView labelCant, labelStoc, textPretMinKA, textPretMediuKA;
+    private TextView textUM,  textMultipluArt;
+    private TextView labelCant, labelStoc;
     private Spinner spinnerDepoz, spinnerUnitMas;
 
     private TextView textPromo, textCondPret;
@@ -163,14 +161,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         layoutStocKA = (LinearLayout) findViewById(R.id.layoutStocKA);
         layoutStocKA.setVisibility(View.INVISIBLE);
 
-        textPretMediuKA = (TextView) findViewById(R.id.textPretMediuKA);
-        layoutPretMediuKA = (LinearLayout) findViewById(R.id.layoutPretMediuKA);
-        layoutPretMediuKA.setVisibility(View.INVISIBLE);
-
-        textPretMinKA = (TextView) findViewById(R.id.textPretMaxKA);
-        layoutPretMaxKA = (LinearLayout) findViewById(R.id.layoutPretMaxKA);
-        layoutPretMaxKA.setVisibility(View.INVISIBLE);
-
         this.articoleBtn = (Button) findViewById(R.id.articoleBtn);
         addListenerBtnArticole();
 
@@ -196,7 +186,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         this.tglProc = (ToggleButton) findViewById(R.id.tglProc);
         addListenerTglProc();
 
-        procDisc = (TextView) findViewById(R.id.procDisc);
 
         textProcRed = (EditText) findViewById(R.id.textProcRed);
         textProcRed.setFocusableInTouchMode(true);
@@ -210,7 +199,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         textCant = (EditText) findViewById(R.id.txtCantArt);
         labelCant = (TextView) findViewById(R.id.labelCant);
         labelStoc = (TextView) findViewById(R.id.labelStoc);
-        textPretTVA = (TextView) findViewById(R.id.textPretTVA);
         txtImpachetare = (TextView) findViewById(R.id.txtImpachetare);
         textCondPret = (TextView) findViewById(R.id.textCondPret);
 
@@ -253,7 +241,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         pretBtn.setVisibility(View.INVISIBLE);
         textPromo.setVisibility(View.INVISIBLE);
         textCondPret.setVisibility(View.INVISIBLE);
-        textPretTVA.setVisibility(View.INVISIBLE);
+
         textMultipluArt.setVisibility(View.INVISIBLE);
 
     }
@@ -461,10 +449,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                         pretMod = true;
                         finalPrice = initPrice;
 
-                        if (ModificareComanda.isComandaDistrib)
-                            textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu * Constants.TVA)));
-                        else
-                            textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu)));
 
                     } else {
 
@@ -484,10 +468,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                         pretMod = false;
                         finalPrice = initPrice;
 
-                        if (ModificareComanda.isComandaDistrib)
-                            textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu * Constants.TVA)));
-                        else
-                            textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu)));
 
                     }
                 }
@@ -536,19 +516,12 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                                         txtPretArt.setText(nf2.format(newPr));
                                         finalPrice = newPr;
 
-                                        if (ModificareComanda.isComandaDistrib)
-                                            textPretTVA.setText(String.valueOf(nf2.format(finalPrice * Constants.TVA)));
-                                        else
-                                            textPretTVA.setText(String.valueOf(nf2.format(finalPrice)));
                                     }
                                 }
 
                             } else {
                                 txtPretArt.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
-                                if (ModificareComanda.isComandaDistrib)
-                                    textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu * Constants.TVA)));
-                                else
-                                    textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu)));
+
                             }
 
                         }// modificare procent
@@ -567,10 +540,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                                 finalPrice = 0;
                             }
 
-                            if (ModificareComanda.isComandaDistrib)
-                                textPretTVA.setText(String.valueOf(nf2.format(finalPrice * Constants.TVA)));
-                            else
-                                textPretTVA.setText(String.valueOf(nf2.format(finalPrice)));
 
                         }
 
@@ -659,65 +628,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
         }
-
-    }
-
-    @SuppressWarnings("unchecked")
-    private void actionGetPret_old() {
-        String depSel = "";
-        String uLog = UserInfo.getInstance().getUnitLog();
-        String tipUser = "";
-
-        String localCanalDistrib = ModificareComanda.isComandaDistrib ? "10" : "20";
-
-        if (ModificareComanda.filialaAlternativaM.toUpperCase().contains("BV9") && globalDepozSel.equals("MAV1"))
-            localCanalDistrib = "10";
-
-        if (codArticol.length() == 8)
-            codArticol = "0000000000" + codArticol;
-
-        depSel = globalCodDepartSelectetItem.substring(0, 2);
-
-        if (!ModificareComanda.isComandaDistrib || globalDepozSel.equals("MAV1")) {
-            depSel = "11";
-            uLog = UserInfo.getInstance().getUnitLog().substring(0, 2) + "2" + UserInfo.getInstance().getUnitLog().substring(3, 4);
-        }
-        if (UserInfo.getInstance().getTipAcces().equals("9")) {
-            tipUser = "AV";
-        }
-        if (UserInfo.getInstance().getTipAcces().equals("10")) {
-            tipUser = "SD";
-        }
-        if (UserInfo.getInstance().getTipAcces().equals("14") || UserInfo.getInstance().getTipAcces().equals("12")) {
-            tipUser = "DV";
-        }
-        if (UserInfo.getInstance().getTipAcces().equals("27"))
-            tipUser = "KA";
-
-        String paramUnitMas = textUM.getText().toString();
-
-        if (listUmVanz.size() > 1) {
-            artMap = (HashMap<String, String>) spinnerUnitMas.getSelectedItem();
-            paramUnitMas = artMap.get("rowText");
-
-        }
-
-        HashMap<String, String> params = new HashMap<String, String>();
-
-        params.put("client", ModificareComanda.codClientVar);
-        params.put("articol", codArticol);
-        params.put("cantitate", textCant.getText().toString().trim());
-        params.put("depart", depSel);
-        params.put("um", paramUnitMas);
-        params.put("ul", uLog);
-        params.put("depoz", globalDepozSel);
-        params.put("tipUser", tipUser);
-        params.put("codUser", UserInfo.getInstance().getCod());
-        params.put("canalDistrib", localCanalDistrib);
-        params.put("filialaAlternativa", ModificareComanda.filialaAlternativaM);
-        params.put("tipTransport", DateLivrare.getInstance().getTransport());
-
-        opArticol.getPret(params);
 
     }
 
@@ -1291,38 +1201,8 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         alertDialog.show();
     }
 
-    public void showModifCantInfo(String cantInfo, String cant50Info, String um50Info) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        StringBuilder infoText = new StringBuilder();
-
-        infoText.append("\nAcest produs se vinde doar in ");
-        infoText.append(um50Info);
-        infoText.append(" si cantitatea a fost ajustata la ");
-        infoText.append(cantInfo + " ");
-        infoText.append(textUM.getText());
-        infoText.append(" pentru a corespunde la ");
-        infoText.append(cant50Info + " " + um50Info + ".\n");
-
-        alertDialogBuilder.setTitle("Info");
-        alertDialogBuilder.setMessage(infoText.toString()).setCancelable(false)
-                .setNegativeButton("Inchide", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    private boolean isConditiiModifCant50(String cantArticol, String cantitate50, String um50) {
-        return !textUM.getText().toString().trim().equals(um50) && Double.parseDouble(cantitate50) > 0
-                && selectedCant != Double.parseDouble(cantArticol);
-    }
-
     private boolean isConditiiModifCant50(PretArticolGed pretArticol) {
-        return !textUM.getText().toString().trim().equals(pretArticol.getUm50()) && Double.parseDouble(pretArticol.getCantitate50()) > 0
+        return  Double.parseDouble(pretArticol.getCantitate50()) > 0
                 && selectedCant != Double.parseDouble(pretArticol.getCantitate());
     }
 
@@ -1332,6 +1212,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
         if (!pretArticol.getErrMsg().isEmpty()) {
             Toast.makeText(getApplicationContext(), pretArticol.getErrMsg(), Toast.LENGTH_LONG).show();
+            saveArtBtn.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -1383,28 +1264,19 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         initPrice = Double.valueOf(pretArticol.getPret());
         listPrice = Double.valueOf(pretArticol.getPretLista());
 
-        String[] condPret =  pretArticol.getConditiiPret().split(";");
-        int ii = 0;
-        String[] tokPret;
-        String stringCondPret = "";
-        Double valCondPret = 0.0;
-
-        for (ii = 0; ii < condPret.length; ii++) {
-            tokPret = condPret[ii].split(":");
-            valCondPret = Double.valueOf(tokPret[1].replace(',', '.').trim());
-            if (valCondPret != 0) {
-                stringCondPret += tokPret[0] + UtilsFormatting.addSpace(20 - tokPret[0].length()) + ":"
-                        + UtilsFormatting.addSpace(10 - String.valueOf(nf2.format(valCondPret)).length()) + nf2.format(valCondPret)
-                        + System.getProperty("line.separator");
-            }
-        }
-
         textCondPret.setVisibility(View.VISIBLE);
-        textCondPret.setText(stringCondPret);
+        textCondPret.setText(HelperPreturi.getInfoPret(pretArticol, nf2));
 
         txtImpachetare.setText(pretArticol.getImpachetare());
 
-        afisIstoricPret(pretArticol.getIstoricPret());
+        if (pretArticol.getIstoricPret().trim().isEmpty())
+            findViewById(R.id.textIstoricPret).setVisibility(View.GONE);
+        else {
+            findViewById(R.id.textIstoricPret).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.textIstoricPret)).setText(HelperPreturi.getIstoricPret(pretArticol.getIstoricPret()));
+        }
+
+
         istoricPret = UtilsFormatting.getIstoricPret(pretArticol.getIstoricPret(), EnumTipComanda.DISTRIBUTIE);
 
         procDiscClient = 0;
@@ -1415,8 +1287,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
                 Toast.makeText(getApplicationContext(), "Pret sub cmp.", Toast.LENGTH_LONG).show();
 
-                if (layoutPretMaxKA.getVisibility() == View.VISIBLE)
-                    layoutPretMaxKA.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -1426,23 +1296,16 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
         redBtnTable.setVisibility(View.VISIBLE);
         textProcRed.setVisibility(View.VISIBLE);
-        procDisc.setVisibility(View.VISIBLE);
 
         textMultipluArt.setVisibility(View.VISIBLE);
         textMultipluArt.setText("Unit.pret: " + valMultiplu + " " + umStoc);
 
-        textPretTVA.setVisibility(View.VISIBLE);
 
         txtPretArt.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
         txtPretArt.setHint(nf2.format(initPrice / globalCantArt * valMultiplu));
 
         dataExpPret = pretArticol.getDataExp();
-        ((TextView) findViewById(R.id.textDataExp)).setText(UtilsDates.formatDataExp(pretArticol.getDataExp()));
 
-        if (ModificareComanda.isComandaDistrib)
-            textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu * Constants.TVA)));
-        else
-            textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu)));
 
         discMaxAV = 0;
         discMaxSD = 0;
@@ -1457,7 +1320,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         }
 
 
-        procDisc.setText(nf2.format(procDiscClient));
+
         textProcRed.setFocusableInTouchMode(true);
         tglProc.setEnabled(true);
         txtPretArt.setEnabled(true);
@@ -1490,281 +1353,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
     }
 
-    private void listArtPret(String pretResponse) {
 
-        try {
-            if (!pretResponse.equals("-1") && pretResponse.contains("#")) {
 
-                String[] tokenPret = pretResponse.split("#");
 
-                valMultiplu = 1;
-
-                cantUmb = tokenPret[14];
-                Umb = tokenPret[15];
-                greutateArt = Double.parseDouble(tokenPret[24].trim());
-
-                tipMarfa = tokenPret[26];
-                greutateBruta = Double.parseDouble(tokenPret[27].trim());
-                lungimeArt = tokenPret[28];
-
-                cantitate50 = tokenPret[29];
-                um50 = tokenPret[30];
-
-                if (isConditiiModifCant50(tokenPret[0], cantitate50, um50)) {
-                    textCant.setText(tokenPret[0]);
-                    showModifCantInfo(tokenPret[0], cantitate50, um50);
-                    selectedCant = Double.parseDouble(textCant.getText().toString().trim());
-                }
-
-                if (Double.parseDouble(cantitate50) == 0)
-                    cantitate50 = tokenPret[0];
-
-                cmpArt = Double.parseDouble(tokenPret[17]);
-
-                if (Double.parseDouble(cantUmb) > nf2.parse(textStoc.getText().toString()).doubleValue()) {
-                    Toast.makeText(getApplicationContext(), "Stoc insuficient!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                valMultiplu = Double.parseDouble(tokenPret[13].toString().trim());
-
-                globalCantArt = Double.parseDouble(tokenPret[14]);
-
-                saveArtBtn.setVisibility(View.VISIBLE);
-                textPromo.setText("");
-
-                NumberFormat nf2 = NumberFormat.getInstance();
-                nf2.setMinimumFractionDigits(3);
-                nf2.setMaximumFractionDigits(3);
-
-                if (tglProc.isChecked())
-                    tglProc.performClick();
-
-                codPromo = "-1";
-
-                txtPretArt.setVisibility(View.VISIBLE);
-
-                initPrice = Double.parseDouble(tokenPret[1]);
-                listPrice = Double.parseDouble(tokenPret[8]);
-
-                String[] condPret = tokenPret[9].split(";");
-                int ii = 0;
-                String[] tokPret;
-                String stringCondPret = "";
-                Double valCondPret = 0.0;
-
-                for (ii = 0; ii < condPret.length; ii++) {
-                    tokPret = condPret[ii].split(":");
-                    valCondPret = Double.valueOf(tokPret[1].replace(',', '.').trim());
-                    if (valCondPret != 0) {
-                        stringCondPret += tokPret[0] + UtilsFormatting.addSpace(20 - tokPret[0].length()) + ":"
-                                + UtilsFormatting.addSpace(10 - String.valueOf(nf2.format(valCondPret)).length()) + nf2.format(valCondPret)
-                                + System.getProperty("line.separator");
-                    }
-                }
-
-                textCondPret.setVisibility(View.VISIBLE);
-                textCondPret.setText(stringCondPret);
-
-                txtImpachetare.setText(tokenPret[19]);
-
-                afisIstoricPret(tokenPret[20]);
-
-                istoricPret = UtilsFormatting.getIstoricPret(tokenPret[20], EnumTipComanda.DISTRIBUTIE);
-
-                procDiscClient = 0;
-                minimKAPrice = 0;
-                if (UserInfo.getInstance().getTipAcces().equals("27")) {
-
-                    minimKAPrice = listPrice / globalCantArt * valMultiplu - (listPrice / globalCantArt * valMultiplu) * Double.valueOf(tokenPret[16]) / 100;
-
-                    if (listPrice > 0)
-                        procDiscClient = 100 - (initPrice / listPrice) * 100;
-
-                    layoutPretMaxKA.setVisibility(View.VISIBLE);
-                    textPretMinKA.setText(String.valueOf(nf2.format(minimKAPrice)));
-
-                    layoutPretMediuKA.setVisibility(View.VISIBLE);
-                    textPretMediuKA.setText(nf2.format(Double.valueOf(tokenPret[18])));
-
-                }
-
-
-
-                finalPrice = initPrice;
-
-                textProcRed.setText("");
-
-                redBtnTable.setVisibility(View.VISIBLE);
-                textProcRed.setVisibility(View.VISIBLE);
-                procDisc.setVisibility(View.VISIBLE);
-
-                textMultipluArt.setVisibility(View.VISIBLE);
-                textMultipluArt.setText("Unit.pret: " + tokenPret[13] + " " + umStoc);
-
-                textPretTVA.setVisibility(View.VISIBLE);
-
-                txtPretArt.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
-                txtPretArt.setHint(nf2.format(initPrice / globalCantArt * valMultiplu));
-
-                dataExpPret = tokenPret[23];
-                ((TextView) findViewById(R.id.textDataExp)).setText(UtilsDates.formatDataExp(tokenPret[23]));
-
-                if (ModificareComanda.isComandaDistrib)
-                    textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu * Constants.TVA)));
-                else
-                    textPretTVA.setText(String.valueOf(nf2.format(initPrice / globalCantArt * valMultiplu)));
-
-                discMaxAV = Double.valueOf(tokenPret[10]);
-                discMaxSD = Double.valueOf(tokenPret[11]);
-
-
-                infoArticol = tokenPret[9].replace(',', '.');
-
-                pretVanzare = listPrice; // se calculeaza procentul de aprobare
-
-                if (!UserInfo.getInstance().getTipAcces().equals("27")) {
-                    if (listPrice > 0)
-                        procDiscClient = 100 - (initPrice / listPrice) * 100;
-                }
-
-                procDisc.setText(nf2.format(procDiscClient));
-                textProcRed.setFocusableInTouchMode(true);
-                tglProc.setEnabled(true);
-                txtPretArt.setEnabled(true);
-
-                // se afiseaza direct pretul si nu procentul
-                tglProc.setChecked(false);
-                tglProc.performClick();
-
-                if (noDiscount(tokenPret[3])) {
-                    txtPretArt.setEnabled(false);
-                    textProcRed.setFocusable(false);
-                    tglProc.setEnabled(false);
-                    textPromo.setVisibility(View.VISIBLE);
-                    textPromo.setText("Pret promotional");
-                    codPromo = "1";
-                } else {
-
-                    InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mgr.showSoftInput(textProcRed, InputMethodManager.SHOW_IMPLICIT);
-
-                    // verificare articole promotii
-                    if (Double.parseDouble(tokenPret[5]) != 0) {
-                        artPromoText = "";
-                        textPromo.setVisibility(View.VISIBLE);
-
-                        // articolul din promotie are alt pret
-                        if (Double.parseDouble(tokenPret[6]) != 0) {
-
-                        } else // articolul din promotie este gratuit
-                        {
-                            codPromo = "2";
-
-                            // verificare cantitati articole gratuite
-                            // cant. art promotie se adauga la cant. ceruta
-                            if (Double.parseDouble(textCant.getText().toString().trim()) == Double.parseDouble(tokenPret[0])) {
-
-                                // verificare cod articol promotie
-                                // art. promo = art. din comanda
-                                if (codArticol.equals(tokenPret[4])) {
-                                    artPromoText = tokenPret[5] + " " + tokenPret[7] + " x " + numeArticol + " gratuit. ";
-                                } else// art. promo diferit de art. din cmd.
-                                {
-                                    artPromoText = tokenPret[5] + " " + tokenPret[7] + " x " + tokenPret[4] + " gratuit. ";
-
-                                }
-
-                            } else // cant art. promotie se scade din cant.
-                            // ceruta
-                            {
-
-                                artPromoText = "Din cantitatea comandata " + tokenPret[5] + " " + tokenPret[7] + " sunt gratis.";
-
-                            }
-
-                            textPromo.setText("Articol cu promotie");
-
-                        }
-
-                    }
-
-                }
-
-                // **la preturi zero se blocheaza modificarea
-                if (Double.parseDouble(tokenPret[1].toString()) == 0) {
-                    txtPretArt.setEnabled(false);
-                }
-
-                if (!codPromo.equals("1")) {
-                    textProcRed.requestFocus();
-                }
-
-            } else {
-
-                Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_SHORT).show();
-
-            }
-
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void afisIstoricPret(String infoIstoric) {
-        LinearLayout layoutIstoric1 = (LinearLayout) findViewById(R.id.layoutIstoricPret1);
-        LinearLayout layoutIstoric2 = (LinearLayout) findViewById(R.id.layoutIstoricPret2);
-        LinearLayout layoutIstoric3 = (LinearLayout) findViewById(R.id.layoutIstoricPret3);
-
-        layoutIstoric1.setVisibility(View.GONE);
-        layoutIstoric2.setVisibility(View.GONE);
-        layoutIstoric3.setVisibility(View.GONE);
-
-        DecimalFormat df = new DecimalFormat("#0.00");
-
-        if (infoIstoric.contains(":")) {
-            String[] arrayIstoric = infoIstoric.split(":");
-
-            if (arrayIstoric.length > 0 && arrayIstoric[0].contains("@")) {
-
-                layoutIstoric1.setVisibility(View.VISIBLE);
-
-                String[] arrayPret = arrayIstoric[0].split("@");
-
-                TextView textIstoric1 = (TextView) findViewById(R.id.txtIstoricPret1);
-                textIstoric1.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / " + arrayPret[1] + " "
-                        + arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
-
-            }
-
-            if (arrayIstoric.length > 1 && arrayIstoric[1].contains("@")) {
-
-                layoutIstoric2.setVisibility(View.VISIBLE);
-
-                String[] arrayPret = arrayIstoric[1].split("@");
-
-                TextView textIstoric2 = (TextView) findViewById(R.id.txtIstoricPret2);
-                textIstoric2.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / " + arrayPret[1] + " "
-                        + arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
-
-            }
-
-            if (arrayIstoric.length > 2 && arrayIstoric[2].contains("@")) {
-
-                layoutIstoric3.setVisibility(View.VISIBLE);
-
-                String[] arrayPret = arrayIstoric[2].split("@");
-
-                TextView textIstoric3 = (TextView) findViewById(R.id.txtIstoricPret3);
-                textIstoric3.setText(df.format(Double.valueOf(arrayPret[0])) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " / " + arrayPret[1] + " "
-                        + arrayPret[2] + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
-
-            }
-
-        }
-
-    }
 
     private boolean noDiscount(String artPromo) {
 
@@ -1897,9 +1488,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                 break;
             case GET_PRET_UNIC:
                 listPretArticol(opArticol.deserializePretGed(result));
-                break;
-            case GET_PRET:
-                listArtPret((String) result);
                 break;
             case GET_STOC_DEPOZIT:
                 listArtStoc((String) result);

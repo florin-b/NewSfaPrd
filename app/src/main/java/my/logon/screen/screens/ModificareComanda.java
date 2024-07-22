@@ -157,6 +157,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     private String globalAlertSDKA = "", globalAlertDVKA = "";
     private String conditieID = "";
     private int idOperatieComanda = 3;
+    private String codJ = "";
 
     private boolean alertSD = false;
     private boolean alertDV = false;
@@ -723,7 +724,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                         nf3.setMinimumFractionDigits(2);
                         nf3.setMaximumFractionDigits(2);
 
-                        String userSiteMail = " ", isValIncModif = " ", codJ = "", adrLivrareGED = "";
+                        String userSiteMail = " ", isValIncModif = " ", adrLivrareGED = "";
 
                         if (dateLivrareInstance.isValIncModif())
                             isValIncModif = "X";
@@ -1633,6 +1634,11 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         articol.setCantitate(1.0);
         articol.setDepozit(listArticoleComanda.get(0).getDepozit());
         articol.setPretUnit(taxaVerde);
+        articol.setGreutateBruta(0);
+        articol.setGreutate(0);
+        articol.setCantitate50(articol.getCantitate());
+        articol.setUm50("BUC");
+        articol.setArticolMathaus(null);
         articol.setProcent(0);
         articol.setUm("BUC");
         articol.setProcentFact(0);
@@ -1647,6 +1653,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         articol.setDepart(listArticoleComanda.get(0).getDepart());
         articol.setObservatii("");
         articol.setIstoricPret("");
+        articol.setFilialaSite(listArticoleComanda.get(0).getFilialaSite());
         listArticoleComanda.add(articol);
 
     }
@@ -1828,6 +1835,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             obj.put("codPostal", DateLivrare.getInstance().getCodPostal());
             obj.put("isComandaCustodie", DateLivrare.getInstance().isComandaCustodie());
             obj.put("taxeComanda", opArticol.serializeTaxeComanda(DateLivrare.getInstance().getTaxeComanda()));
+            obj.put("zona", DateLivrare.getInstance().getDatePoligonLivrare().getTipZona());
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
@@ -1876,7 +1884,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     }
 
     private boolean isConditiiCmdAccept() {
-        if ((UtilsUser.isAgentOrSD() && isComandaGed()) || comandaSelectata.isCmdInstPublica())
+        if ((UtilsUser.isAgentOrSD() && isComandaGed()) || comandaSelectata.isCmdInstPublica() || UtilsUser.isConsWood())
             return isCmdGEDOkToSave();
         else
             return isCommandaOkToSave();
@@ -2113,6 +2121,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         afisConditiiHeader(conditiiComanda.getHeader());
 
         conditieID = String.valueOf(conditiiComanda.getHeader().getId());
+        codJ = dateLivrare.getCodJ();
 
         conditiiComandaArticole = conditiiComanda.getArticole();
 

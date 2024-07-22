@@ -40,6 +40,8 @@ public class UserInfo {
 	private double maxNumerarPFizica = 0;
 	private double maxNumerarPJuridica = 0;
 
+	private String appVer;
+
 	private static UserInfo instance = new UserInfo();
 
 	private UserInfo() {
@@ -283,13 +285,21 @@ public class UserInfo {
 		this.maxNumerarPJuridica = maxNumerarPJuridica;
 	}
 
+	public String getAppVer() {
+		return appVer;
+	}
+
+	public void setAppVer(String appVer) {
+		this.appVer = appVer;
+	}
+
 	@Override
 	public String toString() {
-		return "UserInfo [nume=" + nume + ", filiala=" + filiala + ", cod=" + cod + ", numeDepart=" + numeDepart + ", codDepart=" + codDepart
-				+ ", unitLog=" + unitLog + ", initUnitLog=" + initUnitLog + ", tipAcces=" + tipAcces + ", parentScreen=" + parentScreen
-				+ ", filialeDV=" + filialeDV + ", altaFiliala=" + altaFiliala + ", tipUser=" + tipUser + ", departExtra=" + departExtra
-				+ ", tipUserSap=" + tipUserSap + ", extraFiliale=" + extraFiliale + ", comisionCV=" + comisionCV + ", coefCorectie=" + coefCorectie
-				+ ", userSite=" + userSite + ", userWood=" + userWood + ", filHome=" + filHome + "]";
+		return "UserInfo [nume=" + nume + ", filiala=" + filiala + ", cod=" + cod + ", numeDepart=" + numeDepart + ", codDepart=" + codDepart + ", unitLog="
+				+ unitLog + ", initUnitLog=" + initUnitLog + ", tipAcces=" + tipAcces + ", parentScreen=" + parentScreen + ", filialeDV=" + filialeDV
+				+ ", altaFiliala=" + altaFiliala + ", tipUser=" + tipUser + ", departExtra=" + departExtra + ", tipUserSap=" + tipUserSap + ", extraFiliale="
+				+ extraFiliale + ", comisionCV=" + comisionCV + ", coefCorectie=" + coefCorectie + ", userSite=" + userSite + ", userWood=" + userWood
+				+ ", filHome=" + filHome + "]";
 	}
 
 }

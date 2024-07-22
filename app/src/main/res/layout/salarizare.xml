@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ScrollView
         android:id="@+id/mainScroll"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fillViewport="true" >
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/mainDepartament"
@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dip"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/labelDateGenerale"
@@ -40,11 +40,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="30dip"
-                    android:layout_marginRight="100dip"
                     android:layout_marginTop="10dip"
+                    android:layout_marginRight="100dip"
                     android:background="#D6DBDF"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/textNumeAgent"
@@ -145,7 +145,7 @@
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <ListView
                         android:id="@+id/listAgenti"
@@ -160,13 +160,13 @@
                     android:layout_width="400dip"
                     android:layout_height="35dip"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="30dip"
                     android:layout_marginLeft="30dip"
                     android:layout_marginTop="30dip"
+                    android:layout_marginBottom="30dip"
                     android:background="#E0E0E0"
+                    android:gravity="left"
                     android:paddingLeft="5dip"
                     android:paddingTop="5dip"
-                    android:gravity="left"
                     android:textColor="@color/salarizareHeaderTotal"
                     android:textSize="17sp"
                     android:visibility="gone" />
@@ -177,18 +177,18 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TableLayout
                         android:id="@+id/table_venit_general"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="50dip"
                         android:layout_marginLeft="30dip"
+                        android:layout_marginTop="10dip"
                         android:layout_marginRight="100dip"
-                        android:layout_marginTop="10dip" >
+                        android:layout_marginBottom="50dip">
 
-                        <TableRow android:background="#D6DBDF" >
+                        <TableRow android:background="#D6DBDF">
 
                             <TextView
                                 android:layout_width="0dip"
@@ -256,7 +256,7 @@
                                 android:layout_weight="0.1"
                                 android:gravity="center"
                                 android:padding="3dip"
-                                android:text="Venit CVS"
+                                android:text="% st nociv"
                                 android:textColor="@color/salarizareHeaderTotal"
                                 android:textSize="17sp"
                                 android:typeface="sans" />
@@ -273,7 +273,7 @@
                                 android:typeface="sans" />
                         </TableRow>
 
-                        <TableRow android:background="#EFF0F1" >
+                        <TableRow android:background="#EFF0F1">
 
                             <TextView
                                 android:id="@+id/venitT1"
@@ -359,10 +359,10 @@
                     android:id="@+id/layoutDetaliiSalarizare"
                     android:layout_width="match_parent"
                     android:layout_height="50dip"
-                    android:layout_marginBottom="30dip"
                     android:layout_marginRight="100dip"
+                    android:layout_marginBottom="30dip"
                     android:orientation="vertical"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/btnDetaliiSalarizare"
@@ -381,14 +381,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="10dip"
                         android:layout_marginLeft="30dip"
+                        android:layout_marginBottom="10dip"
                         android:layout_weight="0.6"
                         android:gravity="left"
                         android:text="Detalii venit marja T1"
@@ -401,7 +401,7 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -420,7 +420,7 @@
                     android:layout_marginRight="100dip"
                     android:background="#D6DBDF"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/textNumeClient"
@@ -529,7 +529,7 @@
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <ListView
                         android:id="@+id/listDetaliiBaza"
@@ -549,7 +549,7 @@
                     android:layout_marginRight="100dip"
                     android:background="#D6DBDF"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"
@@ -645,7 +645,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="30dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/textDetRecurent"
@@ -665,7 +665,7 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -681,11 +681,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dip"
-                    android:layout_marginRight="100dip"
                     android:layout_marginTop="10dip"
-                    android:visibility="gone" >
+                    android:layout_marginRight="100dip"
+                    android:visibility="gone">
 
-                    <TableRow android:background="#D6DBDF" >
+                    <TableRow android:background="#D6DBDF">
 
                         <TextView
                             android:layout_width="0dip"
@@ -757,7 +757,7 @@
                             android:typeface="sans" />
                     </TableRow>
 
-                    <TableRow android:background="#EFF0F1" >
+                    <TableRow android:background="#EFF0F1">
 
                         <TextView
                             android:id="@+id/venitBazaTCF"
@@ -833,7 +833,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="30dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -852,7 +852,7 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -868,11 +868,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dip"
-                    android:layout_marginRight="100dip"
                     android:layout_marginTop="10dip"
-                    android:visibility="gone" >
+                    android:layout_marginRight="100dip"
+                    android:visibility="gone">
 
-                    <TableRow android:background="#D6DBDF" >
+                    <TableRow android:background="#D6DBDF">
 
                         <TextView
                             android:layout_width="0dip"
@@ -923,7 +923,7 @@
                             android:typeface="sans" />
                     </TableRow>
 
-                    <TableRow android:background="#EFF0F1" >
+                    <TableRow android:background="#EFF0F1">
 
                         <TextView
                             android:id="@+id/venitBazaCorectii"
@@ -977,7 +977,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="30dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -996,7 +996,7 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -1012,10 +1012,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dip"
-                    android:layout_marginRight="100dip"
                     android:layout_marginTop="10dip"
+                    android:layout_marginRight="100dip"
                     android:background="#D6DBDF"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -1061,7 +1061,7 @@
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <ListView
                         android:id="@+id/listDetalii0_8"
@@ -1077,11 +1077,11 @@
                     android:id="@+id/layout_total_detalii_08"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="30dip"
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
+                    android:layout_marginBottom="30dip"
                     android:background="#D6DBDF"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -1129,7 +1129,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="30dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -1148,7 +1148,7 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -1164,10 +1164,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dip"
-                    android:layout_marginRight="100dip"
                     android:layout_marginTop="10dip"
+                    android:layout_marginRight="100dip"
                     android:background="#D6DBDF"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -1213,7 +1213,7 @@
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <ListView
                         android:id="@+id/listDetaliiMalus"
@@ -1229,11 +1229,11 @@
                     android:id="@+id/layout_total_detalii_malus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="30dip"
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
+                    android:layout_marginBottom="30dip"
                     android:background="#D6DBDF"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -1281,7 +1281,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="30dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/labelDetaliiMalusClientSelect"
@@ -1301,7 +1301,7 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -1317,10 +1317,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dip"
-                    android:layout_marginRight="100dip"
                     android:layout_marginTop="10dip"
+                    android:layout_marginRight="100dip"
                     android:background="#D6DBDF"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -1450,7 +1450,7 @@
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <ListView
                         android:id="@+id/listDetaliiMalusClient"
@@ -1467,10 +1467,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="10dip"
                     android:layout_marginLeft="30dip"
+                    android:layout_marginBottom="10dip"
                     android:gravity="left"
-                    android:text="Detalii CVS"
+                    android:text="Detalii stoc nociv"
                     android:textColor="@color/salarizareHeaderTotal"
                     android:textSize="17sp"
                     android:textStyle="bold"
@@ -1482,10 +1482,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_marginLeft="30dip"
-                    android:layout_marginRight="100dip"
                     android:layout_marginTop="10dip"
+                    android:layout_marginRight="100dip"
                     android:background="#D6DBDF"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dip"
@@ -1503,10 +1503,10 @@
                         android:layout_width="0dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.08"
                         android:gravity="right"
                         android:padding="3dip"
-                        android:text="Venit marja T1"
+                        android:text="V st nociv"
                         android:textColor="@color/salarizareHeaderTotal"
                         android:textSize="17sp"
                         android:typeface="sans" />
@@ -1518,7 +1518,7 @@
                         android:layout_weight="0.1"
                         android:gravity="right"
                         android:padding="3dip"
-                        android:text="Valoare stoc"
+                        android:text="Val tot stoc"
                         android:textColor="@color/salarizareHeaderTotal"
                         android:textSize="17sp"
                         android:typeface="sans" />
@@ -1527,10 +1527,10 @@
                         android:layout_width="0dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.07"
                         android:gravity="right"
                         android:padding="3dip"
-                        android:text="Target realizat"
+                        android:text="Prag valor"
                         android:textColor="@color/salarizareHeaderTotal"
                         android:textSize="17sp"
                         android:typeface="sans" />
@@ -1539,19 +1539,7 @@
                         android:layout_width="0dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="0.1"
-                        android:gravity="right"
-                        android:padding="3dip"
-                        android:text="Venit fara tva"
-                        android:textColor="@color/salarizareHeaderTotal"
-                        android:textSize="17sp"
-                        android:typeface="sans" />
-
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="40dip"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="0.05"
+                        android:layout_weight="0.07"
                         android:gravity="right"
                         android:padding="3dip"
                         android:text="Procent"
@@ -1563,10 +1551,10 @@
                         android:layout_width="0dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="0.05"
+                        android:layout_weight="0.08"
                         android:gravity="right"
                         android:padding="3dip"
-                        android:text="CVS"
+                        android:text="VenitMJ T1"
                         android:textColor="@color/salarizareHeaderTotal"
                         android:textSize="17sp"
                         android:typeface="sans" />
@@ -1575,10 +1563,10 @@
                         android:layout_width="0dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="0.06"
+                        android:layout_weight="0.08"
                         android:gravity="right"
                         android:padding="3dip"
-                        android:text="Venit CVS"
+                        android:text="% stoc nociv"
                         android:textColor="@color/salarizareHeaderTotal"
                         android:textSize="17sp"
                         android:typeface="sans" />
@@ -1588,11 +1576,11 @@
                     android:id="@+id/layoutListDetaliiCVS"
                     android:layout_width="match_parent"
                     android:layout_height="340dp"
-                    android:layout_marginBottom="30dip"
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="100dip"
+                    android:layout_marginBottom="30dip"
                     android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <ListView
                         android:id="@+id/listDetaliiCVS"
@@ -1603,16 +1591,16 @@
                 </LinearLayout>
 
                 <include
-                    android:layout_alignParentLeft="true"
+                    layout="@layout/detalii_stoc_nociv"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    layout="@layout/detalii_stoc_nociv"/>
+                    android:layout_alignParentLeft="true" />
 
                 <include
-                    android:layout_alignParentLeft="true"
+                    layout="@layout/detalii_vanzari_incrucisate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    layout="@layout/detalii_vanzari_incrucisate"/>
+                    android:layout_alignParentLeft="true" />
 
             </LinearLayout>
         </LinearLayout>

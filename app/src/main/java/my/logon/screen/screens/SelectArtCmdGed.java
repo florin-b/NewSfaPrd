@@ -39,7 +39,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,6 +75,7 @@ import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.filters.DecimalDigitsInputFilter;
 import my.logon.screen.helpers.HelperComenzi;
 import my.logon.screen.helpers.HelperMathaus;
+import my.logon.screen.helpers.HelperPreturi;
 import my.logon.screen.listeners.ArticolMathausListener;
 import my.logon.screen.listeners.Cablu05SelectedListener;
 import my.logon.screen.listeners.MagazinMathausListener;
@@ -95,7 +95,6 @@ import my.logon.screen.utils.DepartamentAgent;
 import my.logon.screen.utils.ScreenUtils;
 import my.logon.screen.utils.UtilsArticole;
 import my.logon.screen.utils.UtilsComenzi;
-import my.logon.screen.utils.UtilsDates;
 import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
@@ -125,7 +124,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     ToggleButton tglProc;
 
     private TextView textStoc;
-    private TextView textCant, procDisc, textPretGED, textMultipluArt;
+    private TextView textCant,  textMultipluArt;
 
     private TextView textUM;
     private TextView labelCant, labelStoc;
@@ -170,8 +169,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     private double coefCorectie;
     private ArrayAdapter<String> adapterSpinnerDepozite;
-    private LinearLayout layoutPretGEDFTva;
-    private TextView textPretGEDFTva, textTransport, textDataExp;
+
+
     private double procentTVA, procentTransport, valoareTransport;
     private PretArticolGed selectedArticol;
 
@@ -293,7 +292,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         else
             textProcRed.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(3)});
 
-        procDisc = (TextView) findViewById(R.id.procDisc);
+
 
         textMultipluArt = (TextView) findViewById(R.id.txtMultipluArt);
 
@@ -306,7 +305,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         labelCant = (TextView) findViewById(R.id.labelCant);
         labelStoc = (TextView) findViewById(R.id.labelStoc);
         textCondPret = (TextView) findViewById(R.id.textCondPret);
-        textPretGED = (TextView) findViewById(R.id.textPretGED);
+
 
         txtImpachetare = (TextView) findViewById(R.id.txtImpachetare);
 
@@ -362,21 +361,12 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         textProcRed.setVisibility(View.INVISIBLE);
         pretBtn.setVisibility(View.INVISIBLE);
         textPromo.setVisibility(View.INVISIBLE);
-        procDisc.setVisibility(View.INVISIBLE);
+
         textCondPret.setVisibility(View.INVISIBLE);
-        textPretGED.setVisibility(View.INVISIBLE);
+
         textMultipluArt.setVisibility(View.INVISIBLE);
 
-        layoutPretGEDFTva = (LinearLayout) findViewById(R.id.layoutPretGEDFTva);
-        layoutPretGEDFTva.setVisibility(View.GONE);
 
-        textPretGEDFTva = (TextView) findViewById(R.id.textPretGEDFTVA);
-        textTransport = (TextView) findViewById(R.id.textTransport);
-        textDataExp = (TextView) findViewById(R.id.textDataExp);
-
-        if (UserInfo.getInstance().getTipUserSap().equals("KA3") && DateLivrare.getInstance().getTipPersClient().equals("D")) {
-            layoutPretGEDFTva.setVisibility(View.VISIBLE);
-        }
 
         if (CreareComandaGed.tipComandaGed == TipCmdGed.COMANDA_AMOB) {
             ((LinearLayout) findViewById(R.id.cautareArticoleLayout)).setVisibility(View.GONE);
@@ -1207,9 +1197,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                         pretMod = true;
                         finalPrice = initPrice;
 
-                        textPretGED.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
-                        textPretGEDFTva.setText(nf2.format((initPrice / globalCantArt * valMultiplu) / procentTVA));
-                        textTransport.setText(nForm2.format(initPrice * (procentTransport / 100) + valoareTransport));
+
+
+
 
                     } else {
 
@@ -1226,9 +1216,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                         pretMod = false;
                         finalPrice = initPrice;
 
-                        textPretGED.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
-                        textPretGEDFTva.setText(nf2.format((initPrice / globalCantArt * valMultiplu) / procentTVA));
-                        textTransport.setText(nForm2.format(initPrice * (procentTransport / 100) + valoareTransport));
+
+
+
 
                     }
                 }
@@ -1285,20 +1275,15 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
                                         txtPretArt.setText(nf2.format(newPr));
                                         finalPrice = newPr;
-                                        textPretGEDFTva.setText(nf2.format(finalPrice / procentTVA));
-                                        textPretGED.setText(txtPretArt.getText().toString());
-
-                                        textTransport.setText(nForm2.format(((finalPrice / valMultiplu) * globalCantArt) * (procentTransport / 100)
-                                                + valoareTransport));
 
                                     }
                                 }
 
                             } else {
                                 txtPretArt.setText(nf2.format(initPrice / globalCantArt * valMultiplu));
-                                textPretGED.setText(nf2.format((initPrice / globalCantArt) * valMultiplu));
-                                textPretGEDFTva.setText(nf2.format((initPrice / globalCantArt * valMultiplu) / procentTVA));
-                                textTransport.setText(nForm2.format((initPrice) * (procentTransport / 100) + valoareTransport));
+
+
+
 
                             }
 
@@ -1313,16 +1298,11 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
                                 txtPretArt.setText(nf2.format(procR));
                                 finalPrice = Double.parseDouble(textProcRed.getText().toString());
-                                textPretGEDFTva.setText(nf2.format(finalPrice / procentTVA));
-                                textTransport.setText(nForm2.format(((finalPrice / valMultiplu) * globalCantArt) * (procentTransport / 100) + valoareTransport));
-                                textPretGED.setText(textProcRed.getText().toString());
+
 
                             } else {
                                 txtPretArt.setText("0");
                                 finalPrice = 0;
-                                textPretGEDFTva.setText("0");
-                                textTransport.setText("0");
-                                textPretGED.setText("0");
                                 textProcRed.setFocusableInTouchMode(true);
                             }
 
@@ -1812,8 +1792,6 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                     }
 
 
-
-
                     // pt. unele articole care nu au pret (servicii)
                     if (pretVanzare == 0)
                         pretVanzare = finalPrice;
@@ -1937,7 +1915,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                         if (HelperMathaus.isComandaVanzareTCLI()) {
 
                             if (!UtilsUser.isConsWood() && !UtilsComenzi.isDepozitUnitLog(articol.getDepozit(), DateLivrare.getInstance().getFilialaLivrareTCLI().getDepozite())) {
-                                Toast.makeText(getApplicationContext(), "Nu puteti folosi acest depozit pentru " + DateLivrare.getInstance().getFilialaLivrareTCLI().getNumeFiliala() +".", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Nu puteti folosi acest depozit pentru " + DateLivrare.getInstance().getFilialaLivrareTCLI().getNumeFiliala() + ".", Toast.LENGTH_LONG).show();
                                 return;
                             }
 
@@ -2147,48 +2125,6 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     }
 
-    private void listStocDisponibilTCLI_old(String stocResponse) {
-        resultLayout.setVisibility(View.VISIBLE);
-
-        listStocTCLI = new ArrayList<>();
-
-        if (!stocResponse.equals("-1")) {
-
-            String[] tokStocArt = stocResponse.split("!");
-            String[] tokenMain = tokStocArt[0].split("@@");
-            double stocTotalTCLI = 0;
-            String umStocTCLI = "BUC";
-
-            for (int i = 0; i < tokenMain.length; i++) {
-                String[] articol = tokenMain[i].toString().split("#");
-
-                if (Double.valueOf(articol[0]) > 0) {
-
-                    if (UtilsComenzi.isDepozitTCLI(articol[2], articolDBSelected.getDepart())) {
-                        stocTotalTCLI += Double.parseDouble(articol[0]);
-                        globalDepozSel = articol[2];
-                        umStocTCLI = articol[1];
-
-                        BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
-                        beanStocTCLI.setCantitate(Double.parseDouble(articol[0]));
-                        beanStocTCLI.setUm(umStocTCLI);
-                        beanStocTCLI.setDepozit(articol[2]);
-                        listStocTCLI.add(beanStocTCLI);
-
-                    }
-                }
-            }
-
-            listArtStoc(stocTotalTCLI + "#" + umStocTCLI + "#1");
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_SHORT).show();
-            textUM.setText("");
-            textStoc.setText("");
-        }
-
-    }
-
     private void listStocDeteriorat(String stocResponse) {
         resultLayout.setVisibility(View.VISIBLE);
 
@@ -2294,7 +2230,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                 cautaStocBV90 = true;
                 verificatStocBV90 = true;
                 performListArtStoc();
-            }else if (isArticolModificatCantPret) {
+            } else if (isArticolModificatCantPret) {
                 textCant.setText(String.valueOf(articolModificat.getCantitate()));
                 performGetPret();
             }
@@ -2499,7 +2435,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     }
 
     private boolean isConditiiModifCant50(PretArticolGed pretArticol) {
-        return !textUM.getText().toString().trim().equals(selectedArticol.getUm50()) && Double.parseDouble(selectedArticol.getCantitate50()) > 0
+        return Double.parseDouble(selectedArticol.getCantitate50()) > 0
                 && selectedCant != Double.parseDouble(pretArticol.getCantitate());
     }
 
@@ -2554,8 +2490,6 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         initPrice = Double.valueOf(pretArticol.getPret());
         listPrice = Double.valueOf(pretArticol.getPretLista());
 
-        afisIstoricPret(pretArticol.getIstoricPret());
-
         listArtRecom = pretArticol.getArticoleRecomandate();
         ((LinearLayout) findViewById(R.id.layoutRecommend)).setVisibility(View.GONE);
         if (!listArtRecom.isEmpty()) {
@@ -2568,6 +2502,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         if (!pretArticol.getErrMsg().isEmpty()) {
             Toast.makeText(getApplicationContext(), pretArticol.getErrMsg(), Toast.LENGTH_LONG).show();
+            saveArtBtn.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -2583,28 +2518,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             }
         }
 
-        String[] condPret = pretArticol.getConditiiPret().split(";");
-
-        int ii = 0;
-        String[] tokPret;
-        String stringCondPret = "";
-        Double valCondPret = 0.0;
-
-
-        for (ii = 0; ii < condPret.length; ii++) {
-            tokPret = condPret[ii].split(":");
-            valCondPret = Double.valueOf(tokPret[1].replace(',', '.').trim());
-            if (valCondPret != 0) {
-                stringCondPret += tokPret[0] + addSpace(20 - tokPret[0].length()) + ":"
-                        + addSpace(10 - String.valueOf(nf2.format(valCondPret)).length()) + nf2.format(valCondPret)
-                        + System.getProperty("line.separator");
-
-            }
-
-        }
 
         textCondPret.setVisibility(View.VISIBLE);
-        textCondPret.setText(stringCondPret);
+        textCondPret.setText(HelperPreturi.getInfoPret(pretArticol, nf2));
 
         finalPrice = initPrice;
         textProcRed.setText("");
@@ -2614,7 +2530,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         redBtnTable.setVisibility(View.VISIBLE);
         textProcRed.setVisibility(View.VISIBLE);
 
-        textPretGED.setVisibility(View.VISIBLE);
+
         textMultipluArt.setVisibility(View.VISIBLE);
 
         labelFactConv.setVisibility(View.INVISIBLE);
@@ -2622,16 +2538,12 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         txtPretArt.setText(nf2.format((initPrice / globalCantArt) * valMultiplu));
         txtPretArt.setHint(nf2.format((initPrice / globalCantArt) * valMultiplu));
 
-        if (CreareComandaGed.tipClient.equals("IP"))
-            ((TextView) findViewById(R.id.labelPretGED)).setText("Pret GED fara tva: ");
-
-        textPretGED.setText(nf2.format((initPrice / globalCantArt) * valMultiplu));
         infoArticol = pretArticol.getConditiiPret().replace(',', '.');
 
         // afisare pret in um alternativa
         afisPretUmAlternativa();
 
-        procDisc.setText(nf2.format(procDiscClient));
+
 
         discMaxAV = pretArticol.getDiscMaxAV();
         discMaxSD = pretArticol.getDiscMaxSD();
@@ -2643,7 +2555,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
         nf.setMaximumFractionDigits(2);
         nf.setMinimumFractionDigits(2);
-        textPretGEDFTva.setText(nf.format(valoareFaraTva));
+
 
         NumberFormat nForm2 = NumberFormat.getInstance(new Locale("en", "US"));
         nForm2.setMinimumFractionDigits(2);
@@ -2652,8 +2564,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         procentTransport = pretArticol.getProcTransport();
         valoareTransport = pretArticol.getValTrap();
         double pretTransport = (initPrice) * (pretArticol.getProcTransport() / 100) + pretArticol.getValTrap();
-        textTransport.setText(nForm2.format(pretTransport));
-        textDataExp.setText(UtilsDates.formatDataExp(pretArticol.getDataExp()));
+
+
 
         // agentii nu pot modifica pretul
         if (userCannotModifyPrice()) {
@@ -2805,76 +2717,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         return retVal;
     }
 
-    private void afisIstoricPret(String infoIstoric) {
-        LinearLayout layoutIstoric1 = (LinearLayout) findViewById(R.id.layoutIstoricPret1);
-        LinearLayout layoutIstoric2 = (LinearLayout) findViewById(R.id.layoutIstoricPret2);
-        LinearLayout layoutIstoric3 = (LinearLayout) findViewById(R.id.layoutIstoricPret3);
 
-        layoutIstoric1.setVisibility(View.GONE);
-        layoutIstoric2.setVisibility(View.GONE);
-        layoutIstoric3.setVisibility(View.GONE);
-
-        DecimalFormat df = new DecimalFormat("#0.00");
-
-        double valoarePret = 0;
-
-        if (infoIstoric.contains(":")) {
-            String[] arrayIstoric = infoIstoric.split(":");
-
-            if (arrayIstoric.length > 0 && arrayIstoric[0].contains("@")) {
-
-                layoutIstoric1.setVisibility(View.VISIBLE);
-
-                String[] arrayPret = arrayIstoric[0].split("@");
-
-                if (isComandaIP())
-                    valoarePret = Double.parseDouble(arrayPret[0]);
-                else
-                    valoarePret = Double.parseDouble(arrayPret[0]) * Constants.TVA;
-
-                TextView textIstoric1 = (TextView) findViewById(R.id.txtIstoricPret1);
-                textIstoric1.setText(" " + df.format(valoarePret) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " /" + arrayPret[1] + " " + arrayPret[2]
-                        + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
-
-            }
-
-            if (arrayIstoric.length > 1 && arrayIstoric[1].contains("@")) {
-
-                layoutIstoric2.setVisibility(View.VISIBLE);
-
-                String[] arrayPret = arrayIstoric[1].split("@");
-
-                if (isComandaIP())
-                    valoarePret = Double.parseDouble(arrayPret[0]);
-                else
-                    valoarePret = Double.parseDouble(arrayPret[0]) * Constants.TVA;
-
-                TextView textIstoric2 = (TextView) findViewById(R.id.txtIstoricPret2);
-                textIstoric2.setText(df.format(valoarePret) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " /" + arrayPret[1] + " " + arrayPret[2]
-                        + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
-
-            }
-
-            if (arrayIstoric.length > 2 && arrayIstoric[2].contains("@")) {
-
-                layoutIstoric3.setVisibility(View.VISIBLE);
-
-                String[] arrayPret = arrayIstoric[2].split("@");
-
-                if (isComandaIP())
-                    valoarePret = Double.parseDouble(arrayPret[0]);
-                else
-                    valoarePret = Double.parseDouble(arrayPret[0]) * Constants.TVA;
-
-                TextView textIstoric3 = (TextView) findViewById(R.id.txtIstoricPret3);
-                textIstoric3.setText(df.format(valoarePret) + UtilsFormatting.addSpace(arrayPret[0].trim(), 6) + " /" + arrayPret[1] + " " + arrayPret[2]
-                        + " - " + UtilsFormatting.getMonthNameFromDate(arrayPret[3], 2));
-
-            }
-
-        }
-
-    }
 
     private static boolean isComandaIP() {
         return UtilsUser.isUserIP() && (CreareComandaGed.tipClientIP == EnumTipClientIP.CONSTR || CreareComandaGed.tipClientIP == EnumTipClientIP.NONCONSTR);

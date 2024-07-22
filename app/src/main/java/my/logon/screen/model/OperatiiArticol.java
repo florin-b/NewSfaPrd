@@ -110,6 +110,8 @@ public interface OperatiiArticol {
 
 	public void getPretUnic(HashMap<String, String> params);
 
+	public void getPretUnicCustodie(HashMap<String, String> params);
+
 	public String serializeTaxeComanda(List<TaxaComanda> listTaxe);
 
 }

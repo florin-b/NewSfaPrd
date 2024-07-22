@@ -17,10 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.R;
-import my.logon.screen.beans.ArticolComandaAfis;
 import my.logon.screen.beans.BeanComandaCreata;
 import my.logon.screen.beans.BeanConditiiArticole;
-import my.logon.screen.beans.ValoriComanda;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.listeners.ArticolModificareListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
@@ -459,25 +457,6 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 
 		notifyDataSetChanged();
 
-	}
-
-	public ValoriComanda getValoriComanda(List<ArticolComandaAfis> articol) {
-
-		double marja = 0;
-		ValoriComanda valoriComanda = new ValoriComanda();
-
-		for (ArticolComandaAfis art : articol) {
-
-			if (art.getTipArt().equals("B")) {
-				valoriComanda.setPondereB(art.getPret() + valoriComanda.getPondereB());
-			}
-
-			valoriComanda.setTotal(art.getPret() + valoriComanda.getTotal());
-			marja = (art.getPretUnit() / art.getMultiplu() - art.getCmp()) * art.getCantitate();
-			valoriComanda.setMarja(marja + valoriComanda.getMarja());
-		}
-
-		return valoriComanda;
 	}
 
 	public int getCount() {

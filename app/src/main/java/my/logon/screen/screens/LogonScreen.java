@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
@@ -42,8 +43,8 @@ import java.util.Timer;
 
 import my.logon.screen.R;
 import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.model.Constants;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
+import my.logon.screen.model.Constants;
 import my.logon.screen.model.OperatiiMeniu;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsDevice;
@@ -306,6 +307,8 @@ public class LogonScreen extends Activity implements AsyncTaskListener {
 		// start login thread
 		try {
 
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+
 			HashMap<String, String> params = new HashMap<String, String>();
 
 			String userN = etUsername.getText().toString().trim();
@@ -316,6 +319,7 @@ public class LogonScreen extends Activity implements AsyncTaskListener {
 			
 			params.put("ipAdr", globalMyIP);
 			params.put("deviceInfo", new OperatiiMeniu(getApplicationContext()).serializeDeviceInfo(new UtilsDevice().getDeviceInfo(getApplicationContext())));
+			params.put("appVer", String.valueOf(pInfo.versionCode));
 
 			AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
 			call.getCallResults();

@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layoutHeaderArt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal" >
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
@@ -94,25 +94,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
         <include
             android:id="@+id/layout_articol_mathaus"
+            layout="@layout/layout_articol_mathaus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            layout="@layout/layout_articol_mathaus"
             android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/layout_list_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4" >
+            android:layout_weight="0.4">
 
             <ListView
                 android:id="@android:id/list"
@@ -132,19 +132,19 @@
             android:layout_marginRight="5dp"
             android:layout_weight="0.6"
             android:background="@drawable/rounded_shape"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textCodArticol"
@@ -173,7 +173,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/labelStoc"
@@ -190,7 +190,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/textStoc"
@@ -222,7 +222,7 @@
                         android:id="@+id/layoutStocKA"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/labelStocKA"
@@ -268,13 +268,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:baselineAligned="false"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
@@ -345,12 +345,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
@@ -422,335 +422,54 @@
                     android:id="@+id/txtPretUmAlt"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
                     android:layout_gravity="right|center"
+                    android:layout_marginLeft="10dp"
                     android:textColor="@color/editTextColor1"
                     android:textSize="17sp"
                     android:typeface="monospace" />
 
                 <LinearLayout
-                    android:id="@+id/layoutIstoricPret1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone" >
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/labelIstoricPret"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center"
-                        android:layout_weight="0.1"
-                        android:gravity="left|center"
-                        android:text="Istoric pret: "
-                        android:textColor="@color/editTextColor1"
-                        android:textSize="17sp"
-                        android:typeface="monospace" />
-
-                    <TextView
-                        android:id="@+id/txtIstoricPret1"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center"
-                        android:layout_weight="0.4"
-                        android:gravity="left|center"
-                        android:textColor="@color/editTextColor1"
-                        android:textSize="17sp"
-                        android:typeface="monospace" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutIstoricPret2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone" >
-
-                    <View
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1" />
-
-                    <TextView
-                        android:id="@+id/txtIstoricPret2"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="0.4"
-                        android:gravity="left|center"
-                        android:textColor="@color/editTextColor1"
-                        android:textSize="17sp"
-                        android:typeface="monospace" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutIstoricPret3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone" >
-
-                    <View
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1" />
-
-                    <TextView
-                        android:id="@+id/txtIstoricPret3"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="0.4"
-                        android:gravity="left|center"
-                        android:textColor="@color/editTextColor1"
-                        android:textSize="17sp"
-                        android:typeface="monospace" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:layout_height="wrap_content">
 
-                        <LinearLayout
-                            android:id="@+id/layoutPretMaxKA"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/textPromo"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:id="@+id/labelPretMaxKA"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="0.22"
-                                android:text="Pret minim: "
-                                android:textColor="@color/detColor5"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:id="@+id/textPretMaxKA"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="0.15"
-                                android:gravity="left"
-                                android:text="0.0"
-                                android:textColor="@color/detColor5"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.4" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layoutPretMediuKA"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:id="@+id/labelPretMediuKA"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="0.22"
-                                android:text="Pret mediu: "
-                                android:textColor="#228B22"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:id="@+id/textPretMediuKA"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="0.15"
-                                android:gravity="left"
-                                android:text="0.0"
-                                android:textColor="#228B22"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.4" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
-
-                            <TextView
-                                android:id="@+id/textPromo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:textColor="@color/warningColor2"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:typeface="monospace" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:id="@+id/labelPretTVA"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="0.22"
-                                android:text="Pret cu tva: "
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:id="@+id/textPretTVA"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="0.15"
-                                android:gravity="left"
-                                android:text="0.0"
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.4" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:id="@+id/labelDisc"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="0.22"
-                                android:text="Disc. client (%): "
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:id="@+id/procDisc"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="0.15"
-                                android:gravity="left"
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.4" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:id="@+id/labelPretGed"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="0.22"
-                                android:text="Pret GED: "
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:id="@+id/textPretGed"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="0.15"
-                                android:gravity="left"
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.4" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:id="@+id/labelDataExp"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="0.22"
-                                android:text="Data exp: "
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:id="@+id/textDataExp"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="0.15"
-                                android:gravity="left"
-                                android:textColor="@color/detColor2"
-                                android:textSize="16sp"
-                                android:typeface="monospace" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.4" />
-                        </LinearLayout>
+                            android:layout_gravity="left"
+                            android:textColor="@color/warningColor2"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:typeface="monospace" />
                     </LinearLayout>
-                </LinearLayout>
 
+
+                </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textIstoricPret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="left"
+
+                        android:maxLines="3"
+                        android:textColor="@color/detColor2"
+                        android:textSize="15sp"
+                        android:typeface="monospace" />
 
                     <TextView
                         android:id="@+id/textCondPret"
@@ -770,8 +489,7 @@
                     android:id="@+id/layoutRecommend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/afisArtRecomBtn"

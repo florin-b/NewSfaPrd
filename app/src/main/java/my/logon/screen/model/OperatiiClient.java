@@ -219,6 +219,9 @@ public class OperatiiClient implements AsyncTaskListener {
 				if (jsonObject.has("tipPlata"))
 					detaliiClient.setTipPlata(jsonObject.getString("tipPlata"));
 
+				if (jsonObject.has("errMsg"))
+					detaliiClient.setErrMsg(jsonObject.getString("errMsg"));
+
 				detaliiClient.setEmail(jsonObject.getString("email"));
 			}
 

@@ -2,77 +2,67 @@ package my.logon.screen.beans;
 
 public class SalarizareDetaliiCVS {
 
-	private String agent;
-	private double venitBaza;
-	private double venitCvs;
-	private double valoareP6V;
-	private double pondere;
-	private double targetValoric;
-	private double valoareFTVA;
-	private double cvs;
+    private String agent;
+    private double venitBaza;
+    private double venitCvs;
+    private double valTotal;
+    private double valNociv;
+    private double prag;
+    private double procent;
 
-	public String getAgent() {
-		return agent;
-	}
+    public String getAgent() {
+        return agent;
+    }
 
-	public void setAgent(String agent) {
-		this.agent = agent;
-	}
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
 
-	public double getVenitBaza() {
-		return venitBaza;
-	}
+    public double getVenitBaza() {
+        return venitBaza;
+    }
 
-	public void setVenitBaza(double venitBaza) {
-		this.venitBaza = venitBaza;
-	}
+    public void setVenitBaza(double venitBaza) {
+        this.venitBaza = venitBaza;
+    }
 
-	public double getVenitCvs() {
-		return venitCvs;
-	}
+    public double getVenitCvs() {
+        return venitCvs;
+    }
 
-	public void setVenitCvs(double venitCvs) {
-		this.venitCvs = venitCvs;
-	}
+    public void setVenitCvs(double venitCvs) {
+        this.venitCvs = venitCvs;
+    }
 
-	public double getValoareP6V() {
-		return valoareP6V;
-	}
+    public double getValTotal() {
+        return valTotal;
+    }
 
-	public void setValoareP6V(double valoareP6V) {
-		this.valoareP6V = valoareP6V;
-	}
+    public void setValTotal(double valTotal) {
+        this.valTotal = valTotal;
+    }
 
-	public double getPondere() {
-		return pondere;
-	}
+    public double getValNociv() {
+        return valNociv;
+    }
 
-	public void setPondere(double pondere) {
-		this.pondere = pondere;
-	}
+    public void setValNociv(double valNociv) {
+        this.valNociv = valNociv;
+    }
 
-	public double getTargetValoric() {
-		return targetValoric;
-	}
+    public double getPrag() {
+        return prag;
+    }
 
-	public void setTargetValoric(double targetValoric) {
-		this.targetValoric = targetValoric;
-	}
+    public void setPrag(double prag) {
+        this.prag = prag;
+    }
 
-	public double getValoareFTVA() {
-		return valoareFTVA;
-	}
+    public double getProcent() {
+        return procent;
+    }
 
-	public void setValoareFTVA(double valoareFTVA) {
-		this.valoareFTVA = valoareFTVA;
-	}
-
-	public double getCvs() {
-		return cvs;
-	}
-
-	public void setCvs(double cvs) {
-		this.cvs = cvs;
-	}
-
+    public void setProcent(double procent) {
+        this.procent = procent;
+    }
 }

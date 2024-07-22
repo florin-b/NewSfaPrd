@@ -37,9 +37,10 @@ import my.logon.screen.adapters.CautareClientiAdapter;
 import my.logon.screen.beans.BeanClient;
 import my.logon.screen.beans.DetaliiClient;
 import my.logon.screen.enums.EnumClienti;
+import my.logon.screen.helpers.DialogHelper;
 import my.logon.screen.listeners.OperatiiClientListener;
-import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
+import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.OperatiiClient;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsGeneral;
@@ -469,6 +470,11 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 
 		tipClient.setText(detaliiClient.getTipClient());
 		saveClntBtn.setVisibility(View.VISIBLE);
+
+		if (detaliiClient.getErrMsg() != null && !detaliiClient.getErrMsg().trim().isEmpty() ) {
+			new DialogHelper().showInfoDialog(this, "\n" + detaliiClient.getErrMsg() + "\n");
+			saveClntBtn.setVisibility(View.INVISIBLE);
+		}
 
 	}
 

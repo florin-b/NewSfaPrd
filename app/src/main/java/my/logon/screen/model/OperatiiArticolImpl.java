@@ -202,7 +202,12 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
         numeComanda = EnumArticoleDAO.GET_PRET_UNIC;
         this.params = params;
         performOperation();
+    }
 
+    public void getPretUnicCustodie(HashMap<String, String> params) {
+        numeComanda = EnumArticoleDAO.GET_PRET_UNIC_CUSTODIE;
+        this.params = params;
+        performOperation();
     }
 
     @Override
@@ -417,6 +422,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             jsonParametru.put("codClientParavan", parametru.getCodClientParavan());
             jsonParametru.put("filialaClp", parametru.getFilialaClp());
             jsonParametru.put("tipTransport", parametru.getTipTransport());
+            jsonParametru.put("appVer", UserInfo.getInstance().getAppVer());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -579,10 +585,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
         return jsonArray.toString();
     }
 
-    public void deserializeListArtStoc(String listArticole) {
-        // Object json = new JSONTokener(serializedListArticole).nextValue();
 
-    }
 
     public PretArticolGed deserializePretGed(Object result) {
         PretArticolGed pretArticol = new PretArticolGed();
@@ -632,7 +635,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
                 double pretMinUnitar = Double.valueOf(pretArticol.getPret());
                 if (jsonObject.getString("pretMinim") != null && jsonObject.getString("pretMinim") != "null")
-                    pretMinUnitar = (Double.valueOf(jsonObject.getString("pretMinim")) / Double.valueOf(pretArticol.getCantitate()))
+                    pretMinUnitar = (Double.valueOf(jsonObject.getString("pretMinim")) / Double.valueOf(pretArticol.getCantitateUmBaza()))
                             * Double.valueOf(pretArticol.getMultiplu());
 
                 pretArticol.setPretMinim(pretMinUnitar);

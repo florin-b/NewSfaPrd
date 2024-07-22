@@ -20,6 +20,7 @@ public class DetaliiClient {
 	private String divizii;
 	private String tipPlata;
 	private String email;
+	private String errMsg;
 
 	public DetaliiClient() {
 
@@ -167,5 +168,13 @@ public class DetaliiClient {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getErrMsg() {
+		return errMsg;
+	}
+
+	public void setErrMsg(String errMsg) {
+		this.errMsg = errMsg;
 	}
 }

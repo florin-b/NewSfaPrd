@@ -578,6 +578,9 @@ public class ClientiGenericiGedInfoStrings {
 			else if (filiala.equals("SV10"))
 				codClient = "4119001361";
 
+			else if (filiala.equals("BU11"))
+				codClient = "4119001390";
+
 
 		}
 
@@ -810,6 +813,9 @@ public class ClientiGenericiGedInfoStrings {
 			else if (filiala.equals("SV10"))
 				codClient = "4119001362";
 
+			else if (filiala.equals("BU11"))
+				codClient = "4119001391";
+
 		}
 
 		if (tipClient.equals("PJ")) {
@@ -901,6 +907,9 @@ public class ClientiGenericiGedInfoStrings {
 		else if (filiala.equals("SV10"))
 			codClient = "4119001363";
 
+		else if (filiala.equals("BU11"))
+			codClient = "4119001386";
+
 		return codClient;
 
 	}
@@ -944,6 +953,12 @@ public class ClientiGenericiGedInfoStrings {
 
 		else if (filiala.equals("SV10"))
 			codClient = "4119001364";
+
+		else if (filiala.equals("BU11"))
+			codClient = "4119001387";
+
+		else if (filiala.equals("BV10"))
+			codClient = "4119001385";
 
 		return codClient;
 

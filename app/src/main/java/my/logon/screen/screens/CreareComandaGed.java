@@ -2416,6 +2416,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             obj.put("filialaPlata", DateLivrare.getInstance().getFilialaPlata());
             obj.put("codPostal", DateLivrare.getInstance().getCodPostal());
             obj.put("taxeComanda", opArticol.serializeTaxeComanda(DateLivrare.getInstance().getTaxeComanda()));
+            obj.put("zona", DateLivrare.getInstance().getDatePoligonLivrare().getTipZona());
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
