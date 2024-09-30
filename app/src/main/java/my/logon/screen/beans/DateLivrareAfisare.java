@@ -79,6 +79,8 @@ public class DateLivrareAfisare {
     private boolean isComandaCustodie;
     private String codPostal;
     private String codJ;
+    private String aprobariNecesare;
+    private String aprobariPrimite;
 
     public DateLivrareAfisare() {
 
@@ -667,5 +669,21 @@ public class DateLivrareAfisare {
 
     public void setCodJ(String codJ) {
         this.codJ = codJ;
+    }
+
+    public String getAprobariNecesare() {
+        return aprobariNecesare;
+    }
+
+    public void setAprobariNecesare(String aprobariNecesare) {
+        this.aprobariNecesare = aprobariNecesare;
+    }
+
+    public String getAprobariPrimite() {
+        return aprobariPrimite;
+    }
+
+    public void setAprobariPrimite(String aprobariPrimite) {
+        this.aprobariPrimite = aprobariPrimite;
     }
 }

@@ -51,11 +51,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="0.05"
-                android:gravity="left|bottom"
+                android:layout_weight="0.08"
+                android:gravity="right|bottom"
                 android:text="1.1"
                 android:textColor="#709472"
-                android:textSize="19sp" />
+                android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout

@@ -11,6 +11,7 @@ public class PlatitorTva {
 	private String strada;
 	private String stareInregistrare;
 	private String diviziiClient;
+	private String codClientNominal;
 
 	public boolean isPlatitor() {
 		return isPlatitor;
@@ -82,5 +83,13 @@ public class PlatitorTva {
 
 	public void setDiviziiClient(String diviziiClient) {
 		this.diviziiClient = diviziiClient;
+	}
+
+	public String getCodClientNominal() {
+		return codClientNominal;
+	}
+
+	public void setCodClientNominal(String codClientNominal) {
+		this.codClientNominal = codClientNominal;
 	}
 }

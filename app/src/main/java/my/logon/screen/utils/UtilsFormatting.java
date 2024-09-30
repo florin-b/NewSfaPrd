@@ -25,7 +25,6 @@ import java.util.regex.Pattern;
 
 import my.logon.screen.enums.EnumJudete;
 import my.logon.screen.enums.EnumTipComanda;
-import my.logon.screen.model.Constants;
 
 public class UtilsFormatting {
 
@@ -222,10 +221,6 @@ public class UtilsFormatting {
 	public static String getIstoricPret(String istoric, EnumTipComanda tipComanda) {
 		StringBuilder formatted = new StringBuilder();
 
-		double valTva = 1;
-
-		if (tipComanda != null && tipComanda == EnumTipComanda.GED)
-			valTva = Constants.TVA;
 
 		if (istoric != null && istoric.contains(":")) {
 			String[] arrayIstoric = istoric.split(":");
@@ -236,7 +231,7 @@ public class UtilsFormatting {
 				if (!formatted.toString().isEmpty())
 					formatted.append("#");
 
-				formatted.append(nf2.format(Double.valueOf(token[0].trim()) * valTva));
+				formatted.append(nf2.format(Double.valueOf(token[0].trim())));
 				formatted.append(" / ");
 				formatted.append(token[2]);
 				formatted.append(" ");

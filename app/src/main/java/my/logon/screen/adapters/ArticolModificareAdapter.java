@@ -23,6 +23,7 @@ import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.listeners.ArticolModificareListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.model.ArticolComanda;
+import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiArticolImpl;
 import my.logon.screen.model.UserInfo;
 
@@ -224,6 +225,31 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 	}
 
 	private String getStatusArticol(ArticolComanda articol, BeanComandaCreata comanda) {
+
+		String statusArticol = "";
+
+		if (!comanda.getStare().equals(ClientiGenericiGedInfoStrings.statusAprobCmd(1)))
+			statusArticol = "";
+
+		if (comanda.getAprobariNecesare() == null || comanda.getAprobariNecesare().trim().isEmpty())
+			statusArticol = "";
+
+		if (articol.hasConditii())
+			statusArticol = "";
+
+		if (comanda.getAprobariNecesare().contains(articol.getDepartSintetic()))
+			statusArticol = "Articolul necesita aprobare";
+
+		if (comanda.getAprobariPrimite().contains(articol.getDepartSintetic()))
+			statusArticol = getStareArticolComandaCV(articol, comanda);
+
+		return statusArticol;
+
+
+	}
+
+
+	private String getStatusArticol_old(ArticolComanda articol, BeanComandaCreata comanda) {
 
 		String statusArticol = "";
 

@@ -554,6 +554,16 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 }
             }
 
+            if (DateLivrare.getInstance().isComandaCustodie()) {
+                spinnerTransp.setSelection(1, true);
+                spinnerTransp.setEnabled(false);
+            } else {
+                spinnerTransp.setSelection(0, true);
+                spinnerTransp.setEnabled(true);
+            }
+
+            setLivrareCustodieLayout();
+
             if (DateLivrare.getInstance().getTransport().trim().isEmpty() || DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT") || DateLivrare.getInstance().getTransport().equals("TFRN"))
                 performGetJudete();
 
@@ -682,6 +692,18 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
             }
         });
+    }
+
+    private void setLivrareCustodieLayout() {
+        if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.LIVRARE_CUSTODIE)) {
+            findViewById(R.id.layoutDocInsot).setVisibility(View.GONE);
+            findViewById(R.id.layoutClientRaft).setVisibility(View.GONE);
+            findViewById(R.id.layoutFactPaleti).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.layoutDocInsot).setVisibility(View.VISIBLE);
+            findViewById(R.id.layoutClientRaft).setVisibility(View.VISIBLE);
+            findViewById(R.id.layoutFactPaleti).setVisibility(View.VISIBLE);
+        }
     }
 
     private void addListenerDataLivrare() {

@@ -19,9 +19,13 @@ public class HelperPreturi {
         Double valCondPret = 0.0;
 
 
+
+
         stringCondPret += "Pret minim" + addSpace(20 - "Pret minim".length()) + ":"
-                + addSpace(10 - String.valueOf(nf.format(pretArticol.getPretMinim())).length()) + nf.format(pretArticol.getPretMinim())
+                + addSpace(10 - nf.format(pretArticol.getPretMinim()).length()) + nf.format(pretArticol.getPretMinim())
                 + System.getProperty("line.separator");
+
+
 
 
         for (ii = 0; ii < condPret.length; ii++) {

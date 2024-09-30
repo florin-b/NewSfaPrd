@@ -203,8 +203,12 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 
 		double marja = 0;
 		ValoriComanda valoriComanda = new ValoriComanda();
+		String moneda = "";
 
 		for (ArticolComanda art : articol) {
+
+			if (moneda.isEmpty())
+				moneda = art.getMoneda();
 
 			if (art.getTipArt().equals("B")) {
 				valoriComanda.setPondereB(art.getPret() + valoriComanda.getPondereB());
@@ -214,6 +218,7 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 
 		}
 
+		valoriComanda.setMoneda(moneda);
 		return valoriComanda;
 	}
 

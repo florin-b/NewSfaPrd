@@ -93,7 +93,6 @@ import my.logon.screen.listeners.MarjaComandaIPListener;
 import my.logon.screen.listeners.ModifCmdTranspListener;
 import my.logon.screen.listeners.PaletiListener;
 import my.logon.screen.listeners.TipMasinaLivrareListener;
-import my.logon.screen.model.AlgoritmComandaGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
@@ -860,13 +859,21 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         if (UserInfo.getInstance().getTipUserSap().contains("KA"))
             codDepartLivr = "10";
 
+        double valPozArt = 0;
+
         for (ArticolComanda artCmd : listArticoleComanda) {
 
             DateArticolMathaus dateArticol = new DateArticolMathaus();
             dateArticol.setProductCode(artCmd.getCodArticol());
             dateArticol.setQuantity(artCmd.getCantitate());
             dateArticol.setUnit(artCmd.getUm());
-            dateArticol.setValPoz(artCmd.getPret());
+
+            valPozArt = artCmd.getPret();
+
+            if (valPozArt == 0)
+                valPozArt = (artCmd.getPretUnitarClient() / artCmd.getMultiplu()) * artCmd.getCantUmb();
+
+            dateArticol.setValPoz(valPozArt);
             dateArticol.setGreutate(artCmd.getGreutateBruta());
 
             dateArticol.setQuantity50(artCmd.getCantitate50());
@@ -1100,13 +1107,13 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         if (totalAdaos >= totalTaxe)
             afisRezumatComandaDialog(livrareMathaus.getCostTransport(), true);
         else
-            afisCostServiciiComandaIP(false);
+            afisCostServiciiComandaIP(false, totalTaxe);
 
     }
 
-    private void afisCostServiciiComandaIP(boolean isBlocat) {
+    private void afisCostServiciiComandaIP(boolean isBlocat, double valoareTaxe) {
 
-        MarjaComandaIPDialog infoDialog = new MarjaComandaIPDialog(this, isBlocat);
+        MarjaComandaIPDialog infoDialog = new MarjaComandaIPDialog(this, isBlocat, valoareTaxe);
         infoDialog.setMarjaComamdaIPListener(this);
         infoDialog.show();
 
@@ -2545,30 +2552,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
     }
 
-    public boolean esteModificatPretulGed(ArrayList<ArticolComanda> listArticole) {
-        boolean esteModificat = false;
-
-        ArticolComanda articol = null;
-
-        for (int i = 0; i < listArticole.size(); i++) {
-
-            articol = listArticole.get(i);
-
-            if (articol.getProcent() > 0) {
-                esteModificat = true;
-                break;
-            }
-
-        }
-
-        if (!esteModificat) {
-            AlgoritmComandaGed algoritm = new AlgoritmComandaGed();
-            algoritm.inlaturaToateAlertelePret(listArticoleComanda);
-        }
-
-        return esteModificat;
-    }
-
     public static double round(double value, int places) {
 
         BigDecimal bd = new BigDecimal(value);
@@ -2611,42 +2594,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         valTranspBtn.setVisibility(View.GONE);
         return;
 
-    }
-
-    private void calculProcente_old(ArrayList<ArticolComanda> listArticole) {
-        if (UtilsUser.isAgentOrSDorKA() || UtilsUser.isConsWood() || comandaSelectata.isCmdInstPublica()) {
-            valTranspBtn.setVisibility(View.GONE);
-            return;
-        }
-
-        textAlertaMarja.setVisibility(View.GONE);
-
-        NumberFormat nf = NumberFormat.getInstance();
-        nf.setMinimumFractionDigits(2);
-        nf.setMaximumFractionDigits(2);
-
-        AlgoritmComandaGed algoritm = new AlgoritmComandaGed();
-        algoritm.calculProcenteComanda(listArticole, esteModificatPretulGed(listArticole));
-
-        double formulaTotalAdaosClientCorectat = algoritm.getTotalAdaosClientCorectat();
-        double valTransportAlgoritm = valTransport - valTransportSAP;
-
-        if (DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT")) {
-            formulaTotalAdaosClientCorectat = algoritm.getTotalAdaosClientCorectat() + valTransportAlgoritm;
-        }
-
-        if (formulaTotalAdaosClientCorectat < algoritm.getTotalAdaosMinimReper()) {
-
-            double deficitComanda = (algoritm.getTotalAdaosMinimReper() - formulaTotalAdaosClientCorectat);
-
-            textAlertaMarja.setText("Cresteti val. cmd. cu minim " + nf.format(deficitComanda) + " RON");
-            textAlertaMarja.setVisibility(View.VISIBLE);
-            algoritm.redistribuireMarja(listArticole, valTransportAlgoritm);
-
-        } else {
-            algoritm.schimbaAlertaArticol(listArticole);
-            textAlertaMarja.setText("");
-        }
     }
 
     public void update(Observable observable, Object data) {

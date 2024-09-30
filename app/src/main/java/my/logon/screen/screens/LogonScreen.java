@@ -142,6 +142,14 @@ public class LogonScreen extends Activity implements AsyncTaskListener {
 
 		etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
+
+		try {
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			((TextView) findViewById(R.id.appVer)).setText("v. "+ String.valueOf(pInfo.versionCode));
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+		}
+
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		addListenerUserName();

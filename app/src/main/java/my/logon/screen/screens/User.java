@@ -180,6 +180,10 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 			HashMap<String, String> temp;
 
 			for (EnumFiliale enumF : EnumFiliale.values()) {
+
+				if (enumF.getCod().equals("BU12"))
+					continue;
+
 				temp = new HashMap<String, String>();
 				temp.put("rowText", enumF.getCod());
 				listFiliala.add(temp);

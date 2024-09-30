@@ -35,7 +35,6 @@ import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsComenzi;
-import my.logon.screen.utils.UtilsGeneral;
 
 public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTransportListener {
 
@@ -140,8 +139,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
             viewHolder.textTotal.setText("Total: " + nf.format(valoareTotal));
 
 
-            if (UtilsComenzi.isComandaDl() || filialeArondate.contains(UtilsGeneral.getUnitLogDistrib(rezumat.getFilialaLivrare())) || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
-
+            if (UtilsComenzi.isComandaDl() || tipTranspArt.equals("TRAP") || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
                 if (UtilsComenzi.isComandaDl())
                     tipTransportArray = tipTransportDL;
 

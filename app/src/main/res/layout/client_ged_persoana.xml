@@ -26,7 +26,7 @@
             android:layout_height="45dip"
             android:layout_weight="0.4"
             android:inputType=""
-            android:maxLength="30"
+            android:maxLength="40"
             android:singleLine="true"
             android:textColor="@color/editTextColor1"
             android:textSize="19sp"
@@ -107,15 +107,34 @@
 
             <EditText
                 android:id="@+id/txtCNPClient"
-                android:layout_width="0dp"
+                android:layout_width="350dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
                 android:inputType="text"
                 android:maxLength="30"
                 android:singleLine="true"
                 android:textColor="@color/editTextColor1"
                 android:textSize="19sp"
                 android:typeface="monospace" />
+
+            <Button
+                android:id="@+id/verificaId"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="50dip"
+                android:paddingRight="50dip"
+                android:text="Verifica cnp" />
+
+            <Button
+                android:id="@+id/verificaTva"
+                style="@style/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:background="@drawable/ok_button_style"
+                android:paddingLeft="50dip"
+                android:paddingRight="50dip"
+                android:text="Cauta" />
 
 
             <CheckBox
@@ -136,25 +155,7 @@
                 android:text="Se emite factura"
                 android:textColor="@color/labelColor" />
 
-            <Button
-                android:id="@+id/verificaId"
-                style="@style/ok_button"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
-                android:background="@drawable/ok_button_style"
-                android:paddingLeft="50dip"
-                android:paddingRight="50dip"
-                android:text="Verifica cnp" />
 
-            <Button
-                android:id="@+id/verificaTva"
-                style="@style/ok_button"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
-                android:background="@drawable/ok_button_style"
-                android:paddingLeft="50dip"
-                android:paddingRight="50dip"
-                android:text="Verifica tva" />
 
             <TextView
                 android:layout_width="0dp"
@@ -306,6 +307,21 @@
                     android:textSize="17sp"
                     android:typeface="serif" />
             </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/checkCustodie"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|bottom"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="20dip"
+                android:layout_weight="0.6"
+                android:textColor="@color/labelColor"
+                android:textSize="17sp"
+                android:typeface="serif"
+                android:visibility="invisible"
+                android:text="Comanda plasata in custodie client" />
+
         </LinearLayout>
     </LinearLayout>
 

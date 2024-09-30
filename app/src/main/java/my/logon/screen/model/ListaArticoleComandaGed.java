@@ -15,6 +15,7 @@ import my.logon.screen.beans.ComandaExtraMathaus;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.beans.StocMathaus;
 import my.logon.screen.enums.EnumArticoleDAO;
+import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.listeners.OperatiiArticolListener;
 import my.logon.screen.screens.CreareComandaGed;
 import my.logon.screen.screens.SelectArtCmdGed;
@@ -403,6 +404,9 @@ public class ListaArticoleComandaGed extends Observable implements OperatiiArtic
 		while (iterator.hasNext()) {
 			totalComanda += iterator.next().getPret();
 		}
+
+		if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.LIVRARE_CUSTODIE))
+			totalComanda = 0;
 
 		return totalComanda;
 

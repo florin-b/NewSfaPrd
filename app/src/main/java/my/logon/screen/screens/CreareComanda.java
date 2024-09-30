@@ -994,14 +994,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
     }
 
-    private void trateazaLivrareCustodie() {
-        mProgress.setVisibility(View.VISIBLE);
-        mProgress.setProgress(0);
-        progressVal = 0;
-        myTimer = new Timer();
-        myTimer.schedule(new UpdateProgress(), 40, 15);
-    }
-
     private void salveazaLivrareCustodie() {
 
         comandaFinala.setCodClient(codClientVar);

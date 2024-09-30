@@ -68,6 +68,7 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
 
         final RadioButton radioNoua = (RadioButton) findViewById(R.id.radioNoua);
         final RadioButton radioDL = (RadioButton) findViewById(R.id.radioDL);
+        final RadioButton radioCC = (RadioButton) findViewById(R.id.radioCC);
         final RadioButton radioAmob = (RadioButton) findViewById(R.id.radioAmob);
         final RadioButton radioCLP = (RadioButton) findViewById(R.id.radioCLP);
         final RadioButton radioACZC = (RadioButton) findViewById(R.id.radioACZC);
@@ -97,143 +98,115 @@ public class TipComandaGedDialog extends Dialog implements ComenziDAOListener {
         setSpinnerAmobListener();
 
         Button btnOkTipCmd = (Button) findViewById(R.id.btnOkTipCmd);
-        btnOkTipCmd.setOnClickListener(new View.OnClickListener() {
+        btnOkTipCmd.setOnClickListener(v -> {
 
-            public void onClick(View v) {
+            if (radioNoua.isChecked())
+                tipComanda = TipCmdGed.COMANDA_VANZARE;
+            else if (radioDL.isChecked())
+                tipComanda = TipCmdGed.DISPOZITIE_LIVRARE;
+            else if (radioCC.isChecked())
+                tipComanda = TipCmdGed.LIVRARE_CUSTODIE;
+            else if (radioACZC.isChecked())
+                tipComanda = TipCmdGed.ARTICOLE_COMANDA;
+            else if (radioDeteriorate.isChecked())
+                tipComanda = TipCmdGed.ARTICOLE_DETERIORATE;
+            else if (radioAmob.isChecked()) {
+                tipComanda = TipCmdGed.COMANDA_AMOB;
+                if (idComanda.equals("-1"))
+                    return;
 
-                if (radioNoua.isChecked())
-                    tipComanda = TipCmdGed.COMANDA_VANZARE;
-                else if (radioDL.isChecked())
-                    tipComanda = TipCmdGed.DISPOZITIE_LIVRARE;
-                else if (radioACZC.isChecked())
-                    tipComanda = TipCmdGed.ARTICOLE_COMANDA;
-                else if (radioDeteriorate.isChecked())
-                    tipComanda = TipCmdGed.ARTICOLE_DETERIORATE;
-                else if (radioAmob.isChecked()) {
-                    tipComanda = TipCmdGed.COMANDA_AMOB;
-                    if (idComanda.equals("-1"))
-                        return;
-
-                } else if (radioCLP.isChecked()) {
-                    if (spinnerFilialeClp.getSelectedItemPosition() == 0) {
-                        Toast.makeText(context, "Selectati filiala", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    @SuppressWarnings("unchecked")
-                    HashMap<String, String> artMap = (HashMap<String, String>) adapterFiliale.getItem(spinnerFilialeClp.getSelectedItemPosition());
-                    codFilialaDest = artMap.get("codJudet");
-                    tipComanda = TipCmdGed.COMANDA_LIVRARE;
-
-                } else if (radioFasonate.isChecked()) {
-                    if (spinnerFilialeFasonate.getSelectedItemPosition() == 0) {
-                        Toast.makeText(context, "Selectati filiala", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    HashMap<String, String> artMap = (HashMap<String, String>) adapterFilialeFasonate.getItem(spinnerFilialeFasonate.getSelectedItemPosition());
-                    codFilialaDest = artMap.get("codJudet");
-                    tipComanda = TipCmdGed.COMANDA_FASONATE;
+            } else if (radioCLP.isChecked()) {
+                if (spinnerFilialeClp.getSelectedItemPosition() == 0) {
+                    Toast.makeText(context, "Selectati filiala", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
-                if (listener != null)
-                    listener.tipComandaSelected(tipComanda, idComanda, codFilialaDest);
+                @SuppressWarnings("unchecked")
+                HashMap<String, String> artMap = (HashMap<String, String>) adapterFiliale.getItem(spinnerFilialeClp.getSelectedItemPosition());
+                codFilialaDest = artMap.get("codJudet");
+                tipComanda = TipCmdGed.COMANDA_LIVRARE;
 
-                dismiss();
+            } else if (radioFasonate.isChecked()) {
+                if (spinnerFilialeFasonate.getSelectedItemPosition() == 0) {
+                    Toast.makeText(context, "Selectati filiala", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-            }
-        });
-
-        radioNoua.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                spinnerComenziAmob.setVisibility(View.GONE);
-                spinnerFilialeClp.setVisibility(View.INVISIBLE);
-                spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
-                textInfoClp.setVisibility(View.INVISIBLE);
-
+                HashMap<String, String> artMap = (HashMap<String, String>) adapterFilialeFasonate.getItem(spinnerFilialeFasonate.getSelectedItemPosition());
+                codFilialaDest = artMap.get("codJudet");
+                tipComanda = TipCmdGed.COMANDA_FASONATE;
             }
 
-        });
+            if (listener != null)
+                listener.tipComandaSelected(tipComanda, idComanda, codFilialaDest);
 
-        radioDL.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                spinnerComenziAmob.setVisibility(View.GONE);
-                spinnerFilialeClp.setVisibility(View.INVISIBLE);
-                spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
-                textInfoClp.setVisibility(View.INVISIBLE);
-
-            }
+            dismiss();
 
         });
 
-        radioCLP.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                spinnerFilialeClp.setVisibility(View.VISIBLE);
-                spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
-                textInfoClp.setVisibility(View.VISIBLE);
-                spinnerComenziAmob.setVisibility(View.GONE);
-
-            }
+        radioNoua.setOnClickListener(v -> {
+            spinnerComenziAmob.setVisibility(View.GONE);
+            spinnerFilialeClp.setVisibility(View.INVISIBLE);
+            spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+            textInfoClp.setVisibility(View.INVISIBLE);
 
         });
 
-        radioAmob.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                spinnerComenziAmob.setVisibility(View.VISIBLE);
-                spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
-                spinnerFilialeClp.setVisibility(View.GONE);
-                textInfoClp.setVisibility(View.INVISIBLE);
-                getComenziAMOB();
-
-            }
+        radioDL.setOnClickListener(v -> {
+            spinnerComenziAmob.setVisibility(View.GONE);
+            spinnerFilialeClp.setVisibility(View.INVISIBLE);
+            spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+            textInfoClp.setVisibility(View.INVISIBLE);
 
         });
 
-        radioACZC.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                spinnerComenziAmob.setVisibility(View.GONE);
-                spinnerFilialeClp.setVisibility(View.INVISIBLE);
-                spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
-                textInfoClp.setVisibility(View.INVISIBLE);
-
-            }
+        radioCC.setOnClickListener(v -> {
+            spinnerComenziAmob.setVisibility(View.GONE);
+            spinnerFilialeClp.setVisibility(View.INVISIBLE);
+            spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+            textInfoClp.setVisibility(View.INVISIBLE);
 
         });
 
-        radioDeteriorate.setOnClickListener(new View.OnClickListener() {
+        radioCLP.setOnClickListener(v -> {
+            spinnerFilialeClp.setVisibility(View.VISIBLE);
+            spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+            textInfoClp.setVisibility(View.VISIBLE);
+            spinnerComenziAmob.setVisibility(View.GONE);
 
-            @Override
-            public void onClick(View v) {
-                spinnerComenziAmob.setVisibility(View.GONE);
-                spinnerFilialeClp.setVisibility(View.INVISIBLE);
-                spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
-                textInfoClp.setVisibility(View.INVISIBLE);
+        });
 
-            }
+        radioAmob.setOnClickListener(v -> {
+            spinnerComenziAmob.setVisibility(View.VISIBLE);
+            spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+            spinnerFilialeClp.setVisibility(View.GONE);
+            textInfoClp.setVisibility(View.INVISIBLE);
+            getComenziAMOB();
+
+        });
+
+        radioACZC.setOnClickListener(v -> {
+            spinnerComenziAmob.setVisibility(View.GONE);
+            spinnerFilialeClp.setVisibility(View.INVISIBLE);
+            spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+            textInfoClp.setVisibility(View.INVISIBLE);
+
+        });
+
+        radioDeteriorate.setOnClickListener(v -> {
+            spinnerComenziAmob.setVisibility(View.GONE);
+            spinnerFilialeClp.setVisibility(View.INVISIBLE);
+            spinnerFilialeFasonate.setVisibility(View.INVISIBLE);
+            textInfoClp.setVisibility(View.INVISIBLE);
 
         });
 
         radioFasonate
-                .setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        spinnerFilialeFasonate.setVisibility(View.VISIBLE);
-                        spinnerFilialeClp.setVisibility(View.INVISIBLE);
-                        spinnerComenziAmob.setVisibility(View.GONE);
-                        textInfoClp.setVisibility(View.INVISIBLE);
-
-                    }
+                .setOnClickListener(v -> {
+                    spinnerFilialeFasonate.setVisibility(View.VISIBLE);
+                    spinnerFilialeClp.setVisibility(View.INVISIBLE);
+                    spinnerComenziAmob.setVisibility(View.GONE);
+                    textInfoClp.setVisibility(View.INVISIBLE);
 
                 });
 

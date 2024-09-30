@@ -13,14 +13,15 @@ public class MarjaComandaIPDialog extends Dialog {
 
 	private TextView textAlert;
 	private Button btnOk;
-	private String alertText;
 	private boolean isBlocat;
 	public MarjaComandaIPListener listener;
+	private double valoareTaxe;
 
 
-	public MarjaComandaIPDialog(Context context, boolean isBlocat) {
+	public MarjaComandaIPDialog(Context context, boolean isBlocat, double valoareTaxe) {
 		super(context);
 		this.isBlocat = isBlocat;
+		this.valoareTaxe = valoareTaxe;
 		setContentView(R.layout.info_comanda_ip_dialog);
 		setupLayout();
 	}
@@ -28,10 +29,10 @@ public class MarjaComandaIPDialog extends Dialog {
 
 
 	private void setupLayout() {
-		textAlert = (TextView) findViewById(R.id.textAlert);
-		btnOk = (Button) findViewById(R.id.btnOk);
+		textAlert = findViewById(R.id.textAlert);
+		btnOk = findViewById(R.id.btnOk);
 
-		textAlert.setText("Marja comenzii este mica!\nCosturile de livrare sunt semnificative!");
+		textAlert.setText("Marja comenzii este mica!\nCosturile de livrare sunt semnificative (" + String.format("%.02f", valoareTaxe) + " lei).");
 
 		if (isBlocat) {
 			setTitle("Atentie!");

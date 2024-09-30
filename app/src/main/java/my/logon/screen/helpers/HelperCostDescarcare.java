@@ -16,6 +16,7 @@ import my.logon.screen.beans.ComandaCalculDescarcare;
 import my.logon.screen.beans.CostDescarcare;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.enums.TipCmdDistrib;
+import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
@@ -38,12 +39,26 @@ public class HelperCostDescarcare {
 
             articolComanda.setCodArticol(artDesc.getCod());
             articolComanda.setNumeArticol(Constants.NUME_SERV_DESC_PALET + artDesc.getDepart());
-            articolComanda.setCantitate(artDesc.getCantitate());
-            articolComanda.setCantUmb(artDesc.getCantitate());
+
+            if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.LIVRARE_CUSTODIE)) {
+                articolComanda.setCantitate(1);
+                articolComanda.setCantUmb(1);
+            }else {
+                articolComanda.setCantitate(artDesc.getCantitate());
+                articolComanda.setCantUmb(artDesc.getCantitate());
+            }
+
             articolComanda.setPretUnit(artDesc.getValoare() * procentReducere);
             articolComanda.setPret(artDesc.getValoare() * procentReducere * artDesc.getCantitate());
             articolComanda.setPretUnitarClient(artDesc.getValoare() * procentReducere);
             articolComanda.setPretUnitarGed(artDesc.getValoare() * procentReducere);
+
+            if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.LIVRARE_CUSTODIE)) {
+                articolComanda.setPretUnit(articolComanda.getPretUnit() * artDesc.getCantitate());
+                articolComanda.setPretUnitarClient(articolComanda.getPretUnitarClient() * artDesc.getCantitate());
+                articolComanda.setPretUnitarGed(articolComanda.getPretUnitarGed() * artDesc.getCantitate());
+            }
+
             articolComanda.setProcent(0);
             articolComanda.setUm("BUC");
             articolComanda.setUmb("BUC");

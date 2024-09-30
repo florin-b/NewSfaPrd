@@ -1,6 +1,5 @@
 /**
  * @author florinb
- *
  */
 package my.logon.screen.screens;
 
@@ -38,929 +37,654 @@ import java.util.List;
 import my.logon.screen.R;
 import my.logon.screen.adapters.CautareArticoleAdapter;
 import my.logon.screen.beans.ArticolDB;
+import my.logon.screen.beans.BeanParametruPretGed;
+import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
 import my.logon.screen.enums.EnumFiliale;
+import my.logon.screen.helpers.HelperPreturi;
 import my.logon.screen.listeners.AsyncTaskListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
-import my.logon.screen.listeners.PreturiListener;
-import my.logon.screen.model.Constants;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
+import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
 import my.logon.screen.model.Preturi;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.DepartamentAgent;
+import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
-public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickListener, OperatiiArticolListener, PreturiListener {
+public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickListener, OperatiiArticolListener {
 
-	private Button stocBtn;
-	private String selectedCodDepart = "";
-	private EditText txtCodArticol;
-	String codArticol = "";
-	String numeArticol = "";
-	String tipAcces;
+    private Button stocBtn;
+    private String selectedCodDepart = "";
+    private EditText txtCodArticol;
+    String codArticol = "";
+    String numeArticol = "";
+    String tipAcces;
 
-	private TextView textCodArticol, textCodBare;
-	private TextView textNumeArticol, textCmpArticol, textStocImbatranit;
+    private TextView textCodArticol, textCodBare;
+    private TextView textNumeArticol, textCmpArticol, textStocImbatranit;
 
-	private static final String METHOD_NAME = "getStocAndroid";
-	private NumberFormat nf2;
+    private static final String METHOD_NAME = "getStocAndroid";
+    private NumberFormat nf2;
 
-	ToggleButton tglButton, tglTipArtBtn;
+    ToggleButton tglButton, tglTipArtBtn;
 
-	public SimpleAdapter adapterFiliale;
-	private Spinner spinnerFiliale;
-	private static ArrayList<HashMap<String, String>> listFiliale = new ArrayList<HashMap<String, String>>();
-	private String filialaStoc = "";
+    public SimpleAdapter adapterFiliale;
+    private Spinner spinnerFiliale;
+    private static ArrayList<HashMap<String, String>> listFiliale = new ArrayList<HashMap<String, String>>();
+    private String filialaStoc = "";
 
-	LinearLayout resLayout;
-	OperatiiArticol opArticol;
+    private TextView textCondPret;
 
-	String selectedDepartamentAgent = "";
-	private Preturi pret;
+    LinearLayout resLayout;
+    OperatiiArticol opArticol;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+    String selectedDepartamentAgent = "";
+    private Preturi pret;
 
-		setTheme(R.style.LRTheme);
-		setContentView(R.layout.stocuri);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 
-		initSelectionDepartament();
+        setTheme(R.style.LRTheme);
+        setContentView(R.layout.stocuri);
 
-		if (UtilsUser.isAV() || UtilsUser.isKA() || UtilsUser.isUserSK() || UtilsUser.isUserSDKA())
-			addSpinnerDepartamente();
+        initSelectionDepartament();
 
-		opArticol = OperatiiArticolFactory.createObject("OperatiiArticolImpl", this);
-		opArticol.setListener(this);
+        if (UtilsUser.isAV() || UtilsUser.isKA() || UtilsUser.isUserSK() || UtilsUser.isUserSDKA())
+            addSpinnerDepartamente();
 
-		this.stocBtn = (Button) findViewById(R.id.stocBtn);
-		stocBtn.setOnClickListener(this);
+        opArticol = OperatiiArticolFactory.createObject("OperatiiArticolImpl", this);
+        opArticol.setListener(this);
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setTitle("Stocuri");
-		actionBar.setDisplayHomeAsUpEnabled(true);
+        this.stocBtn = (Button) findViewById(R.id.stocBtn);
+        stocBtn.setOnClickListener(this);
 
-		nf2 = NumberFormat.getInstance();
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Stocuri si preturi");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-		this.tglButton = (ToggleButton) findViewById(R.id.togglebutton);
-		this.tglButton.setChecked(true);
-		addListenerToggle();
+        nf2 = NumberFormat.getInstance();
 
-		this.tglTipArtBtn = (ToggleButton) findViewById(R.id.tglTipArt);
-		addListenerTglTipArtBtn();
+        this.tglButton = (ToggleButton) findViewById(R.id.togglebutton);
+        this.tglButton.setChecked(true);
+        addListenerToggle();
 
-		txtCodArticol = (EditText) findViewById(R.id.txtCodArt);
+        this.tglTipArtBtn = (ToggleButton) findViewById(R.id.tglTipArt);
+        addListenerTglTipArtBtn();
 
-		textCmpArticol = (TextView) findViewById(R.id.textCmpArticol);
-		textCmpArticol.setVisibility(View.INVISIBLE);
+        txtCodArticol = (EditText) findViewById(R.id.txtCodArt);
 
-		textStocImbatranit = (TextView) findViewById(R.id.textStocImbatranit);
-		textStocImbatranit.setVisibility(View.INVISIBLE);
+        textCmpArticol = (TextView) findViewById(R.id.textCmpArticol);
+        textCmpArticol.setVisibility(View.INVISIBLE);
 
-		resLayout = (LinearLayout) findViewById(R.id.resLayout);
-		resLayout.setVisibility(View.INVISIBLE);
+        textStocImbatranit = (TextView) findViewById(R.id.textStocImbatranit);
+        textStocImbatranit.setVisibility(View.INVISIBLE);
 
-		txtCodArticol.setHint("Introduceti cod articol");
+        resLayout = (LinearLayout) findViewById(R.id.resLayout);
+        resLayout.setVisibility(View.INVISIBLE);
 
-		textNumeArticol = (TextView) findViewById(R.id.textNumeArticol);
-		textCodArticol = (TextView) findViewById(R.id.textCodArticol);
+        txtCodArticol.setHint("Introduceti cod articol");
 
-		spinnerFiliale = (Spinner) findViewById(R.id.spinFilialaStoc);
-		adapterFiliale = new SimpleAdapter(this, listFiliale, R.layout.rowlayoutagenti, new String[] { "numeFiliala", "codFiliala" }, new int[] {
-				R.id.textNumeAgent, R.id.textCodAgent });
-		spinnerFiliale.setOnItemSelectedListener(new MyOnSelectedFiliala());
-		spinnerFiliale.setVisibility(View.INVISIBLE);
+        textNumeArticol = (TextView) findViewById(R.id.textNumeArticol);
+        textCodArticol = (TextView) findViewById(R.id.textCodArticol);
 
-		filialaStoc = UserInfo.getInstance().getUnitLog();
+        spinnerFiliale = (Spinner) findViewById(R.id.spinFilialaStoc);
+        adapterFiliale = new SimpleAdapter(this, listFiliale, R.layout.rowlayoutagenti, new String[]{"numeFiliala", "codFiliala"}, new int[]{
+                R.id.textNumeAgent, R.id.textCodAgent});
+        spinnerFiliale.setOnItemSelectedListener(new MyOnSelectedFiliala());
+        spinnerFiliale.setVisibility(View.INVISIBLE);
 
-		textCodBare = (TextView) findViewById(R.id.textCodBare);
+        filialaStoc = UserInfo.getInstance().getUnitLog();
 
-		populateListFiliale();
+        textCodBare = (TextView) findViewById(R.id.textCodBare);
 
-	}
+        textCondPret = findViewById(R.id.textCondPret);
+        textCondPret.setVisibility(View.INVISIBLE);
 
-	private void addSpinnerDepartamente() {
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item,
-				DepartamentAgent.getDepartamenteAgentNerestr());
+        populateListFiliale();
 
-		LayoutInflater mInflater = LayoutInflater.from(this);
-		View mCustomView = mInflater.inflate(R.layout.spinner_layout, null);
-		final Spinner spinnerView = (Spinner) mCustomView.findViewById(R.id.spinnerDep);
+    }
 
-		spinnerView.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				selectedDepartamentAgent = EnumDepartExtra.getCodDepart(spinnerView.getSelectedItem().toString());
-				resLayout.setVisibility(View.INVISIBLE);
-				populateListViewArticol(new ArrayList<ArticolDB>());
-			}
+    private void addSpinnerDepartamente() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item,
+                DepartamentAgent.getDepartamenteAgentNerestr());
 
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View mCustomView = mInflater.inflate(R.layout.spinner_layout, null);
+        final Spinner spinnerView = (Spinner) mCustomView.findViewById(R.id.spinnerDep);
 
-		spinnerView.setAdapter(adapter);
-		getActionBar().setCustomView(mCustomView);
-		getActionBar().setDisplayShowCustomEnabled(true);
+        spinnerView.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                selectedDepartamentAgent = EnumDepartExtra.getCodDepart(spinnerView.getSelectedItem().toString());
+                resLayout.setVisibility(View.INVISIBLE);
+                populateListViewArticol(new ArrayList<ArticolDB>());
+            }
 
-	}
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
 
-	private void initSelectionDepartament() {
+        spinnerView.setAdapter(adapter);
+        getActionBar().setCustomView(mCustomView);
+        getActionBar().setDisplayShowCustomEnabled(true);
 
-		selectedDepartamentAgent = UserInfo.getInstance().getCodDepart();
+    }
 
-		if (UtilsUser.isCV() || UtilsUser.isDVCV() || UtilsUser.isConsWood())
-			selectedDepartamentAgent = "";
+    private void initSelectionDepartament() {
 
-		if (UtilsUser.isKA() || UtilsUser.isUserSK() || UtilsUser.isUserSDKA())
-			selectedDepartamentAgent = "00";
-	}
+        selectedDepartamentAgent = UserInfo.getInstance().getCodDepart();
 
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+        if (UtilsUser.isCV() || UtilsUser.isDVCV() || UtilsUser.isConsWood())
+            selectedDepartamentAgent = "";
 
-		case android.R.id.home:
-			UserInfo.getInstance().setParentScreen("");
-			Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+        if (UtilsUser.isKA() || UtilsUser.isUserSK() || UtilsUser.isUserSDKA())
+            selectedDepartamentAgent = "00";
+    }
 
-			startActivity(nextScreen);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
-			finish();
-			return true;
+            case android.R.id.home:
+                UserInfo.getInstance().setParentScreen("");
+                Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
 
-		}
-		return false;
-	}
+                startActivity(nextScreen);
 
-	private void populateFilialeAgentiBuc() {
+                finish();
+                return true;
 
-		listFiliale.clear();
+        }
+        return false;
+    }
 
-		HashMap<String, String> temp;
+    private void populateListFiliale() {
 
-		temp = new HashMap<String, String>();
-		temp.put("numeFiliala", "BUC. GLINA");
-		temp.put("codFiliala", "BU10");
-		listFiliale.add(temp);
+        listFiliale.clear();
 
-		temp = new HashMap<String, String>();
-		temp.put("numeFiliala", "BUC. MILITARI");
-		temp.put("codFiliala", "BU11");
-		listFiliale.add(temp);
+        HashMap<String, String> temp;
 
-		temp = new HashMap<String, String>();
-		temp.put("numeFiliala", "BUC. OTOPENI");
-		temp.put("codFiliala", "BU12");
-		listFiliale.add(temp);
+        int selectedItem = 0, i = 1;
 
-		temp = new HashMap<String, String>();
-		temp.put("numeFiliala", "BUC. ANDRONACHE");
-		temp.put("codFiliala", "BU13");
-		listFiliale.add(temp);
+        for (EnumFiliale enumF : EnumFiliale.values()) {
 
-		if (UserInfo.getInstance().getCodDepart().equals("05") || UserInfo.getInstance().getCodDepart().equals("01") || UserInfo.getInstance().getCodDepart().equals("02")) {
-			temp = new HashMap<String, String>();
-			temp.put("numeFiliala", "BRASOV CENTRAL");
-			temp.put("codFiliala", "BV90");
-			listFiliale.add(temp);
-		}
+            temp = new HashMap<String, String>();
 
-		spinnerFiliale.setAdapter(adapterFiliale);
+            temp.put("numeFiliala", enumF.getNume());
+            temp.put("codFiliala", enumF.getCod());
 
-		if (UserInfo.getInstance().getUnitLog().equals("BU10"))
-			spinnerFiliale.setSelection(0);
-		else if (UserInfo.getInstance().getUnitLog().equals("BU11"))
-			spinnerFiliale.setSelection(1);
-		else if (UserInfo.getInstance().getUnitLog().equals("BU12"))
-			spinnerFiliale.setSelection(2);
-		else if (UserInfo.getInstance().getUnitLog().equals("BU13"))
-			spinnerFiliale.setSelection(3);
-		else if (UserInfo.getInstance().getUnitLog().equals("BV90"))
-			spinnerFiliale.setSelection(4);
+            listFiliale.add(temp);
 
-	}
+            if (UserInfo.getInstance().getUnitLog().equals(enumF.getCod()))
+                selectedItem = i;
 
-	private void populateFilialeAgenti() {
+            i++;
+        }
 
-		listFiliale.clear();
+        temp = new HashMap<String, String>();
+        temp.put("numeFiliala", "Brasov Central");
+        temp.put("codFiliala", "BV90");
+        listFiliale.add(temp);
 
-		HashMap<String, String> temp;
+        spinnerFiliale.setAdapter(adapterFiliale);
+        spinnerFiliale.setSelection(selectedItem - 1);
+        spinnerFiliale.setVisibility(View.VISIBLE);
 
-		temp = new HashMap<String, String>();
-		temp.put("numeFiliala", UserInfo.getInstance().getFiliala());
-		temp.put("codFiliala", UserInfo.getInstance().getUnitLog());
-		listFiliale.add(temp);
 
-		temp = new HashMap<String, String>();
-		temp.put("numeFiliala", "BRASOV CENTRAL");
-		temp.put("codFiliala", "BV90");
-		listFiliale.add(temp);
+    }
 
-		spinnerFiliale.setAdapter(adapterFiliale);
+    // captare evenimente spinner filiale
+    public class MyOnSelectedFiliala implements OnItemSelectedListener {
 
-	}
+        @SuppressWarnings("unchecked")
+        public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+            HashMap<String, String> map = (HashMap<String, String>) adapterFiliale.getItem(pos);
+            filialaStoc = map.get("codFiliala");
 
-	private void populateFilialeDV() {
+            if (!codArticol.equals(""))
+                performGetStoc();
+        }
 
-		String district = "";
-		listFiliale.clear();
+        public void onNothingSelected(AdapterView<?> parent) {
 
-		HashMap<String, String> temp;
-		String[] tokenLinie = UserInfo.getInstance().getFilialeDV().split(";");
+        }
+    }
 
-		if (UserInfo.getInstance().getFilialeDV().trim().length() > 0) {
+    public void addListenerToggle() {
+        tglButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                if (tglButton.isChecked()) {
+                    if (tglTipArtBtn.isChecked())
+                        txtCodArticol.setHint("Introduceti cod sintetic");
+                    else
+                        txtCodArticol.setHint("Introduceti cod articol");
+                } else {
+                    if (tglTipArtBtn.isChecked())
+                        txtCodArticol.setHint("Introduceti nume sintetic");
+                    else
+                        txtCodArticol.setHint("Introduceti nume articol");
 
-			for (int i = 0; i < tokenLinie.length; i++) {
+                }
+            }
+        });
 
-				temp = new HashMap<String, String>();
-				temp.put("numeFiliala", ClientiGenericiGedInfoStrings.getNumeUL(tokenLinie[i]));
-				temp.put("codFiliala", tokenLinie[i]);
+    }
 
-				if (tokenLinie[i].substring(0, 2).equals("BU"))
-					district = "BU";
+    public void addListenerTglTipArtBtn() {
+        tglTipArtBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                if (tglTipArtBtn.isChecked()) {
+                    if (!tglButton.isChecked())
+                        txtCodArticol.setHint("Introduceti nume sintetic");
+                    else
+                        txtCodArticol.setHint("Introduceti cod sintetic");
+                } else {
+                    if (!tglButton.isChecked())
+                        txtCodArticol.setHint("Introduceti nume articol");
+                    else
+                        txtCodArticol.setHint("Introduceti cod articol");
 
-				listFiliale.add(temp);
-			}
+                }
+            }
+        });
 
-			if (!district.equals("")) {
-				temp = new HashMap<String, String>();
-				temp.put("numeFiliala", "District BUCURESTI");
-				temp.put("codFiliala", "BU");
-				listFiliale.add(temp);
-			}
+    }
 
-		} else {
-			temp = new HashMap<String, String>();
-			temp.put("numeFiliala", "Nedefinit");
-			temp.put("codFiliala", "ND10");
+    boolean isWood() {
+        return UserInfo.getInstance().getTipUser().equals("WOOD");
+    }
 
-			listFiliale.add(temp);
-		}
-		spinnerFiliale.setAdapter(adapterFiliale);
+    protected void performGetPret() {
 
-	}
+        if (codArticol.length() == 8)
+            codArticol = "0000000000" + codArticol;
 
-	private void populateListFiliale() {
+        HashMap<String, String> params = new HashMap<String, String>();
+        String localCodClient, localDepart, localFiliala, localCanalDistrib;
 
-		listFiliale.clear();
+        if (UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18") || UtilsUser.isUserIP()) {
+            localCodClient = ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
+            localDepart = "11";
+            localFiliala = filialaStoc.substring(0, 2) + "2" + filialaStoc.substring(3, 4);
 
-		HashMap<String, String> temp;
+            if (isWood()) {
+                localFiliala = UserInfo.getInstance().getUnitLog().substring(0, 2) + "4" + UserInfo.getInstance().getUnitLog().substring(3, 4);
+            }
 
-		int selectedItem = 0, i = 1;
+            localCanalDistrib = "20";
 
-		for (EnumFiliale enumF : EnumFiliale.values()) {
+        } else {
+            localCodClient = "4119000004";
+            localDepart = selectedCodDepart;
+            localFiliala = filialaStoc;
+            localCanalDistrib = "10";
+        }
 
-				temp = new HashMap<String, String>();
 
-				temp.put("numeFiliala", enumF.getNume());
-				temp.put("codFiliala", enumF.getCod());
+        BeanParametruPretGed paramPret = new BeanParametruPretGed();
+        paramPret.setClient(localCodClient);
+        paramPret.setArticol(codArticol);
+        paramPret.setCantitate("1");
+        paramPret.setDepart(localDepart);
+        paramPret.setUm(" ");
+        paramPret.setUl(localFiliala);
+        paramPret.setDepoz(" ");
+        paramPret.setCodUser(UserInfo.getInstance().getCod());
+        paramPret.setCanalDistrib(localCanalDistrib);
+        paramPret.setTipUser(UserInfo.getInstance().getTipUserSap());
+        paramPret.setFilialaAlternativa(localFiliala);
+        paramPret.setFilialaClp(DateLivrare.getInstance().getCodFilialaCLP());
+        paramPret.setTipTransport("TRAP");
 
-				listFiliale.add(temp);
+        params.put("parametruPret", opArticol.serializeParamPretGed(paramPret));
 
-				if (UserInfo.getInstance().getUnitLog().equals(enumF.getCod()))
-					selectedItem = i;
+        opArticol.getPretUnic(params);
 
-				i++;
-			}
+    }
 
-			temp = new HashMap<String, String>();
-			temp.put("numeFiliala", "Brasov Central");
-			temp.put("codFiliala", "BV90");
-			listFiliale.add(temp);
 
-			spinnerFiliale.setAdapter(adapterFiliale);
-			spinnerFiliale.setSelection(selectedItem - 1);
-			spinnerFiliale.setVisibility(View.VISIBLE);
+    public void populateListViewArticol(List<ArticolDB> resultList) {
 
+        txtCodArticol.setText("");
+        CautareArticoleAdapter adapterArticole = new CautareArticoleAdapter(this, resultList);
+        setListAdapter(adapterArticole);
 
-	}
+    }
 
-	private void populateFilialeSDIP() {
+    protected void performGetArticole() {
 
-		listFiliale.clear();
+        String numeArticol = txtCodArticol.getText().toString().trim();
 
-		HashMap<String, String> temp;
+        if (numeArticol.trim().length() > 0) {
+            String tipCautare = "", tipArticol = "";
 
-		int selectedItem = 0, i = 1;
+            if (tglButton.isChecked())
+                tipCautare = "C";
+            else
+                tipCautare = "N";
 
-		for (String filiala : UserInfo.getInstance().getExtraFiliale()) {
-			temp = new HashMap<String, String>();
+            if (tglTipArtBtn.isChecked())
+                tipArticol = "S";
+            else
+                tipArticol = "A";
 
-			temp.put("numeFiliala", ClientiGenericiGedInfoStrings.getNumeUL(filiala));
-			temp.put("codFiliala", filiala);
+            HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
+            params.put("searchString", numeArticol);
+            params.put("tipArticol", tipArticol);
+            params.put("tipCautare", tipCautare);
+            params.put("departament", selectedDepartamentAgent);
+            params.put("filiala", UserInfo.getInstance().getUnitLog());
+            params.put("afisStoc", "1");
 
-			listFiliale.add(temp);
+            opArticol.getArticoleDistributie(params);
+        }
 
-			if (UserInfo.getInstance().getUnitLog().equals(filiala))
-				selectedItem = i;
+    }
 
-			i++;
-		}
+    protected void onListItemClick(ListView l, View v, int position, long id) {
 
-		spinnerFiliale.setAdapter(adapterFiliale);
-		spinnerFiliale.setSelection(selectedItem - 1);
+        super.onListItemClick(l, v, position, id);
 
+        ArticolDB articol = (ArticolDB) l.getAdapter().getItem(position);
 
-	}
+        numeArticol = articol.getNume();
+        codArticol = articol.getCod();
 
-	// captare evenimente spinner filiale
-	public class MyOnSelectedFiliala implements OnItemSelectedListener {
+        selectedCodDepart = articol.getDepart().substring(0, 2);
 
-		@SuppressWarnings("unchecked")
-		public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-			HashMap<String, String> map = (HashMap<String, String>) adapterFiliale.getItem(pos);
-			filialaStoc = map.get("codFiliala");
+        textNumeArticol.setText(numeArticol);
+        textCodArticol.setText(codArticol);
 
-			if (!codArticol.equals(""))
-				performGetStoc();
-		}
+        performGetStoc();
 
-		public void onNothingSelected(AdapterView<?> parent) {
+    }
 
-		}
-	}
+    private void performGetCodBare() {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("codArticol", codArticol);
 
-	public void addListenerToggle() {
-		tglButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				if (tglButton.isChecked()) {
-					if (tglTipArtBtn.isChecked())
-						txtCodArticol.setHint("Introduceti cod sintetic");
-					else
-						txtCodArticol.setHint("Introduceti cod articol");
-				} else {
-					if (tglTipArtBtn.isChecked())
-						txtCodArticol.setHint("Introduceti nume sintetic");
-					else
-						txtCodArticol.setHint("Introduceti nume articol");
+        opArticol.getCodBare(params);
+    }
 
-				}
-			}
-		});
+    protected void performGetStoc() {
 
-	}
+        try {
 
-	public void addListenerTglTipArtBtn() {
-		tglTipArtBtn.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				if (tglTipArtBtn.isChecked()) {
-					if (!tglButton.isChecked())
-						txtCodArticol.setHint("Introduceti nume sintetic");
-					else
-						txtCodArticol.setHint("Introduceti cod sintetic");
-				} else {
-					if (!tglButton.isChecked())
-						txtCodArticol.setHint("Introduceti nume articol");
-					else
-						txtCodArticol.setHint("Introduceti cod articol");
+            if (codArticol.length() == 8)
+                codArticol = "0000000000" + codArticol;
 
-				}
-			}
-		});
+            String showCmp = "0";
+            if (UserInfo.getInstance().getTipAcces().equals("12") || UserInfo.getInstance().getTipAcces().equals("14"))// DV,
+            // DD
+            {
+                showCmp = "1";
+            }
 
-	}
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("codArt", codArticol);
+            params.put("filiala", filialaStoc);
+            params.put("showCmp", showCmp);
+            params.put("depart", UserInfo.getInstance().getCodDepart());
 
-	boolean isWood() {
-		return UserInfo.getInstance().getTipUser().equals("WOOD");
-	}
-	
-	protected void performGetPret() {
+            AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
+            call.getCallResults();
 
-		try {
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
 
-			String methodName = "";
+    }
 
-			if (codArticol.length() == 8)
-				codArticol = "0000000000" + codArticol;
+    @SuppressLint("ResourceAsColor")
+    public void afisStocArt(String stocArt) {
 
-			HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
+        try {
 
-			// consilieri sau sm
-			if (UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18") || UtilsUser.isUserIP()) {
+            resLayout.setVisibility(View.VISIBLE);
 
-				String localFilialaStoc = filialaStoc.substring(0, 2) + "2" + filialaStoc.substring(3, 4);
-				
-				if (isWood()) {
-					localFilialaStoc = UserInfo.getInstance().getUnitLog().substring(0, 2) + "4" + UserInfo.getInstance().getUnitLog().substring(3, 4);
-				}
+            LinearLayout tl = (LinearLayout) findViewById(R.id.ArtStocTable);
+            tl.setOrientation(LinearLayout.VERTICAL);
+            tl.setGravity(Gravity.RIGHT);
 
-				params.put("client", ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF"));
-				params.put("articol", codArticol);
-				params.put("cantitate", "1");
-				params.put("depart", "11");
-				params.put("um", " ");
-				params.put("ul", localFilialaStoc);
-				params.put("depoz", " ");
-				params.put("codUser", UserInfo.getInstance().getCod());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 0.01f);
 
-				methodName = "getPretGed";
-			}
-			// ceilalti
-			else {
+            layoutParams.setMargins(20, 0, 0, 0);
 
-				params.put("client", "4119000004");
-				params.put("articol", codArticol);
-				params.put("cantitate", "1");
-				params.put("depart", selectedCodDepart);
-				params.put("um", " ");
-				params.put("ul", filialaStoc);
-				params.put("tipAcces", UserInfo.getInstance().getTipAcces());
+            LinearLayout rowLayout = new LinearLayout(this);
+            rowLayout.setGravity(Gravity.LEFT);
+            rowLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-				methodName = "getPretSimplu";
-			}
+            tl.removeAllViews();
 
-			pret = Preturi.getInstance();
-			pret.setPreturiListener(this);
-			pret.getPret(params, methodName, this);
+            TextView labelCant = new TextView(this);
+            labelCant.setText("Cant");
+            labelCant.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
+            labelCant.setTextSize(16);
+            labelCant.setGravity(Gravity.LEFT);
+            labelCant.setTextColor(this.getResources().getColor(R.color.detColor6));
+            labelCant.setLayoutParams(layoutParams);
+            rowLayout.addView(labelCant);
 
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-		}
+            TextView labelUm = new TextView(this);
+            labelUm.setText("Um");
+            labelUm.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
+            labelUm.setTextSize(16);
+            labelUm.setGravity(Gravity.LEFT);
+            labelUm.setTextColor(this.getResources().getColor(R.color.detColor6));
+            labelUm.setLayoutParams(layoutParams);
+            rowLayout.addView(labelUm);
 
-	}
+            TextView labelDep = new TextView(this);
+            labelDep.setText("Depoz");
+            labelDep.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
+            labelDep.setTextSize(16);
+            labelDep.setGravity(Gravity.LEFT);
+            labelDep.setTextColor(this.getResources().getColor(R.color.detColor6));
+            labelDep.setLayoutParams(layoutParams);
+            rowLayout.addView(labelDep);
 
-	public void populateListViewArticol(List<ArticolDB> resultList) {
+            tl.addView(rowLayout);
 
-		txtCodArticol.setText("");
-		CautareArticoleAdapter adapterArticole = new CautareArticoleAdapter(this, resultList);
-		setListAdapter(adapterArticole);
+            nf2.setMinimumFractionDigits(3);
+            nf2.setMaximumFractionDigits(3);
 
-	}
+            String valoareStoc = "";
 
-	public void addListenerStoc() {
-		stocBtn.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				try {
+            if (!stocArt.equals("-1") && stocArt.length() > 0) {
 
-					if (txtCodArticol.length() > 0) {
-						try {
-							performGetArticole();
+                String[] tokStocArt = stocArt.split("!");
 
-						} catch (Exception ex) {
-							Log.e("Error", ex.toString());
+                String[] tokenMain = tokStocArt[0].split("@@");
 
-						}
-					} else {
-						Toast.makeText(getApplicationContext(), "Introduceti cod articol!", Toast.LENGTH_SHORT).show();
-					}
+                for (int i = 0; i < tokenMain.length; i++) {
 
-				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
+                    String[] articol = tokenMain[i].toString().split("#");
 
-	}
+                    LinearLayout rowLayoutCh = new LinearLayout(this);
 
-	protected void performGetArticole() {
+                    if (tokStocArt[2].equals("1")) {
+                        valoareStoc = nf2.format(Double.valueOf(articol[0]));
+                    }
 
-		String numeArticol = txtCodArticol.getText().toString().trim();
+                    if (tokStocArt[2].equals("0")) {
+                        if (Double.parseDouble(articol[0]) > 0)
+                            valoareStoc = "In stoc";
+                        else
+                            valoareStoc = "Fara stoc";
+                    }
 
-		if (numeArticol.trim().length() > 0) {
-			String tipCautare = "", tipArticol = "";
+                    labelCant = new TextView(this);
+                    labelCant.setText(valoareStoc);
+                    labelCant.setTypeface(Typeface.MONOSPACE);
+                    labelCant.setTextSize(16);
+                    labelCant.setGravity(Gravity.LEFT);
+                    labelCant.setTextColor(this.getResources().getColor(R.color.dropColor2));
+                    labelCant.setLayoutParams(layoutParams);
+                    rowLayoutCh.addView(labelCant);
 
-			if (tglButton.isChecked())
-				tipCautare = "C";
-			else
-				tipCautare = "N";
+                    labelUm = new TextView(this);
+                    labelUm.setText(articol[1]);
+                    labelUm.setTypeface(Typeface.MONOSPACE);
+                    labelUm.setTextSize(16);
+                    labelUm.setGravity(Gravity.LEFT);
+                    labelUm.setTextColor(this.getResources().getColor(R.color.dropColor2));
+                    labelUm.setLayoutParams(layoutParams);
+                    rowLayoutCh.addView(labelUm);
 
-			if (tglTipArtBtn.isChecked())
-				tipArticol = "S";
-			else
-				tipArticol = "A";
+                    labelDep = new TextView(this);
+                    labelDep.setText(articol[2]);
+                    labelDep.setTypeface(Typeface.MONOSPACE);
+                    labelDep.setTextSize(16);
+                    labelDep.setGravity(Gravity.LEFT);
+                    labelDep.setLayoutParams(layoutParams);
+                    labelDep.setTextColor(this.getResources().getColor(R.color.dropColor2));
+                    rowLayoutCh.addView(labelDep);
 
-			HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
-			params.put("searchString", numeArticol);
-			params.put("tipArticol", tipArticol);
-			params.put("tipCautare", tipCautare);
-			params.put("departament", selectedDepartamentAgent);
-			params.put("filiala", UserInfo.getInstance().getUnitLog());
-			params.put("afisStoc", "1");
+                    tl.addView(rowLayoutCh);
 
-			opArticol.getArticoleDistributie(params);
-		}
+                }
 
-	}
+                if (UserInfo.getInstance().getTipAcces().equals("12") || UserInfo.getInstance().getTipAcces().equals("14"))// DV,
+                // DD
+                {
+                    textCmpArticol.setVisibility(View.VISIBLE);
+                    textCmpArticol.setText("Cmp: " + tokStocArt[1]);
+                }
 
-	protected void onListItemClick(ListView l, View v, int position, long id) {
+                textStocImbatranit.setVisibility(View.VISIBLE);
+                textStocImbatranit.setText("Stoc imbatranit: " + tokStocArt[3]);
 
-		super.onListItemClick(l, v, position, id);
+                String[] stocBlocat = tokStocArt[4].split("#");
 
-		ArticolDB articol = (ArticolDB) l.getAdapter().getItem(position);
+                if (stocBlocat.length > 1) {
+                    ((TextView) findViewById(R.id.textStocBlocat)).setVisibility(View.VISIBLE);
+                    ((TextView) findViewById(R.id.textStocBlocat)).setText("Stoc blocat: " + stocBlocat[0] + " Tip: " + stocBlocat[1]);
+                } else
+                    ((TextView) findViewById(R.id.textStocBlocat)).setVisibility(View.GONE);
 
-		numeArticol = articol.getNume();
-		codArticol = articol.getCod();
+            } else {
 
-		selectedCodDepart = articol.getDepart().substring(0, 2);
+                Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_SHORT).show();
 
-		textNumeArticol.setText(numeArticol);
-		textCodArticol.setText(codArticol);
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
 
-		performGetStoc();
+    }
 
-	}
+    public void afisPretArt(PretArticolGed pretArticol) {
 
-	private void performGetCodBare() {
-		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("codArticol", codArticol);
 
-		opArticol.getCodBare(params);
-	}
+        String pretUnitar = nf2.format(Double.valueOf(pretArticol.getPret()) / Double.valueOf(pretArticol.getCantitateUmBaza()) * Double.valueOf(pretArticol.getMultiplu()));
 
-	protected void performGetStoc() {
+        String stringCondPretUnitar = "Pret" + UtilsFormatting.addSpace(20 - "Pret".length()) + ":"
+                + UtilsFormatting.addSpace(10 - pretUnitar.length()) + pretUnitar
+                + System.getProperty("line.separator");
 
-		try {
+        textCondPret.setVisibility(View.VISIBLE);
+        textCondPret.setText(stringCondPretUnitar);
+        textCondPret.setText(textCondPret.getText() + HelperPreturi.getInfoPret(pretArticol, nf2));
 
-			if (codArticol.length() == 8)
-				codArticol = "0000000000" + codArticol;
+        if (!pretArticol.getErrMsg().isEmpty())
+            Toast.makeText(getApplicationContext(), pretArticol.getErrMsg(), Toast.LENGTH_LONG).show();
 
-			String showCmp = "0";
-			if (UserInfo.getInstance().getTipAcces().equals("12") || UserInfo.getInstance().getTipAcces().equals("14"))// DV,
-			// DD
-			{
-				showCmp = "1";
-			}
+    }
 
-			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("codArt", codArticol);
-			params.put("filiala", filialaStoc);
-			params.put("showCmp", showCmp);
-			params.put("depart", UserInfo.getInstance().getCodDepart());
 
-			AsyncTaskWSCall call = new AsyncTaskWSCall(this, METHOD_NAME, params);
-			call.getCallResults();
+    @Override
+    public void onBackPressed() {
+        UserInfo.getInstance().setParentScreen("");
+        Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
 
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-		}
+        startActivity(nextScreen);
 
-	}
+        finish();
+        return;
+    }
 
-	@SuppressLint("ResourceAsColor")
-	public void afisStocArt(String stocArt) {
+    public void onTaskComplete(String methodName, Object result) {
+        afisStocArt((String) result);
+        performGetPret();
 
-		try {
+    }
 
-			resLayout.setVisibility(View.VISIBLE);
+    private void stocBtnListener() {
+        try {
+            if (txtCodArticol.length() > 0) {
+                try {
+                    performGetArticole();
 
-			LinearLayout tl = (LinearLayout) findViewById(R.id.ArtStocTable);
-			tl.setOrientation(LinearLayout.VERTICAL);
-			tl.setGravity(Gravity.RIGHT);
+                } catch (Exception ex) {
+                    Log.e("Error", ex.toString());
 
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 0.01f);
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Introduceti cod articol!", Toast.LENGTH_SHORT).show();
+            }
 
-			layoutParams.setMargins(20, 0, 0, 0);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
-			LinearLayout rowLayout = new LinearLayout(this);
-			rowLayout.setGravity(Gravity.LEFT);
-			rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+    public void onClick(View v) {
 
-			tl.removeAllViews();
+        int id = v.getId();
+        if (id == R.id.stocBtn) {
+            stocBtnListener();
+        }
 
-			TextView labelCant = new TextView(this);
-			labelCant.setText("Cant");
-			labelCant.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
-			labelCant.setTextSize(16);
-			labelCant.setGravity(Gravity.LEFT);
-			labelCant.setTextColor(this.getResources().getColor(R.color.detColor6));
-			labelCant.setLayoutParams(layoutParams);
-			rowLayout.addView(labelCant);
+    }
 
-			TextView labelUm = new TextView(this);
-			labelUm.setText("Um");
-			labelUm.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
-			labelUm.setTextSize(16);
-			labelUm.setGravity(Gravity.LEFT);
-			labelUm.setTextColor(this.getResources().getColor(R.color.detColor6));
-			labelUm.setLayoutParams(layoutParams);
-			rowLayout.addView(labelUm);
 
-			TextView labelDep = new TextView(this);
-			labelDep.setText("Depoz");
-			labelDep.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
-			labelDep.setTextSize(16);
-			labelDep.setGravity(Gravity.LEFT);
-			labelDep.setTextColor(this.getResources().getColor(R.color.detColor6));
-			labelDep.setLayoutParams(layoutParams);
-			rowLayout.addView(labelDep);
+    public void operationComplete(EnumArticoleDAO methodName, Object result) {
 
-			tl.addView(rowLayout);
+        switch (methodName) {
+            case GET_ARTICOLE_DISTRIBUTIE:
+                populateListViewArticol(opArticol.deserializeArticoleVanzare((String) result));
+                break;
+            case GET_COD_BARE:
+                displayCodBare((String) result);
+                break;
+            case GET_PRET_UNIC:
+                if (!result.equals("-1"))
+                    afisPretArt(opArticol.deserializePretGed(result));
+                else {
+                    Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_LONG).show();
+                    textCondPret.setVisibility(View.INVISIBLE);
+                }
 
-			nf2.setMinimumFractionDigits(3);
-			nf2.setMaximumFractionDigits(3);
+                if (UtilsUser.isCV() || UtilsUser.isUserIP())
+                    performGetCodBare();
+                break;
+            default:
+                break;
+        }
 
-			String valoareStoc = "";
+    }
 
-			if (!stocArt.equals("-1") && stocArt.length() > 0) {
+    private void displayCodBare(String result) {
+        if (!result.trim().equals("")) {
 
-				String[] tokStocArt = stocArt.split("!");
+            String label = "Cod bare\n";
+            if (!result.contains(",")) {
+                label += result;
+            } else {
+                String[] coduri = result.split(",");
 
-				String[] tokenMain = tokStocArt[0].split("@@");
+                for (int i = 0; i < coduri.length; i++)
+                    label += coduri[i] + "\n";
 
-				for (int i = 0; i < tokenMain.length; i++) {
+            }
 
-					String[] articol = tokenMain[i].toString().split("#");
+            textCodBare.setText(label);
+        }
 
-					LinearLayout rowLayoutCh = new LinearLayout(this);
-
-					if (tokStocArt[2].equals("1")) {
-						valoareStoc = nf2.format(Double.valueOf(articol[0]));
-					}
-
-					if (tokStocArt[2].equals("0")) {
-						if (Double.parseDouble(articol[0]) > 0)
-							valoareStoc = "In stoc";
-						else
-							valoareStoc = "Fara stoc";
-					}
-
-					labelCant = new TextView(this);
-					labelCant.setText(valoareStoc);
-					labelCant.setTypeface(Typeface.MONOSPACE);
-					labelCant.setTextSize(16);
-					labelCant.setGravity(Gravity.LEFT);
-					labelCant.setTextColor(this.getResources().getColor(R.color.dropColor2));
-					labelCant.setLayoutParams(layoutParams);
-					rowLayoutCh.addView(labelCant);
-
-					labelUm = new TextView(this);
-					labelUm.setText(articol[1]);
-					labelUm.setTypeface(Typeface.MONOSPACE);
-					labelUm.setTextSize(16);
-					labelUm.setGravity(Gravity.LEFT);
-					labelUm.setTextColor(this.getResources().getColor(R.color.dropColor2));
-					labelUm.setLayoutParams(layoutParams);
-					rowLayoutCh.addView(labelUm);
-
-					labelDep = new TextView(this);
-					labelDep.setText(articol[2]);
-					labelDep.setTypeface(Typeface.MONOSPACE);
-					labelDep.setTextSize(16);
-					labelDep.setGravity(Gravity.LEFT);
-					labelDep.setLayoutParams(layoutParams);
-					labelDep.setTextColor(this.getResources().getColor(R.color.dropColor2));
-					rowLayoutCh.addView(labelDep);
-
-					tl.addView(rowLayoutCh);
-
-				}
-
-				if (UserInfo.getInstance().getTipAcces().equals("12") || UserInfo.getInstance().getTipAcces().equals("14"))// DV,
-				// DD
-				{
-					textCmpArticol.setVisibility(View.VISIBLE);
-					textCmpArticol.setText("Cmp: " + tokStocArt[1]);
-				}
-
-				textStocImbatranit.setVisibility(View.VISIBLE);
-				textStocImbatranit.setText("Stoc imbatranit: " + tokStocArt[3]);
-
-				String[] stocBlocat = tokStocArt[4].split("#");
-
-				if (stocBlocat.length > 1) {
-					((TextView) findViewById(R.id.textStocBlocat)).setVisibility(View.VISIBLE);
-					((TextView) findViewById(R.id.textStocBlocat)).setText("Stoc blocat: " + stocBlocat[0] + " Tip: " + stocBlocat[1]);
-				} else
-					((TextView) findViewById(R.id.textStocBlocat)).setVisibility(View.GONE);
-
-			} else {
-
-				Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_SHORT).show();
-
-			}
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-		}
-
-	}
-
-	public void afisPretArt(String pretArt) {
-
-		NumberFormat nf2 = NumberFormat.getInstance();
-		nf2.setMinimumFractionDigits(2);
-		nf2.setMaximumFractionDigits(2);
-
-		LinearLayout tl = (LinearLayout) findViewById(R.id.ArtPretTable);
-		tl.setOrientation(LinearLayout.VERTICAL);
-		tl.setGravity(Gravity.RIGHT);
-
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 0.005f);
-
-		layoutParams.setMargins(20, 0, 0, 0);
-
-		LinearLayout rowLayout = new LinearLayout(this);
-		rowLayout.setGravity(Gravity.LEFT);
-		rowLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-		tl.removeAllViews();
-
-		TextView labelPret = new TextView(this);
-		labelPret.setText("Pret");
-		labelPret.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
-		labelPret.setTextSize(16);
-		labelPret.setGravity(Gravity.LEFT);
-		labelPret.setTextColor(getResources().getColor(R.color.detColor4));
-		labelPret.setLayoutParams(layoutParams);
-		rowLayout.addView(labelPret);
-
-		TextView labelPTVA = new TextView(this);
-		// pentru consilieri nu se afiseaza pretul cu tva
-		if (!UserInfo.getInstance().getTipAcces().equals("17") && !UserInfo.getInstance().getTipAcces().equals("18") && !UtilsUser.isUserIP()) {
-
-			labelPTVA.setText("Pret + tva");
-			labelPTVA.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
-			labelPTVA.setTextSize(16);
-			labelPTVA.setGravity(Gravity.LEFT);
-			labelPTVA.setTextColor(getResources().getColor(R.color.detColor4));
-			labelPTVA.setLayoutParams(layoutParams);
-			rowLayout.addView(labelPTVA);
-		}
-
-		// pentru directori se afiseaza si pretul GED
-		TextView labelPretGED = new TextView(this);
-		if (UserInfo.getInstance().getTipAcces().equals("12") || UserInfo.getInstance().getTipAcces().equals("14")) {
-			labelPretGED.setText("Pret GED");
-			labelPretGED.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
-			labelPretGED.setTextSize(16);
-			labelPretGED.setGravity(Gravity.LEFT);
-			labelPretGED.setTextColor(getResources().getColor(R.color.detColor4));
-			labelPretGED.setLayoutParams(layoutParams);
-			rowLayout.addView(labelPretGED);
-		}
-
-		TextView labelUm = new TextView(this);
-		labelUm.setText("Um");
-		labelUm.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
-		labelUm.setTextSize(16);
-		labelUm.setGravity(Gravity.LEFT);
-		labelUm.setTextColor(getResources().getColor(R.color.detColor4));
-		labelUm.setLayoutParams(layoutParams);
-		rowLayout.addView(labelUm);
-
-		tl.addView(rowLayout);
-
-		if (!pretArt.equals("")) {
-
-			String[] artTok = pretArt.split("#");
-
-			if (artTok.length > 1) {
-				LinearLayout rowLayoutCh = new LinearLayout(this);
-
-				labelPret = new TextView(this);
-				labelPret.setText("");
-
-				if (artTok[1] != null) {
-					labelPret.setText(artTok[1]);
-				}
-
-				labelPret.setTypeface(Typeface.MONOSPACE);
-				labelPret.setTextSize(16);
-				labelPret.setTextColor(getResources().getColor(R.color.dropColor2));
-				labelPret.setLayoutParams(layoutParams);
-				rowLayoutCh.addView(labelPret);
-
-				if (!UserInfo.getInstance().getTipAcces().equals("17") && !UserInfo.getInstance().getTipAcces().equals("18") && !UtilsUser.isUserIP()) {
-					labelPTVA = new TextView(this);
-					labelPTVA.setText("");
-					if (artTok[1] != null) {
-						Double ptva = Double.parseDouble(artTok[1]) * Constants.TVA;
-						labelPTVA.setText(String.valueOf(nf2.format(ptva)));
-					}
-
-					labelPTVA.setTypeface(Typeface.MONOSPACE);
-					labelPTVA.setTextSize(16);
-					labelPTVA.setTextColor(getResources().getColor(R.color.dropColor2));
-					labelPTVA.setLayoutParams(layoutParams);
-					rowLayoutCh.addView(labelPTVA);
-				}
-
-				// pentru directori se afiseaza si pretul GED
-				if (UserInfo.getInstance().getTipAcces().equals("12") || UserInfo.getInstance().getTipAcces().equals("14")) {
-
-					labelPretGED = new TextView(this);
-					labelPretGED.setText("");
-					if (artTok[9] != null) {
-						Double pged = Double.parseDouble(artTok[9]);
-						labelPretGED.setText(String.valueOf(nf2.format(pged)));
-					}
-
-					labelPretGED.setTypeface(Typeface.MONOSPACE);
-					labelPretGED.setTextSize(16);
-					labelPretGED.setTextColor(getResources().getColor(R.color.dropColor2));
-					labelPretGED.setLayoutParams(layoutParams);
-					rowLayoutCh.addView(labelPretGED);
-				}
-
-				labelUm = new TextView(this);
-				labelUm.setText("");
-				if (artTok[2] != null) {
-					labelUm.setText(artTok[2]);
-				}
-
-				labelUm.setTypeface(Typeface.MONOSPACE);
-				labelUm.setTextSize(16);
-				labelUm.setTextColor(getResources().getColor(R.color.dropColor2));
-				labelUm.setLayoutParams(layoutParams);
-				rowLayoutCh.addView(labelUm);
-
-				tl.addView(rowLayoutCh);
-			} else {
-				Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_SHORT).show();
-			}
-		} else {
-
-			Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_SHORT).show();
-
-		}
-
-	}
-
-	@Override
-	public void onBackPressed() {
-		UserInfo.getInstance().setParentScreen("");
-		Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
-
-		startActivity(nextScreen);
-
-		finish();
-		return;
-	}
-
-	public void onTaskComplete(String methodName, Object result) {
-		afisStocArt((String) result);
-		performGetPret();
-
-	}
-
-	private void stocBtnListener() {
-		try {
-			if (txtCodArticol.length() > 0) {
-				try {
-					performGetArticole();
-
-				} catch (Exception ex) {
-					Log.e("Error", ex.toString());
-
-				}
-			} else {
-				Toast.makeText(getApplicationContext(), "Introduceti cod articol!", Toast.LENGTH_SHORT).show();
-			}
-
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	public void onClick(View v) {
-
-		int id = v.getId();
-		if (id == R.id.stocBtn) {
-			stocBtnListener();
-		}
-
-	}
-
-	public void taskComplete(String response) {
-		afisPretArt(response);
-		if (UtilsUser.isCV() || UtilsUser.isUserIP())
-			performGetCodBare();
-	}
-
-	public void operationComplete(EnumArticoleDAO methodName, Object result) {
-
-		switch (methodName) {
-		case GET_ARTICOLE_DISTRIBUTIE:
-			populateListViewArticol(opArticol.deserializeArticoleVanzare((String) result));
-			break;
-		case GET_COD_BARE:
-			displayCodBare((String) result);
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	private void displayCodBare(String result) {
-		if (!result.trim().equals("")) {
-
-			String label = "Cod bare\n";
-			if (!result.contains(",")) {
-				label += result;
-			} else {
-				String[] coduri = result.split(",");
-
-				for (int i = 0; i < coduri.length; i++)
-					label += coduri[i] + "\n";
-
-			}
-
-			textCodBare.setText(label);
-		}
-
-	}
+    }
 }

@@ -1862,7 +1862,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         paramPret.setDepart(globalCodDepartSelectetItem.substring(0, 2));
         paramPret.setUm(paramUnitMas);
         paramPret.setUl(uLog);
-        paramPret.setDepoz("");
+        paramPret.setDepoz("CUSC");
         paramPret.setCodUser(UserInfo.getInstance().getCod());
         paramPret.setCanalDistrib("20");
         paramPret.setTipUser(UserInfo.getInstance().getTipUser());
