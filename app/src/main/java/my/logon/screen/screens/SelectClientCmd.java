@@ -15,16 +15,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -64,9 +61,9 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 	private TextView limCreditText;
 	private TextView restCreditText;
 	private TextView clientBlocatText, filClientText;
-	private CheckBox cmdAngaj;
 
-	ToggleButton tglTipComanda;
+
+
 	private NumberFormat nf2;
 
 	private static ArrayList<HashMap<String, String>> listClienti = null;
@@ -75,7 +72,6 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 
 	OperatiiClient opClient;
 	private Spinner spinnerAgenti;
-	private RadioButton radioCmdFerma, radioCmdSimulata;
 
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -114,23 +110,11 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 		tipClient = (TextView) findViewById(R.id.tipClient);
 		filClientText = (TextView) findViewById(R.id.filClient);
 
-		cmdAngaj = (CheckBox) findViewById(R.id.checkboxCmdAng);
-
 		txtNumeClient.setHint("Introduceti nume client");
 
 		listClienti = new ArrayList<HashMap<String, String>>();
 
 		saveClntBtn.setVisibility(View.INVISIBLE);
-
-		this.tglTipComanda = (ToggleButton) findViewById(R.id.tglTipComanda);
-		addListenerTipComanda();
-
-		if (UserInfo.getInstance().getTipAcces().equals("27")) // KA fara
-																// clienti ged
-		{
-			this.tglTipComanda.setVisibility(View.INVISIBLE);
-			cmdAngaj.setVisibility(View.INVISIBLE);
-		}
 
 		CreareComanda.canalDistrib = "10";
 
@@ -146,11 +130,6 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 			((LinearLayout) findViewById(R.id.layoutAgentClient)).setVisibility(View.VISIBLE);
 		}
 
-		radioCmdFerma = (RadioButton) findViewById(R.id.radio_cmd_ferma);
-		radioCmdSimulata = (RadioButton) findViewById(R.id.radio_cmd_simulata);
-
-		radioCmdFerma.setVisibility(View.INVISIBLE);
-		radioCmdSimulata.setVisibility(View.INVISIBLE);
 
 	}
 
@@ -184,51 +163,6 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 
 	}
 
-	public void addListenerTipComanda() {
-		tglTipComanda.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (tglTipComanda.isChecked()) {
-
-					CreareComanda.canalDistrib = "20";
-
-					listClienti.clear();
-
-					numeClientText.setText("");
-					codClientText.setText("");
-					adresaText.setText("");
-					limCreditText.setText("");
-					restCreditText.setText("");
-					codClientVar = "";
-					numeClientVar = "";
-					tipClient.setVisibility(View.GONE);
-					filClientText.setVisibility(View.GONE);
-					cmdAngaj.setVisibility(View.INVISIBLE);
-					clientBlocatText.setText("");
-
-				} else {
-
-					CreareComanda.canalDistrib = "10";
-
-					listClienti.clear();
-
-					numeClientText.setText("");
-					codClientText.setText("");
-					adresaText.setText("");
-					limCreditText.setText("");
-					restCreditText.setText("");
-					codClientVar = "";
-					numeClientVar = "";
-					tipClient.setVisibility(View.GONE);
-					filClientText.setVisibility(View.GONE);
-					cmdAngaj.setVisibility(View.VISIBLE);
-					clientBlocatText.setText("");
-
-				}
-
-			}
-		});
-
-	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		BeanClient client = (BeanClient) l.getAdapter().getItem(position);
@@ -327,19 +261,6 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 					CreareComanda.cmdAngajament = false;
 
 					DateLivrare.getInstance().setRefClient(((EditText) findViewById(R.id.textRefClient)).getText().toString().trim());
-
-					if (CreareComanda.canalDistrib.equals("10")) {
-
-						if (cmdAngaj.isChecked())
-							CreareComanda.cmdAngajament = true;
-					}
-
-					if (radioCmdFerma.isChecked()) {
-						CreareComanda.tipComanda = "N";
-					} else if (radioCmdSimulata.isChecked()) {
-						CreareComanda.cmdAngajament = false;
-						CreareComanda.tipComanda = "S";
-					}
 
 					finish();
 				}

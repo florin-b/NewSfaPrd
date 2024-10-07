@@ -917,7 +917,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("antetComanda", opArticol.serializeAntetCmdMathaus(antetComanda));
         params.put("comandaMathaus", opArticol.serializeComandaMathaus(comandaMathaus));
-        params.put("canal", ModificareComanda.isComandaDistrib ? "10" : "20");
+        params.put("canal", comandaSelectata.getCanalDistrib());
         params.put("datePoligon", opArticol.serializeDatePoligon(DateLivrare.getInstance().getDatePoligonLivrare()));
 
         operatiiComenzi.getLivrariMathaus(params);
@@ -1766,7 +1766,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             obj.put("adresaLivrare", comanda.getAdresaLivrare());
             obj.put("valoareIncasare", comanda.getValoareIncasare());
             obj.put("conditieID", comanda.getConditieID());
-            obj.put("canalDistrib", ModificareComanda.isComandaDistrib ? "10" : "20");
+            obj.put("canalDistrib", comandaSelectata.getCanalDistrib());
             obj.put("necesarAprobariCV", comanda.getNecesarAprobariCV());
             obj.put("valTransportSap", "0");
 

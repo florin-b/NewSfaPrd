@@ -2375,7 +2375,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         numeClientVar = "";
         codClientVar = "";
         totalComanda = 0;
-        canalDistrib = "";
+        canalDistrib = "10";
         cursValutar = 0;
         limitaCredit = 0;
         restCredit = 0;

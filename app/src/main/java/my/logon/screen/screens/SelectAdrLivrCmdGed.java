@@ -2257,7 +2257,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     @Override
     public void onBackPressed() {
-        finish();
+        saveAdrLivrBtn.performClick();
         return;
     }
 

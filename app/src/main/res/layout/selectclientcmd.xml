@@ -69,52 +69,6 @@
                 android:layout_height="match_parent" >
             </View>
 
-            <ToggleButton
-                android:id="@+id/tglTipComanda"
-                style="@style/button_text_1"
-                android:layout_width="2dip"
-                android:layout_height="40dip"
-                android:background="@drawable/button_style_5"
-                android:paddingLeft="20dip"
-                android:paddingRight="20dip"
-                android:textOff="@string/strDistrib"
-                android:textOn="Client ged"
-                android:visibility="invisible" />
-
-            <View
-                android:layout_width="30dip"
-                android:layout_height="match_parent" >
-            </View>
-
-            <CheckBox
-                android:id="@+id/checkboxCmdAng"
-                style="@style/checkbox_text_1"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
-                android:button="@drawable/checkbox_style_1"
-                android:visibility="gone"
-                android:text="@string/strCmdAngaj" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <RadioButton
-                    android:id="@+id/radio_cmd_ferma"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:textColor="@color/agentiColor"
-                    android:text="Comanda ferma" />
-
-                <RadioButton
-                    android:id="@+id/radio_cmd_simulata"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/agentiColor"
-                    android:text="Comanda simulata fara rezervare de stoc" />
-            </RadioGroup>
         </LinearLayout>
 
         <ScrollView

@@ -2426,7 +2426,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        finish();
+        saveAdrLivrBtn.performClick();
         return;
     }
 
