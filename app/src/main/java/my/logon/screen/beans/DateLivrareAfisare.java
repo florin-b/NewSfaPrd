@@ -81,6 +81,7 @@ public class DateLivrareAfisare {
     private String codJ;
     private String aprobariNecesare;
     private String aprobariPrimite;
+    private String prelucrare;
 
     public DateLivrareAfisare() {
 
@@ -685,5 +686,13 @@ public class DateLivrareAfisare {
 
     public void setAprobariPrimite(String aprobariPrimite) {
         this.aprobariPrimite = aprobariPrimite;
+    }
+
+    public String getPrelucrare() {
+        return prelucrare;
+    }
+
+    public void setPrelucrare(String prelucrare) {
+        this.prelucrare = prelucrare;
     }
 }

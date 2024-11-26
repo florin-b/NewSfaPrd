@@ -171,6 +171,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private ActivityResultLauncher<Intent> startActivityForResult;
     private String ulLivrareModifCmd;
     private Button btnCodPostal;
+    private boolean isAdresaLivrareTCLIModifCmd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -240,9 +241,10 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             }
 
             ulLivrareModifCmd = "";
-
+            isAdresaLivrareTCLIModifCmd = false;
             if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("ModificareComanda")) {
                 ulLivrareModifCmd = bundle.getString("ulLivrare");
+                isAdresaLivrareTCLIModifCmd = bundle.getString("adrLivrareTCLI").equals(("true"));
             }
 
             textLocalitateLivrare = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocLivrare);
@@ -548,7 +550,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                     isAdresaLivrareTCLI = true;
                     ((LinearLayout) findViewById(R.id.layoutFilLivrare)).setVisibility(View.GONE);
                     spinnerTransp.setSelection(0);
-                    spinnerTransp.setSelection(0);
                     clearAdresaLivrare();
                     performGetJudete();
                 }
@@ -560,6 +561,15 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             } else {
                 spinnerTransp.setSelection(0, true);
                 spinnerTransp.setEnabled(true);
+            }
+
+            if (!ulLivrareModifCmd.trim().isEmpty()) {
+                if (isAdresaLivrareTCLIModifCmd || DateLivrare.getInstance().getTransport().equals("TRAP"))
+                    spinnerTransp.setSelection(0, true);
+
+                else if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
+                    spinnerTransp.setSelection(1, true);
+                }
             }
 
             setLivrareCustodieLayout();
@@ -1208,10 +1218,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         HashMap<String, String> temp;
         String numeJudSel = "";
         int i;
-        temp = new HashMap<String, String>();
-        temp.put("numeJudet", "Selectati judetul");
-        temp.put("codJudet", "");
-        listJudete.add(temp);
 
         int nrJud = 0;
         for (i = 0; i < UtilsGeneral.numeJudete.length; i++) {

@@ -305,7 +305,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
             codArticol = "0000000000" + codArticol;
 
         HashMap<String, String> params = new HashMap<String, String>();
-        String localCodClient, localDepart, localFiliala, localCanalDistrib;
+        String localCodClient, localDepart, localFiliala;
 
         if (UserInfo.getInstance().getTipAcces().equals("17") || UserInfo.getInstance().getTipAcces().equals("18") || UtilsUser.isUserIP()) {
             localCodClient = ClientiGenericiGedInfoStrings.getClientGenericGed(UserInfo.getInstance().getUnitLog(), "PF");
@@ -316,13 +316,13 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
                 localFiliala = UserInfo.getInstance().getUnitLog().substring(0, 2) + "4" + UserInfo.getInstance().getUnitLog().substring(3, 4);
             }
 
-            localCanalDistrib = "20";
+
 
         } else {
             localCodClient = "4119000004";
             localDepart = selectedCodDepart;
             localFiliala = filialaStoc;
-            localCanalDistrib = "10";
+
         }
 
 
@@ -335,7 +335,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
         paramPret.setUl(localFiliala);
         paramPret.setDepoz(" ");
         paramPret.setCodUser(UserInfo.getInstance().getCod());
-        paramPret.setCanalDistrib(localCanalDistrib);
+        paramPret.setCanalDistrib("99");
         paramPret.setTipUser(UserInfo.getInstance().getTipUserSap());
         paramPret.setFilialaAlternativa(localFiliala);
         paramPret.setFilialaClp(DateLivrare.getInstance().getCodFilialaCLP());

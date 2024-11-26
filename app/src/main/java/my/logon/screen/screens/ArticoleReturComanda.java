@@ -35,10 +35,14 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.apache.commons.net.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,6 +74,7 @@ import my.logon.screen.model.ComenziDAO;
 import my.logon.screen.model.OperatiiReturMarfa;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.MapUtils;
+import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsDates;
 import my.logon.screen.utils.UtilsGeneral;
 
@@ -101,6 +106,7 @@ public class ArticoleReturComanda extends Fragment implements ListaArtReturListe
 
     private Button macaraBtn;
     private ComenziDAO comandaDAO;
+    private static final String codArtUzuraPalet = "88888888";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.articole_retur_comanda, container, false);
@@ -542,7 +548,79 @@ public class ArticoleReturComanda extends Fragment implements ListaArtReturListe
         }
     }
 
+    private BeanArticolRetur getUzuraPalet() {
+
+        BeanArticolRetur uzuraPaleti = new BeanArticolRetur();
+        uzuraPaleti.setCod(codArtUzuraPalet);
+        uzuraPaleti.setNume("TAXA UZURA PALET");
+        uzuraPaleti.setCantitate(1);
+        uzuraPaleti.setCantitateRetur(1);
+        uzuraPaleti.setUm("BUC");
+        uzuraPaleti.setMotivRespingere(selectedArticol.getMotivRespingere());
+
+        return uzuraPaleti;
+
+    }
+
+    private void removeArticolUzura(){
+
+        Iterator<BeanArticolRetur> listIterator = listArticole.iterator();
+
+        while (listIterator.hasNext()) {
+            BeanArticolRetur artRetur = listIterator.next();
+
+            if (artRetur.getCod().equals(codArtUzuraPalet))
+                listIterator.remove();
+        }
+
+    }
+
+    private void checkTaxaUzuraPaleti(){
+
+        double localTaxaUzuraPaleti = UtilsComenzi.getTaxaUzuraPaleti(listArticole);
+
+        if (localTaxaUzuraPaleti > 0)
+            showInfoTaxaUzuraPaleti(localTaxaUzuraPaleti);
+        else
+            performSaveRetur();
+
+    }
+
+    public void showInfoTaxaUzuraPaleti(double taxaUzuraPaleti) {
+
+        NumberFormat nf = new DecimalFormat("#0.00");
+
+        StringBuilder alertMsg = new StringBuilder();
+        alertMsg.append("\n");
+        alertMsg.append("Pentru aceasta comanda se va percepe o taxa de uzura paleti in valoare de " + nf.format(taxaUzuraPaleti) + " lei.");
+        alertMsg.append("\n");
+        alertMsg.append("\n");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(alertMsg.toString()).setCancelable(false).setPositiveButton("Salveaza", (dialog, id) -> performSaveRetur()).
+                setNegativeButton("Anuleaza", (dialog, id) -> dialog.cancel()).setTitle("Atentie!").setIcon(R.drawable.warning96).setCancelable(false);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    private boolean isComandaPaleti(){
+        for (BeanArticolRetur artRetur : listArticole){
+            if (artRetur.getCantitateRetur() > 0 && artRetur.getCategMat() != null &&
+                    !artRetur.getCategMat().equals("PA") && !artRetur.getCategMat().equals("AM"))
+                return false;
+        }
+
+        return true;
+    }
+
     private void performSaveRetur() {
+
+        if (isComandaPaleti()) {
+            Snackbar.make(getView(), "Comanda de retur nu poate sa contina doar paleti.", Snackbar.LENGTH_LONG).show();
+            return;
+        }
 
         BeanComandaRetur comandaRetur = new BeanComandaRetur();
         comandaRetur.setNrDocument(nrDocument);

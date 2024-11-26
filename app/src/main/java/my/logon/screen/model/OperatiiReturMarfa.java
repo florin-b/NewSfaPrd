@@ -223,6 +223,9 @@ public class OperatiiReturMarfa implements AsyncTaskListener {
 					else
 						artRetur.setPretUnitPalet(0);
 
+					artRetur.setTaxaUzura(Double.valueOf(jsonObj.getString("taxaUzura")));
+					artRetur.setCategMat(jsonObj.getString("categMat"));
+
 					listArticole.add(artRetur);
 				}
 			}

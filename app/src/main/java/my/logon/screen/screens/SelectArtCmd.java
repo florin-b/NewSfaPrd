@@ -1313,13 +1313,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         }
     }
 
-    boolean isNotDepartRestricted(String codDepart) {
-        if (UserInfo.getInstance().getTipAcces().equals("27"))
-            return true;
-        else
-            return UserInfo.getInstance().getCodDepart().equals(codDepart);
-    }
-
     public void addListenerBtnArticole() {
         articoleBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {

@@ -48,6 +48,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
     private List<RezumatComanda> listRezumat;
     private NumberFormat nf2 = new DecimalFormat("#,##0.00");
     private AdapterRezumatComanda adapterRezumat;
+    private boolean isComandaModif;
 
     public RezumatComandaDialog(Context context, List<ArticolComanda> listArticole, String canal, List<CostTransportMathaus> costTransport, String tipTransport,
                                 String filialeArondate, boolean selectTransp) {
@@ -301,7 +302,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
     @Override
     public void setStareRezumat(String codStare, String filialaLivrare) {
 
-        if (DateLivrare.getInstance().getFilialaLivrareTCLI() == null || DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().isEmpty())
+        if (!isComandaModif && (DateLivrare.getInstance().getFilialaLivrareTCLI() == null || DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().isEmpty()))
             return;
 
         if ((codStare.equals("0") && !isCom1()) || !selectTransp) {
@@ -320,4 +321,7 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
     }
 
 
+    public void setComandaModif(boolean isComandaModif){
+        this.isComandaModif = isComandaModif;
+    }
 }

@@ -263,7 +263,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4" />
                     </LinearLayout>
-
+                    
                     <LinearLayout
                         style="@style/dateLivrareDlLayout"
                         android:layout_width="match_parent"
@@ -283,6 +283,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4" />
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:id="@+id/layoutFilialaClp"
@@ -402,6 +403,29 @@
 
                         <TextView
                             android:id="@+id/textPondereArtBAfis"
+                            style="@style/dateLivrareDlValori"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutPrelucrare"
+                        style="@style/dateLivrareDlLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <TextView
+                            style="@style/dateLivrareDlLabel"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:text="Prelucrare" />
+
+                        <TextView
+                            android:id="@+id/textPrelucrare"
                             style="@style/dateLivrareDlValori"
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"

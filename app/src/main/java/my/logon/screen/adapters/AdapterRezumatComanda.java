@@ -18,8 +18,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import my.logon.screen.R;
 import my.logon.screen.beans.BeanDataLivrare;
@@ -257,6 +255,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                 articolComanda.setPret(articolComanda.getPretUnit());
                 articolComanda.setPretUnitarClient(articolComanda.getPretUnit());
                 articolComanda.setPretUnitarGed(articolComanda.getPretUnit());
+                articolComanda.setPretMinim(getCostTransport(rezumat.getFilialaLivrare()));
 
                 if (listener != null) {
                     listener.eliminaArticol(articolComanda);
@@ -937,39 +936,6 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
             return null;
         }
 
-    }
-
-    private String[] getDateDisponibileLivrare(String filiala) {
-
-        List<String> dateLivrare = new ArrayList<>();
-
-        if (listDateLivrare != null) {
-
-            for (BeanDataLivrare dataL : listDateLivrare) {
-
-                if (dataL.getFiliala().equals(UtilsComenzi.getFilialaDistrib(filiala)))
-                    dateLivrare.add(dataL.getDataLivrare());
-
-            }
-
-        }
-
-        return dateLivrare.toArray(new String[0]);
-    }
-
-    private String[] getDateDisponibileLivrare() {
-
-        SortedSet<String> dateLivrare = new TreeSet<>();
-
-        if (listDateLivrare != null) {
-
-            for (BeanDataLivrare dataL : listDateLivrare) {
-                dateLivrare.add(dataL.getDataLivrare());
-            }
-
-        }
-
-        return dateLivrare.toArray(new String[0]);
     }
 
     public String addSpaces(String um) {

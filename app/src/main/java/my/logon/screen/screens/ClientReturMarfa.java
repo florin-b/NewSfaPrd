@@ -1,6 +1,7 @@
 package my.logon.screen.screens;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
+
 public class ClientReturMarfa extends Fragment implements OperatiiClientListener {
 
 	private OperatiiClient opClient;
@@ -45,6 +47,7 @@ public class ClientReturMarfa extends Fragment implements OperatiiClientListener
 	private RadioGroup groupTipDistrib;
 	private RadioButton radioDistrib, radioGed;
 	private EnumTipComanda tipComanda;
+	
 
 	ClientReturListener clientListener;
 
@@ -75,22 +78,24 @@ public class ClientReturMarfa extends Fragment implements OperatiiClientListener
 		addRadioGedListener();
 
 		groupTipDistrib = (RadioGroup) v.findViewById(R.id.groupTipDistrib);
+
 		if (!UtilsUser.isCV())
 			groupTipDistrib.setVisibility(View.VISIBLE);
-		else
+		else {
 			groupTipDistrib.setVisibility(View.GONE);
+		}
 
 		return v;
 
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onAttach(Context context) {
+		super.onAttach(context);
 		try {
 			clientListener = (ClientReturListener) getActivity();
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString());
+			throw new ClassCastException(context.toString());
 		}
 	}
 
@@ -104,7 +109,6 @@ public class ClientReturMarfa extends Fragment implements OperatiiClientListener
 	private void addRadioDistribListener() {
 		radioDistrib.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					tipComanda = EnumTipComanda.DISTRIBUTIE;
@@ -119,7 +123,6 @@ public class ClientReturMarfa extends Fragment implements OperatiiClientListener
 	private void addRadioGedListener() {
 		radioGed.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					tipComanda = EnumTipComanda.GED;
@@ -155,6 +158,7 @@ public class ClientReturMarfa extends Fragment implements OperatiiClientListener
 			params.put("depart", "00");
 			params.put("departAg", UserInfo.getInstance().getCodDepart());
 			params.put("unitLog", UserInfo.getInstance().getUnitLog());
+			params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
 
 			if (UtilsUser.isUserGed() || tipComanda == EnumTipComanda.GED)
 				opClient.getListClientiCV(params);

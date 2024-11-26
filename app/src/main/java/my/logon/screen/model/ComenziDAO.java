@@ -487,6 +487,7 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
                 dateLivrare.setTonaj(jsonLivrare.getString("tonaj"));
                 dateLivrare.setCodJ(jsonLivrare.getString("codJ"));
+                dateLivrare.setPrelucrare(jsonLivrare.getString("prelucrare"));
 
                 JSONArray jsonArticole = jsonObject.getJSONArray("articoleComanda");
                 String tipAlert, subCmp;

@@ -169,6 +169,7 @@ public class HelperMathaus {
         articolComanda.setPret(articolComanda.getPretUnit());
         articolComanda.setPretUnitarClient(articolComanda.getPretUnit());
         articolComanda.setPretUnitarGed(articolComanda.getPretUnit());
+        articolComanda.setPretMinim(articolComanda.getPretUnit());
         articolComanda.setProcent(0);
         articolComanda.setUm("BUC");
         articolComanda.setUmb("BUC");

@@ -168,6 +168,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
     private EditText textMail;
     private CheckBox checkCustodie;
     private Button btnCodPostal;
+    private boolean isAdresaLivrareTCLIModifCmd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -186,12 +187,14 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         operatiiAdresa.setOperatiiAdresaListener(this);
 
         ulLivrareModifCmd = "";
+        isAdresaLivrareTCLIModifCmd = false;
 
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null && bundle.getString("parrentClass") != null && bundle.getString("parrentClass").equals("ModificareComanda")) {
 
             ulLivrareModifCmd = bundle.getString("ulLivrare");
+            isAdresaLivrareTCLIModifCmd = bundle.getString("adrLivrareTCLI").equals(("true"));
 
             if ((Double.parseDouble(bundle.getString("limitaCredit")) > 1) && !bundle.getString("termenPlata").equals("C000")) {
 
@@ -531,6 +534,15 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             chkbClientLaRaft.setChecked(true);
             chkbClientLaRaft.setEnabled(false);
 
+        }
+
+        if (!ulLivrareModifCmd.trim().isEmpty()) {
+            if (isAdresaLivrareTCLIModifCmd || DateLivrare.getInstance().getTransport().equals("TRAP"))
+                spinnerTransp.setSelection(0, true);
+
+            else if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
+                spinnerTransp.setSelection(1, true);
+            }
         }
 
         btnDataLivrare = (Button) findViewById(R.id.btnDataLivrare);
@@ -1201,10 +1213,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         HashMap<String, String> temp;
         String numeJudSel = "";
         int i;
-        temp = new HashMap<String, String>();
-        temp.put("numeJudet", "Selectati judetul");
-        temp.put("codJudet", "");
-        listJudete.add(temp);
 
         int nrJud = 0;
         for (i = 0; i < UtilsGeneral.numeJudete.length; i++) {

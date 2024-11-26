@@ -709,6 +709,13 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 		else
 			layoutCmdBV90.setVisibility(View.GONE);
 
+		if (dateLivrare.getPrelucrare() != null && !dateLivrare.getPrelucrare().trim().isEmpty()){
+			findViewById(R.id.layoutPrelucrare).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.textPrelucrare)).setText(dateLivrare.getPrelucrare());
+		} else {
+			findViewById(R.id.layoutPrelucrare).setVisibility(View.GONE);
+		}
+
 	}
 
 	private void showListComenzi(List<BeanComandaCreata> listComenziCreate) {

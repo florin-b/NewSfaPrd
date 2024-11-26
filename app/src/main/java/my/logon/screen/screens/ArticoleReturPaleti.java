@@ -47,6 +47,7 @@ import my.logon.screen.listeners.OperatiiReturListener;
 import my.logon.screen.model.OperatiiReturMarfa;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.MapUtils;
+import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
@@ -71,6 +72,7 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
     TextView selectIcon;
     private static final double TAXA_RETUR_PALET = 8.4;
     private static final String codArtTranspPalet = "99999999";
+    private static final String codArtUzuraPalet = "88888888";
     private DocumenteReturPaleti docPaletiInstance;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -300,7 +302,6 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
                     public void run() {
 
                         showWarningDialog();
-
                     }
                 });
                 myTimer.cancel();
@@ -321,16 +322,48 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
 
     }
 
-    private String getUnDocument(List<BeanArticolRetur> listArticole){
+    private String getUnDocument(List<BeanArticolRetur> listArticole) {
         String unDocument = "";
 
         for (BeanArticolRetur artRetur : listArticole)
-            if (artRetur.getNrDocument()!= null && !artRetur.getNrDocument().trim().isEmpty()) {
+            if (artRetur.getNrDocument() != null && !artRetur.getNrDocument().trim().isEmpty()) {
                 unDocument = artRetur.getNrDocument();
                 break;
             }
 
         return unDocument;
+    }
+
+
+    private void checkTaxaUzuraPaleti() {
+
+        double localTaxaUzuraPaleti = UtilsComenzi.getTaxaUzuraPaleti(listArticole);
+
+        if (localTaxaUzuraPaleti > 0)
+            showInfoTaxaUzuraPaleti(localTaxaUzuraPaleti);
+        else
+            showWarningDialog();
+
+    }
+
+    public void showInfoTaxaUzuraPaleti(double taxaUzuraPaleti) {
+
+        NumberFormat nf = new DecimalFormat("#0.00");
+
+        StringBuilder alertMsg = new StringBuilder();
+        alertMsg.append("\n");
+        alertMsg.append("Pentru aceasta comanda se va percepe o taxa de uzura paleti in valoare de " + nf.format(taxaUzuraPaleti) + " lei.");
+        alertMsg.append("\n");
+        alertMsg.append("\n");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(alertMsg.toString()).setCancelable(false).setPositiveButton("Salveaza", (dialog, id) ->
+                showWarningDialog()).setNegativeButton("Anuleaza", (dialog, id) ->
+                dialog.cancel()).setTitle("Atentie!").setIcon(R.drawable.warning96).setCancelable(false);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     private void performSaveRetur() {
@@ -339,6 +372,13 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
 
         if (isCondTranspPaleti()) {
             listArticole.add(getTransportRetur());
+        }
+
+        removeArticolUzura();
+
+        double taxaUzura = UtilsComenzi.getTaxaUzuraPaleti(listArticole);
+        if (taxaUzura > 0) {
+            listArticole.add(getUzuraPalet());
         }
 
         List<BeanComandaRetur> listComenziRetur = new ArrayList<>();
@@ -395,6 +435,19 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
             BeanArticolRetur artRetur = listIterator.next();
 
             if (artRetur.getCod().equals(codArtTranspPalet))
+                listIterator.remove();
+        }
+
+    }
+
+    private void removeArticolUzura() {
+
+        Iterator<BeanArticolRetur> listIterator = listArticole.iterator();
+
+        while (listIterator.hasNext()) {
+            BeanArticolRetur artRetur = listIterator.next();
+
+            if (artRetur.getCod().equals(codArtUzuraPalet))
                 listIterator.remove();
         }
 
@@ -523,6 +576,21 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
 
     }
 
+    private BeanArticolRetur getUzuraPalet() {
+
+        BeanArticolRetur uzuraPaleti = new BeanArticolRetur();
+        uzuraPaleti.setCod(codArtUzuraPalet);
+        uzuraPaleti.setNume("TAXA UZURA PALET");
+        uzuraPaleti.setCantitate(1);
+        uzuraPaleti.setCantitateRetur(1);
+        uzuraPaleti.setUm("BUC");
+
+        uzuraPaleti.setNrDocument(getUnDocument(listArticole));
+
+        return uzuraPaleti;
+
+    }
+
     private void showPanel(String panel) {
         if (panel.equals("cantitateRetur")) {
             layoutRetur.setVisibility(View.VISIBLE);
@@ -571,7 +639,7 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
 
     @Override
     public void setDocumentReturPaletiInstance(DocumenteReturPaleti instance) {
-            this.docPaletiInstance = instance;
+        this.docPaletiInstance = instance;
     }
 
     private void populateListArticole(List<BeanArticolRetur> listArticole) {

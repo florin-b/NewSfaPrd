@@ -133,41 +133,7 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 		textVersiuneCod.setText(buildVer + " / " + dateUpdate);
 		
 
-		// exceptie pentru agenti si sd din BUC
-		if (UserInfo.getInstance().getTipAcces().equals("9") || UserInfo.getInstance().getTipAcces().equals("10")) {
-			if (UserInfo.getInstance().getUnitLog().equals("BU10") || UserInfo.getInstance().isAltaFiliala()) {
-				if (UserInfo.getInstance().getCodDepart().equals("01") || UserInfo.getInstance().getCodDepart().equals("02")) {
 
-					listFiliala = new ArrayList<HashMap<String, String>>();
-					adapterFiliala = new SimpleAdapter(this, listFiliala, R.layout.simplerowlayout_1, new String[] { "rowText" },
-							new int[] { R.id.textRowName });
-
-					HashMap<String, String> temp;
-					temp = new HashMap<String, String>();
-					temp.put("rowText", "BU10");
-					listFiliala.add(temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("rowText", "BU13");
-					listFiliala.add(temp);
-
-					spinnerFiliala.setAdapter(adapterFiliala);
-					filUser.setText("GLINA");
-
-					if (UserInfo.getInstance().getUnitLog().equals("BU13")) {
-						spinnerFiliala.setSelection(1);
-						filUser.setText("ANDRONACHE");
-					}
-
-					spinnerFiliala.setVisibility(View.VISIBLE);
-					labelFiliala.setVisibility(View.VISIBLE);
-
-					spinnerFiliala.setOnItemSelectedListener(new onSelectedFiliala());
-
-				}
-
-			}
-		}
 
 		// user site
 		if (UserInfo.getInstance().getUserSite().equals("X") || UserInfo.getInstance().getTipUserSap().equals("SDIP")
@@ -193,7 +159,14 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 			spinnerFiliala.setVisibility(View.VISIBLE);
 			labelFiliala.setVisibility(View.VISIBLE);
 			spinnerFiliala.setOnItemSelectedListener(new onSelectedFiliala());
-			spinnerFiliala.setSelection(EnumFiliale.getItemPosition(UserInfo.getInstance().getUnitLog()));
+
+			for (int ii=0;ii<spinnerFiliala.getAdapter().getCount();ii++){
+
+				if (spinnerFiliala.getAdapter().getItem(ii).toString().contains(UserInfo.getInstance().getInitUnitLog())) {
+					spinnerFiliala.setSelection(ii);
+					break;
+				}
+			}
 
 			if (UtilsUser.isUserIP())
 				spinnerFiliala.setEnabled(false);
@@ -210,54 +183,6 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 		// sau
 		// sm, sdip
 		{
-
-			// pentru cei din BUC posibilitate selectie filiale BUC
-			if (UserInfo.getInstance().getUnitLog().contains("BU")) {
-				// afisare filiale BUC
-				listFiliala = new ArrayList<HashMap<String, String>>();
-				adapterFiliala = new SimpleAdapter(this, listFiliala, R.layout.simplerowlayout_1, new String[] { "rowText" }, new int[] { R.id.textRowName });
-
-				HashMap<String, String> temp;
-				temp = new HashMap<String, String>();
-				temp.put("rowText", "BU10");
-				listFiliala.add(temp);
-
-				temp = new HashMap<String, String>();
-				temp.put("rowText", "BU11");
-				listFiliala.add(temp);
-
-				temp = new HashMap<String, String>();
-				temp.put("rowText", "BU12");
-				listFiliala.add(temp);
-
-				temp = new HashMap<String, String>();
-				temp.put("rowText", "BU13");
-				listFiliala.add(temp);
-
-				spinnerFiliala.setAdapter(adapterFiliala);
-
-				spinnerFiliala.setVisibility(View.VISIBLE);
-				labelFiliala.setVisibility(View.VISIBLE);
-
-				spinnerFiliala.setOnItemSelectedListener(new onSelectedFiliala());
-
-				if (UserInfo.getInstance().getUnitLog().equals("BU10")) {
-					spinnerFiliala.setSelection(0);
-				}
-
-				if (UserInfo.getInstance().getUnitLog().equals("BU11")) {
-					spinnerFiliala.setSelection(1);
-				}
-
-				if (UserInfo.getInstance().getUnitLog().equals("BU12")) {
-					spinnerFiliala.setSelection(2);
-				}
-
-				if (UserInfo.getInstance().getUnitLog().equals("BU13")) {
-					spinnerFiliala.setSelection(3);
-				}
-
-			}// sf. if BUC
 
 			spinnerDepart.setEnabled(true);
 
@@ -585,7 +510,7 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 			temp.put("rowText", filiala);
 			listFiliala.add(temp);
 
-			if (UserInfo.getInstance().getUnitLog().equals(filiala))
+			if (UserInfo.getInstance().getInitUnitLog().equals(filiala))
 				selectedItem = i;
 
 			i++;

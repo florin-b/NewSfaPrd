@@ -14,6 +14,8 @@ public class BeanArticolRetur {
 	private boolean inlocuire;
 	private List<PozaArticol> pozeArticol;
 	private String nrDocument;
+	private double taxaUzura;
+	private String categMat;
 
 	public BeanArticolRetur() {
 
@@ -100,6 +102,22 @@ public class BeanArticolRetur {
 
 	public void setNrDocument(String nrDocument) {
 		this.nrDocument = nrDocument;
+	}
+
+	public double getTaxaUzura() {
+		return taxaUzura;
+	}
+
+	public void setTaxaUzura(double taxaUzura) {
+		this.taxaUzura = taxaUzura;
+	}
+
+	public String getCategMat() {
+		return categMat;
+	}
+
+	public void setCategMat(String categMat) {
+		this.categMat = categMat;
 	}
 
 	@Override

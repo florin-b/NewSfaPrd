@@ -238,6 +238,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private List<OptiuneCamion> stareOptiuniCamion;
     private TextView textGreutateCmd;
     public static String filialaCustodie = "";
+    private boolean isPragNumerarZiValid = false;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -1204,10 +1205,11 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                         DateLivrare dateLivrareInstance = DateLivrare.getInstance();
 
                         String redSeparat = "";
-                        String cmdSAP = "-1"; // se foloseste doar la modificare
-                        // comanda
+                        String cmdSAP = "-1";
 
                         String alerteKA = "!";
+
+                        isPragNumerarZiValid = false;
 
                         // comanda consilier (av) simulata
                         if (CreareComandaGed.tipComanda.equals("S")) {
@@ -1240,27 +1242,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
                         comandaFinala.setValoareIncasare(valIncasare);
 
-                        if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("E1") || dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance.getTipPlata().equals("R"))
-                                && CreareComandaGed.tipClient.equals("PJ")) {
-                            if (totalComanda > UserInfo.getInstance().getMaxNumerarPJuridica()) {
-                                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " + UserInfo.getInstance().getMaxNumerarPJuridica()
-                                        + " RON!", Toast.LENGTH_SHORT).show();
-                                return;
-                            } else
-                                getTotalComenziNumerar();
-
-                        } else if (isCondPF10_000()) {
-                            if (totalComanda > UserInfo.getInstance().getMaxNumerarPFizica()) {
-                                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " + UserInfo.getInstance().getMaxNumerarPFizica()
-                                        + " RON.", Toast.LENGTH_SHORT).show();
-                                return;
-                            } else
-                                getTotalComenziNumerar();
-                        } else if (isGreutateMaximaComanda()) {
-                            Toast.makeText(getApplicationContext(), Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
-                            return;
-                        } else
-                            valideazaFinal();
+                        valideazaFinal();
 
                     }
                 });
@@ -1317,6 +1299,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
         if (totalComanda + Double.valueOf(totalNumerar) > valPragNumerar) {
 
+            isPragNumerarZiValid = false;
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(
                     "\nLa acest client valoarea comenzilor cu plata in numerar livrate in data de " + DateLivrare.getInstance().getDataLivrare() + " depaseste " + (int) valPragNumerar + " de lei.\n\n" +
@@ -1331,8 +1315,10 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             alert.setCancelable(false);
             alert.show();
 
-        } else
-            valideazaFinal();
+        } else {
+            isPragNumerarZiValid = true;
+            performSaveCmd();
+        }
     }
 
 
@@ -1462,7 +1448,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         ComandaMathaus comandaMathaus = new ComandaMathaus();
 
         String filialaLivrareMathaus = CreareComandaGed.filialaAlternativa;
-        if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_LIVRARE)
+        if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_LIVRARE && !DateLivrare.getInstance().getCodFilialaCLP().equals("BV90"))
             filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
         else if ((DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_VANZARE) && DateLivrare.getInstance().getTransport().equals("TCLI") &&
                 !DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().trim().isEmpty())
@@ -2014,6 +2000,46 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     }
 
+    private boolean isPragNumerarComandaValid() {
+
+        double totalComandaNumerar = 0;
+
+        for(ArticolComanda articolCmd : ListaArticoleComandaGed.getInstance().getListArticoleLivrare()) {
+            totalComandaNumerar += articolCmd.getPretUnitarClient() * articolCmd.getCantUmb();
+        }
+
+        DateLivrare dateLivrareInstance = DateLivrare.getInstance();
+
+        if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("E1") || dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance.getTipPlata().equals("R"))
+                && CreareComandaGed.tipClient.equals("PJ")) {
+            if (totalComandaNumerar > UserInfo.getInstance().getMaxNumerarPJuridica()) {
+                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " + UserInfo.getInstance().getMaxNumerarPJuridica()
+                        + " RON!", Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                getTotalComenziNumerar();
+                return false;
+            }
+
+        } else if (isCondPF10_000()) {
+            if (totalComandaNumerar > UserInfo.getInstance().getMaxNumerarPFizica()) {
+                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " + UserInfo.getInstance().getMaxNumerarPFizica()
+                        + " RON.", Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                getTotalComenziNumerar();
+                return false;
+            }
+        } else if (isGreutateMaximaComanda()) {
+            Toast.makeText(getApplicationContext(), Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            isPragNumerarZiValid = true;
+            return true;
+        }
+
+    }
+
     private void performSaveCmd() {
         try {
 
@@ -2022,7 +2048,12 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 return;
             }
 
-            HashMap<String, String> params = new HashMap<String, String>();
+            if (!isPragNumerarZiValid && !isPragNumerarComandaValid()){
+                saveComandaMathaus = false;
+                return;
+            }
+
+            HashMap<String, String> params = new HashMap<>();
 
             String tipUser = "CV";
 
@@ -2471,7 +2502,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         tipComandaGed = TipCmdGed.COMANDA_VANZARE;
 
         DateLivrare.getInstance().resetAll();
-
+        UserInfo.getInstance().setUnitLog(UserInfo.getInstance().getInitUnitLog());
         filialaAlternativa = UserInfo.getInstance().getUnitLog();
         ListaArticoleComandaGed.getInstance().clearArticoleComanda();
 
@@ -3008,6 +3039,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     @Override
     public void tipComandaSelected(TipCmdGed tipSelected, String idComanda, String codFilialaClp) {
+
+        clearAllData();
 
         DateLivrare.getInstance().setCodFilialaFasonate("");
 

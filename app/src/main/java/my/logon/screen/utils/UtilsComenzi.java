@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import my.logon.screen.beans.BeanArticolRetur;
 import my.logon.screen.beans.BeanStocTCLI;
 import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.enums.TipCmdDistrib;
@@ -423,6 +424,16 @@ public class UtilsComenzi {
 			return ListaArticoleComanda.getInstance().getListArticoleComanda() != null && ListaArticoleComanda.getInstance().getListArticoleComanda().size() > 0;
 		else
 			return ListaArticoleComandaGed.getInstance().getListArticoleComanda() != null && ListaArticoleComandaGed.getInstance().getListArticoleComanda().size() > 0;
+	}
+
+	public static double getTaxaUzuraPaleti(List<BeanArticolRetur> listArticole){
+		double taxaUzura = 0;
+
+		for (BeanArticolRetur artRetur : listArticole) {
+			taxaUzura += artRetur.getCantitateRetur() * artRetur.getTaxaUzura();
+		}
+
+		return taxaUzura;
 	}
 
 }

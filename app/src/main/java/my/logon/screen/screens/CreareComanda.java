@@ -198,6 +198,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
     private RezumatComandaDialog rezumatComanda;
     private boolean isAfisOptiuniMasini = false;
     private List<OptiuneCamion> stareOptiuniCamion;
+    private boolean isPragNumerarZiValid = false;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -844,7 +845,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                             }
 
 
-
                             if (DateLivrare.getInstance().getTermenPlata().trim().equals("") && !isLivrareCustodie()) {
                                 Toast.makeText(getApplicationContext(), "Verificati datele de livrare!", Toast.LENGTH_SHORT).show();
                                 return true;
@@ -1044,6 +1044,8 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                         if (isReducere())
                             localRedSeparat = "X";
 
+                        isPragNumerarZiValid = false;
+
 
                         String userSiteMail = " ", isValIncModif = " ", codJ = "", adrLivrareGED = "";
 
@@ -1073,19 +1075,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
                         comandaJson = serializeComanda(comandaFinala);
 
-
-                        if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance.getTipPlata().equals("R")) && CreareComanda.tipClientVar.equals("PJ")) {
-                            if (totalComanda > UserInfo.getInstance().getMaxNumerarPJuridica()) {
-                                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " + UserInfo.getInstance().getMaxNumerarPJuridica() + " RON!", Toast.LENGTH_SHORT).show();
-                                return;
-                            } else
-                                getTotalComenziNumerar();
-                        } else if (isGreutateMaximaComanda()) {
-                            Toast.makeText(getApplicationContext(), Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        else
-                            valideazaFinal();
+                        valideazaFinal();
 
                     }
                 });
@@ -1098,14 +1088,14 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         }
     }
 
-    private boolean isGreutateMaximaComanda(){
+    private boolean isGreutateMaximaComanda() {
 
-        if (1==1)
+        if (1 == 1)
             return false;
 
         double greutateComanda = ListaArticoleComanda.getInstance().getGreutateKgArticole();
 
-        if (greutateComanda > Constants.MAX_GREUTATE_CMD_KG && DateLivrare.getInstance().getTransport().equals("TRAP")){
+        if (greutateComanda > Constants.MAX_GREUTATE_CMD_KG && DateLivrare.getInstance().getTransport().equals("TRAP")) {
             return true;
         }
 
@@ -1140,6 +1130,8 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
         if (totalComanda + Double.valueOf(totalNumerar) > UserInfo.getInstance().getMaxNumerarPJuridica()) {
 
+            isPragNumerarZiValid = false;
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(
                     "\nLa acest client valoarea comenzilor cu plata in numerar livrate in data de " + DateLivrare.getInstance().getDataLivrare() + " depaseste " +
@@ -1155,8 +1147,10 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             alert.setCancelable(false);
             alert.show();
 
-        } else
-            valideazaFinal();
+        } else {
+            isPragNumerarZiValid = true;
+            performSaveCmd();
+        }
 
 
     }
@@ -1353,7 +1347,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             params.put("codFurnizor", codFurnizor);
             params.put("listComenzi", comenziSer);
             params.put("canal", "10");
-            params.put("isCustodie",String.valueOf(tipComandaDistributie == TipCmdDistrib.LIVRARE_CUSTODIE));
+            params.put("isCustodie", String.valueOf(tipComandaDistributie == TipCmdDistrib.LIVRARE_CUSTODIE));
 
             comandaDAO.getCostMacaraComenzi(params);
         } else {
@@ -1381,11 +1375,45 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         comandaJson = serializeComanda(comandaFinala);
     }
 
+    private boolean isPragNumerarComandaValid() {
+
+        double totalComandaNumerar = 0;
+
+        for(ArticolComanda articolCmd : ListaArticoleComanda.getInstance().getListArticoleLivrare()) {
+            totalComandaNumerar += articolCmd.getPretUnit() / articolCmd.getMultiplu() * articolCmd.getCantUmb();
+        }
+
+        DateLivrare dateLivrareInstance = DateLivrare.getInstance();
+
+        if ((dateLivrareInstance.getTipPlata().equals("E") || dateLivrareInstance.getTipPlata().equals("N") || dateLivrareInstance.getTipPlata().equals("R")) && CreareComanda.tipClientVar.equals("PJ")) {
+            if (totalComandaNumerar > UserInfo.getInstance().getMaxNumerarPJuridica()) {
+                Toast.makeText(getApplicationContext(), "Pentru plata in numerar valoarea maxima este de " + UserInfo.getInstance().getMaxNumerarPJuridica() + " RON!", Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                getTotalComenziNumerar();
+                return false;
+            }
+        } else if (isGreutateMaximaComanda()) {
+            Toast.makeText(getApplicationContext(), Constants.MSG_MASA_MAXIMA_CMD, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else {
+            isPragNumerarZiValid = true;
+            return true;
+        }
+    }
+
+
     private void performSaveCmd() {
         try {
 
             if (isLivrareCustodie()) {
                 salveazaLivrareCustodie();
+                return;
+            }
+
+            if (!isPragNumerarZiValid && !isPragNumerarComandaValid()) {
+                saveComandaMathaus = false;
                 return;
             }
 
@@ -2105,7 +2133,8 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         ComandaMathaus comandaMathaus = new ComandaMathaus();
 
         String filialaLivrareMathaus = CreareComanda.filialaAlternativa;
-        if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_LIVRARE)
+        if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_LIVRARE &&
+                !DateLivrare.getInstance().getCodFilialaCLP().equals("BV90"))
             filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
 
         String livrareFilialaSecundara = HelperMathaus.getFilialaSecundara();
@@ -2387,6 +2416,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         valNegociat = 0;
 
         DateLivrare.getInstance().resetAll();
+        UserInfo.getInstance().setUnitLog(UserInfo.getInstance().getInitUnitLog());
         filialaAlternativa = UserInfo.getInstance().getUnitLog();
         filialaCustodie = "";
         saveComandaMathaus = false;
@@ -2772,6 +2802,8 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
     @Override
     public void tipComandaSelected(TipCmdDistrib tipSelected, String codFilialaDest) {
+
+        clearAllData();
 
         DateLivrare.getInstance().setCodFilialaFasonate("");
 
