@@ -16,6 +16,7 @@ import java.util.List;
 import my.logon.screen.beans.AntetCmdMathaus;
 import my.logon.screen.beans.ArticolCant;
 import my.logon.screen.beans.ArticolDB;
+import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.beans.BeanArticolCautare;
 import my.logon.screen.beans.BeanArticolSimulat;
 import my.logon.screen.beans.BeanArticolStoc;
@@ -30,6 +31,7 @@ import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.beans.TaxaComanda;
+import my.logon.screen.beans.TaxaMasina;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumUnitMas;
 import my.logon.screen.listeners.AsyncTaskListener;
@@ -76,6 +78,12 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
     public void getFactorConversie(HashMap<String, String> params) {
         numeComanda = EnumArticoleDAO.GET_FACTOR_CONVERSIE;
+        this.params = params;
+        performOperation();
+    }
+
+    public void getFactorConversieModifCmd(HashMap<String, String> params) {
+        numeComanda = EnumArticoleDAO.GET_FACTOR_CONVERSIE_MODIF_CMD;
         this.params = params;
         performOperation();
     }
@@ -640,7 +648,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
                 pretArticol.setPretMinim(pretMinUnitar);
                 pretArticol.setPromo(jsonObject.getString("promo").equals("X"));
-
+                pretArticol.setTipTransport(jsonObject.getString("tipTransport"));
 
             }
 
@@ -778,6 +786,8 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             livrareMathaus.setComandaMathaus(deserializeStocMathaus(jsonObject.getString("comandaMathaus")));
 
             List<CostTransportMathaus> listCostTransport = new ArrayList<CostTransportMathaus>();
+            List<TaxaMasina> taxeMasini = new ArrayList<>();
+            List<ArticolPalet> listPaleti = new ArrayList<>();
 
             JSONArray jsonArrayTransp = new JSONArray(jsonObject.getString("costTransport"));
 
@@ -796,7 +806,63 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
             }
 
+            JSONArray jsonArrayTaxeMasini = new JSONArray(jsonObject.getString("taxeMasini"));
+
+            for (int i = 0; i < jsonArrayTaxeMasini.length(); i++) {
+                JSONObject taxaObject = jsonArrayTaxeMasini.getJSONObject(i);
+
+                TaxaMasina taxaMasina = new TaxaMasina();
+
+                taxaMasina.setWerks(taxaObject.getString("werks"));
+                taxaMasina.setVstel(taxaObject.getString("vstel"));
+                taxaMasina.setMacara(taxaObject.getString("macara").equals("X"));
+                taxaMasina.setLift(taxaObject.getString("lift").equals("X"));
+                taxaMasina.setCamionIveco(taxaObject.getString("camionIveco").equals("X"));
+                taxaMasina.setCamionScurt(taxaObject.getString("camionScurt").equals("X"));
+                taxaMasina.setCamionOricare(taxaObject.getString("camionOricare").equals("X"));
+                taxaMasina.setTaxaMacara(Double.valueOf(taxaObject.getString("taxaMacara")));
+                taxaMasina.setMatnrMacara(taxaObject.getString("matnrMacara"));
+                taxaMasina.setMaktxMacara(taxaObject.getString("maktxMacara"));
+                taxaMasina.setMaktxZona(taxaObject.getString("maktxZona"));
+                taxaMasina.setMatnrZona(taxaObject.getString("matnrZona"));
+                taxaMasina.setMaktxZona(taxaObject.getString("maktxZona"));
+                taxaMasina.setTaxaZona(Double.valueOf(taxaObject.getString("taxaZona")));
+                taxaMasina.setMatnrAcces(taxaObject.getString("matnrAcces"));
+                taxaMasina.setMaktxAcces(taxaObject.getString("maktxAcces"));
+                taxaMasina.setTaxaAcces(Double.valueOf(taxaObject.getString("taxaAcces")));
+                taxaMasina.setMatnrTransport(taxaObject.getString("matnrTransport"));
+                taxaMasina.setMaktxTransport(taxaObject.getString("maktxTransport"));
+                taxaMasina.setTaxaTransport(Double.valueOf(taxaObject.getString("taxaTransport")));
+                taxaMasina.setSpart(taxaObject.getString("spart"));
+                taxaMasina.setTraty(taxaObject.getString("traty"));
+
+                taxeMasini.add(taxaMasina);
+
+            }
+
+            JSONArray jsonPaleti = new JSONArray(jsonObject.getString("listPaleti"));
+
+            for (int j = 0; j < jsonPaleti.length(); j++) {
+                ArticolPalet articol = new ArticolPalet();
+                JSONObject object = jsonPaleti.getJSONObject(j);
+                articol.setCodPalet(object.getString("codPalet"));
+                articol.setNumePalet(object.getString("numePalet"));
+                articol.setDepart(object.getString("depart"));
+                articol.setCantitate(Integer.valueOf(object.getString("cantitate")));
+                articol.setPretUnit(Double.valueOf(object.getString("pretUnit")));
+                articol.setFurnizor(object.getString("furnizor"));
+                articol.setCodArticol(object.getString("codArticol"));
+                articol.setNumeArticol(object.getString("numeArticol"));
+                articol.setCantArticol(object.getString("cantArticol"));
+                articol.setUmArticol(object.getString("umArticol"));
+                listPaleti.add(articol);
+
+            }
+
             livrareMathaus.setCostTransport(listCostTransport);
+            livrareMathaus.setTaxeMasini(taxeMasini);
+            livrareMathaus.setListPaleti(listPaleti);
+
 
         } catch (JSONException e) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
@@ -870,6 +936,8 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             jsonAntet.put("greutateComanda", antetComanda.getGreutateComanda());
             jsonAntet.put("tipComandaCamion", antetComanda.getTipComandaCamion());
             jsonAntet.put("isComandaDL", antetComanda.isComandaDL());
+            jsonAntet.put("nrCmdSap", antetComanda.getNrCmdSap());
+            jsonAntet.put("strada", antetComanda.getStrada().trim());
 
         } catch (JSONException e) {
             e.printStackTrace();

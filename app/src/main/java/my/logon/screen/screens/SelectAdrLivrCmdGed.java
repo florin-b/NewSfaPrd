@@ -1219,6 +1219,11 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         String numeJudSel = "";
         int i;
 
+        temp = new HashMap<>();
+        temp.put("numeJudet", "Selectati judetul");
+        temp.put("codJudet", "");
+        listJudete.add(temp);
+
         int nrJud = 0;
         for (i = 0; i < UtilsGeneral.numeJudete.length; i++) {
 
@@ -1526,7 +1531,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                saveAdrLivrBtn.performClick();
+                returnToHome();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1608,15 +1613,11 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         textNrStr.setText(UtilsAddress.getStreetNumber(DateLivrare.getInstance().getStrada()));
 
         setListenerTextStrada();
-        getFilialaLivrareMathaus(DateLivrare.getInstance().getCodJudet());
+
 
     }
 
-    private void getFilialaLivrareMathaus(String codJudet) {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("codJudet", codJudet);
-        operatiiAdresa.getFilialaLivrareMathaus(params);
-    }
+
 
     private void setListenerTextLocalitate() {
 
@@ -2263,8 +2264,39 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     @Override
     public void onBackPressed() {
-        saveAdrLivrBtn.performClick();
+        returnToHome();
         return;
+    }
+
+    private void returnToHome() {
+
+        if (!ModificareComanda.codClientVar.equals("")) {
+            saveAdrLivrBtn.performClick();
+            return;
+        }
+
+        if (ListaArticoleComandaGed.getInstance().getListArticoleComanda().size() > 0) {
+            saveAdrLivrBtn.performClick();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Datele se vor pierde. Continuati?").setCancelable(false).setPositiveButton("Da", (dialog, id) -> {
+
+            DateLivrare.getInstance().resetAll();
+            CreareComandaGed.numeClientVar = "";
+            ListaArticoleComandaGed.getInstance().clearArticoleComanda();
+            UserInfo.getInstance().setParentScreen("");
+
+            Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+            startActivity(nextScreen);
+            finish();
+        }).setNegativeButton("Nu", (dialog, id) -> dialog.cancel()).setTitle("Atentie!").setIcon(R.drawable.warning96);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
 
@@ -2520,10 +2552,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             valideazaAdresaResponse((String) result);
         } else if (numeComanda == EnumOperatiiAdresa.GET_DATE_LIVRARE_CLIENT) {
             loadDateLivrareClient(operatiiAdresa.deserializeDateLivrareClient((String) result));
-        } else if (numeComanda == EnumOperatiiAdresa.GET_FILIALA_MATHAUS) {
-            CreareComandaGed.filialaLivrareMathaus = ((String) result).split(",")[0];
-            CreareComandaGed.filialeArondateMathaus = (String) result;
-        } else if (numeComanda == EnumOperatiiAdresa.GET_ADRESA_FILIALA) {
+        }  else if (numeComanda == EnumOperatiiAdresa.GET_ADRESA_FILIALA) {
             setAdresalivrareFiliala((String) result);
         } else if (numeComanda == EnumOperatiiAdresa.GET_DATE_POLIGON_LIVRARE) {
             setDatePoligonLivrare((String) result);

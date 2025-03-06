@@ -17,6 +17,8 @@ public class AntetCmdMathaus {
     private double greutateComanda;
     private String tipComandaCamion;
     private boolean isComandaDL;
+    private String nrCmdSap;
+    private String strada;
 
 
     public String getLocalitate() {
@@ -121,5 +123,21 @@ public class AntetCmdMathaus {
 
     public void setComandaDL(boolean comandaDL) {
         isComandaDL = comandaDL;
+    }
+
+    public String getNrCmdSap() {
+        return nrCmdSap;
+    }
+
+    public void setNrCmdSap(String nrCmdSap) {
+        this.nrCmdSap = nrCmdSap;
+    }
+
+    public String getStrada() {
+        return strada;
+    }
+
+    public void setStrada(String strada) {
+        this.strada = strada;
     }
 }

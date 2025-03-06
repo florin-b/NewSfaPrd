@@ -13,11 +13,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.beans.BeanStocTCLI;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.RezumatComanda;
+import my.logon.screen.beans.TaxaMasina;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
@@ -463,6 +465,51 @@ public class HelperMathaus {
 
     }
 
+    public static void setTransportTERT(LivrareMathaus livrareMathaus) {
+
+        for (TaxaMasina taxaMasina : livrareMathaus.getTaxeMasini()) {
+
+            if (taxaMasina.getTraty().equals("TERT")) {
+                CostTransportMathaus costTransportMathaus = new CostTransportMathaus();
+                costTransportMathaus.setCodArtTransp(taxaMasina.getMatnrTransport());
+                costTransportMathaus.setNumeCost(taxaMasina.getMaktxTransport());
+                costTransportMathaus.setValTransp(String.valueOf(taxaMasina.getTaxaTransport()));
+                costTransportMathaus.setFiliala(taxaMasina.getWerks());
+                costTransportMathaus.setTipTransp("TERT");
+                costTransportMathaus.setDepart(taxaMasina.getSpart());
+                livrareMathaus.getCostTransport().add(costTransportMathaus);
+            }
+        }
+
+    }
+
+    public static List<ArticolPalet> getListPaletiCopy(List<ArticolPalet> listPaleti) {
+
+        List<ArticolPalet> copyList = new ArrayList<>();
+
+        for (ArticolPalet articolPalet : listPaleti){
+
+            ArticolPalet copyPalet = new ArticolPalet();
+            copyPalet.setUmArticol(articolPalet.getUmArticol());
+            copyPalet.setCantArticol(articolPalet.getCantArticol());
+            copyPalet.setNumePalet(articolPalet.getNumePalet());
+            copyPalet.setAdaugat(articolPalet.isAdaugat());
+            copyPalet.setCodArticol(articolPalet.getCodArticol());
+            copyPalet.setCodPalet(articolPalet.getCodPalet());
+            copyPalet.setCantitate(articolPalet.getCantitate());
+            copyPalet.setDepart(articolPalet.getDepart());
+            copyPalet.setFiliala(articolPalet.getFiliala());
+            copyPalet.setFurnizor(articolPalet.getFurnizor());
+            copyPalet.setPretUnit(articolPalet.getPretUnit());
+            copyPalet.setCantitate(articolPalet.getCantitate());
+
+            copyList.add(copyPalet);
+        }
+
+
+        return copyList;
+    }
+
     public static List<BeanStocTCLI> getStocTCLIDepozit(String cantitate, String depozit, String um) {
 
         DecimalFormat df = new DecimalFormat("#####0.00");
@@ -555,6 +602,50 @@ public class HelperMathaus {
         }
 
         return cmpCorectat;
+    }
+
+    public static void setFilialaSite(ArticolComanda articolComanda, LivrareMathaus livrareMathaus) {
+
+        if (livrareMathaus == null)
+            return;
+
+        if (articolComanda != null && articolComanda.getFilialaSite().equals("BV90"))
+            return;
+
+        if (livrareMathaus.getComandaMathaus().getDeliveryEntryDataList() == null)
+            return;
+
+
+        String codArticolComanda = articolComanda.getCodArticol();
+
+        if (articolComanda.getCodArticol().length() == 8 || !Character.isDigit(codArticolComanda.charAt(0)))
+            codArticolComanda = "0000000000" + articolComanda.getCodArticol();
+
+        for (DateArticolMathaus articolMathaus : livrareMathaus.getComandaMathaus().getDeliveryEntryDataList()) {
+            if (codArticolComanda.equals(articolMathaus.getProductCode())) {
+                articolComanda.setFilialaSite(articolMathaus.getDeliveryWarehouse());
+                break;
+            }
+        }
+
+    }
+
+    public static int getNrPaletiFiliala(LivrareMathaus dateLivrare, String filiala) {
+
+        int nrPaleti = 0;
+
+        for (ArticolPalet articolPalet : dateLivrare.getListPaleti()) {
+
+            for (DateArticolMathaus articolMathaus : dateLivrare.getComandaMathaus().getDeliveryEntryDataList()) {
+
+                if (articolPalet.getCodArticol().replaceFirst("^0*", "").equals(articolMathaus.getProductCode().replaceFirst("^0*", ""))
+                        && articolMathaus.getDeliveryWarehouse().equals(filiala)) {
+                    nrPaleti += articolPalet.getCantitate();
+                }
+            }
+        }
+
+        return nrPaleti;
     }
 
 

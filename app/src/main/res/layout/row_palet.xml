@@ -32,7 +32,7 @@
             android:layout_gravity="right"
             android:layout_weight="0.07"
             android:gravity="right"
-            android:textColor="@color/rowColor1"
+            android:textColor="#44524b"
             android:textSize="17sp"
             android:typeface="monospace" />
 
@@ -43,7 +43,8 @@
             android:layout_gravity="right"
             android:layout_weight="0.07"
             android:gravity="right"
-            android:textColor="@color/rowColor1"
+            android:layout_marginRight="5dp"
+            android:textColor="#44524b"
             android:textSize="17sp"
             android:typeface="monospace" />
     </LinearLayout>

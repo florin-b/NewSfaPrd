@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -256,7 +257,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         nf2 = NumberFormat.getInstance();
         nf2.setMinimumFractionDigits(2);
         nf2.setMaximumFractionDigits(2);
-
 
 
         txtTel.setText(listTel[0]);
@@ -577,7 +577,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
     }
 
-    private void trateazaOptiuneCustodie(){
+    private void trateazaOptiuneCustodie() {
         checkCustodie.setVisibility(View.INVISIBLE);
 
         if (isConditiiCustodie()) {
@@ -765,7 +765,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
     }
 
-    private void afisDateLivrareDialog(String[] dateLivrare){
+    private void afisDateLivrareDialog(String[] dateLivrare) {
 
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", new Locale("ro"));
@@ -788,8 +788,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             datePickerDialog.getDatePicker().setMinDate(minDate.getTime());
             datePickerDialog.getDatePicker().setMaxDate(maxDate.getTime());
             datePickerDialog.show();
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), "Eroare afisare date livrare.", Toast.LENGTH_LONG).show();
         }
     }
@@ -1173,7 +1172,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
     }
 
 
-
     private void performGetJudete() {
 
         fillJudeteClient(EnumJudete.getRegionCodes());
@@ -1213,6 +1211,11 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         HashMap<String, String> temp;
         String numeJudSel = "";
         int i;
+
+        temp = new HashMap<>();
+        temp.put("numeJudet", "Selectati judetul");
+        temp.put("codJudet", "");
+        listJudete.add(temp);
 
         int nrJud = 0;
         for (i = 0; i < UtilsGeneral.numeJudete.length; i++) {
@@ -1282,8 +1285,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                 if (pos == 0 || pos == 1 || pos == 2 || pos == 3) {
                     spinnerTermenPlata.setVisibility(View.VISIBLE);
                 }
-
-
 
 
                 if (rawTipPlataStr.toLowerCase().contains("numerar") || rawTipPlataStr.toLowerCase().contains("ramburs")) {
@@ -1358,12 +1359,11 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                saveAdrLivrBtn.performClick();
+                returnToHome();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1505,6 +1505,8 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                 spinnerAdreseLivrare.setSelection(selectedAddrModifCmd);
 
             if (!ModificareComanda.selectedCmd.equals("") && !DateLivrare.getInstance().getTransport().equals("TCLI")) {
+
+
                 if (!adrNouaModifCmd)
                     getCmdDateLivrare();
                 else
@@ -1742,15 +1744,9 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
         setListenerTextLocalitate();
 
-        getFilialaLivrareMathaus();
 
     }
 
-    private void getFilialaLivrareMathaus() {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("codJudet", DateLivrare.getInstance().getCodJudet());
-        operatiiAdresa.getFilialaLivrareMathaus(params);
-    }
 
     private void setListenerTextLocalitate() {
 
@@ -2007,7 +2003,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             Toast.makeText(getApplicationContext(), "Selectati data livrare!", Toast.LENGTH_LONG).show();
             return;
         }
-
 
 
         if (((LinearLayout) findViewById(R.id.layoutFilLivrare)).getVisibility() == View.VISIBLE && spinnerFilialeTCLI.getSelectedItemPosition() == 0) {
@@ -2321,9 +2316,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
         DateLivrare.getInstance().setCoordonateAdresa(new LatLng(Double.valueOf(tokenCoords[0]), Double.valueOf(tokenCoords[1])));
 
-
-        getFilialaLivrareMathaus();
-
     }
 
     private void setAdresaLivrare(Address address) {
@@ -2377,9 +2369,8 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
                 if (adresaLivrare.getCodPostal().trim().isEmpty()) {
                     layoutAdr3.setVisibility(View.VISIBLE);
-                    ((EditText)findViewById(R.id.textCodPostal)).setText("");
-                }
-                else
+                    ((EditText) findViewById(R.id.textCodPostal)).setText("");
+                } else
                     layoutAdr3.setVisibility(View.GONE);
 
             }
@@ -2434,9 +2425,41 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        saveAdrLivrBtn.performClick();
+        returnToHome();
         return;
     }
+
+    private void returnToHome() {
+
+        if (!ModificareComanda.codClientVar.equals("")) {
+            saveAdrLivrBtn.performClick();
+            return;
+        }
+
+        if (ListaArticoleComanda.getInstance().getListArticoleComanda().size() > 0) {
+            saveAdrLivrBtn.performClick();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Datele se vor pierde. Continuati?").setCancelable(false).setPositiveButton("Da", (dialog, id) -> {
+
+            DateLivrare.getInstance().resetAll();
+            CreareComanda.numeClientVar = "";
+            ListaArticoleComanda.getInstance().clearArticoleComanda();
+            UserInfo.getInstance().setParentScreen("");
+
+            Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+            startActivity(nextScreen);
+            finish();
+        }).setNegativeButton("Nu", (dialog, id) -> dialog.cancel()).setTitle("Atentie!").setIcon(R.drawable.warning96);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
 
     private void valideazaAdresaResponse(String result) {
         valideazaDateLivrare();
@@ -2468,10 +2491,6 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
                 break;
             case GET_LOCALITATI_LIVRARE_RAPIDA:
                 HelperAdreseLivrare.setLocalitatiAcceptate((String) result);
-                break;
-            case GET_FILIALA_MATHAUS:
-                CreareComanda.filialaLivrareMathaus = ((String) result).split(",")[0];
-                CreareComanda.filialeArondateMathaus = (String) result;
                 break;
             case GET_ADRESA_FILIALA:
                 setAdresalivrareFiliala((String) result);

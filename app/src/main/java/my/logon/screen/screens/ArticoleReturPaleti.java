@@ -492,12 +492,15 @@ public class ArticoleReturPaleti extends Fragment implements ListaArtReturListen
         int nrPaleti = 0;
 
         for (BeanArticolRetur artRetur : listArticole) {
-            if (artRetur.getCantitateRetur() > 0)
+            if (artRetur.getCantitateRetur() > 0 && artRetur.getCategMat() != null &&
+                    (artRetur.getCategMat().equals("PA") || artRetur.getCategMat().equals("AM")))
                 nrPaleti += artRetur.getCantitateRetur();
         }
 
         return nrPaleti;
     }
+
+
 
     private double getValoarePaletiRetur() {
 

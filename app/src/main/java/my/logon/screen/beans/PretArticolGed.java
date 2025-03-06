@@ -46,6 +46,7 @@ public class PretArticolGed {
 
 	private double pretMinim;
 	private boolean promo;
+	private String tipTransport;
 
 	public String getPret() {
 		return pret;
@@ -357,5 +358,13 @@ public class PretArticolGed {
 
 	public void setPromo(boolean promo) {
 		this.promo = promo;
+	}
+
+	public String getTipTransport() {
+		return tipTransport;
+	}
+
+	public void setTipTransport(String tipTransport) {
+		this.tipTransport = tipTransport;
 	}
 }

@@ -137,6 +137,18 @@ public class OperatiiClient implements AsyncTaskListener {
         call.getCallResultsFromFragment();
     }
 
+    public void cautaClientPF(HashMap<String, String> params) {
+        numeComanda = EnumClienti.CAUTA_CLIENT_PF;
+        AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
+        call.getCallResultsFromFragment();
+    }
+
+    public void creeazaClientPF(HashMap<String, String> params) {
+        numeComanda = EnumClienti.CREEAZA_CLIENT_PF;
+        AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getComanda(), params, (AsyncTaskListener) this, context);
+        call.getCallResultsFromFragment();
+    }
+
     public ArrayList<BeanClient> deserializeListClienti(String serializedListClienti) {
         BeanClient client = null;
         ArrayList<BeanClient> listClienti = new ArrayList<BeanClient>();
@@ -517,6 +529,27 @@ public class OperatiiClient implements AsyncTaskListener {
             jsonParametru.put("codJ", parametru.getCodJ());
             jsonParametru.put("platitorTVA", parametru.getPlatitorTVA() ? "X" : " ");
             jsonParametru.put("tipClient", parametru.getTipClientSelect());
+            jsonParametru.put("coordonateAdresa", parametru.getCoordonateAdresa());
+            jsonParametru.put("codAgent", UserInfo.getInstance().getCod());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonParametru.toString();
+    }
+
+    public String serializeParamClientPF(DateClientSap parametru) {
+
+        JSONObject jsonParametru = new JSONObject();
+
+        try {
+
+            jsonParametru.put("numeCompanie", parametru.getNumeCompanie());
+            jsonParametru.put("emailCompanie", parametru.getEmailCompanie());
+            jsonParametru.put("strada", parametru.getStrada());
+            jsonParametru.put("localitate", parametru.getLocalitate());
+            jsonParametru.put("judet", parametru.getJudet());
+            jsonParametru.put("telPersContact", parametru.getTelPersContact());
             jsonParametru.put("coordonateAdresa", parametru.getCoordonateAdresa());
             jsonParametru.put("codAgent", UserInfo.getInstance().getCod());
 

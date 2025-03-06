@@ -228,11 +228,6 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
         performOperation(params);
     }
 
-    public void getProcMarjaIP(HashMap<String, String> params) {
-        numeComanda = EnumComenziDAO.GET_PROC_MARJA_IP;
-        performOperation(params);
-    }
-
     public void getOptiuniMasini(HashMap<String, String> params){
         numeComanda = EnumComenziDAO.GET_OPTIUNI_MASINI;
         performOperation(params);

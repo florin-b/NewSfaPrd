@@ -45,12 +45,15 @@ import my.logon.screen.beans.InfoCredit;
 import my.logon.screen.beans.PlatitorTva;
 import my.logon.screen.beans.RaspunsClientSap;
 import my.logon.screen.dialogs.CautaClientDialog;
+import my.logon.screen.dialogs.CreareClientPFDialog;
 import my.logon.screen.dialogs.CreareClientPJDialog;
 import my.logon.screen.dialogs.DatePersClientDialog;
 import my.logon.screen.enums.EnumClienti;
+import my.logon.screen.enums.EnumJudete;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.helpers.DialogHelper;
 import my.logon.screen.listeners.CautaClientDialogListener;
+import my.logon.screen.listeners.CreareClientPFListener;
 import my.logon.screen.listeners.CreareClientPJListener;
 import my.logon.screen.listeners.DatePersListener;
 import my.logon.screen.listeners.OperatiiClientListener;
@@ -61,11 +64,10 @@ import my.logon.screen.model.OperatiiClient;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.MapUtils;
 import my.logon.screen.utils.ScreenUtils;
-import my.logon.screen.utils.UtilsCheck;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
-public class SelectClientCmdGed extends Activity implements OperatiiClientListener, CautaClientDialogListener, DatePersListener, CreareClientPJListener {
+public class SelectClientCmdGed extends Activity implements OperatiiClientListener, CautaClientDialogListener, DatePersListener, CreareClientPJListener, CreareClientPFListener {
 
     Button cautaClientBtn, saveClntBtn;
     String filiala = "", nume = "", cod = "";
@@ -98,6 +100,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
     private Button cautaClientPFBtn;
 
     private RadioButton radioClientInstPub, radioClientNominal;
+
 
     private enum EnumTipClient {
         MESERIAS, PARAVAN, DISTRIBUTIE;
@@ -190,7 +193,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         layoutTextJ.setVisibility(View.GONE);
 
         labelIDClient = (TextView) findViewById(R.id.labelIdClient);
-        labelIDClient.setText("CNP");
+        labelIDClient.setText("Telefon client");
 
         verificaID = (Button) findViewById(R.id.verificaId);
         setListenerVerificaID();
@@ -261,15 +264,15 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
             radioClPF.setVisibility(View.INVISIBLE);
             radioClPJ.setChecked(true);
 
-            ((LinearLayout) findViewById(R.id.layoutClientParavan)).setVisibility(View.INVISIBLE);
-            ((LinearLayout) findViewById(R.id.layoutDateClient)).setVisibility(View.INVISIBLE);
+            findViewById(R.id.layoutClientParavan).setVisibility(View.INVISIBLE);
+            findViewById(R.id.layoutDateClient).setVisibility(View.INVISIBLE);
 
             labelIDClient.setVisibility(View.INVISIBLE);
 
-            ((LinearLayout) findViewById(R.id.layoutLabelJ)).setVisibility(View.INVISIBLE);
-            ((LinearLayout) findViewById(R.id.layoutTextJ)).setVisibility(View.INVISIBLE);
-            ((LinearLayout) findViewById(R.id.layoutTipComanda)).setVisibility(View.INVISIBLE);
-            ((LinearLayout) findViewById(R.id.layoutRadioTipComanda)).setVisibility(View.INVISIBLE);
+            findViewById(R.id.layoutLabelJ).setVisibility(View.INVISIBLE);
+            findViewById(R.id.layoutTextJ).setVisibility(View.INVISIBLE);
+            findViewById(R.id.layoutTipComanda).setVisibility(View.INVISIBLE);
+            findViewById(R.id.layoutRadioTipComanda).setVisibility(View.INVISIBLE);
 
             spinnerAgenti = ((Spinner) findViewById(R.id.spinnerAgenti));
 
@@ -298,16 +301,13 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
             if (radioClMeserias.getVisibility() == View.VISIBLE)
                 radioClMeserias.setEnabled(false);
 
-            if (radioClPF.getVisibility() == View.VISIBLE)
-                radioClPF.setEnabled(false);
-
             if (radioCmdSimulata.getVisibility() == View.VISIBLE)
                 radioCmdSimulata.setEnabled(false);
 
         }
 
 
-        if (isConditiiCustodie() && radioClPJ.isChecked())
+        if (isConditiiCustodie() && (radioClPJ.isChecked() || radioClPF.isChecked()))
             checkCustodie.setVisibility(View.VISIBLE);
         else
             checkCustodie.setVisibility(View.INVISIBLE);
@@ -322,7 +322,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
     private boolean isConditiiCustodie() {
         return (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_VANZARE)
-                || DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_LIVRARE)) ;
+                || DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.COMANDA_LIVRARE));
     }
 
     private boolean isCasiera() {
@@ -412,69 +412,52 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
     }
 
     private void setListenerFacturaPF() {
-        checkFacturaPF.setOnClickListener(new OnClickListener() {
+        checkFacturaPF.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            if (checkFacturaPF.isChecked())
+                checkFacturaPF.setText("Se emite factura");
+            else
+                checkFacturaPF.setText("Nu se emite factura");
 
-                if (checkFacturaPF.isChecked())
-                    checkFacturaPF.setText("Se emite factura");
-                else
-                    checkFacturaPF.setText("Nu se emite factura");
-
-            }
         });
     }
 
     private void setListenerVerificaID() {
 
-        verificaID.setOnClickListener(v -> checkCNP(true));
+        verificaID.setOnClickListener(v -> {
+            String textTelClient = txtCNPClient.getText().toString().trim();
+
+            if (!textTelClient.isEmpty()) {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("strClient", textTelClient);
+                params.put("criteriu", "TEL");
+                operatiiClient.cautaClientPF(params);
+            }
+        });
 
     }
 
-    private boolean checkCNP(boolean showValidMessage) {
-
-        if (UtilsCheck.isCnpValid(txtCNPClient.getText().toString().trim())) {
-
-            if (showValidMessage)
-                Toast.makeText(getApplicationContext(), "CNP valid", Toast.LENGTH_SHORT).show();
-
-            return true;
-        } else {
-
-            if (showValidMessage)
-                Toast.makeText(getApplicationContext(), "CNP invalid", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-    }
 
     private void setListenerCautaClientBtn() {
-        cautaClientBtn.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
+        cautaClientBtn.setOnClickListener(v -> {
 
-                if (isNumeClientValid())
-                    getListaClienti();
+            if (isNumeClientValid())
+                getListaClienti();
 
-            }
         });
     }
 
     private void setListenerCautaClientPFBtn() {
-        cautaClientPFBtn.setOnClickListener(new OnClickListener() {
+        cautaClientPFBtn.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            String textClient = txtNumeClientGed.getText().toString().trim();
 
-                String textClient = txtNumeClientGed.getText().toString().trim();
+            if (UtilsUser.isCGED() || UtilsUser.isSSCM() || (UtilsUser.isAgentOrSD() && radioClientNominal.isChecked())) {
+                cautaClientDistributie(textClient);
 
-                if (UtilsUser.isCGED() || UtilsUser.isSSCM() || (UtilsUser.isAgentOrSD() && radioClientNominal.isChecked())) {
-                    cautaClientDistributie(textClient);
+            } else if (!textClient.isEmpty())
+                cautaClientPF(textClient);
 
-                } else if (!textClient.isEmpty())
-                    cautaClientPF(textClient);
-
-            }
         });
     }
 
@@ -493,11 +476,20 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         if (radioClPJ.isChecked())
             pressedTVAButton = false;
 
+        String tipClientCautare = getTipClient();
+
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("numeClient", textClient);
-        params.put("tipClient", getTipClient());
-        params.put("codAgent", UserInfo.getInstance().getCod());
-        operatiiClient.getCnpClient(params);
+
+        if (tipClientCautare.equals("PF")) {
+            params.put("strClient", textClient);
+            params.put("criteriu", "NUME");
+            operatiiClient.cautaClientPF(params);
+        } else {
+            params.put("numeClient", textClient);
+            params.put("tipClient", "PJ");
+            params.put("codAgent", UserInfo.getInstance().getCod());
+            operatiiClient.getCnpClient(params);
+        }
 
     }
 
@@ -598,8 +590,10 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         if (!raspunsClientSap.getCodClient().trim().isEmpty()) {
             CreareComandaGed.codClientCUI = raspunsClientSap.getCodClient();
             valideazaDateClient();
-        } else
+        } else {
+            setDateContactClientPF(null);
             Toast.makeText(getApplicationContext(), "Inregistrarea clientului in baza de date a esuat. Contactati departamentul IT.", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -653,7 +647,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         if (platitorTva.getCodClientNominal() != null && !platitorTva.getCodClientNominal().isEmpty())
             CreareComandaGed.codClientCUI = platitorTva.getCodClientNominal();
 
-        if (!isConditiiCustodiePJ()) {
+        if (!isConditiiClientPJNou()) {
             return;
         }
 
@@ -664,12 +658,11 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
     }
 
-    private boolean isConditiiCustodiePJ() {
+    private boolean isConditiiClientPJNou() {
 
         String strCui = "";
 
-
-        if (radioClPJ.isChecked() && !UtilsUser.isCGED() && !UtilsUser.isSSCM() && DateLivrare.getInstance().isComandaCustodie()
+        if (radioClPJ.isChecked() && !UtilsUser.isCGED() && !UtilsUser.isSSCM()
                 && CreareComandaGed.codClientCUI.isEmpty()) {
 
             if (!txtCNPClient.getText().toString().isEmpty()) {
@@ -685,6 +678,35 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         } else
             return true;
 
+    }
+
+    private boolean isConditiiClientPFNou(){
+        if (isCustodiePF() && CreareComandaGed.codClientCUI.isEmpty() ) {
+            afisCreareClientPFDialog();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isCustodiePF(){
+        return radioClPF.isChecked() && DateLivrare.getInstance().isComandaCustodie();
+    }
+
+    private void afisCreareClientPFDialog(){
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.6);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
+
+        DateClientSap dateClientSap = new DateClientSap();
+
+        dateClientSap.setNumePersContact(txtNumeClientGed.getText().toString().trim());
+        dateClientSap.setTelPersContact(txtCNPClient.getText().toString().trim());
+
+        CreareClientPFDialog clientPJDialog = new CreareClientPFDialog(dateClientSap, this);
+        clientPJDialog.getWindow().setLayout(width, height);
+        clientPJDialog.setCreareClientPFListener(this);
+        clientPJDialog.show();
     }
 
     private void addListenerRadioClDistrib() {
@@ -722,9 +744,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                     ((LinearLayout) findViewById(R.id.layoutLabelJ)).setVisibility(View.VISIBLE);
                     ((LinearLayout) findViewById(R.id.layoutTextJ)).setVisibility(View.VISIBLE);
 
-                    if (isConditiiCustodie())
-                        ScreenUtils.setCheckBoxVisibility(checkCustodie, true);
-
+                    ScreenUtils.setCheckBoxVisibility(checkCustodie, isConditiiCustodie());
 
                     layoutLabelJ.setVisibility(View.VISIBLE);
                     layoutTextJ.setVisibility(View.VISIBLE);
@@ -771,29 +791,27 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
     private void addListenerRadioCLPF() {
 
-        radioClPF.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-                if (arg1) {
+        radioClPF.setOnCheckedChangeListener((OnCheckedChangeListener) (arg0, arg1) -> {
+            if (arg1) {
 
-                    labelIDClient.setVisibility(View.VISIBLE);
-                    ((LinearLayout) findViewById(R.id.layoutDateClient)).setVisibility(View.VISIBLE);
-                    ((LinearLayout) findViewById(R.id.layoutClientParavan)).setVisibility(View.VISIBLE);
-                    ScreenUtils.setCheckBoxVisibility(checkCustodie, false);
+                labelIDClient.setVisibility(View.VISIBLE);
+                ((LinearLayout) findViewById(R.id.layoutDateClient)).setVisibility(View.VISIBLE);
+                ((LinearLayout) findViewById(R.id.layoutClientParavan)).setVisibility(View.VISIBLE);
+                ScreenUtils.setCheckBoxVisibility(checkCustodie, isConditiiCustodie());
 
-                    layoutLabelJ.setVisibility(View.GONE);
-                    layoutTextJ.setVisibility(View.GONE);
-                    checkPlatTva.setVisibility(View.INVISIBLE);
-                    verificaID.setVisibility(View.VISIBLE);
-                    verificaTva.setVisibility(View.GONE);
-                    checkFacturaPF.setVisibility(View.VISIBLE);
-                    labelIDClient.setText("CNP");
-                    setTextNumeClientEnabled(true);
-                    clearDateLivrare();
+                layoutLabelJ.setVisibility(View.GONE);
+                layoutTextJ.setVisibility(View.GONE);
+                checkPlatTva.setVisibility(View.GONE);
+                verificaID.setVisibility(View.VISIBLE);
+                verificaTva.setVisibility(View.GONE);
+                checkFacturaPF.setVisibility(View.VISIBLE);
+                labelIDClient.setText("Telefon client");
+                setTextNumeClientEnabled(true);
+                clearDateLivrare();
 
-
-                }
 
             }
+
         });
 
     }
@@ -935,49 +953,43 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
     }
 
     public void addListenerRadioCmdNormala() {
-        radioCmdNormala.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-                if (arg1) {
-                    CreareComandaGed.tipComanda = "N";
-                    layoutRezervStocLabel.setVisibility(View.GONE);
-                    layoutRezervStocBtn.setVisibility(View.GONE);
-                    checkCustodie.setVisibility(View.VISIBLE);
-                    checkCustodie.setChecked(false);
-                }
-
+        radioCmdNormala.setOnCheckedChangeListener((arg0, arg1) -> {
+            if (arg1) {
+                CreareComandaGed.tipComanda = "N";
+                layoutRezervStocLabel.setVisibility(View.GONE);
+                layoutRezervStocBtn.setVisibility(View.GONE);
+                checkCustodie.setVisibility(View.VISIBLE);
+                checkCustodie.setChecked(false);
             }
+
         });
     }
 
     public void addListenerRadioCmdSimulata() {
-        radioCmdSimulata.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-                if (arg1) {
-                    CreareComandaGed.tipComanda = "S";
-                    layoutRezervStocLabel.setVisibility(View.GONE);
-                    layoutRezervStocBtn.setVisibility(View.GONE);
-                    radioRezervStocDa.setChecked(true);
-                    checkCustodie.setVisibility(View.INVISIBLE);
-                    checkCustodie.setChecked(false);
-                }
-
+        radioCmdSimulata.setOnCheckedChangeListener((arg0, arg1) -> {
+            if (arg1) {
+                CreareComandaGed.tipComanda = "S";
+                layoutRezervStocLabel.setVisibility(View.GONE);
+                layoutRezervStocBtn.setVisibility(View.GONE);
+                radioRezervStocDa.setChecked(true);
+                checkCustodie.setVisibility(View.INVISIBLE);
+                checkCustodie.setChecked(false);
             }
+
         });
     }
 
     public void addListenerSave() {
-        saveClntBtn.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
+        saveClntBtn.setOnClickListener(v -> {
 
-                if (radioClPJ.isChecked() && !pressedTVAButton && !UtilsUser.isCGED() && !UtilsUser.isSSCM()) {
-                    if (clientCUIWithCode || !pressedTVAButton)
-                        performVerificareTVA();
-                    else
-                        getListClientiCUI();
-                } else
-                    valideazaDateClient();
+            if (radioClPJ.isChecked() && !pressedTVAButton && !UtilsUser.isCGED() && !UtilsUser.isSSCM()) {
+                if (clientCUIWithCode || !pressedTVAButton)
+                    performVerificareTVA();
+                else
+                    getListClientiCUI();
+            } else
+                valideazaDateClient();
 
-            }
         });
 
     }
@@ -995,12 +1007,11 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 return;
             }
 
-            if (radioClPF.isChecked() && hasCnp() && !checkCNP(false)) {
-                Toast.makeText(getApplicationContext(), "CNP invalid", Toast.LENGTH_SHORT).show();
+            if (!isConditiiClientPJNou()) {
                 return;
             }
 
-            if (!isConditiiCustodiePJ()) {
+            if (!isConditiiClientPFNou()){
                 return;
             }
 
@@ -1047,6 +1058,9 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 }
 
                 CreareComandaGed.cnpClient = txtCNPClient.getText().toString().trim();
+
+                if (CreareComandaGed.codClientCUI != null && !CreareComandaGed.codClientCUI.trim().isEmpty())
+                    CreareComandaGed.codClientVar = CreareComandaGed.codClientCUI;
 
             }
 
@@ -1170,7 +1184,9 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
     private void afisDatePersSelectDialog(String strDatePersonale) {
         List<BeanDatePersonale> listDatePers = operatiiClient.deserializeDatePersonale(strDatePersonale);
 
-        if (listDatePers.isEmpty()) {
+        if (listDatePers.isEmpty() && isCustodiePF())
+            afisCreareClientPFDialog();
+        else if (listDatePers.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Nu exista informatii.", Toast.LENGTH_LONG).show();
         } else {
             DatePersClientDialog datePersDialog = new DatePersClientDialog(this, listDatePers);
@@ -1368,6 +1384,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 updateStareTva(operatiiClient.deserializePlatitorTva((String) result));
                 break;
             case GET_CNP_CLIENT:
+            case CAUTA_CLIENT_PF:
                 afisDatePersSelectDialog((String) result);
             case GET_AGENT_COMANDA:
                 afisAgentComanda((String) result);
@@ -1382,6 +1399,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 afisDateClientAnaf((String) result);
                 break;
             case CREEAZA_CLIENT_PJ:
+            case CREEAZA_CLIENT_PF:
                 setCodClientNominalPJ((String) result);
                 break;
             case GET_LISTA_CLIENTI_CUI:
@@ -1484,6 +1502,11 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         DateLivrare.getInstance().setAdresaD(datePersonale.getStrada());
         DateLivrare.getInstance().setDiviziiClient(datePersonale.getDivizii());
 
+        if (radioClPF.isChecked()) {
+            DateLivrare.getInstance().setNrTel(datePersonale.getCnp());
+            DateLivrare.getInstance().setPersContact(datePersonale.getNume());
+        }
+
     }
 
     @Override
@@ -1513,6 +1536,37 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("dateClient", serParam);
         operatiiClient.creeazaClientPJ(params);
+
+    }
+
+
+    @Override
+    public void clientPFCreated(DateClientSap dateClientSap) {
+        setCoordonateAdresaANAF(dateClientSap);
+        setDateContactClientPF(dateClientSap);
+        String serParam = operatiiClient.serializeParamClientPF(dateClientSap);
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("dateClient", serParam);
+        operatiiClient.creeazaClientPF(params);
+
+    }
+
+    private void setDateContactClientPF(DateClientSap dateClientSap){
+
+        if (dateClientSap == null) {
+            DateLivrare.getInstance().setCodJudetD("");
+            DateLivrare.getInstance().setOrasD("");
+            DateLivrare.getInstance().setAdresaD("");
+            DateLivrare.getInstance().setNrTel("");
+            DateLivrare.getInstance().setPersContact("");
+        } else {
+            DateLivrare.getInstance().setCodJudetD(EnumJudete.getCodJudet(dateClientSap.getJudet()));
+            DateLivrare.getInstance().setOrasD(dateClientSap.getLocalitate());
+            DateLivrare.getInstance().setAdresaD(dateClientSap.getStrada());
+            DateLivrare.getInstance().setNrTel(dateClientSap.getTelPersContact());
+            DateLivrare.getInstance().setPersContact(dateClientSap.getNumeCompanie());
+        }
 
     }
 

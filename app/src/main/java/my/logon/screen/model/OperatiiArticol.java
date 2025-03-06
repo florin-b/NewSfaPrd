@@ -114,6 +114,8 @@ public interface OperatiiArticol {
 
 	public String serializeTaxeComanda(List<TaxaComanda> listTaxe);
 
+	public void getFactorConversieModifCmd(HashMap<String, String> params);
+
 }
 
 

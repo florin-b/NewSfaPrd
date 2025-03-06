@@ -9,7 +9,7 @@ public enum EnumArticoleDAO {
             "getStocCustodie"), GET_ARTICOLE_CUSTODIE("getListArticoleCustodie"), GET_STOC_MATHAUS("getStocMathaus"), GET_INFOPRET_MATHAUS("getInfoPretMathaus"), GET_ARTICOLE_CANT(
             "getArticoleCant"), GET_CABLURI_05("getCabluri05"), GET_ARTICOLE_ACZC("getArticoleACZC"), GET_STOC_DISPONIBIL("getStocAndroid"),
             GET_STOC_TCLI("getStocAndroid"), GET_STOC_SAP("getStocSapService"), GET_PRET_UNIC("getPretUnic"),
-            GET_PRET_UNIC_CUSTODIE("getPretUnic");
+            GET_PRET_UNIC_CUSTODIE("getPretUnic"),GET_FACTOR_CONVERSIE_MODIF_CMD("getArtFactConvUM");
 
     String numeComanda;
 

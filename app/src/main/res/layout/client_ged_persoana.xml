@@ -124,7 +124,7 @@
                 android:background="@drawable/ok_button_style"
                 android:paddingLeft="50dip"
                 android:paddingRight="50dip"
-                android:text="Verifica cnp" />
+                android:text="Cauta" />
 
             <Button
                 android:id="@+id/verificaTva"
