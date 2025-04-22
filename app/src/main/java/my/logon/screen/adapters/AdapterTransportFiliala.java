@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +24,7 @@ import my.logon.screen.beans.Details;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.OptiuneLivrare;
 import my.logon.screen.beans.TaxaTransport;
+import my.logon.screen.beans.TaxeLivrare;
 import my.logon.screen.dialogs.TaxeTransportDialog;
 import my.logon.screen.enums.EnumTipCamion;
 import my.logon.screen.helpers.HelperMathaus;
@@ -33,14 +34,17 @@ public class AdapterTransportFiliala extends BaseAdapter {
     private List<TaxaTransport> listTaxeTransport;
     private LivrareMathaus dateLivrare;
     private Context context;
-    private NumberFormat nf2;
+    private DecimalFormat df;
 
     public AdapterTransportFiliala(Context context, List<TaxaTransport> listTaxeTransport, LivrareMathaus dateLivrare) {
         this.context = context;
         this.listTaxeTransport = listTaxeTransport;
         this.dateLivrare = dateLivrare;
 
-        nf2 = new DecimalFormat("#0.00");
+        df = new DecimalFormat("#####0.00");
+        DecimalFormatSymbols dfs = df.getDecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
     }
 
     static class ViewHolder {
@@ -162,27 +166,27 @@ public class AdapterTransportFiliala extends BaseAdapter {
         List<Details> listTaxe = null;
 
         for (BeanTaxaCamion taxaCamion : taxaTransport.getListTaxe()) {
-            if (taxaCamion.getTipCamion().equals(taxaTransport.getSelectedCamion())) {
+            if (taxaCamion.getTipCamion().equals(taxaTransport.getSelectedCamion()) && taxaTransport.isAcceptaMacara() == isCamionLiftMacara(taxaCamion.getTaxeLivrare())) {
                 listTaxe = new ArrayList<>();
                 Details details = new Details();
 
                 if (taxaCamion.getTaxeLivrare().getValoareTaxaTransport() > 0) {
                     details.setText1(taxaCamion.getTaxeLivrare().getNumeTaxaTransport());
-                    details.setText2(nf2.format(taxaCamion.getTaxeLivrare().getValoareTaxaTransport()));
+                    details.setText2(df.format(taxaCamion.getTaxeLivrare().getValoareTaxaTransport()));
                     listTaxe.add(details);
                 }
 
                 if (taxaCamion.getTaxeLivrare().getValoareTaxaZona() > 0) {
                     details = new Details();
                     details.setText1(taxaCamion.getTaxeLivrare().getNumeTaxaZona());
-                    details.setText2(nf2.format(taxaCamion.getTaxeLivrare().getValoareTaxaZona()));
+                    details.setText2(df.format(taxaCamion.getTaxeLivrare().getValoareTaxaZona()));
                     listTaxe.add(details);
                 }
 
                 if (taxaCamion.getTaxeLivrare().getValoareTaxaAcces() > 0) {
                     details = new Details();
                     details.setText1(taxaCamion.getTaxeLivrare().getNumeTaxaAcces());
-                    details.setText2(nf2.format(taxaCamion.getTaxeLivrare().getValoareTaxaAcces()));
+                    details.setText2(df.format(taxaCamion.getTaxeLivrare().getValoareTaxaAcces()));
                     listTaxe.add(details);
                 }
 
@@ -215,28 +219,16 @@ public class AdapterTransportFiliala extends BaseAdapter {
 
             numeOptiune = optiuneLivrare.getNumeOptiune();
 
-            optiuneLivrare.setValoareOptiune(getValoareTransport(taxaTransport, taxaCamion.getTipCamion()));
+            if (taxaCamion.getTaxeLivrare().isMacara())
+                optiuneLivrare.setNumeOptiune(numeOptiune + " cu macara");
+            else if (taxaCamion.getTaxeLivrare().isLift())
+                optiuneLivrare.setNumeOptiune(numeOptiune + " cu lift");
+
+            optiuneLivrare.setValoareOptiune(getValoareTransport(taxaTransport, taxaCamion));
             optiuneLivrare.setTaxaTransport(taxaTransport);
-            optiuneLivrare.setMacara(false);
+            optiuneLivrare.setMacara(taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift());
             optiuneLivrare.setTipCamion(taxaCamion.getTipCamion());
             listOptiuniLivare.add(optiuneLivrare);
-
-            if (taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift()) {
-
-                optiuneLivrare = new OptiuneLivrare();
-
-                if (taxaCamion.getTaxeLivrare().isMacara())
-                    optiuneLivrare.setNumeOptiune(numeOptiune + " cu macara");
-                else
-                    optiuneLivrare.setNumeOptiune(numeOptiune + " cu lift");
-
-                optiuneLivrare.setMacara(true);
-                optiuneLivrare.setTipCamion(taxaCamion.getTipCamion());
-                optiuneLivrare.setValoareOptiune(getValoareTransport(taxaTransport, taxaCamion.getTipCamion()));
-                optiuneLivrare.setTaxaTransport(taxaTransport);
-
-                listOptiuniLivare.add(optiuneLivrare);
-            }
 
 
         }
@@ -252,18 +244,23 @@ public class AdapterTransportFiliala extends BaseAdapter {
 
     }
 
-    private String getValoareTransport(TaxaTransport taxaTransport, EnumTipCamion tipCamion) {
+
+    private String getValoareTransport(TaxaTransport taxaTransport, BeanTaxaCamion taxaCamion) {
         double valoareTransport = 0;
 
         for (BeanTaxaCamion taxa : taxaTransport.getListTaxe()) {
 
-            if (taxa.getTipCamion().equals(tipCamion)) {
+            if (taxa.getTipCamion().equals(taxaCamion.getTipCamion()) && (isCamionLiftMacara(taxa.getTaxeLivrare()) == isCamionLiftMacara(taxaCamion.getTaxeLivrare()))) {
                 valoareTransport = taxa.getTaxeLivrare().getValoareTaxaTransport() + taxa.getTaxeLivrare().getValoareTaxaAcces() +
                         taxa.getTaxeLivrare().getValoareTaxaZona();
             }
         }
 
-        return nf2.format(valoareTransport);
+        return df.format(valoareTransport);
+    }
+
+    private boolean isCamionLiftMacara(TaxeLivrare taxeLivrare) {
+        return taxeLivrare.isLift() || taxeLivrare.isMacara();
     }
 
 
@@ -278,7 +275,7 @@ public class AdapterTransportFiliala extends BaseAdapter {
             }
         }
 
-        return nf2.format(valoareTransport);
+        return df.format(valoareTransport);
     }
 
 

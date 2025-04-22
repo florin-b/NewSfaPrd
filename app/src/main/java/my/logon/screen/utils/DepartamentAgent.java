@@ -99,7 +99,11 @@ public class DepartamentAgent {
 				depart.add(EnumDepartExtra.getNumeDepart("00"));
 			}
 			else {
-				depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
+
+				if (UserInfo.getInstance().getCodDepart().equals("16"))
+					depart.add(EnumDepartExtra.getNumeDepart("00"));
+				else
+					depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
 				if (UserInfo.getInstance().getDepartExtra().length() > 0) {
 					String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");
@@ -139,7 +143,7 @@ public class DepartamentAgent {
 
 		String diviziiClient = DateLivrare.getInstance().getDiviziiClient();
 
-		return diviziiClient != null && diviziiClient.split(";").length > 1;
+		return diviziiClient != null && (diviziiClient.split(";").length > 1 || diviziiClient.equals("11;"));
 	}
 
 	public static String getDepartArticole(String departImplicit){
@@ -202,7 +206,11 @@ public class DepartamentAgent {
 				depart.add(EnumDepartExtra.getNumeDepart("00"));
 			}
 			else {
-				depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
+
+				if (UserInfo.getInstance().getCodDepart().equals("16"))
+					depart.add(EnumDepartExtra.getNumeDepart("00"));
+				else
+					depart.add(EnumDepartExtra.getNumeDepart(UserInfo.getInstance().getCodDepart()));
 
 				if (UserInfo.getInstance().getCodDepart().startsWith("04") && UserInfo.getInstance().getDepartExtra().length() > 0) {
 					String[] depExtra = UserInfo.getInstance().getDepartExtra().split(";");

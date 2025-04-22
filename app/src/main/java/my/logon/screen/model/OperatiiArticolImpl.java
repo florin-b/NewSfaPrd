@@ -938,6 +938,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             jsonAntet.put("isComandaDL", antetComanda.isComandaDL());
             jsonAntet.put("nrCmdSap", antetComanda.getNrCmdSap());
             jsonAntet.put("strada", antetComanda.getStrada().trim());
+            jsonAntet.put("codFurnizor", antetComanda.getCodFurnizor());
 
         } catch (JSONException e) {
             e.printStackTrace();

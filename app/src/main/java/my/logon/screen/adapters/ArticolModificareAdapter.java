@@ -26,6 +26,7 @@ import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.OperatiiArticolImpl;
 import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsComenzi;
 
 public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArticolListener {
 
@@ -249,27 +250,6 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 	}
 
 
-	private String getStatusArticol_old(ArticolComanda articol, BeanComandaCreata comanda) {
-
-		String statusArticol = "";
-
-		if (articol.getDepart().equals(comanda.getDivizieComanda())) {
-
-			if (articol.hasConditii()) {
-				statusArticol = "";
-			} else if (articol.getPonderare() == 1) {
-				if (comanda.getAprobariPrimite().contains(articol.getDepartSintetic()))
-					statusArticol = getStareArticolComandaCV(articol, comanda);
-				else
-					statusArticol = "Articolul necesita aprobare";
-			}
-
-		}
-
-		return statusArticol;
-
-	}
-
 	private String getObsArt(String statusArt) {
 		if (statusArt != null && statusArt.equals("9"))
 			return "Stoc insuficient";
@@ -343,7 +323,7 @@ public class ArticolModificareAdapter extends BaseAdapter implements OperatiiArt
 		ArticolComanda articolComanda = getItem(pozitieArticolSelectat);
 		BeanConditiiArticole articolConditie = getConditieArticol(articolComanda.getCodArticol());
 
-		if (stocExistent < articolConditie.getCantitate()) {
+		if (stocExistent < articolConditie.getCantitate() && !UtilsComenzi.isComandaDl()) {
 			Toast.makeText(context, "Stoc insuficient.", Toast.LENGTH_SHORT).show();
 		} else {
 			articolComanda.setConditii(false);

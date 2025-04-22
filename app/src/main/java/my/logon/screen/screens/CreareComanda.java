@@ -1025,7 +1025,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         if (!DateLivrare.getInstance().isClientFurnizor())
             verificaPaletiComanda(costDescarcare.getArticolePaleti());
 
-        DateLivrare.getInstance().setMasinaMacara(costDescarcare.getArticoleDescarcare().isEmpty());
+        DateLivrare.getInstance().setMasinaMacara(!costDescarcare.getArticoleDescarcare().isEmpty());
 
         List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcareDistrib(costDescarcare, 0, ListaArticoleComanda.getInstance().getListArticoleComanda());
         ListaArticoleComanda.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
@@ -1943,9 +1943,6 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
     }
 
 
-
-
-
     private void getLivrariMathaus() {
 
         ListaArticoleComanda.getInstance().reseteazaArticoleLivrare();
@@ -1959,11 +1956,10 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         if (DateLivrare.getInstance().getTipComandaDistrib() == TipCmdDistrib.COMANDA_LIVRARE &&
                 DateLivrare.getInstance().getCodFilialaCLP().equals("BV90"))
             filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
-
-        String livrareFilialaSecundara = HelperMathaus.getFilialaSecundara();
-
-        if (!livrareFilialaSecundara.isEmpty())
-            filialaLivrareMathaus += "," + livrareFilialaSecundara;
+        else if (DateLivrare.getInstance().getDatePoligonLivrare() != null &&
+                !DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala().trim().isEmpty() &&
+                DateLivrare.getInstance().getTransport().equals("TRAP"))
+            filialaLivrareMathaus = DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala();
 
         comandaMathaus.setSellingPlant(filialaLivrareMathaus);
         List<DateArticolMathaus> listArticoleMat = new ArrayList<DateArticolMathaus>();
@@ -2010,6 +2006,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
                 DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_COMANDA));
         antetComanda.setNrCmdSap("");
         antetComanda.setStrada(DateLivrare.getInstance().getStrada());
+        antetComanda.setCodFurnizor(UtilsComenzi.getCodFurnizorDL());
 
         copyLivrareMathaus(antetComanda, comandaMathaus);
 

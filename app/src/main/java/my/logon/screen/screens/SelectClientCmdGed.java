@@ -64,6 +64,7 @@ import my.logon.screen.model.OperatiiClient;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.MapUtils;
 import my.logon.screen.utils.ScreenUtils;
+import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
@@ -312,6 +313,12 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         else
             checkCustodie.setVisibility(View.INVISIBLE);
 
+
+        if (UtilsUser.isUserCVOB()) {
+            radioClPF.setVisibility(View.INVISIBLE);
+            radioClPJ.setChecked(true);
+        }
+
         setListenerCustodie();
 
     }
@@ -407,6 +414,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("cuiClient", strCui);
         params.put("codAgent", UserInfo.getInstance().getCod());
+        params.put("depart", UserInfo.getInstance().getCodDepart());
         operatiiClient.getStarePlatitorTva(params);
 
     }
@@ -488,6 +496,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
             params.put("numeClient", textClient);
             params.put("tipClient", "PJ");
             params.put("codAgent", UserInfo.getInstance().getCod());
+            params.put("depart", UserInfo.getInstance().getCodDepart());
+            params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
             operatiiClient.getCnpClient(params);
         }
 
@@ -1062,6 +1072,10 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 if (CreareComandaGed.codClientCUI != null && !CreareComandaGed.codClientCUI.trim().isEmpty())
                     CreareComandaGed.codClientVar = CreareComandaGed.codClientCUI;
 
+
+                if (UtilsComenzi.isComandaPFDep16())
+                    DateLivrare.getInstance().setDiviziiClient("03;040;041;09;11");
+
             }
 
             if (radioClPJ.isChecked() && !UtilsUser.isCGED() && !UtilsUser.isSSCM()) {
@@ -1440,6 +1454,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 txtNumeClientGed.setText(client.getNumeClient().replaceFirst("\\(.*", ""));
 
                 if (DateLivrare.getInstance().getFurnizorComanda() != null) {
+                    UserInfo.getInstance().setUnitLog(client.getFilialaClientIP());
                 } else if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_DETERIORATE)) {
                 } else {
                     if (!client.getFilialaClientIP().equals(UserInfo.getInstance().getUnitLog()))

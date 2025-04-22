@@ -432,25 +432,12 @@ public class HelperCostDescarcare {
 
         for (ArticolComanda art : listArticole) {
             if (art.getCodArticol().contains(codArticolPalet)) {
-                depozit = art.getDepozit();
+                depozit = art.getDepozit().replace("040","04").replace("041","04");
                 break;
             }
         }
 
         return depozit;
-    }
-
-    public static String getUnitlogPalet(List<ArticolComanda> listArticole, String codArticolPalet) {
-        String unitLog = "";
-
-        for (ArticolComanda art : listArticole) {
-            if (art.getCodArticol().contains(codArticolPalet)) {
-                unitLog = art.getFilialaSite();
-                break;
-            }
-        }
-
-        return unitLog;
     }
 
 

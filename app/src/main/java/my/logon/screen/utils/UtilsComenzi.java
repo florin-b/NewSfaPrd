@@ -15,6 +15,7 @@ import java.util.List;
 
 import my.logon.screen.beans.BeanArticolRetur;
 import my.logon.screen.beans.BeanStocTCLI;
+import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.ArticolComanda;
@@ -24,6 +25,7 @@ import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.model.ListaArticoleModificareComanda;
+import my.logon.screen.model.UserInfo;
 
 public class UtilsComenzi {
 
@@ -101,6 +103,18 @@ public class UtilsComenzi {
 
     public static boolean isComandaInstPublica() {
         return DateLivrare.getInstance().getTipPersClient() != null && DateLivrare.getInstance().getTipPersClient().toUpperCase().equals("IP");
+    }
+
+    public static boolean isArticolCuDepozit(ArticolComanda artCmd, BeanStocTCLI stocTCLI) {
+
+        if (stocTCLI != null && !stocTCLI.getDepozit().trim().isEmpty())
+            return false;
+
+        if (artCmd.getArticolMathaus() != null)
+            return false;
+
+        return artCmd.getDepozit() != null && !artCmd.getDepozit().trim().isEmpty();
+
     }
 
     public static boolean isComandaExpirata(List<ArticolComanda> listArticole) {
@@ -295,6 +309,14 @@ public class UtilsComenzi {
                 && DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().length() > 4;
     }
 
+    public static String getCodFurnizorDL(){
+
+        if (!isComandaDl())
+            return "";
+
+        return DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa();
+    }
+
 
     public static boolean isAdresaUnitLogModifCmd(Context context, String filialaModifComanda, DatePoligonLivrare poligonLivrareon) {
 
@@ -440,6 +462,22 @@ public class UtilsComenzi {
             return false;
 
         return DateLivrare.getInstance().getTransport().equals("TRAP") && DateLivrare.getInstance().getDatePoligonLivrare().isRestrictionat();
+
+    }
+
+    public static boolean isComandaPFDep16() {
+        if (DateLivrare.getInstance().getTipPersClient() == null)
+            return false;
+
+        return DateLivrare.getInstance().getTipPersClient().equals("PF") && UserInfo.getInstance().getCodDepart().equals("16");
+    }
+
+    public static boolean isComandaPFDep16(DateLivrareAfisare dateLivrareAfisare){
+
+        if (dateLivrareAfisare == null)
+            return false;
+
+        return dateLivrareAfisare.getTipPersClient().equals("PF") && UserInfo.getInstance().getCodDepart().equals("16");
 
     }
 

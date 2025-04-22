@@ -39,6 +39,7 @@ import my.logon.screen.beans.TaxeLivrare;
 import my.logon.screen.enums.EnumTipCamion;
 import my.logon.screen.helpers.HelperMathaus;
 import my.logon.screen.listeners.TaxeMasiniListener;
+import my.logon.screen.model.DateLivrare;
 
 public class TaxeMasiniDialog extends Dialog {
 
@@ -307,13 +308,28 @@ public class TaxeMasiniDialog extends Dialog {
         return listTaxeTransport;
     }
 
+
+    private void trateazaTipMasina(BeanTaxaCamion taxaCamion) {
+
+        DateLivrare.getInstance().setTipMasina("");
+
+        if (taxaCamion.getTipCamion().equals(EnumTipCamion.CAMION_IVECO)) {
+            DateLivrare.getInstance().setTipMasina("iveco");
+        } else if (taxaCamion.getTipCamion().equals(EnumTipCamion.CAMION_SCURT))
+            DateLivrare.getInstance().setTipMasina("scurt");
+
+
+    }
+
     private void setTaxeTransportAgent() {
+
 
         for (TaxaTransport taxaTransport : taxeTransport) {
 
             for (BeanTaxaCamion taxaCamion : taxaTransport.getListTaxe()) {
-                if (taxaTransport.getSelectedCamion().equals(taxaCamion.getTipCamion())) {
+                if (taxaTransport.getSelectedCamion().equals(taxaCamion.getTipCamion()) && isCamionLiftMacara(taxaCamion.getTaxeLivrare()) == taxaTransport.isAcceptaMacara()) {
 
+                    trateazaTipMasina(taxaCamion);
 
                     CostTransportMathaus costTransportMathaus = new CostTransportMathaus();
                     costTransportMathaus.setCodArtTransp(taxaCamion.getTaxeLivrare().getCodTaxaTransport());
@@ -428,7 +444,7 @@ public class TaxeMasiniDialog extends Dialog {
 
         for (TaxaTransport taxaTransport : taxeTransport) {
             for (BeanTaxaCamion taxaCamion : taxaTransport.getListTaxe()) {
-                if (taxaCamion.getTipCamion().equals(taxaTransport.getSelectedCamion())) {
+                if (taxaCamion.getTipCamion().equals(taxaTransport.getSelectedCamion()) && isCamionLiftMacara(taxaCamion.getTaxeLivrare()) == taxaTransport.isAcceptaMacara()) {
 
                     if (taxaTransport.getTaxaMacaraAgent() > 0) {
 
@@ -450,6 +466,10 @@ public class TaxeMasiniDialog extends Dialog {
         costDescarcare.setArticoleDescarcare(listArticole);
         costDescarcare.setArticolePaleti(listPaleti);
         return costDescarcare;
+    }
+
+    private boolean isCamionLiftMacara(TaxeLivrare taxeLivrare) {
+        return taxeLivrare.isLift() || taxeLivrare.isMacara();
     }
 
 

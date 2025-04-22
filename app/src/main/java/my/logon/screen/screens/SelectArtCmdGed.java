@@ -1265,6 +1265,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             uLog = UserInfo.getInstance().getUnitLog().substring(0, 2) + "4" + UserInfo.getInstance().getUnitLog().substring(3, 4);
         }
 
+        if (UtilsUser.isUserCVOB() && isOriceComandaModificata())
+            uLog = ModificareComanda.filialaAlternativaM.substring(0, 2) + "2" + ModificareComanda.filialaAlternativaM.substring(3, 4);
+
         String paramUnitMas = textUM.getText().toString();
 
         if (listUmVanz.size() > 1) {
@@ -1751,6 +1754,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                     else
                         articol.setFilialaSite(CreareComandaGed.filialaAlternativa);
 
+                    if (isOriceComandaModificata() && UtilsUser.isUserCVOB())
+                        articol.setFilialaSite(ModificareComanda.filialaAlternativaM);
 
                     articol.setArticolMathaus(articolMathaus);
 
@@ -2881,7 +2886,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         spinnerConversieCount = 0;
 
-        paramsGetStocDepozit = new HashMap<String, String>();
+        paramsGetStocDepozit = new HashMap<>();
 
         String varLocalUnitLog;
 
@@ -2917,7 +2922,11 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             }
 
             if (UtilsUser.isUserSite()) {
-                varLocalUnitLog = UtilsUser.getULUserSite(CreareComandaGed.filialaAlternativa, globalDepozSel);
+
+                if (isOriceComandaModificata())
+                    varLocalUnitLog = UtilsUser.getULUserSite(ModificareComanda.filialaAlternativaM, globalDepozSel);
+                else
+                    varLocalUnitLog = UtilsUser.getULUserSite(CreareComandaGed.filialaAlternativa, globalDepozSel);
             }
 
         }

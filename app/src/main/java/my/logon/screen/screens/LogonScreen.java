@@ -452,6 +452,9 @@ public class LogonScreen extends Activity implements AsyncTaskListener {
 		if (numeDepart.equals("LEFA"))
 			dpt = "02";
 
+		if (numeDepart.equals("DP16"))
+			dpt = "16";
+
 		return dpt;
 
 	}

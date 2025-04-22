@@ -242,30 +242,28 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 	}
 
 	public void addListenerSave() {
-		saveClntBtn.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+		saveClntBtn.setOnClickListener(v -> {
 
-				if (codClientVar.length() == 0) {
-					Toast.makeText(getApplicationContext(), "Selectati un client!", Toast.LENGTH_SHORT).show();
-				} else {
+			if (codClientVar.length() == 0) {
+				Toast.makeText(getApplicationContext(), "Selectati un client!", Toast.LENGTH_SHORT).show();
+			} else {
 
-					if ((UtilsUser.isSuperAv() || UtilsUser.isASDL()) && spinnerAgenti.getSelectedItemPosition() == 0) {
-						Toast.makeText(getApplicationContext(), "Selectati un agent.", Toast.LENGTH_LONG).show();
-						return;
-					}
-
-					CreareComanda.codClientVar = codClientVar;
-					CreareComanda.numeClientVar = numeClientVar;
-					CreareComanda.tipClientVar = tipClientVar;
-
-					CreareComanda.cmdAngajament = false;
-
-					DateLivrare.getInstance().setRefClient(((EditText) findViewById(R.id.textRefClient)).getText().toString().trim());
-
-					finish();
+				if ((UtilsUser.isSuperAv() || UtilsUser.isASDL()) && spinnerAgenti.getSelectedItemPosition() == 0) {
+					Toast.makeText(getApplicationContext(), "Selectati un agent.", Toast.LENGTH_LONG).show();
+					return;
 				}
 
+				CreareComanda.codClientVar = codClientVar;
+				CreareComanda.numeClientVar = numeClientVar;
+				CreareComanda.tipClientVar = tipClientVar;
+
+				CreareComanda.cmdAngajament = false;
+
+				DateLivrare.getInstance().setRefClient(((EditText) findViewById(R.id.textRefClient)).getText().toString().trim());
+
+				finish();
 			}
+
 		});
 
 	}
@@ -277,19 +275,17 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 	}
 
 	public void addListenerClient() {
-		clientBtn.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				try {
-					if (txtNumeClient.length() > 0) {
-						performListClients();
-					} else {
-						Toast.makeText(getApplicationContext(), "Introduceti nume client!", Toast.LENGTH_SHORT).show();
-					}
-				} catch (Exception ex) {
-					Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+		clientBtn.setOnClickListener(v -> {
+			try {
+				if (txtNumeClient.length() > 0) {
+					performListClients();
+				} else {
+					Toast.makeText(getApplicationContext(), "Introduceti nume client!", Toast.LENGTH_SHORT).show();
 				}
-
+			} catch (Exception ex) {
+				Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
 			}
+
 		});
 
 	}

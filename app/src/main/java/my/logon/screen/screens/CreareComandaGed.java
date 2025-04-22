@@ -1311,11 +1311,10 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         else if ((DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.COMANDA_VANZARE) && DateLivrare.getInstance().getTransport().equals("TCLI") &&
                 !DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog().trim().isEmpty())
             filialaLivrareMathaus = DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog();
-
-        String livrareFilialaSecundara = HelperMathaus.getFilialaSecundara();
-
-        if (!livrareFilialaSecundara.isEmpty())
-            filialaLivrareMathaus += "," + livrareFilialaSecundara;
+        else if (DateLivrare.getInstance().getDatePoligonLivrare() != null &&
+                !DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala().trim().isEmpty() &&
+                DateLivrare.getInstance().getTransport().equals("TRAP"))
+            filialaLivrareMathaus = DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala();
 
         comandaMathaus.setSellingPlant(filialaLivrareMathaus);
         List<DateArticolMathaus> listArticoleMat = new ArrayList<DateArticolMathaus>();
@@ -1367,6 +1366,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
                 DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_COMANDA));
         antetComanda.setNrCmdSap("");
         antetComanda.setStrada(DateLivrare.getInstance().getStrada());
+        antetComanda.setCodFurnizor(UtilsComenzi.getCodFurnizorDL());
 
         copyLivrareMathaus(antetComanda, comandaMathaus);
 
@@ -1504,9 +1504,18 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
         } else {
             HelperMathaus.setTransportTERT(livrareMathaus);
+            trateazaTransportIP();
             setLivrariMathaus(livrareMathaus);
         }
 
+    }
+
+    private void trateazaTransportIP(){
+        costTransportIP = 0;
+        taxeComandaIP = new ArrayList<>();
+
+        if (isExceptieComandaIP())
+            eliminaCostTransport();
     }
 
     @Override
@@ -1514,16 +1523,12 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
         this.costDescarcare = costDescarcare;
 
-        costTransportIP = 0;
-        taxeComandaIP = new ArrayList<>();
-
-        if (isExceptieComandaIP())
-            eliminaCostTransport();
+        trateazaTransportIP();
 
         if (!DateLivrare.getInstance().isClientFurnizor())
             verificaPaletiComanda(costDescarcare.getArticolePaleti());
 
-        DateLivrare.getInstance().setMasinaMacara(costDescarcare.getArticoleDescarcare().isEmpty());
+        DateLivrare.getInstance().setMasinaMacara(!costDescarcare.getArticoleDescarcare().isEmpty());
 
         List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcare, 0, ListaArticoleComandaGed.getInstance().getListArticoleComanda());
         ListaArticoleComandaGed.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
@@ -1539,8 +1544,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     private void adaugaPaletComanda(ArticolPalet articolPalet) {
 
-        String depozitPalet = HelperCostDescarcare
-                .getDepozitPalet(ListaArticoleComandaGed.getInstance().getListArticoleComanda(), articolPalet.getCodArticol());
+        String depozitPalet = HelperCostDescarcare.getDepozitPalet(ListaArticoleComandaGed.getInstance().getListArticoleComanda(), articolPalet.getCodArticol());
 
         ArticolComanda articol = HelperCostDescarcare.getArticolPalet(articolPalet, depozitPalet, articolPalet.getFiliala());
         ListaArticoleComandaGed.getInstance().addArticolLivrareComanda(articol);
@@ -1669,8 +1673,6 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private boolean isExceptieComandaIP() {
         return UtilsUser.isUserIP() && tipClient.equals("IP") && tipClientIP == EnumTipClientIP.CONSTR;
     }
-
-
 
 
     private void verificaPaletiComanda(List<ArticolPalet> listPaleti) {
@@ -2640,7 +2642,6 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         }
 
     }
-
 
 
     @Override

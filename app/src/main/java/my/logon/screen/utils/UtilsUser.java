@@ -235,6 +235,11 @@ public class UtilsUser {
 
 	}
 
+	public static boolean isUserCVOB(){
+		return UserInfo.getInstance().getTipUserSap().equals("CVOB");
+
+	}
+
 	public static String getULUserSite(String unitLog, String depozit) {
 
 		if (depozit.equals("MAV1") || depozit.equals("MAV2")) {

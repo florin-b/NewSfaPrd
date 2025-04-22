@@ -266,7 +266,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             txtPers = (EditText) findViewById(R.id.txtPersCont);
             txtTel = (EditText) findViewById(R.id.txtTelefon);
             txtPers.setText(dateLivrareInstance.getPersContact());
-            txtTel.setText(dateLivrareInstance.getNrTel());
+            txtTel.setText(dateLivrareInstance.getNrTel().trim());
 
             checkFactura = (CheckBox) findViewById(R.id.checkFactura);
             setListenerCheckFactura();
@@ -2530,7 +2530,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             }
 
             if (!dateLivrareClient.getTelPersContact().isEmpty() && !dateLivrareClient.getTelPersContact().equals("null")) {
-                txtTel.setText(dateLivrareClient.getTelPersContact());
+                txtTel.setText(dateLivrareClient.getTelPersContact().trim());
             }
 
             if ((UtilsUser.isCGED() || UtilsUser.isSSCM()) && dateLivrareClient.getTermenPlata().trim().length() > 0) {

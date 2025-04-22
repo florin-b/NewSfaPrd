@@ -15,12 +15,16 @@ public class UtilsAddress {
 		if (address == null)
 			return " ";
 
-		if (address.toLowerCase().contains("nr"))
-			return address.substring(0, address.toLowerCase().indexOf("nr") - 2).trim();
-		else if (address.toLowerCase().contains("nr."))
-			return address.substring(0, address.toLowerCase().indexOf("nr.") - 3).trim();
-		else
-			return address;
+		try {
+			if (address.toLowerCase().contains("nr"))
+				return address.substring(0, address.toLowerCase().indexOf("nr") - 2).trim();
+			else if (address.toLowerCase().contains("nr."))
+				return address.substring(0, address.toLowerCase().indexOf("nr.") - 3).trim();
+			else
+				return address;
+		} catch (Exception ex) {
+			return " ";
+		}
 
 	}
 

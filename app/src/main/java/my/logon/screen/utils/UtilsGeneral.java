@@ -610,6 +610,9 @@ public class UtilsGeneral {
         if (numeDepart.equals("LEFA"))
             dpt = "02";
 
+        if (numeDepart.equals("DP16"))
+            dpt = "16";
+
         return dpt;
 
     }

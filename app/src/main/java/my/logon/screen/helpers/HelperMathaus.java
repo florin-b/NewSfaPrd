@@ -25,7 +25,6 @@ import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
-import my.logon.screen.model.HelperTranspBuc;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
 import my.logon.screen.utils.UtilsComenzi;
@@ -254,29 +253,6 @@ public class HelperMathaus {
 
     }
 
-    public static void trateazaTaxaBucuresti(List<ArticolComanda> listArticoleComanda) {
-
-        String depozitArt = "";
-        String tipTransp = "";
-
-        for (ArticolComanda articolComanda : listArticoleComanda) {
-            if (articolComanda.getDepozit() != null && !articolComanda.getDepozit().trim().isEmpty() && articolComanda.getTipTransport() != null
-                    && !articolComanda.getTipTransport().trim().isEmpty()) {
-                depozitArt = articolComanda.getDepozit();
-                tipTransp = articolComanda.getTipTransport();
-                break;
-            }
-        }
-
-        for (ArticolComanda articolComanda : listArticoleComanda) {
-            if (HelperTranspBuc.isTranspZonaBuc(articolComanda.getCodArticol())) {
-                articolComanda.setDepozit(depozitArt);
-                articolComanda.setTipTransport(tipTransp);
-            }
-        }
-
-    }
-
     public static void setTonajComanda() {
 
         if (DateLivrare.getInstance().getDatePoligonLivrare() == null)
@@ -346,60 +322,6 @@ public class HelperMathaus {
     }
 
 
-    public static List<BeanStocTCLI> genereazaStocArticolTCLI(ArticolComanda articolComanda) {
-
-        List<BeanStocTCLI> listStocTCLI = new ArrayList<>();
-
-        double cantNecesar = articolComanda.getCantitate();
-
-        BeanStocTCLI stocV1 = getStocDepozit(articolComanda, articolComanda.getDepart().substring(0, 2) + "V1");
-        BeanStocTCLI stocMAV1 = getStocDepozit(articolComanda, "MAV1");
-
-        BeanStocTCLI beanStoc = new BeanStocTCLI();
-
-        if (stocV1.getCantitate() > 0) {
-
-            if (cantNecesar <= stocV1.getCantitate()) {
-                beanStoc.setCantitate(cantNecesar);
-                cantNecesar = 0;
-            } else {
-                beanStoc.setCantitate(stocV1.getCantitate());
-                cantNecesar = cantNecesar - beanStoc.getCantitate();
-            }
-
-            beanStoc.setDepozit(stocV1.getDepozit());
-            beanStoc.setUm(stocV1.getUm());
-            listStocTCLI.add(beanStoc);
-        }
-        if (stocMAV1.getCantitate() > 0 && cantNecesar > 0 && cantNecesar <= stocMAV1.getCantitate()) {
-
-            beanStoc = new BeanStocTCLI();
-            beanStoc.setCantitate(cantNecesar);
-            beanStoc.setDepozit(stocMAV1.getDepozit());
-            beanStoc.setUm(stocMAV1.getUm());
-            listStocTCLI.add(beanStoc);
-        }
-
-
-        return listStocTCLI;
-    }
-
-    private static BeanStocTCLI getStocDepozit(ArticolComanda articolComanda, String depozit) {
-
-        BeanStocTCLI beanStocTCLI = new BeanStocTCLI();
-
-        for (BeanStocTCLI stocTCLI : articolComanda.getListStocTCLI()) {
-            if (stocTCLI.getDepozit().equals(depozit)) {
-                beanStocTCLI.setCantitate(stocTCLI.getCantitate());
-                beanStocTCLI.setDepozit(stocTCLI.getDepozit());
-                beanStocTCLI.setUm(stocTCLI.getUm());
-                break;
-            }
-        }
-
-        return beanStocTCLI;
-    }
-
     public static DateArticolMathaus genereazaStocArticolTCLI(ArticolComanda artCmd, BeanStocTCLI stocTCLI) {
 
         DateArticolMathaus dateArticol = new DateArticolMathaus();
@@ -435,7 +357,8 @@ public class HelperMathaus {
 
         dateArticol.setUnit50(artCmd.getUm50());
 
-        if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()) || isDepozitExceptie(artCmd.getDepozit()) || UtilsComenzi.isLivrareCustodie())
+        if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()) || isDepozitExceptie(artCmd.getDepozit()) || UtilsComenzi.isLivrareCustodie() ||
+            UtilsComenzi.isArticolCuDepozit(artCmd, stocTCLI))
             dateArticol.setDepozit(artCmd.getDepozit());
         else if (stocTCLI != null && !stocTCLI.getDepozit().trim().isEmpty())
             dateArticol.setDepozit(stocTCLI.getDepozit());

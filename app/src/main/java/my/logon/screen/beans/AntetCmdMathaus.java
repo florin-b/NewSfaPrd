@@ -19,6 +19,7 @@ public class AntetCmdMathaus {
     private boolean isComandaDL;
     private String nrCmdSap;
     private String strada;
+    private String codFurnizor;
 
 
     public String getLocalitate() {
@@ -139,5 +140,13 @@ public class AntetCmdMathaus {
 
     public void setStrada(String strada) {
         this.strada = strada;
+    }
+
+    public String getCodFurnizor() {
+        return codFurnizor;
+    }
+
+    public void setCodFurnizor(String codFurnizor) {
+        this.codFurnizor = codFurnizor;
     }
 }

@@ -259,7 +259,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         nf2.setMaximumFractionDigits(2);
 
 
-        txtTel.setText(listTel[0]);
+        txtTel.setText(listTel[0].trim());
 
         checkObsSofer = (CheckBox) findViewById(R.id.chkObsSofer);
         setListenerCheckObsSofer();
@@ -923,7 +923,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
 
         try {
             txtPers.setText(listPersCont[position]);
-            txtTel.setText(listTel[position]);
+            txtTel.setText(listTel[position].trim());
             lpw.dismiss();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -1589,7 +1589,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
             txtPers.setText(tokLivrare[2]);
 
             // telefon
-            txtTel.setText(tokLivrare[3]);
+            txtTel.setText(tokLivrare[3].trim());
 
             // fact.red. separat
             if (tokLivrare[6].equals("X"))

@@ -837,11 +837,11 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
         if (isComandaCLP() && DateLivrare.getInstance().getCodFilialaCLP().equals("BV90"))
             filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
+        else if (DateLivrare.getInstance().getDatePoligonLivrare() != null &&
+                !DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala().trim().isEmpty() &&
+                DateLivrare.getInstance().getTransport().equals("TRAP"))
+            filialaLivrareMathaus = DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala();
 
-        String livrareFilialaSecundara = HelperMathaus.getFilialaSecundara();
-
-        if (!livrareFilialaSecundara.isEmpty())
-            filialaLivrareMathaus += "," + livrareFilialaSecundara;
 
         comandaMathaus.setSellingPlant(filialaLivrareMathaus);
 
@@ -871,7 +871,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             dateArticol.setQuantity50(artCmd.getCantitate50());
             dateArticol.setUnit50(artCmd.getUm50());
 
-            if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()))
+            if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()) || UtilsComenzi.isArticolCuDepozit(artCmd, null))
                 dateArticol.setDepozit(artCmd.getDepozit());
             else
                 dateArticol.setDepozit("");
@@ -906,6 +906,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         antetComanda.setComandaDL(isComandaDL());
         antetComanda.setNrCmdSap(comandaSelectata.getCmdSap());
         antetComanda.setStrada(DateLivrare.getInstance().getStrada());
+        antetComanda.setCodFurnizor(UtilsComenzi.getCodFurnizorDL());
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("antetComanda", opArticol.serializeAntetCmdMathaus(antetComanda));
@@ -1059,7 +1060,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
         this.costDescarcare = costDescarcare;
 
-        DateLivrare.getInstance().setMasinaMacara(costDescarcare.getArticoleDescarcare().isEmpty());
+        DateLivrare.getInstance().setMasinaMacara(!costDescarcare.getArticoleDescarcare().isEmpty());
 
         List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcare, 0, listArticoleComanda);
         ListaArticoleComanda.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
@@ -1980,6 +1981,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         params.put("nrCmd", selectedCmd);
         params.put("afisCond", "1");
         params.put("tipUser", UserInfo.getInstance().getTipUser());
+        params.put("departament", UserInfo.getInstance().getCodDepart());
 
         operatiiComenzi.getArticoleComandaJSON(params);
 
@@ -1991,6 +1993,11 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
         DateLivrare.getInstance().setDateLivrareAfisare(dateLivrare);
         DateLivrare.getInstance().setClientBlocat(articoleComanda.getDateLivrare().isClientBlocat());
+
+        DateLivrare.getInstance().setDiviziiClient(articoleComanda.getDateLivrare().getDiviziiClient());
+
+        if (UtilsComenzi.isComandaPFDep16(articoleComanda.getDateLivrare()))
+            DateLivrare.getInstance().setDiviziiClient("03;040;041;09;11");
 
         listArticoleComanda = articoleComanda.getListArticole();
 
