@@ -37,7 +37,7 @@ public class HelperCostDescarcare {
             ArticolComanda articolComanda = new ArticolComanda();
 
             articolComanda.setCodArticol(artDesc.getCod().replaceFirst("^0+(?!$)", ""));
-            articolComanda.setNumeArticol(Constants.NUME_SERV_DESC_PALET + artDesc.getDepart());
+            articolComanda.setNumeArticol(Constants.NUME_SERV_DESC_PALET);
 
             if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.LIVRARE_CUSTODIE)) {
                 articolComanda.setCantitate(1);
@@ -98,7 +98,7 @@ public class HelperCostDescarcare {
 
             ArticolComanda articolComanda = new ArticolComanda();
             articolComanda.setCodArticol(artDesc.getCod().replaceFirst("^0+(?!$)", ""));
-            articolComanda.setNumeArticol(Constants.NUME_SERV_DESC_PALET + artDesc.getDepart());
+            articolComanda.setNumeArticol(Constants.NUME_SERV_DESC_PALET);
 
             if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.LIVRARE_CUSTODIE)) {
                 articolComanda.setCantitate(1);

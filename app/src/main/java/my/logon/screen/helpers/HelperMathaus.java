@@ -13,13 +13,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import my.logon.screen.beans.ArticolDescarcare;
 import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.beans.BeanStocTCLI;
+import my.logon.screen.beans.BeanTaxaCamion;
+import my.logon.screen.beans.CostDescarcare;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.beans.TaxaMasina;
+import my.logon.screen.beans.TaxaTransport;
+import my.logon.screen.enums.EnumTipCamion;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
@@ -27,7 +32,9 @@ import my.logon.screen.model.Constants;
 import my.logon.screen.model.DateLivrare;
 import my.logon.screen.model.ListaArticoleComanda;
 import my.logon.screen.model.ListaArticoleComandaGed;
+import my.logon.screen.utils.UtilsArticole;
 import my.logon.screen.utils.UtilsComenzi;
+import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
 
 public class HelperMathaus {
@@ -136,6 +143,25 @@ public class HelperMathaus {
                 iterator.remove();
             }
         }
+    }
+
+    public static void eliminaCostDescarcareFiliala(CostDescarcare costDescarcare, List<ArticolComanda> listArticole) {
+
+        Iterator<ArticolComanda> iterator = listArticole.iterator();
+
+        for (ArticolDescarcare articolDescarcare : costDescarcare.getArticoleDescarcare()) {
+
+            while (iterator.hasNext()) {
+
+                ArticolComanda articolComanda = iterator.next();
+
+                if (articolDescarcare.getCod().replaceFirst("^0*", "").equals((articolComanda.getCodArticol().replaceFirst("^0*", ""))))
+                    iterator.remove();
+
+            }
+        }
+
+
     }
 
     public static void eliminaCostTransport(List<ArticolComanda> listArticole, List<CostTransportMathaus> costTransport) {
@@ -358,7 +384,7 @@ public class HelperMathaus {
         dateArticol.setUnit50(artCmd.getUm50());
 
         if (UtilsComenzi.isDespozitDeteriorate(artCmd.getDepozit()) || isDepozitExceptie(artCmd.getDepozit()) || UtilsComenzi.isLivrareCustodie() ||
-            UtilsComenzi.isArticolCuDepozit(artCmd, stocTCLI))
+                UtilsComenzi.isArticolCuDepozit(artCmd, stocTCLI))
             dateArticol.setDepozit(artCmd.getDepozit());
         else if (stocTCLI != null && !stocTCLI.getDepozit().trim().isEmpty())
             dateArticol.setDepozit(stocTCLI.getDepozit());
@@ -410,7 +436,7 @@ public class HelperMathaus {
 
         List<ArticolPalet> copyList = new ArrayList<>();
 
-        for (ArticolPalet articolPalet : listPaleti){
+        for (ArticolPalet articolPalet : listPaleti) {
 
             ArticolPalet copyPalet = new ArticolPalet();
             copyPalet.setUmArticol(articolPalet.getUmArticol());
@@ -569,6 +595,203 @@ public class HelperMathaus {
         }
 
         return nrPaleti;
+    }
+
+    public static int getNrPaletiFilialaDepart(CostDescarcare costDescarcare, String filiala, String depart) {
+
+        int nrPaleti = 0;
+
+        for (ArticolPalet articolPalet : costDescarcare.getArticolePaleti()) {
+            if (articolPalet.getFiliala().equals(filiala) && articolPalet.getDepart().equals(depart))
+                nrPaleti += articolPalet.getCantitate();
+        }
+
+        return nrPaleti;
+    }
+
+    public static List<CostTransportMathaus> getCostTransportDepart(List<TaxaTransport> listTaxeTransport, List<ArticolComanda> listArticoleComanda) {
+
+        List<CostTransportMathaus> costTranspDepart = new ArrayList<>();
+
+        for (TaxaTransport taxaTransportFil : listTaxeTransport) {
+
+            EnumTipCamion camionSelect = taxaTransportFil.getSelectedCamion();
+            boolean acceptaMacara = taxaTransportFil.isAcceptaMacara();
+
+            for (BeanTaxaCamion taxaCamion : taxaTransportFil.getListTaxe()) {
+
+                if (taxaCamion.getTipCamion().equals(camionSelect) && acceptaMacara == (taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift())) {
+
+                    List<CostTransportMathaus> taxeTranspFil = getCostTranspFiliala(taxaCamion.getTaxeLivrare().getTaxeDivizii(), taxaTransportFil.getFiliala(), listArticoleComanda);
+                    costTranspDepart.addAll(taxeTranspFil);
+
+                }
+
+            }
+
+        }
+
+        return costTranspDepart;
+
+    }
+
+    private static List<CostTransportMathaus> getCostTranspFiliala(List<TaxaMasina> taxeDivizii, String filiala, List<ArticolComanda> listArticoleComanda) {
+
+        ArticolComanda articolTranspFiliala = getTransportFiliala(filiala, listArticoleComanda);
+
+        NumberFormat nf3 = NumberFormat.getInstance();
+        nf3.setMinimumFractionDigits(2);
+        nf3.setMaximumFractionDigits(2);
+
+        double valTranspExtraTotal = UtilsFormatting.bigDecimalSubstract(articolTranspFiliala.getPret(), articolTranspFiliala.getPretMinim());
+        double transpExtraDepart;
+
+        List<CostTransportMathaus> listCostTransportMathaus = new ArrayList<>();
+
+        for (TaxaMasina taxaMasina : taxeDivizii) {
+
+            if (taxaMasina.getTaxaTransport() > 0) {
+                CostTransportMathaus costTransportMathaus = new CostTransportMathaus();
+                costTransportMathaus.setDepart(taxaMasina.getSpart());
+                costTransportMathaus.setFiliala(filiala);
+                costTransportMathaus.setTipTransp(taxaMasina.getTraty());
+                costTransportMathaus.setCodArtTransp(taxaMasina.getMatnrTransport());
+                costTransportMathaus.setNumeCost(taxaMasina.getMaktxTransport());
+                transpExtraDepart = taxaMasina.getTaxaTransport() + valTranspExtraTotal * (UtilsFormatting.bigDecimalDivide(taxaMasina.getTaxaTransport(), articolTranspFiliala.getPretMinim()));
+                costTransportMathaus.setValTransp(nf3.format(transpExtraDepart));
+                listCostTransportMathaus.add(costTransportMathaus);
+            }
+
+            if (taxaMasina.getTaxaAcces() > 0) {
+                CostTransportMathaus costTransportMathaus = new CostTransportMathaus();
+                costTransportMathaus.setDepart(taxaMasina.getSpart());
+                costTransportMathaus.setFiliala(filiala);
+                costTransportMathaus.setTipTransp(taxaMasina.getTraty());
+                costTransportMathaus.setCodArtTransp(taxaMasina.getMatnrAcces());
+                costTransportMathaus.setNumeCost(taxaMasina.getMaktxAcces());
+                costTransportMathaus.setValTransp(String.valueOf(taxaMasina.getTaxaAcces()));
+                listCostTransportMathaus.add(costTransportMathaus);
+            }
+
+            if (taxaMasina.getTaxaZona() > 0) {
+                CostTransportMathaus costTransportMathaus = new CostTransportMathaus();
+                costTransportMathaus.setDepart(taxaMasina.getSpart());
+                costTransportMathaus.setFiliala(filiala);
+                costTransportMathaus.setTipTransp(taxaMasina.getTraty());
+                costTransportMathaus.setCodArtTransp(taxaMasina.getMatnrZona());
+                costTransportMathaus.setNumeCost(taxaMasina.getMaktxZona());
+                costTransportMathaus.setValTransp(String.valueOf(taxaMasina.getTaxaZona()));
+                listCostTransportMathaus.add(costTransportMathaus);
+            }
+
+            if (taxaMasina.getTaxaUsor() > 0) {
+                CostTransportMathaus costTransportMathaus = new CostTransportMathaus();
+                costTransportMathaus.setDepart(taxaMasina.getSpart());
+                costTransportMathaus.setFiliala(filiala);
+                costTransportMathaus.setTipTransp(taxaMasina.getTraty());
+                costTransportMathaus.setCodArtTransp(taxaMasina.getMatnrUsor());
+                costTransportMathaus.setNumeCost(taxaMasina.getMaktxUsor());
+                costTransportMathaus.setValTransp(String.valueOf(taxaMasina.getTaxaUsor()));
+                listCostTransportMathaus.add(costTransportMathaus);
+            }
+
+        }
+
+        return listCostTransportMathaus;
+
+    }
+
+    private static ArticolComanda getTransportFiliala(String filiala, List<ArticolComanda> listArticoleComanda) {
+
+        ArticolComanda artTransport = null;
+
+        for (ArticolComanda articolComanda : listArticoleComanda) {
+            if (UtilsArticole.isArticolTrasport(articolComanda.getNumeArticol()) && articolComanda.getFilialaSite().equals(filiala))
+                artTransport = articolComanda;
+        }
+
+        return artTransport;
+
+    }
+
+    public static CostDescarcare getCostDescarcareDivizii(List<TaxaTransport> listTaxeTransport) {
+
+        CostDescarcare costDescarcare = new CostDescarcare();
+        List<ArticolDescarcare> listArticoleDescarcare = new ArrayList<>();
+        costDescarcare.setArticoleDescarcare(listArticoleDescarcare);
+
+        for (TaxaTransport taxaTransport : listTaxeTransport) {
+
+            if (!taxaTransport.isAcceptaMacara())
+                continue;
+
+            EnumTipCamion tipCamionFiliala = taxaTransport.getSelectedCamion();
+
+            for (BeanTaxaCamion taxaCamion : taxaTransport.getListTaxe()) {
+
+                if (taxaCamion.getTipCamion().equals(tipCamionFiliala) && (taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift())) {
+
+                    for (TaxaMasina taxaMasina : taxaCamion.getTaxeLivrare().getTaxeDivizii()) {
+                        ArticolDescarcare articolDescarcare = new ArticolDescarcare();
+                        articolDescarcare.setCod(taxaMasina.getMatnrMacara());
+                        articolDescarcare.setFiliala(taxaTransport.getFiliala());
+                        articolDescarcare.setDepart(taxaMasina.getSpart());
+                        articolDescarcare.setCantitate(taxaMasina.getNrPaleti());
+                        articolDescarcare.setValoare(taxaMasina.getTaxaMacara());
+                        articolDescarcare.setValoareMin(taxaMasina.getTaxaMacara());
+                        listArticoleDescarcare.add(articolDescarcare);
+                    }
+                }
+            }
+        }
+
+        return costDescarcare;
+    }
+
+
+    public static CostDescarcare getCostDescarcareFiliala(List<TaxaTransport> listTaxeTransport) {
+
+        CostDescarcare costDescarcare = new CostDescarcare();
+        List<ArticolDescarcare> listArticoleDescarcare = new ArrayList<>();
+        costDescarcare.setArticoleDescarcare(listArticoleDescarcare);
+
+        for (TaxaTransport taxaTransport : listTaxeTransport) {
+
+            if (!taxaTransport.isAcceptaMacara())
+                continue;
+
+            EnumTipCamion tipCamionFiliala = taxaTransport.getSelectedCamion();
+
+            for (BeanTaxaCamion taxaCamion : taxaTransport.getListTaxe()) {
+
+                if (taxaCamion.getTipCamion().equals(tipCamionFiliala) && (taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift())) {
+
+
+                    ArticolDescarcare articolDescarcare = new ArticolDescarcare();
+                    articolDescarcare.setCod(taxaCamion.getTaxeLivrare().getCodTaxaMacara());
+                    articolDescarcare.setFiliala(taxaTransport.getFiliala());
+                    articolDescarcare.setDepart(taxaCamion.getTaxeLivrare().getDepart());
+
+                    double taxaDescarcare = 0, nrPaleti = 0;
+                    for (TaxaMasina taxaMasina : taxaCamion.getTaxeLivrare().getTaxeDivizii()) {
+
+                        if (taxaMasina.getTaxaMacara() > 0)
+                            taxaDescarcare = taxaMasina.getTaxaMacara();
+
+                        nrPaleti += taxaMasina.getNrPaleti();
+                    }
+
+                    articolDescarcare.setCantitate(nrPaleti);
+                    articolDescarcare.setValoare(taxaDescarcare);
+                    articolDescarcare.setValoareMin(taxaDescarcare);
+
+                    listArticoleDescarcare.add(articolDescarcare);
+                }
+            }
+
+        }
+
+        return costDescarcare;
     }
 
 

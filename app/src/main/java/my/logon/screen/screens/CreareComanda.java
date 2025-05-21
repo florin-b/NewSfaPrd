@@ -66,6 +66,7 @@ import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.TaxaMasina;
+import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.beans.TranspComenzi;
 import my.logon.screen.dialogs.RezumatComandaDialog;
 import my.logon.screen.dialogs.TaxeMasiniDialog;
@@ -190,6 +191,8 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
     private boolean isAfisOptiuniMasini = false;
     private List<OptiuneCamion> stareOptiuniCamion;
     private boolean isPragNumerarZiValid = false;
+    private List<TaxaTransport> listTaxeTransport;
+    private CostDescarcare costDescarcareFiliala;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -1017,17 +1020,20 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
     }
 
     @Override
-    public void tipMasinaFilialaSelected(LivrareMathaus livrareMathaus, CostDescarcare costDescarcare) {
+    public void tipMasinaFilialaSelected(LivrareMathaus livrareMathaus, CostDescarcare costDescarcare, List<TaxaTransport> listTaxeTransport) {
 
 
         this.costDescarcare = costDescarcare;
+        this.listTaxeTransport = listTaxeTransport;
 
         if (!DateLivrare.getInstance().isClientFurnizor())
             verificaPaletiComanda(costDescarcare.getArticolePaleti());
 
-        DateLivrare.getInstance().setMasinaMacara(!costDescarcare.getArticoleDescarcare().isEmpty());
+        this.costDescarcareFiliala = HelperMathaus.getCostDescarcareFiliala(listTaxeTransport);
 
-        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcareDistrib(costDescarcare, 0, ListaArticoleComanda.getInstance().getListArticoleComanda());
+        DateLivrare.getInstance().setMasinaMacara(!costDescarcareFiliala.getArticoleDescarcare().isEmpty());
+
+        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcareDistrib(costDescarcareFiliala, 0, ListaArticoleComanda.getInstance().getListArticoleComanda());
         ListaArticoleComanda.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
 
         for (ArticolPalet articolPalet : costDescarcare.getArticolePaleti()) {
@@ -2635,6 +2641,10 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
 
     @Override
     public void comandaSalvata() {
+
+        setCostTransportDepart();
+        setCostDescarcareDepart();
+
         prepareArtForDelivery();
         articoleFinaleStr = serializedResult;
 
@@ -2643,6 +2653,35 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         performSaveCmd();
 
     }
+
+    private void setCostDescarcareDepart() {
+
+        if (costDescarcareFiliala.getArticoleDescarcare().isEmpty())
+            return;
+
+        CostDescarcare costDescarcareDivizii = HelperMathaus.getCostDescarcareDivizii(listTaxeTransport);
+        HelperMathaus.eliminaCostDescarcareFiliala(costDescarcareFiliala, ListaArticoleComanda.getInstance().getListArticoleLivrare());
+
+        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcareDistrib(costDescarcareDivizii, 0, ListaArticoleComanda.getInstance().getListArticoleComanda());
+        ListaArticoleComanda.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
+
+    }
+
+
+    private void setCostTransportDepart() {
+
+
+        if (DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_VANZARE) ||
+                DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.COMANDA_LIVRARE) ||
+                isComandaDL_TRAP() || DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_DETERIORATE) ||
+                DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.LIVRARE_CUSTODIE)
+        )
+            HelperMathaus.adaugaArticolTransport(HelperMathaus.getCostTransportDepart(listTaxeTransport, ListaArticoleComanda.getInstance().getListArticoleLivrare()), "10", null);
+
+
+    }
+
+
 
     @Override
     public void redirectDateLivrare() {

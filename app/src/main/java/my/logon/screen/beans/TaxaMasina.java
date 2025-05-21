@@ -1,5 +1,7 @@
 package my.logon.screen.beans;
 
+import java.util.List;
+
 public class TaxaMasina {
 
     private String werks;
@@ -12,6 +14,10 @@ public class TaxaMasina {
     private double taxaMacara;
     private String matnrMacara;
     private String maktxMacara;
+    private int nrPaleti;
+    private String matnrUsor;
+    private String maktxUsor;
+    private double taxaUsor;
     private String matnrZona;
     private String maktxZona;
     private double taxaZona;
@@ -23,6 +29,7 @@ public class TaxaMasina {
     private double taxaTransport;
     private String spart;
     private String traty;
+    private List<TaxaMasina> taxeDivizii;
 
     public String getWerks() {
         return werks;
@@ -190,5 +197,45 @@ public class TaxaMasina {
 
     public void setMaktxMacara(String maktxMacara) {
         this.maktxMacara = maktxMacara;
+    }
+
+    public List<TaxaMasina> getTaxeDivizii() {
+        return taxeDivizii;
+    }
+
+    public void setTaxeDivizii(List<TaxaMasina> taxeDivizii) {
+        this.taxeDivizii = taxeDivizii;
+    }
+
+    public int getNrPaleti() {
+        return nrPaleti;
+    }
+
+    public void setNrPaleti(int nrPaleti) {
+        this.nrPaleti = nrPaleti;
+    }
+
+    public String getMatnrUsor() {
+        return matnrUsor;
+    }
+
+    public void setMatnrUsor(String matnrUsor) {
+        this.matnrUsor = matnrUsor;
+    }
+
+    public String getMaktxUsor() {
+        return maktxUsor;
+    }
+
+    public void setMaktxUsor(String maktxUsor) {
+        this.maktxUsor = maktxUsor;
+    }
+
+    public double getTaxaUsor() {
+        return taxaUsor;
+    }
+
+    public void setTaxaUsor(double taxaUsor) {
+        this.taxaUsor = taxaUsor;
     }
 }

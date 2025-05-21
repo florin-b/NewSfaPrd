@@ -70,6 +70,7 @@ import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.TaxaComanda;
 import my.logon.screen.beans.TaxaMasina;
+import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.dialogs.AprobariDialog;
 import my.logon.screen.dialogs.MarjaComandaIPDialog;
 import my.logon.screen.dialogs.RezumatComandaDialog;
@@ -203,6 +204,8 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     private RezumatComandaDialog rezumatComanda;
     private boolean isPragNumerarZiValid = false;
     private boolean redirectDateLivrareTCLI = false;
+    private List<TaxaTransport> listTaxeTransport;
+    private CostDescarcare costDescarcareFiliala;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -851,6 +854,10 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         if (UserInfo.getInstance().getTipUserSap().contains("KA"))
             codDepartLivr = "10";
 
+        String localCanal = comandaSelectata.getCanalDistrib();
+        if (UtilsUser.isUserCVOB())
+            localCanal = "60";
+
         double valPozArt = 0;
 
         for (ArticolComanda artCmd : listArticoleComanda) {
@@ -911,7 +918,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("antetComanda", opArticol.serializeAntetCmdMathaus(antetComanda));
         params.put("comandaMathaus", opArticol.serializeComandaMathaus(comandaMathaus));
-        params.put("canal", comandaSelectata.getCanalDistrib());
+        params.put("canal", localCanal);
         params.put("datePoligon", opArticol.serializeDatePoligon(DateLivrare.getInstance().getDatePoligonLivrare()));
 
         operatiiComenzi.getLivrariMathaus(params);
@@ -1056,13 +1063,16 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     }
 
     @Override
-    public void tipMasinaFilialaSelected(LivrareMathaus livrareMathaus, CostDescarcare costDescarcare) {
+    public void tipMasinaFilialaSelected(LivrareMathaus livrareMathaus, CostDescarcare costDescarcare, List<TaxaTransport> listTaxeTransport) {
 
         this.costDescarcare = costDescarcare;
+        this.listTaxeTransport = listTaxeTransport;
 
-        DateLivrare.getInstance().setMasinaMacara(!costDescarcare.getArticoleDescarcare().isEmpty());
+        this.costDescarcareFiliala = HelperMathaus.getCostDescarcareFiliala(listTaxeTransport);
 
-        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcare, 0, listArticoleComanda);
+        DateLivrare.getInstance().setMasinaMacara(!costDescarcareFiliala.getArticoleDescarcare().isEmpty());
+
+        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcareFiliala, 0, listArticoleComanda);
         ListaArticoleComanda.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
 
         for (ArticolPalet articolPalet : costDescarcare.getArticolePaleti()) {
@@ -1263,17 +1273,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         return UtilsUser.isUserIP() && comandaSelectata.getTipClientInstPublica() == EnumTipClientIP.CONSTR;
     }
 
-
-    private void trateazaFluxComanda() {
-
-        if (isConditiiAfisOptiuniMasini() && !isExceptieComandaIP())
-            getOptiuniMasini();
-        else if (isComandaDL())
-            performSaveCmd();
-        else
-            afisRezumatComandaDialog(livrareMathaus.getCostTransport(), true);
-
-    }
 
     private void eliminaPaletiComanda(List<ArticolComanda> listArticole) {
         Iterator<ArticolComanda> articolIterator = listArticole.iterator();
@@ -2419,9 +2418,41 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
     @Override
     public void comandaSalvata() {
+
+        if (isComandaDistrib) {
+            setCostTransportDepart();
+            setCostDescarcareDepart();
+        }
+
         prepareArtForDelivery();
         saveComandaMathaus = true;
         performSaveCmd();
+    }
+
+
+    private void setCostDescarcareDepart() {
+
+        if (costDescarcareFiliala.getArticoleDescarcare().isEmpty())
+            return;
+
+        CostDescarcare costDescarcareDivizii = HelperMathaus.getCostDescarcareDivizii(listTaxeTransport);
+        HelperMathaus.eliminaCostDescarcareFiliala(costDescarcareFiliala, ListaArticoleComanda.getInstance().getListArticoleLivrare());
+
+        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcareDistrib(costDescarcareDivizii, 0, listArticoleComanda);
+        ListaArticoleComanda.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
+
+    }
+
+
+    private void setCostTransportDepart() {
+
+        if (isExceptieComandaIP()) {
+
+        } else if (isComandaDistrib || !isComandaDistrib || isComandaCLP() || isComandaDL()) {
+            HelperMathaus.adaugaArticolTransport(HelperMathaus.getCostTransportDepart(listTaxeTransport, listArticoleComanda), "10", listArticoleComanda);
+            HelperMathaus.adaugaArticolTransport(HelperMathaus.getCostTransportDepart(listTaxeTransport, ListaArticoleComanda.getInstance().getListArticoleLivrare()), "10", ListaArticoleComanda.getInstance().getListArticoleLivrare());
+        }
+
     }
 
     @Override

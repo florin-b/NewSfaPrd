@@ -288,10 +288,12 @@ public class TaxeMasiniDialog extends Dialog {
                     taxeLivrare.setValoareTaxaAcces(taxaMasina.getTaxaAcces());
                     taxeLivrare.setTaxaMacara(taxaMasina.getTaxaMacara());
                     taxeLivrare.setMacara(taxaMasina.isMacara());
+                    taxeLivrare.setNrPaleti(taxaMasina.getNrPaleti());
                     taxeLivrare.setLift(taxaMasina.isLift());
                     taxeLivrare.setCodTaxaMacara(taxaMasina.getMatnrMacara());
                     taxeLivrare.setNumeTaxaMacara(taxaMasina.getMaktxMacara());
                     taxeLivrare.setDepart(taxaMasina.getSpart());
+                    taxeLivrare.setTaxeDivizii(taxaMasina.getTaxeDivizii());
                     taxaCamion.setTaxeLivrare(taxeLivrare);
                     listTaxeCamion.add(taxaCamion);
 
@@ -381,13 +383,10 @@ public class TaxeMasiniDialog extends Dialog {
                 return;
             }
 
-            if (!isTaxaMacaraValid()) {
-                return;
-            }
 
             if (listener != null) {
                 setTaxeTransportAgent();
-                listener.tipMasinaFilialaSelected(dateLivrare, getCostDescarcare());
+                listener.tipMasinaFilialaSelected(dateLivrare, getCostDescarcare(), taxeTransport);
                 dismiss();
             }
 

@@ -1280,6 +1280,10 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         if (UtilsComenzi.isDespozitDeteriorate(globalDepozSel))
             paramDepozit = globalDepozSel;
 
+        String localCanal = "20";
+        if (UtilsUser.isUserCVOB())
+            localCanal = "60";
+
 
         BeanParametruPretGed paramPret = new BeanParametruPretGed();
         paramPret.setClient(codClientVar);
@@ -1291,7 +1295,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         paramPret.setUl(uLog);
         paramPret.setDepoz(paramDepozit);
         paramPret.setCodUser(UserInfo.getInstance().getCod());
-        paramPret.setCanalDistrib("20");
+        paramPret.setCanalDistrib(localCanal);
         paramPret.setTipUser(UserInfo.getInstance().getTipUserSap());
         paramPret.setMetodaPlata(DateLivrare.getInstance().getTipPlata());
         paramPret.setTermenPlata(DateLivrare.getInstance().getTermenPlata());

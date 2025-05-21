@@ -104,7 +104,7 @@ public class AdapterTransportFiliala extends BaseAdapter {
                     if (optiune.isMacara()) {
 
                         taxaTransport.setAcceptaMacara(true);
-                        String taxaMacara = getValoareTransportMacara(taxaTransport, dateLivrare);
+                        String taxaMacara = getValoareTransportMacara(taxaTransport);
 
                         if (Double.valueOf(taxaMacara) > 0) {
                             viewHolder.labelMacara.setVisibility(View.VISIBLE);
@@ -262,6 +262,22 @@ public class AdapterTransportFiliala extends BaseAdapter {
     private boolean isCamionLiftMacara(TaxeLivrare taxeLivrare) {
         return taxeLivrare.isLift() || taxeLivrare.isMacara();
     }
+
+    private String getValoareTransportMacara(TaxaTransport taxaTransport){
+        double valoareTransport = 0;
+
+        for (BeanTaxaCamion taxa : taxaTransport.getListTaxe()) {
+            if (taxa.getTipCamion().equals(taxaTransport.getSelectedCamion()) && (taxa.getTaxeLivrare().isLift() || taxa.getTaxeLivrare().isMacara())) {
+                int nrPaleti = taxa.getTaxeLivrare().getNrPaleti();
+                valoareTransport = taxa.getTaxeLivrare().getTaxaMacara() * nrPaleti;
+            }
+
+        }
+
+        return df.format(valoareTransport);
+
+    }
+
 
 
     private String getValoareTransportMacara(TaxaTransport taxaTransport, LivrareMathaus dateLivrare) {

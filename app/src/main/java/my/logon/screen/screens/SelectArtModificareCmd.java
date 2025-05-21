@@ -68,6 +68,7 @@ import my.logon.screen.utils.DepartamentAgent;
 import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
+import my.logon.screen.utils.UtilsUser;
 
 public class SelectArtModificareCmd extends ListActivity implements OperatiiArticolListener, Cablu05SelectedListener {
 
@@ -686,6 +687,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
         if (ModificareComanda.filialaAlternativaM.toUpperCase().contains("BV9") && globalDepozSel.equals("MAV1"))
             localCanalDistrib = "10";
+
+        if (UtilsUser.isUserCVOB())
+            localCanalDistrib = "60";
 
         if (codArticol.length() == 8)
             codArticol = "0000000000" + codArticol;

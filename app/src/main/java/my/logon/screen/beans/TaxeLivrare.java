@@ -1,5 +1,7 @@
 package my.logon.screen.beans;
 
+import java.util.List;
+
 public class TaxeLivrare {
 
     private double taxaMacara;
@@ -7,6 +9,7 @@ public class TaxeLivrare {
     private boolean lift;
     private String codTaxaMacara;
     private String numeTaxaMacara;
+    private int nrPaleti;
     private String codTaxaZona;
     private String numeTaxaZona;
     private double valoareTaxaZona;
@@ -17,6 +20,7 @@ public class TaxeLivrare {
     private String numeTaxaTransport;
     private double valoareTaxaTransport;
     private String depart;
+    private List<TaxaMasina> taxeDivizii;
 
     public double getTaxaMacara() {
         return taxaMacara;
@@ -136,5 +140,21 @@ public class TaxeLivrare {
 
     public void setNumeTaxaMacara(String numeTaxaMacara) {
         this.numeTaxaMacara = numeTaxaMacara;
+    }
+
+    public List<TaxaMasina> getTaxeDivizii() {
+        return taxeDivizii;
+    }
+
+    public void setTaxeDivizii(List<TaxaMasina> taxeDivizii) {
+        this.taxeDivizii = taxeDivizii;
+    }
+
+    public int getNrPaleti() {
+        return nrPaleti;
+    }
+
+    public void setNrPaleti(int nrPaleti) {
+        this.nrPaleti = nrPaleti;
     }
 }

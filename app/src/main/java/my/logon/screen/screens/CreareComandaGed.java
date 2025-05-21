@@ -74,6 +74,7 @@ import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.beans.TaxaComanda;
 import my.logon.screen.beans.TaxaMasina;
+import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.dialogs.MarjaComandaIPDialog;
 import my.logon.screen.dialogs.RezumatComandaDialog;
 import my.logon.screen.dialogs.TaxeMasiniDialog;
@@ -233,6 +234,8 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     private TextView textGreutateCmd;
     public static String filialaCustodie = "";
     private boolean isPragNumerarZiValid = false;
+    private List<TaxaTransport> listTaxeTransport;
+    private CostDescarcare costDescarcareFiliala;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -1323,6 +1326,10 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         if (UserInfo.getInstance().getTipUserSap().contains("KA"))
             codDepartLivr = "10";
 
+        String localCanal = "20";
+        if (UtilsUser.isUserCVOB())
+            localCanal = "60";
+
         for (ArticolComanda artCmd : articoleComanda) {
 
             List<BeanStocTCLI> listStocTCLI;
@@ -1373,7 +1380,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("antetComanda", opArticol.serializeAntetCmdMathaus(antetComanda));
         params.put("comandaMathaus", opArticol.serializeComandaMathaus(comandaMathaus));
-        params.put("canal", "20");
+        params.put("canal", localCanal);
         params.put("datePoligon", opArticol.serializeDatePoligon(DateLivrare.getInstance().getDatePoligonLivrare()));
 
         comandaDAO.getLivrariMathaus(params);
@@ -1519,18 +1526,21 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
     }
 
     @Override
-    public void tipMasinaFilialaSelected(LivrareMathaus livrareMathaus, CostDescarcare costDescarcare) {
+    public void tipMasinaFilialaSelected(LivrareMathaus livrareMathaus, CostDescarcare costDescarcare, List<TaxaTransport> listTaxeTransport) {
 
         this.costDescarcare = costDescarcare;
+        this.listTaxeTransport = listTaxeTransport;
 
         trateazaTransportIP();
 
         if (!DateLivrare.getInstance().isClientFurnizor())
             verificaPaletiComanda(costDescarcare.getArticolePaleti());
 
-        DateLivrare.getInstance().setMasinaMacara(!costDescarcare.getArticoleDescarcare().isEmpty());
+        this.costDescarcareFiliala = HelperMathaus.getCostDescarcareFiliala(listTaxeTransport);
 
-        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcare, 0, ListaArticoleComandaGed.getInstance().getListArticoleComanda());
+        DateLivrare.getInstance().setMasinaMacara(!costDescarcareFiliala.getArticoleDescarcare().isEmpty());
+
+        List<ArticolComanda> articoleDescarcare = HelperCostDescarcare.getArticoleDescarcare(costDescarcareFiliala, 0, ListaArticoleComandaGed.getInstance().getListArticoleComanda());
         ListaArticoleComandaGed.getInstance().getListArticoleLivrare().addAll(articoleDescarcare);
 
         for (ArticolPalet articolPalet : costDescarcare.getArticolePaleti()) {

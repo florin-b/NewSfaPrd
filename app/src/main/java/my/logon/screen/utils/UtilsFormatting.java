@@ -11,6 +11,8 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
@@ -251,5 +253,29 @@ public class UtilsFormatting {
 			retVal += " ";
 
 		return retVal;
+	}
+
+	public static double bigDecimalSubstract(double val1, double val2){
+
+		BigDecimal decimalVal1 = new BigDecimal(val1).setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal decimalVal2 = new BigDecimal(val2).setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal decimalResult = decimalVal1.subtract(decimalVal2);
+
+		decimalResult = decimalResult.setScale(2, BigDecimal.ROUND_HALF_UP);
+
+		return decimalResult.doubleValue();
+
+	}
+
+	public static double bigDecimalDivide(double val1, double val2){
+
+		BigDecimal decimalVal1 = new BigDecimal(val1).setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal decimalVal2 = new BigDecimal(val2).setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal decimalResult = decimalVal1.divide(decimalVal2,2, RoundingMode.HALF_UP);
+
+		decimalResult = decimalResult.setScale(2, BigDecimal.ROUND_HALF_UP);
+
+		return decimalResult.doubleValue();
+
 	}
 }

@@ -594,7 +594,6 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
     }
 
 
-
     public PretArticolGed deserializePretGed(Object result) {
         PretArticolGed pretArticol = new PretArticolGed();
 
@@ -822,6 +821,10 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setCamionOricare(taxaObject.getString("camionOricare").equals("X"));
                 taxaMasina.setTaxaMacara(Double.valueOf(taxaObject.getString("taxaMacara")));
                 taxaMasina.setMatnrMacara(taxaObject.getString("matnrMacara"));
+                taxaMasina.setNrPaleti(Integer.parseInt(taxaObject.getString("nrPaleti")));
+                taxaMasina.setMatnrUsor(taxaObject.getString("matnrUsor"));
+                taxaMasina.setMaktxUsor(taxaObject.getString("maktxUsor"));
+                taxaMasina.setTaxaUsor(Double.valueOf(taxaObject.getString("taxaUsor")));
                 taxaMasina.setMaktxMacara(taxaObject.getString("maktxMacara"));
                 taxaMasina.setMaktxZona(taxaObject.getString("maktxZona"));
                 taxaMasina.setMatnrZona(taxaObject.getString("matnrZona"));
@@ -835,6 +838,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setTaxaTransport(Double.valueOf(taxaObject.getString("taxaTransport")));
                 taxaMasina.setSpart(taxaObject.getString("spart"));
                 taxaMasina.setTraty(taxaObject.getString("traty"));
+                taxaMasina.setTaxeDivizii(getTaxeDivizii(taxaObject.getString("taxeDivizii")));
 
                 taxeMasini.add(taxaMasina);
 
@@ -869,6 +873,53 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
         }
 
         return livrareMathaus;
+    }
+
+    private List<TaxaMasina> getTaxeDivizii(String serObject) {
+        List<TaxaMasina> taxeDivizii = new ArrayList<>();
+
+        if (serObject == null || serObject.trim().isEmpty())
+            return taxeDivizii;
+
+        try {
+            JSONArray jsonArrayTaxeMasini = new JSONArray(serObject);
+
+            for (int i = 0; i < jsonArrayTaxeMasini.length(); i++) {
+                JSONObject taxaObject = jsonArrayTaxeMasini.getJSONObject(i);
+
+                TaxaMasina taxaMasina = new TaxaMasina();
+
+                taxaMasina.setWerks(taxaObject.getString("werks"));
+                taxaMasina.setVstel(taxaObject.getString("vstel"));
+                taxaMasina.setMacara(taxaObject.getString("macara").equals("X"));
+                taxaMasina.setLift(taxaObject.getString("lift").equals("X"));
+                taxaMasina.setCamionIveco(taxaObject.getString("camionIveco").equals("X"));
+                taxaMasina.setCamionScurt(taxaObject.getString("camionScurt").equals("X"));
+                taxaMasina.setCamionOricare(taxaObject.getString("camionOricare").equals("X"));
+                taxaMasina.setTaxaMacara(Double.valueOf(taxaObject.getString("taxaMacara")));
+                taxaMasina.setMatnrMacara(taxaObject.getString("matnrMacara"));
+                taxaMasina.setMaktxMacara(taxaObject.getString("maktxMacara"));
+                taxaMasina.setNrPaleti(Integer.valueOf(taxaObject.getString("nrPaleti")));
+                taxaMasina.setMaktxZona(taxaObject.getString("maktxZona"));
+                taxaMasina.setMatnrZona(taxaObject.getString("matnrZona"));
+                taxaMasina.setMaktxZona(taxaObject.getString("maktxZona"));
+                taxaMasina.setTaxaZona(Double.valueOf(taxaObject.getString("taxaZona")));
+                taxaMasina.setMatnrAcces(taxaObject.getString("matnrAcces"));
+                taxaMasina.setMaktxAcces(taxaObject.getString("maktxAcces"));
+                taxaMasina.setTaxaAcces(Double.valueOf(taxaObject.getString("taxaAcces")));
+                taxaMasina.setMatnrTransport(taxaObject.getString("matnrTransport"));
+                taxaMasina.setMaktxTransport(taxaObject.getString("maktxTransport"));
+                taxaMasina.setTaxaTransport(Double.valueOf(taxaObject.getString("taxaTransport")));
+                taxaMasina.setSpart(taxaObject.getString("spart"));
+                taxaMasina.setTraty(taxaObject.getString("traty"));
+                taxeDivizii.add(taxaMasina);
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return taxeDivizii;
     }
 
     public ComandaMathaus deserializeStocMathaus(String result) {

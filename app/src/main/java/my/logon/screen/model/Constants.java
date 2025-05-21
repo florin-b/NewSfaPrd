@@ -17,7 +17,7 @@ public class Constants {
 
 	public final static String TIP_ARTICOL_ENERGOFAG = "0003";
 
-	public static final String NUME_SERV_DESC_PALET = "PREST.SERV.DESCARCARE PALET DIV";
+	public static final String NUME_SERV_DESC_PALET = "PREST.SERV.DESCARCARE PALET";
 
 	public static final double MAX_GREUTATE_CMD_KG = 22000;
 	public static String MSG_MASA_MAXIMA_CMD = "Masa comenzii este mai mare de 22 t si nu se poate salva.";
