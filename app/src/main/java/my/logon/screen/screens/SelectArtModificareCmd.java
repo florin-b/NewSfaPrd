@@ -683,7 +683,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         String uLog = UserInfo.getInstance().getUnitLog();
 
 
-        String localCanalDistrib = ModificareComanda.isComandaDistrib ? "10" : "20";
+        String localCanalDistrib = ModificareComanda.canalDistributie;
 
         if (ModificareComanda.filialaAlternativaM.toUpperCase().contains("BV9") && globalDepozSel.equals("MAV1"))
             localCanalDistrib = "10";

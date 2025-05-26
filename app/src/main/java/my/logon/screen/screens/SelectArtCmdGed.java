@@ -820,7 +820,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             if (articolMathaus.getDepart().equals("11"))
                 globalDepozSel = "MAV1";
             else
-                globalDepozSel = articolMathaus.getDepart().substring(0,2) + "V1";
+                globalDepozSel = articolMathaus.getDepart().substring(0, 2) + "V1";
 
 
             String umVanz = articolMathaus.getUmVanz();
@@ -1281,6 +1281,10 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             paramDepozit = globalDepozSel;
 
         String localCanal = "20";
+
+        if (isOriceComandaModificata())
+            localCanal = ModificareComanda.canalDistributie;
+
         if (UtilsUser.isUserCVOB())
             localCanal = "60";
 
@@ -1457,6 +1461,17 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         if (UtilsUser.isAV())
             departCautare = DepartamentAgent.getDepartArticole(departCautare);
+
+        if (UtilsUser.isAV() && isComandaModif() && !ModificareComanda.isComandaDistrib) {
+
+            String codDepArt = UserInfo.getInstance().getCodDepart();
+
+            if (codDepArt.equals("040") || codDepArt.equals("041"))
+                codDepArt = "040;041";
+
+            departCautare += codDepArt + ";11;";
+        }
+
 
         if (isCV())
             departCautare = "";
@@ -3058,7 +3073,6 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         afisArticolMathaus(articol);
 
     }
-
 
 
     @Override

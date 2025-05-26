@@ -143,6 +143,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     public static double totalComanda = 0, stocArtCond = 0;
 
     public static boolean isComandaDistrib = true;
+    public static String canalDistributie;
 
     private static ArticolComanda[] objArticol = new ArticolComanda[70];
 
@@ -823,10 +824,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
     }
 
-    private boolean isConditiiAfisOptiuniMasini() {
-        return DateLivrare.getInstance().getTransport().equals("TRAP") && DateLivrare.getInstance().getDatePoligonLivrare() != null;
-    }
-
     private void getLivrariMathaus() {
 
         ListaArticoleComanda.getInstance().reseteazaArticoleLivrare();
@@ -888,8 +885,8 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             else
                 dateArticol.setTip2("");
 
-            if (artCmd.getFilialaSite().equals("BV90"))
-                dateArticol.setUlStoc("BV90");
+
+            dateArticol.setUlStoc(artCmd.getFilialaSite());
 
             listArticoleMat.add(dateArticol);
 
@@ -2263,6 +2260,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         comandaSelectata = comanda;
 
         unitLogComanda = comandaSelectata.getFiliala();
+        canalDistributie = comandaSelectata.getCanalDistrib();
 
         selectedCmd = comanda.getId();
 
@@ -2419,7 +2417,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     @Override
     public void comandaSalvata() {
 
-        if (isComandaDistrib) {
+        if (isComandaDistrib && listTaxeTransport != null) {
             setCostTransportDepart();
             setCostDescarcareDepart();
         }

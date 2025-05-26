@@ -613,6 +613,9 @@ public class HelperMathaus {
 
         List<CostTransportMathaus> costTranspDepart = new ArrayList<>();
 
+        if (listTaxeTransport == null)
+            return costTranspDepart;
+
         for (TaxaTransport taxaTransportFil : listTaxeTransport) {
 
             EnumTipCamion camionSelect = taxaTransportFil.getSelectedCamion();
@@ -637,7 +640,12 @@ public class HelperMathaus {
 
     private static List<CostTransportMathaus> getCostTranspFiliala(List<TaxaMasina> taxeDivizii, String filiala, List<ArticolComanda> listArticoleComanda) {
 
+        List<CostTransportMathaus> listCostTransportMathaus = new ArrayList<>();
+
         ArticolComanda articolTranspFiliala = getTransportFiliala(filiala, listArticoleComanda);
+
+        if (articolTranspFiliala == null)
+            return listCostTransportMathaus;
 
         NumberFormat nf3 = NumberFormat.getInstance();
         nf3.setMinimumFractionDigits(2);
@@ -646,7 +654,7 @@ public class HelperMathaus {
         double valTranspExtraTotal = UtilsFormatting.bigDecimalSubstract(articolTranspFiliala.getPret(), articolTranspFiliala.getPretMinim());
         double transpExtraDepart;
 
-        List<CostTransportMathaus> listCostTransportMathaus = new ArrayList<>();
+
 
         for (TaxaMasina taxaMasina : taxeDivizii) {
 
@@ -719,6 +727,9 @@ public class HelperMathaus {
         CostDescarcare costDescarcare = new CostDescarcare();
         List<ArticolDescarcare> listArticoleDescarcare = new ArrayList<>();
         costDescarcare.setArticoleDescarcare(listArticoleDescarcare);
+
+        if (listTaxeTransport == null)
+            return costDescarcare;
 
         for (TaxaTransport taxaTransport : listTaxeTransport) {
 

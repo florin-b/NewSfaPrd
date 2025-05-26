@@ -2642,8 +2642,10 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
     @Override
     public void comandaSalvata() {
 
-        setCostTransportDepart();
-        setCostDescarcareDepart();
+        if (listTaxeTransport != null) {
+            setCostTransportDepart();
+            setCostDescarcareDepart();
+        }
 
         prepareArtForDelivery();
         articoleFinaleStr = serializedResult;

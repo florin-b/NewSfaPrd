@@ -531,6 +531,8 @@ public class OperatiiClient implements AsyncTaskListener {
             jsonParametru.put("tipClient", parametru.getTipClientSelect());
             jsonParametru.put("coordonateAdresa", parametru.getCoordonateAdresa());
             jsonParametru.put("codAgent", UserInfo.getInstance().getCod());
+            jsonParametru.put("tipAngajat", UserInfo.getInstance().getTipUserSap());
+            jsonParametru.put("codDepart", UserInfo.getInstance().getCodDepart());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -569,6 +571,7 @@ public class OperatiiClient implements AsyncTaskListener {
             if (jsonObject instanceof JSONObject) {
                 raspunsClientSap.setCodClient(jsonObject.getString("codClient"));
                 raspunsClientSap.setMsg(jsonObject.getString("msg"));
+                raspunsClientSap.setDiviziiClient(jsonObject.getString("diviziiClient"));
             }
 
         } catch (JSONException e) {
