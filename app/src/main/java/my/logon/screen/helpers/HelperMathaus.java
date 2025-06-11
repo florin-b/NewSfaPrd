@@ -108,6 +108,10 @@ public class HelperMathaus {
         return numeArticol != null && numeArticol.toUpperCase().contains("EXTRA") && numeArticol.toUpperCase().contains("METRO");
     }
 
+    private static boolean isArtTaxaVehicolUsor(String numeArticol) {
+        return numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("VEHICOL") && numeArticol.toUpperCase().contains("USOR");
+    }
+
     public static boolean isArtCostTransp(String numeArticol) {
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
     }
@@ -126,7 +130,7 @@ public class HelperMathaus {
 
             ArticolComanda articol = iterator.next();
 
-            if (isArtTaxaTransp(articol.getNumeArticol()) || isArtTaxaMetro(articol.getNumeArticol())) {
+            if (isArtTaxaTransp(articol.getNumeArticol()) || isArtTaxaMetro(articol.getNumeArticol()) || isArtTaxaVehicolUsor(articol.getNumeArticol())) {
                 iterator.remove();
             }
         }
@@ -653,7 +657,6 @@ public class HelperMathaus {
 
         double valTranspExtraTotal = UtilsFormatting.bigDecimalSubstract(articolTranspFiliala.getPret(), articolTranspFiliala.getPretMinim());
         double transpExtraDepart;
-
 
 
         for (TaxaMasina taxaMasina : taxeDivizii) {

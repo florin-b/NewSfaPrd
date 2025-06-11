@@ -471,10 +471,11 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         layoutPrelucrare04 = (LinearLayout) findViewById(R.id.layoutIndoire);
         layoutPrelucrare04.setVisibility(View.INVISIBLE);
 
-        if (UtilsUser.isAgentOrSD() && (UserInfo.getInstance().getCodDepart().startsWith("04") || UserInfo.getInstance().getCodDepart().startsWith("01"))) {
+        if (UtilsUser.isAgentOrSD() && (UserInfo.getInstance().getCodDepart().startsWith("04") || UserInfo.getInstance().getCodDepart().startsWith("01")
+        || UserInfo.getInstance().getCodDepart().equals("16"))) {
             layoutPrelucrare04.setVisibility(View.VISIBLE);
 
-            if (UserInfo.getInstance().getCodDepart().startsWith("04")) {
+            if (UserInfo.getInstance().getCodDepart().startsWith("04") || UserInfo.getInstance().getCodDepart().equals("16")) {
                 spinnerIndoire.setVisibility(View.VISIBLE);
                 spinnerDebitare.setVisibility(View.INVISIBLE);
             } else if (UserInfo.getInstance().getCodDepart().startsWith("01")) {

@@ -1,23 +1,21 @@
 package my.logon.screen.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import my.logon.screen.listeners.AsyncTaskListener;
-import my.logon.screen.listeners.OperatiiAgentListener;
-import my.logon.screen.model.Agent;
-import my.logon.screen.model.UserInfo;
-import my.logon.screen.screens.AsyncTaskWSCall;
+import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import my.logon.screen.listeners.AsyncTaskListener;
+import my.logon.screen.listeners.OperatiiAgentListener;
+import my.logon.screen.screens.AsyncTaskWSCall;
 import my.logon.screen.utils.UtilsGeneral;
-import android.content.Context;
-import android.widget.Toast;
 
 public class OperatiiAgent implements AsyncTaskListener {
 
@@ -28,15 +26,13 @@ public class OperatiiAgent implements AsyncTaskListener {
 	private OperatiiAgentListener listener;
 
 	private OperatiiAgent() {
+
 	}
 
 	public static OperatiiAgent getInstance() {
 		return new OperatiiAgent();
 	}
 
-
-	
-	
 	public void getListaAgenti(String filiala, String departament, Context context, boolean optTotiAgentii, String tipAgent) {
 
 		this.optTotiAgentii = optTotiAgentii;
@@ -48,14 +44,13 @@ public class OperatiiAgent implements AsyncTaskListener {
 
 		if (tipAgent != null)
 			params.put("tipAgent", tipAgent);
-		
+
 		params.put("codAgent", UserInfo.getInstance().getCod());
 
 		AsyncTaskListener contextListener = OperatiiAgent.this;
 		AsyncTaskWSCall call = new AsyncTaskWSCall(context, contextListener, "getListAgentiJSON", params);
 		call.getCallResultsFromFragment();
 	}
-	
 
 	private void deserializeAgentiData(String JSONString) {
 		Agent unAgent = null;
@@ -63,7 +58,7 @@ public class OperatiiAgent implements AsyncTaskListener {
 		try {
 
 			Object json = new JSONTokener(JSONString).nextValue();
-			listObjAgenti = new ArrayList<Agent>();
+			listObjAgenti = new ArrayList<>();
 
 			if (json instanceof JSONArray) {
 				jsonObject = new JSONArray(JSONString);
@@ -73,6 +68,7 @@ public class OperatiiAgent implements AsyncTaskListener {
 					unAgent = new Agent();
 					unAgent.setNume(agentObject.getString("nume"));
 					unAgent.setCod(agentObject.getString("cod"));
+					unAgent.setDepart(agentObject.getString("depart"));
 					listObjAgenti.add(unAgent);
 
 				}
@@ -94,12 +90,14 @@ public class OperatiiAgent implements AsyncTaskListener {
 			temp = new HashMap<String, String>();
 			temp.put("numeAgent", "Agent");
 			temp.put("codAgent", " ");
+			temp.put("depart", " ");
 			listAgenti.add(temp);
 
 			if (optTotiAgentii) {
 				temp = new HashMap<String, String>();
 				temp.put("numeAgent", "Toti agentii");
 				temp.put("codAgent", "00000000");
+				temp.put("depart", " ");
 				listAgenti.add(temp);
 			}
 
@@ -107,6 +105,7 @@ public class OperatiiAgent implements AsyncTaskListener {
 				temp = new HashMap<String, String>();
 				temp.put("numeAgent", listObjAgenti.get(i).getNume());
 				temp.put("codAgent", listObjAgenti.get(i).getCod());
+				temp.put("depart", listObjAgenti.get(i).getDepart());
 				listAgenti.add(temp);
 			}
 

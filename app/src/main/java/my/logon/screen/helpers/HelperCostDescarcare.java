@@ -12,9 +12,8 @@ import my.logon.screen.beans.ArticolCalculDesc;
 import my.logon.screen.beans.ArticolDescarcare;
 import my.logon.screen.beans.ArticolPalet;
 import my.logon.screen.beans.BeanArticolRetur;
-import my.logon.screen.beans.ComandaCalculDescarcare;
+import my.logon.screen.beans.CantitateFiliala;
 import my.logon.screen.beans.CostDescarcare;
-import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
@@ -49,8 +48,8 @@ public class HelperCostDescarcare {
 
             articolComanda.setPretUnit(artDesc.getValoare());
             articolComanda.setPret(artDesc.getValoare() * artDesc.getCantitate());
-            articolComanda.setPretUnitarClient(artDesc.getValoare() );
-            articolComanda.setPretUnitarGed(artDesc.getValoare() );
+            articolComanda.setPretUnitarClient(artDesc.getValoare());
+            articolComanda.setPretUnitarGed(artDesc.getValoare());
 
 
             if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.LIVRARE_CUSTODIE)) {
@@ -188,12 +187,15 @@ public class HelperCostDescarcare {
 
         articolComanda.setCodArticol(articolPalet.getCodPalet());
         articolComanda.setNumeArticol(articolPalet.getNumePalet());
-        articolComanda.setCantitate(articolPalet.getCantitate());
-        articolComanda.setCantUmb(articolPalet.getCantitate());
-        articolComanda.setPretUnit(articolPalet.getPretUnit());
-        articolComanda.setPret(articolPalet.getPretUnit() * articolPalet.getCantitate());
-        articolComanda.setPretUnitarClient(articolPalet.getPretUnit());
-        articolComanda.setPretUnitarGed(articolPalet.getPretUnit());
+
+        CantitateFiliala cantPaletFiliala = getCantPaletFiliala(articolPalet, unitLog);
+
+        articolComanda.setCantitate(cantPaletFiliala.getCantitate());
+        articolComanda.setCantUmb(cantPaletFiliala.getCantitate());
+        articolComanda.setPretUnit(cantPaletFiliala.getPretUnitPalet());
+        articolComanda.setPret(cantPaletFiliala.getPretUnitPalet() * cantPaletFiliala.getCantitate());
+        articolComanda.setPretUnitarClient(cantPaletFiliala.getPretUnitPalet());
+        articolComanda.setPretUnitarGed(cantPaletFiliala.getPretUnitPalet());
         articolComanda.setProcent(0);
         articolComanda.setUm("BUC");
         articolComanda.setUmb("BUC");
@@ -218,64 +220,33 @@ public class HelperCostDescarcare {
 
     }
 
-    public static void eliminaPaleti(List<ArticolComanda> listArticole) {
+    private static CantitateFiliala getCantPaletFiliala(ArticolPalet articolPalet, String filiala) {
 
-        Iterator<ArticolComanda> iterator = listArticole.iterator();
+        CantitateFiliala retCantFiliala = new CantitateFiliala();
 
-        while (iterator.hasNext()) {
-
-            ArticolComanda articol = iterator.next();
-
-            if (articol.isUmPalet())
-                iterator.remove();
-
+        if (articolPalet.getCantFiliala() == null || articolPalet.getCantFiliala().isEmpty()) {
+            retCantFiliala.setCantitate(articolPalet.getCantitate());
+            retCantFiliala.setPretUnitPalet(articolPalet.getPretUnit());
+            return retCantFiliala;
         }
 
-    }
+        for (CantitateFiliala cantFiliala : articolPalet.getCantFiliala()) {
+            if (cantFiliala.getFiliala().equals(filiala)) {
 
-    public static List<ArticolCalculDesc> getDateCalculDescarcare(List<ArticolComanda> listArticole) {
+                retCantFiliala.setPretUnitPalet(cantFiliala.getPretUnitPalet());
 
-        List<ArticolCalculDesc> articoleCalcul = new ArrayList<ArticolCalculDesc>();
-
-        for (ArticolComanda artCmd : listArticole) {
-            ArticolCalculDesc articol = new ArticolCalculDesc();
-            articol.setCod(artCmd.getCodArticol());
-            articol.setCant(artCmd.getCantUmb());
-            articol.setUm(artCmd.getUmb());
-            articol.setDepoz(artCmd.getDepozit());
-            articoleCalcul.add(articol);
-        }
-
-        return articoleCalcul;
-
-    }
-
-
-    public static List<ComandaCalculDescarcare> getComenziCalculDescarcare(List<RezumatComanda> listComenziRezumat) {
-        List<ComandaCalculDescarcare> listComenzi = new ArrayList<>();
-
-        for (RezumatComanda rezumatComanda : listComenziRezumat) {
-
-            ComandaCalculDescarcare comandaCalculDescarcare = new ComandaCalculDescarcare();
-            comandaCalculDescarcare.setFiliala(rezumatComanda.getFilialaLivrare());
-
-            List<ArticolCalculDesc> articoleCalcul = new ArrayList<ArticolCalculDesc>();
-            for (ArticolComanda artCmd : rezumatComanda.getListArticole()) {
-                ArticolCalculDesc articol = new ArticolCalculDesc();
-                articol.setCod(artCmd.getCodArticol());
-                articol.setCant(artCmd.getCantUmb());
-                articol.setUm(artCmd.getUmb());
-                articol.setDepoz(artCmd.getDepozit());
-                articoleCalcul.add(articol);
+                if (articolPalet.getCantitate() == cantFiliala.getCantTotal())
+                    retCantFiliala.setCantitate(cantFiliala.getCantitate());
+                else
+                    retCantFiliala.setCantitate(Math.round(articolPalet.getCantitate() * ((float) cantFiliala.getCantitate() / cantFiliala.getCantTotal())));
             }
 
-            comandaCalculDescarcare.setListArticole(articoleCalcul);
-            listComenzi.add(comandaCalculDescarcare);
         }
 
-        return listComenzi;
+        return retCantFiliala;
 
     }
+
 
     public static List<ArticolCalculDesc> getDateCalculDescarcareRetur(List<BeanArticolRetur> listArticole) {
 
@@ -295,75 +266,6 @@ public class HelperCostDescarcare {
 
         return articoleCalcul;
 
-    }
-
-    public static CostDescarcare deserializeCostComenziMacara(String dateCost) {
-        CostDescarcare costDescarcare = new CostDescarcare();
-
-        List<ArticolDescarcare> listArticole = new ArrayList<ArticolDescarcare>();
-        List<ArticolPalet> listPaleti = new ArrayList<ArticolPalet>();
-        costDescarcare.setSePermite(false);
-
-        try {
-            JSONArray jsonObject = new JSONArray(dateCost);
-
-            for (int i = 0; i < jsonObject.length(); i++) {
-                JSONObject comandaObject = jsonObject.getJSONObject(i);
-
-                if (Boolean.valueOf(comandaObject.getString("sePermite")))
-                    costDescarcare.setSePermite(true);
-
-                JSONArray jsonArray = new JSONArray(comandaObject.getString("articoleDescarcare"));
-
-                for (int ii = 0; ii < jsonArray.length(); ii++) {
-                    ArticolDescarcare articol = new ArticolDescarcare();
-
-                    JSONObject object = jsonArray.getJSONObject(ii);
-
-                    articol.setCod(object.getString("cod"));
-                    articol.setDepart(object.getString("depart"));
-                    articol.setValoare(Double.valueOf(object.getString("valoare")));
-                    articol.setCantitate(Double.valueOf(object.getString("cantitate")));
-                    articol.setValoareMin(Double.valueOf(object.getString("valoareMin")));
-                    articol.setFiliala(comandaObject.getString("filiala"));
-                    listArticole.add(articol);
-
-                }
-
-                JSONArray jsonPaleti = new JSONArray(comandaObject.getString("articolePaleti"));
-
-                for (int j = 0; j < jsonPaleti.length(); j++) {
-                    ArticolPalet articol = new ArticolPalet();
-
-                    JSONObject object = jsonPaleti.getJSONObject(j);
-
-                    articol.setCodPalet(object.getString("codPalet"));
-                    articol.setNumePalet(object.getString("numePalet"));
-                    articol.setDepart(object.getString("depart"));
-                    articol.setCantitate(Integer.valueOf(object.getString("cantitate")));
-                    articol.setPretUnit(Double.valueOf(object.getString("pretUnit")));
-                    articol.setFurnizor(object.getString("furnizor"));
-                    articol.setCodArticol(object.getString("codArticol"));
-                    articol.setNumeArticol(object.getString("numeArticol"));
-                    articol.setCantArticol(object.getString("cantArticol"));
-                    articol.setUmArticol(object.getString("umArticol"));
-                    articol.setFiliala(comandaObject.getString("filiala"));
-
-                    listPaleti.add(articol);
-
-                }
-
-            }
-
-
-        } catch (JSONException e) {
-
-        }
-
-        costDescarcare.setArticoleDescarcare(listArticole);
-        costDescarcare.setArticolePaleti(listPaleti);
-
-        return costDescarcare;
     }
 
     public static CostDescarcare deserializeCostMacara(String dateCost) {
@@ -432,7 +334,7 @@ public class HelperCostDescarcare {
 
         for (ArticolComanda art : listArticole) {
             if (art.getCodArticol().contains(codArticolPalet)) {
-                depozit = art.getDepozit().replace("040","04").replace("041","04");
+                depozit = art.getDepozit().replace("040", "04").replace("041", "04");
                 break;
             }
         }

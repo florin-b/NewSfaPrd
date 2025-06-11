@@ -97,7 +97,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
     private TextView textStoc;
     private TextView textCant;
 
-    private TextView textUM,  textMultipluArt;
+    private TextView textUM, textMultipluArt;
     private TextView labelCant, labelStoc;
     private Spinner spinnerDepoz, spinnerUnitMas;
 
@@ -469,7 +469,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
     }
 
 
-
     public void addListenerTglProc() {
         tglProc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -630,19 +629,11 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                         return;
                     }
 
-                    if (!textStoc.getText().equals("")) {
-                        if (nf2.parse(textStoc.getText().toString()).doubleValue() > 0) {
-                            if (Double.parseDouble(textCant.getText().toString().trim()) <= nf2.parse(textStoc.getText().toString()).doubleValue()) {
-                                mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                mgr.hideSoftInputFromWindow(textCant.getWindowToken(), 0);
+                    mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    mgr.hideSoftInputFromWindow(textCant.getWindowToken(), 0);
 
-                                performGetPret();
-                            } else
-                                Toast.makeText(getApplicationContext(), "Stoc insuficient!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Articolul nu exista in stoc!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    performGetPret();
+
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
@@ -855,7 +846,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                     return;
                 }
 
-                if (UtilsComenzi.isPoligonRestrictionat()){
+                if (UtilsComenzi.isPoligonRestrictionat()) {
                     Toast.makeText(getApplicationContext(), Constants.ARTICOL_ZONA_RESTRICTIONATA, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -884,6 +875,13 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
                     Toast.makeText(getApplicationContext(), "Pretul nu corespunde cantitatii solicitate!", Toast.LENGTH_LONG).show();
 
+                    return;
+                }
+
+                if (!UtilsComenzi.isComandaDl()
+                        && Double.parseDouble(textCant.getText().toString().trim()) > Double.parseDouble(textStoc.getText()
+                        .toString().replaceAll(",", ""))) {
+                    Toast.makeText(getApplicationContext(), "Stoc insuficient!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -1208,7 +1206,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
             if (UserInfo.getInstance().getTipAcces().equals("27")) {
                 layoutStocKA.setVisibility(View.VISIBLE);
                 textUmKA.setText(tokenPret[1]);
-                textStocKA.setText(nf2.format((Double.valueOf(tokenPret[0]) + cantArtModificat)/ 2));
+                textStocKA.setText(nf2.format((Double.valueOf(tokenPret[0]) + cantArtModificat) / 2));
             }
 
             umStoc = tokenPret[1];
@@ -1269,7 +1267,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
     }
 
     private boolean isConditiiModifCant50(PretArticolGed pretArticol) {
-        return  Double.parseDouble(pretArticol.getCantitate50()) > 0
+        return Double.parseDouble(pretArticol.getCantitate50()) > 0
                 && selectedCant != Double.parseDouble(pretArticol.getCantitate());
     }
 
@@ -1385,7 +1383,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
             if (listPrice > 0)
                 procDiscClient = 100 - (initPrice / listPrice) * 100;
         }
-
 
 
         textProcRed.setFocusableInTouchMode(true);

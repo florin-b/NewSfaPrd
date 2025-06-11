@@ -13,6 +13,9 @@ public class TaxeLivrare {
     private String codTaxaZona;
     private String numeTaxaZona;
     private double valoareTaxaZona;
+    private String codVehiculUsor;
+    private String numeVehiculUsor;
+    private double taxaVehiculUsor;
     private String codTaxaAcces;
     private String numeTaxaAcces;
     private double valoareTaxaAcces;
@@ -156,5 +159,29 @@ public class TaxeLivrare {
 
     public void setNrPaleti(int nrPaleti) {
         this.nrPaleti = nrPaleti;
+    }
+
+    public String getCodVehiculUsor() {
+        return codVehiculUsor;
+    }
+
+    public void setCodVehiculUsor(String codVehiculUsor) {
+        this.codVehiculUsor = codVehiculUsor;
+    }
+
+    public String getNumeVehiculUsor() {
+        return numeVehiculUsor;
+    }
+
+    public void setNumeVehiculUsor(String numeVehiculUsor) {
+        this.numeVehiculUsor = numeVehiculUsor;
+    }
+
+    public double getTaxaVehiculUsor() {
+        return taxaVehiculUsor;
+    }
+
+    public void setTaxaVehiculUsor(double taxaVehiculUsor) {
+        this.taxaVehiculUsor = taxaVehiculUsor;
     }
 }

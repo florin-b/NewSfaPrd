@@ -190,6 +190,15 @@ public class AdapterTransportFiliala extends BaseAdapter {
                     listTaxe.add(details);
                 }
 
+                if (taxaCamion.getTaxeLivrare().getTaxaVehiculUsor() > 0) {
+                    details = new Details();
+                    details.setText1(taxaCamion.getTaxeLivrare().getNumeVehiculUsor());
+                    details.setText2(df.format(taxaCamion.getTaxeLivrare().getTaxaVehiculUsor()));
+                    listTaxe.add(details);
+
+
+                }
+
             }
         }
 
@@ -252,7 +261,7 @@ public class AdapterTransportFiliala extends BaseAdapter {
 
             if (taxa.getTipCamion().equals(taxaCamion.getTipCamion()) && (isCamionLiftMacara(taxa.getTaxeLivrare()) == isCamionLiftMacara(taxaCamion.getTaxeLivrare()))) {
                 valoareTransport = taxa.getTaxeLivrare().getValoareTaxaTransport() + taxa.getTaxeLivrare().getValoareTaxaAcces() +
-                        taxa.getTaxeLivrare().getValoareTaxaZona();
+                        taxa.getTaxeLivrare().getValoareTaxaZona() + taxa.getTaxeLivrare().getTaxaVehiculUsor();
             }
         }
 

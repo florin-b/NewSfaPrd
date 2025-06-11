@@ -481,4 +481,16 @@ public class UtilsComenzi {
 
     }
 
+    public static List<ArticolComanda> getArticolComandaModif() {
+            if (ListaArticoleComanda.getInstance().getListArticoleLivrare()!= null &&
+                    ListaArticoleComanda.getInstance().getListArticoleLivrare().size() > 0)
+                return ListaArticoleComanda.getInstance().getListArticoleLivrare();
+            else if (ListaArticoleComandaGed.getInstance().getListArticoleLivrare()!= null &&
+                    ListaArticoleComandaGed.getInstance().getListArticoleLivrare().size() > 0)
+                return ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
+            else
+                return new ArrayList<>();
+
+    }
+
 }

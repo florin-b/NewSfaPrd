@@ -23,6 +23,7 @@ import my.logon.screen.beans.BeanArticolStoc;
 import my.logon.screen.beans.BeanCablu05;
 import my.logon.screen.beans.BeanGreutateArticol;
 import my.logon.screen.beans.BeanParametruPretGed;
+import my.logon.screen.beans.CantitateFiliala;
 import my.logon.screen.beans.ComandaMathaus;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
@@ -859,6 +860,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 articol.setNumeArticol(object.getString("numeArticol"));
                 articol.setCantArticol(object.getString("cantArticol"));
                 articol.setUmArticol(object.getString("umArticol"));
+                articol.setCantFiliala(getPaletiFiliala(object.getString("paletiFiliala")));
                 listPaleti.add(articol);
 
             }
@@ -873,6 +875,30 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
         }
 
         return livrareMathaus;
+    }
+
+    private List<CantitateFiliala> getPaletiFiliala(String strPaletiFiliala) {
+        List<CantitateFiliala> paletiFiliala = new ArrayList<>();
+
+        try {
+
+            JSONArray jsonPaletiFiliala = new JSONArray(strPaletiFiliala);
+
+            for (int j = 0; j < jsonPaletiFiliala.length(); j++) {
+                CantitateFiliala cantFiliala = new CantitateFiliala();
+                JSONObject object = jsonPaletiFiliala.getJSONObject(j);
+                cantFiliala.setFiliala(object.getString("filiala"));
+                cantFiliala.setCantitate(Integer.valueOf(object.getString("cantitate")));
+                cantFiliala.setCantTotal(Integer.valueOf(object.getString("cantTotal")));
+                cantFiliala.setPretUnitPalet(Double.valueOf(object.getString("pretUnitPalet")));
+                paletiFiliala.add(cantFiliala);
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return paletiFiliala;
     }
 
     private List<TaxaMasina> getTaxeDivizii(String serObject) {
@@ -900,6 +926,9 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setMatnrMacara(taxaObject.getString("matnrMacara"));
                 taxaMasina.setMaktxMacara(taxaObject.getString("maktxMacara"));
                 taxaMasina.setNrPaleti(Integer.valueOf(taxaObject.getString("nrPaleti")));
+                taxaMasina.setMatnrUsor(taxaObject.getString("matnrUsor"));
+                taxaMasina.setMaktxUsor(taxaObject.getString("maktxUsor"));
+                taxaMasina.setTaxaUsor(Double.valueOf(taxaObject.getString("taxaUsor")));
                 taxaMasina.setMaktxZona(taxaObject.getString("maktxZona"));
                 taxaMasina.setMatnrZona(taxaObject.getString("matnrZona"));
                 taxaMasina.setMaktxZona(taxaObject.getString("maktxZona"));

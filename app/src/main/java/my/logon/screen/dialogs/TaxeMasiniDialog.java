@@ -283,6 +283,9 @@ public class TaxeMasiniDialog extends Dialog {
                     taxeLivrare.setCodTaxaZona(taxaMasina.getMatnrZona());
                     taxeLivrare.setNumeTaxaZona(taxaMasina.getMaktxZona());
                     taxeLivrare.setValoareTaxaZona(taxaMasina.getTaxaZona());
+                    taxeLivrare.setCodVehiculUsor(taxaMasina.getMatnrUsor());
+                    taxeLivrare.setNumeVehiculUsor(taxaMasina.getMaktxUsor());
+                    taxeLivrare.setTaxaVehiculUsor(taxaMasina.getTaxaUsor());
                     taxeLivrare.setCodTaxaAcces(taxaMasina.getMatnrAcces());
                     taxeLivrare.setNumeTaxaAcces(taxaMasina.getMaktxAcces());
                     taxeLivrare.setValoareTaxaAcces(taxaMasina.getTaxaAcces());
@@ -364,6 +367,17 @@ public class TaxeMasiniDialog extends Dialog {
                         dateLivrare.getCostTransport().add(costTransportMathaus);
                     }
 
+                    if (taxaCamion.getTaxeLivrare().getTaxaVehiculUsor() > 0) {
+                        costTransportMathaus = new CostTransportMathaus();
+                        costTransportMathaus.setCodArtTransp(taxaCamion.getTaxeLivrare().getCodVehiculUsor());
+                        costTransportMathaus.setNumeCost(taxaCamion.getTaxeLivrare().getNumeVehiculUsor());
+                        costTransportMathaus.setValTransp(String.valueOf(taxaCamion.getTaxeLivrare().getTaxaVehiculUsor()));
+                        costTransportMathaus.setFiliala(taxaTransport.getFiliala());
+                        costTransportMathaus.setTipTransp("TRAP");
+                        costTransportMathaus.setDepart(taxaCamion.getTaxeLivrare().getDepart());
+                        dateLivrare.getCostTransport().add(costTransportMathaus);
+                    }
+
                 }
             }
 
@@ -410,7 +424,7 @@ public class TaxeMasiniDialog extends Dialog {
     private CostDescarcare getCostDescarcare() {
         CostDescarcare costDescarcare = new CostDescarcare();
         List<ArticolDescarcare> listArticole = new ArrayList<ArticolDescarcare>();
-        List<ArticolPalet> listPaleti = new ArrayList<ArticolPalet>();
+        List<ArticolPalet> listPaleti = new ArrayList<>();
 
 
         for (TaxaTransport taxaTransport : taxeTransport) {
@@ -433,6 +447,7 @@ public class TaxeMasiniDialog extends Dialog {
                         articol.setCantArticol(articolPalet.getCantArticol());
                         articol.setUmArticol(articolPalet.getUmArticol());
                         articol.setFiliala(taxaTransport.getFiliala());
+                        articol.setCantFiliala(articolPalet.getCantFiliala());
                         listPaleti.add(articol);
 
                     }

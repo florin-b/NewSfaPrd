@@ -237,6 +237,9 @@ public class RezumatComandaDialog extends Dialog implements RezumatListener {
         else
             listArticoleComanda = ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
 
+        if (listArticoleComanda.size() == 0 && isComandaModif)
+            listArticoleComanda = UtilsComenzi.getArticolComandaModif();
+
         Iterator<ArticolComanda> listIterator = listArticoleComanda.iterator();
 
         while (listIterator.hasNext()) {

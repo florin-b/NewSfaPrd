@@ -1517,7 +1517,7 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
 
     }
 
-    private void trateazaTransportIP(){
+    private void trateazaTransportIP() {
         costTransportIP = 0;
         taxeComandaIP = new ArrayList<>();
 
@@ -1557,7 +1557,9 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
         String depozitPalet = HelperCostDescarcare.getDepozitPalet(ListaArticoleComandaGed.getInstance().getListArticoleComanda(), articolPalet.getCodArticol());
 
         ArticolComanda articol = HelperCostDescarcare.getArticolPalet(articolPalet, depozitPalet, articolPalet.getFiliala());
-        ListaArticoleComandaGed.getInstance().addArticolLivrareComanda(articol);
+
+        if (articol.getCantitate() > 0)
+            ListaArticoleComandaGed.getInstance().addArticolLivrareComanda(articol);
 
     }
 

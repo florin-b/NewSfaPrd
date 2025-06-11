@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="1dip"
+    android:paddingBottom="1dip">
+
+    <TextView
+        android:id="@+id/textNumeAgent"
+        android:layout_width="match_parent"
+        android:layout_height="35dip"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="5dip"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/agentiColor"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

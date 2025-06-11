@@ -1,5 +1,7 @@
 package my.logon.screen.beans;
 
+import java.util.List;
+
 public class ArticolPalet {
 
 	private String codPalet;
@@ -14,6 +16,7 @@ public class ArticolPalet {
 	private String umArticol;
 	private boolean adaugat;
 	private String filiala;
+	private List<CantitateFiliala> cantFiliala;
 
 	
 
@@ -113,5 +116,13 @@ public class ArticolPalet {
 
 	public void setFiliala(String filiala) {
 		this.filiala = filiala;
+	}
+
+	public List<CantitateFiliala> getCantFiliala() {
+		return cantFiliala;
+	}
+
+	public void setCantFiliala(List<CantitateFiliala> cantFiliala) {
+		this.cantFiliala = cantFiliala;
 	}
 }
