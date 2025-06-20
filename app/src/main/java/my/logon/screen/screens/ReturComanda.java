@@ -166,6 +166,7 @@ public class ReturComanda extends FragmentActivity implements ClientReturListene
         params.put("tipDocument", "CMD");
         params.put("interval", interval);
         params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
+        params.put("codAgent", UserInfo.getInstance().getCod());
         opRetur.getDocumenteClient(params);
     }
 

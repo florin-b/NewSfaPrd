@@ -170,6 +170,7 @@ public class ReturPaleti extends FragmentActivity implements ClientReturListener
 		params.put("unitLog", UserInfo.getInstance().getUnitLog());
 		params.put("tipDocument", "PAL");
 		params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
+		params.put("codAgent", UserInfo.getInstance().getCod());
 
 		opRetur.getDocumenteClient(params);
 	}

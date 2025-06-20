@@ -112,6 +112,10 @@ public class HelperMathaus {
         return numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("VEHICOL") && numeArticol.toUpperCase().contains("USOR");
     }
 
+    private static boolean isSinteticServTransp(String codSintetic) {
+        return codSintetic != null && codSintetic.equals(Constants.SINT_SERV_TRANSP);
+    }
+
     public static boolean isArtCostTransp(String numeArticol) {
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
     }
@@ -130,7 +134,8 @@ public class HelperMathaus {
 
             ArticolComanda articol = iterator.next();
 
-            if (isArtTaxaTransp(articol.getNumeArticol()) || isArtTaxaMetro(articol.getNumeArticol()) || isArtTaxaVehicolUsor(articol.getNumeArticol())) {
+            if (isArtTaxaTransp(articol.getNumeArticol()) || isArtTaxaMetro(articol.getNumeArticol()) || isArtTaxaVehicolUsor(articol.getNumeArticol())
+                    || isSinteticServTransp(articol.getSintetic())) {
                 iterator.remove();
             }
         }
@@ -227,6 +232,7 @@ public class HelperMathaus {
         articolComanda.setTipTransport(costTransport.getTipTransp());
         articolComanda.setCantitate50(articolComanda.getCantitate());
         articolComanda.setUm50("BUC");
+        articolComanda.setSintetic(Constants.SINT_SERV_TRANSP);
 
         return articolComanda;
     }

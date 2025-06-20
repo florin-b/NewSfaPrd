@@ -230,15 +230,17 @@ public class HelperCostDescarcare {
             return retCantFiliala;
         }
 
+        int fltCantPaletFiliala = 0;
         for (CantitateFiliala cantFiliala : articolPalet.getCantFiliala()) {
             if (cantFiliala.getFiliala().equals(filiala)) {
 
                 retCantFiliala.setPretUnitPalet(cantFiliala.getPretUnitPalet());
 
+                fltCantPaletFiliala += cantFiliala.getCantitate();
                 if (articolPalet.getCantitate() == cantFiliala.getCantTotal())
-                    retCantFiliala.setCantitate(cantFiliala.getCantitate());
+                    retCantFiliala.setCantitate(fltCantPaletFiliala);
                 else
-                    retCantFiliala.setCantitate(Math.round(articolPalet.getCantitate() * ((float) cantFiliala.getCantitate() / cantFiliala.getCantTotal())));
+                    retCantFiliala.setCantitate(Math.round(articolPalet.getCantitate() * ((float) fltCantPaletFiliala / cantFiliala.getCantTotal())));
             }
 
         }
