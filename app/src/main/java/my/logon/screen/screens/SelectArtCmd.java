@@ -115,7 +115,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
     ToggleButton tglProc;
 
     private TextView textStoc;
-    private TextView textCant,  textMultipluArt;
+    private TextView textCant, textMultipluArt;
 
     private TextView textUM;
     private TextView labelCant, labelStoc;
@@ -217,6 +217,9 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
             if (!isCV())
                 addSpinnerDepartamente();
 
+            if (UtilsUser.isUserCVOB())
+                addSpinnerDepartamente();
+
             opArticol = OperatiiArticolFactory.createObject("OperatiiArticolImpl", this);
             opArticol.setListener(this);
 
@@ -233,8 +236,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
             layoutStocKA = (LinearLayout) findViewById(R.id.layoutStocKA);
             layoutStocKA.setVisibility(View.INVISIBLE);
-
-
 
 
             this.articoleBtn = (Button) findViewById(R.id.articoleBtn);
@@ -359,8 +360,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
             }
 
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_LONG).show();
         }
 
@@ -554,6 +554,10 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         });
 
         spinnerDepartament.setAdapter(adapter);
+
+        if (UtilsUser.isUserCVOB())
+            spinnerDepartament.setSelection(spinnerDepartament.getAdapter().getCount() - 1);
+
         getActionBar().setCustomView(mCustomView);
         getActionBar().setDisplayShowCustomEnabled(true);
 
@@ -968,8 +972,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
     }
 
 
-
-
     public void addListenerTglProc() {
         tglProc.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -994,7 +996,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
 
                         pretMod = true;
                         finalPrice = initPrice;
-
 
 
                     } else {
@@ -1087,7 +1088,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                                 txtPretArt.setText("0");
                                 finalPrice = 0;
                             }
-
 
 
                         }
@@ -1186,7 +1186,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         String uLog = UserInfo.getInstance().getUnitLog();
 
 
-
         if (articolModificat != null) {
             codArticol = articolModificat.getCodArticol();
             globalDepozSel = articolModificat.getDepozit();
@@ -1215,6 +1214,11 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         if (!filialaStocBV90.isEmpty())
             filialaPret = filialaStocBV90;
 
+        String localCanal = CreareComanda.canalDistrib;
+
+        if (UtilsUser.isUserCVOB())
+            localCanal = "60";
+
         BeanParametruPretGed paramPret = new BeanParametruPretGed();
         paramPret.setClient(CreareComanda.codClientVar);
         paramPret.setArticol(codArticol);
@@ -1224,7 +1228,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         paramPret.setUl(uLog);
         paramPret.setDepoz(globalDepozSel);
         paramPret.setCodUser(UserInfo.getInstance().getCod());
-        paramPret.setCanalDistrib(CreareComanda.canalDistrib);
+        paramPret.setCanalDistrib(localCanal);
         paramPret.setTipUser(UserInfo.getInstance().getTipUserSap());
         paramPret.setFilialaAlternativa(filialaPret);
         paramPret.setFilialaClp(DateLivrare.getInstance().getCodFilialaCLP());
@@ -1235,7 +1239,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         opArticol.getPretUnic(params);
 
     }
-
 
 
     public void addListenerToggle() {
@@ -1453,7 +1456,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
                     return;
                 }
 
-                if (UtilsComenzi.isPoligonRestrictionat()){
+                if (UtilsComenzi.isPoligonRestrictionat()) {
                     Toast.makeText(getApplicationContext(), Constants.ARTICOL_ZONA_RESTRICTIONATA, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -2333,7 +2336,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         textCondPret.setText(HelperPreturi.getInfoPret(pretArticol, nf2));
 
 
-
         // calcul doar pentru AG
         if (!UserInfo.getInstance().getTipAcces().equals("27")) {
             if (listPrice > 0)
@@ -2471,7 +2473,6 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
         return pretArticol.getFaraDiscount().toUpperCase().equals("X");
 
     }
-
 
 
     private void afisPretUmAlternativa() {

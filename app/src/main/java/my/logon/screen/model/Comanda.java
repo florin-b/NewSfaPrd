@@ -25,6 +25,7 @@ public class Comanda {
 	private String necesarAprobariCV;
 	private String valTransportSap;
 	private String nrDocumentClp;
+	private String site;
 
 	public Comanda() {
 
@@ -224,4 +225,11 @@ public class Comanda {
 		this.nrDocumentClp = nrDocumentClp;
 	}
 
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
 }

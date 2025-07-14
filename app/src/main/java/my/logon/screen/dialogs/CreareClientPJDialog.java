@@ -23,7 +23,7 @@ public class CreareClientPJDialog extends Dialog {
     private DateClientSap dateClientSap;
     private String codClientNominal;
     private Context context;
-    private EditText textPrenumePersContact, textNumePersContact, textTelContact, textEmail;
+    private EditText textPrenumePersContact, textNumePersContact, textTelContact;
     private Spinner spinnerTipClient;
 
     public CreareClientPJDialog(DateClientSap dateClientSap, Context context) {
@@ -56,7 +56,6 @@ public class CreareClientPJDialog extends Dialog {
         textPrenumePersContact = findViewById(R.id.textPrenumePersContact);
         textNumePersContact = findViewById(R.id.textNumePersContact);
         textTelContact = findViewById(R.id.textTelContact);
-        textEmail = findViewById(R.id.textEmail);
         spinnerTipClient = findViewById(R.id.spinnerTipClient);
 
         BeanTipClient tipClient0 = new BeanTipClient();
@@ -100,7 +99,7 @@ public class CreareClientPJDialog extends Dialog {
         dateClientSap.setPrenumePersContact(textPrenumePersContact.getText().toString().trim());
         dateClientSap.setNumePersContact(textNumePersContact.getText().toString().trim());
         dateClientSap.setTelPersContact(textTelContact.getText().toString().trim());
-        dateClientSap.setEmailCompanie(textEmail.getText().toString().trim());
+        dateClientSap.setEmailCompanie("");
         dateClientSap.setTipClientSelect(((BeanTipClient) spinnerTipClient.getSelectedItem()).getCod());
     }
 
@@ -131,11 +130,6 @@ public class CreareClientPJDialog extends Dialog {
 
         if (textTelContact.getText().toString().trim().length() != 10) {
             Toast.makeText(context, "Numar de telefon invalid.", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        if (textEmail.getText().toString().trim().isEmpty()) {
-            Toast.makeText(context, "Completati adresa de email.", Toast.LENGTH_LONG).show();
             return false;
         }
 

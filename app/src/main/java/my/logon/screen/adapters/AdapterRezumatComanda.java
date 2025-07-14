@@ -45,6 +45,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private List<CostTransportMathaus> costTransport;
     private String[] tipTransportArray = {"TRAP", "TCLI"};
     private String[] tipTransportDL = {"TRAP", "TFRN"};
+    private String[] tipTransportDL_TCLI = {"TCLI", "TFRN"};
     private String[] tipTransportTertArray = {"TERT", "TCLI"};
     private String tipTransportCmd;
     private String filialeArondate;
@@ -138,8 +139,13 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
 
             if (UtilsComenzi.isComandaDl() || tipTranspArt.equals("TRAP") || isCondTranspTrapBV90(rezumat.getFilialaLivrare(), tipTranspArt)) {
-                if (UtilsComenzi.isComandaDl())
+                if (UtilsComenzi.isComandaDl()) {
                     tipTransportArray = tipTransportDL;
+
+                    if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+                        tipTransportArray = tipTransportDL_TCLI;
+
+                }
 
                 ArrayAdapter<String> adapterSpinnerTransp = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, tipTransportArray);
                 adapterSpinnerTransp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

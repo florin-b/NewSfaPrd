@@ -345,6 +345,9 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 
 		filClientText.setText(detaliiClient.getFiliala());
 
+		if (UtilsUser.isUserCVOB())
+			UserInfo.getInstance().setUnitLog(detaliiClient.getFiliala());
+
 		CreareComanda.termenPlata = detaliiClient.getTermenPlata();
 		CreareComanda.cursValutar = Double.parseDouble(detaliiClient.getCursValutar());
 

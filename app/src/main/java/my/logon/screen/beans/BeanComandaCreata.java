@@ -1,6 +1,5 @@
 package my.logon.screen.beans;
 
-
 import my.logon.screen.enums.EnumTipClientIP;
 
 public class BeanComandaCreata {
@@ -44,7 +43,9 @@ public class BeanComandaCreata {
 	private EnumTipClientIP tipClientInstPublica;
 	private boolean isAprobDistrib;
 	private boolean isComandaACZC;
-	
+	private String site;
+
+
 	public BeanComandaCreata() {
 
 	}
@@ -329,14 +330,18 @@ public class BeanComandaCreata {
 		this.isCmdInstPublica = isCmdInstPublica;
 	}	
 	
+	
+	
 	public double getBazaSalariala() {
 		return bazaSalariala;
 	}
 
 	public void setBazaSalariala(double bazaSalariala) {
 		this.bazaSalariala = bazaSalariala;
-	}	
+	}
 	
+	
+
 	public EnumTipClientIP getTipClientInstPublica() {
 		return tipClientInstPublica;
 	}
@@ -359,5 +364,14 @@ public class BeanComandaCreata {
 
 	public void setComandaACZC(boolean comandaACZC) {
 		isComandaACZC = comandaACZC;
+	}
+
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
 	}
 }

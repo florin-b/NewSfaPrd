@@ -85,7 +85,7 @@ public class DepartamentAgent {
 		ArrayList<String> depart = new ArrayList<String>();
 
 		if (isKA() || UtilsUser.isInfoUser() || UtilsUser.isSMR() || UtilsUser.isCVR() || UtilsUser.isSSCM() || UtilsUser.isCGED() || UtilsUser.isOIVPD()
-				|| UtilsUser.isUserSDKA()) {
+				|| UtilsUser.isUserSDKA() || UtilsUser.isUserCVOB()) {
 
 			for (EnumDepartExtra depKA : EnumDepartExtra.values()) {
 				if (depKA.getCod().equals("00") || depKA.getCod().equals("11"))

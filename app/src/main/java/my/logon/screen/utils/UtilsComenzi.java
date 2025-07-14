@@ -17,6 +17,7 @@ import my.logon.screen.beans.BeanArticolRetur;
 import my.logon.screen.beans.BeanStocTCLI;
 import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.DatePoligonLivrare;
+import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
@@ -491,6 +492,14 @@ public class UtilsComenzi {
             else
                 return new ArrayList<>();
 
+    }
+
+    public static boolean existaPaleti(LivrareMathaus livrareMathaus) {
+
+        if (livrareMathaus.getListPaleti() == null)
+            return false;
+
+        return livrareMathaus.getListPaleti().size() > 0;
     }
 
 }

@@ -122,6 +122,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
     public static String numeDepart = "";
     public static String codDepart = "";
 
+
     private int listViewSelPos = -1;
 
     private Spinner spinnerComenzi;
@@ -754,6 +755,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                         comandaFinala.setNumeClient(dateLivrareInstance.getNumeClient());
                         comandaFinala.setCnpClient(dateLivrareInstance.getCnpClient());
                         comandaFinala.setNecesarAprobariCV(comandaSelectata.getAprobariNecesare());
+                        comandaFinala.setSite(comandaSelectata.getSite());
 
                         getLivrariMathaus();
 
@@ -1046,6 +1048,16 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                 else
                     height = (int) (getResources().getDisplayMetrics().heightPixels * 0.4);
             }
+
+            TaxeMasiniDialog taxeMasiniDialog = new TaxeMasiniDialog(this, livrareMathaus);
+            taxeMasiniDialog.setTipMasinaLivrareListener(this);
+            taxeMasiniDialog.getWindow().setLayout(width, height);
+            taxeMasiniDialog.show();
+
+        } else if (DateLivrare.getInstance().getTransport().equals("TCLI") && UtilsComenzi.existaPaleti(livrareMathaus)) {
+
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.65);
+            int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.35);
 
             TaxeMasiniDialog taxeMasiniDialog = new TaxeMasiniDialog(this, livrareMathaus);
             taxeMasiniDialog.setTipMasinaLivrareListener(this);
@@ -1634,6 +1646,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             obj.put("canalDistrib", comandaSelectata.getCanalDistrib());
             obj.put("necesarAprobariCV", comanda.getNecesarAprobariCV());
             obj.put("valTransportSap", "0");
+            obj.put("site", comanda.getSite());
 
 
         } catch (Exception ex) {
@@ -2416,12 +2429,6 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
     @Override
     public void comandaSalvata() {
-
-
-        if (isComandaDistrib  && listTaxeTransport != null) {
-            setCostTransportDepart();
-            setCostDescarcareDepart();
-        }
 
 
         if (isComandaDistrib && listTaxeTransport != null) {

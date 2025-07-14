@@ -62,6 +62,7 @@ public class TaxeMasiniDialog extends Dialog {
     private ArticolPalet articol;
     private NumberFormat nf2;
     private LinearLayout layoutPaleti;
+    private LinearLayout layoutTipTransport;
     private AdapterTransportFiliala adapterTransportFiliala;
 
 
@@ -82,12 +83,16 @@ public class TaxeMasiniDialog extends Dialog {
         addBtnRenuntaListener();
 
         layoutPaleti = findViewById(R.id.layoutPaleti);
+        layoutTipTransport = findViewById(R.id.layoutTipTransport);
 
         if (!dateLivrare.getListPaleti().isEmpty()) {
             setupPaletiLayout();
         } else {
             layoutPaleti.setVisibility(View.GONE);
         }
+
+        if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+            layoutTipTransport.setVisibility(View.GONE);
 
         setupMasiniLayout();
 
@@ -328,6 +333,8 @@ public class TaxeMasiniDialog extends Dialog {
 
     private void setTaxeTransportAgent() {
 
+        if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+            return;
 
         for (TaxaTransport taxaTransport : taxeTransport) {
 
@@ -412,6 +419,10 @@ public class TaxeMasiniDialog extends Dialog {
     }
 
     private boolean isTransportSelected() {
+
+        if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+            return true;
+
         for (TaxaTransport taxaTransport : taxeTransport) {
             if (taxaTransport.getSelectedCamion() == null) {
                 return false;

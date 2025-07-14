@@ -716,6 +716,9 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                     if (comandaObject.has("isComandaACZC"))
                         comanda.setComandaACZC(Boolean.valueOf(comandaObject.getString("isComandaACZC")));
 
+                    if (comandaObject.has("site"))
+                        comanda.setSite(comandaObject.getString("site"));
+
 
                     listComenzi.add(comanda);
 

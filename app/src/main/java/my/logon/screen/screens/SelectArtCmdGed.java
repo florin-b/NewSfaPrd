@@ -1744,10 +1744,10 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                     articol.setDiscClient(procDiscClient);
                     articol.setProcAprob(procentAprob);
                     articol.setMultiplu(valMultiplu);
+                    articol.setCantUmb(Double.valueOf(cantUmb));
                     articol.setPret(articol.getPretUnitarClient() * articol.getCantUmb());
                     articol.setInfoArticol(infoArticol);
                     articol.setUmb(Umb);
-                    articol.setCantUmb(Double.valueOf(cantUmb));
                     articol.setAlteValori(alteValori);
                     articol.setDepart(globalCodDepartSelectetItem);
                     articol.setDepartSintetic(articol.getDepart());

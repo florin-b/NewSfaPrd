@@ -583,7 +583,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
         DateClientSap dateClientSap = operatiiClient.deserializeDateClientANAF(result);
 
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.6);
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.86);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.81);
 
         CreareClientPJDialog clientPJDialog = new CreareClientPJDialog(dateClientSap, this);
         clientPJDialog.getWindow().setLayout(width, height);
@@ -600,7 +600,6 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
             CreareComandaGed.codClientCUI = raspunsClientSap.getCodClient();
 
             DateLivrare.getInstance().setDiviziiClient(raspunsClientSap.getDiviziiClient());
-
             valideazaDateClient();
         } else {
             setDateContactClientPF(null);

@@ -1509,6 +1509,16 @@ public class CreareComandaGed extends Activity implements AsyncTaskListener, Art
             taxeMasiniDialog.getWindow().setLayout(width, height);
             taxeMasiniDialog.show();
 
+        } else if (DateLivrare.getInstance().getTransport().equals("TCLI") && UtilsComenzi.existaPaleti(livrareMathaus)) {
+
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.65);
+            int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.35);
+
+            TaxeMasiniDialog taxeMasiniDialog = new TaxeMasiniDialog(this, livrareMathaus);
+            taxeMasiniDialog.setTipMasinaLivrareListener(this);
+            taxeMasiniDialog.getWindow().setLayout(width, height);
+            taxeMasiniDialog.show();
+
         } else {
             HelperMathaus.setTransportTERT(livrareMathaus);
             trateazaTransportIP();

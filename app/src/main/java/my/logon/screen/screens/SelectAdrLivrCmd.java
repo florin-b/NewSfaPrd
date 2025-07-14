@@ -1472,6 +1472,7 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("codClient", globalCodClient);
         params.put("filiala", filiala);
+        params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
 
         operatiiAdresa.getAdreseLivrareClient(params);
 
