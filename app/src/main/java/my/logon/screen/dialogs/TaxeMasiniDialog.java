@@ -64,6 +64,7 @@ public class TaxeMasiniDialog extends Dialog {
     private LinearLayout layoutPaleti;
     private LinearLayout layoutTipTransport;
     private AdapterTransportFiliala adapterTransportFiliala;
+    private String canalDistrib;
 
 
     public TaxeMasiniDialog(Context context, LivrareMathaus dateLivrare) {
@@ -234,6 +235,9 @@ public class TaxeMasiniDialog extends Dialog {
 
     private boolean verificaNrPaleti() {
 
+        if (DateLivrare.getInstance().getTransport().equals("TCLI") && canalDistrib != null && canalDistrib.equals("20"))
+            return true;
+
         int nrPaleti = 0;
 
         for (ArticolPalet palet : dateLivrare.getListPaleti())
@@ -302,6 +306,7 @@ public class TaxeMasiniDialog extends Dialog {
                     taxeLivrare.setNumeTaxaMacara(taxaMasina.getMaktxMacara());
                     taxeLivrare.setDepart(taxaMasina.getSpart());
                     taxeLivrare.setTaxeDivizii(taxaMasina.getTaxeDivizii());
+                    taxeLivrare.setTotalCuTva(taxaMasina.getTotalCuTva());
                     taxaCamion.setTaxeLivrare(taxeLivrare);
                     listTaxeCamion.add(taxaCamion);
 
@@ -350,7 +355,9 @@ public class TaxeMasiniDialog extends Dialog {
                     costTransportMathaus.setFiliala(taxaTransport.getFiliala());
                     costTransportMathaus.setTipTransp("TRAP");
                     costTransportMathaus.setDepart(taxaCamion.getTaxeLivrare().getDepart());
+                    costTransportMathaus.setTotalCuTva(taxaCamion.getTaxeLivrare().getTotalCuTva());
                     dateLivrare.getCostTransport().add(costTransportMathaus);
+
 
                     if (taxaCamion.getTaxeLivrare().getValoareTaxaZona() > 0) {
                         costTransportMathaus = new CostTransportMathaus();
@@ -530,5 +537,8 @@ public class TaxeMasiniDialog extends Dialog {
         this.listener = listener;
     }
 
+    public void setCanalDistrib(String canalDistrib) {
+        this.canalDistrib = canalDistrib;
+    }
 }
 

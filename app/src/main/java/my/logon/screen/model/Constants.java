@@ -2,7 +2,7 @@ package my.logon.screen.model;
 
 public class Constants {
 
-	public final static double TVA = 1.19;
+	public final static double TVA = 1.21;
 	public final static int NR_ZILE_LIVRARE_CVA = 10;
 	public final static int NR_ZILE_LIVRARE_AG = 6;
 	public final static int NR_ZILE_CMD_SIM_REZ_STOC = 10;

@@ -540,10 +540,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
     }
 
     private void setVisibilityRadioClMeserias(RadioButton radioClMeserias) {
-        if (UserInfo.getInstance().getTipUserSap().contains("CAG"))
-            radioClMeserias.setVisibility(View.VISIBLE);
-        else
-            radioClMeserias.setVisibility(View.INVISIBLE);
+
+        radioClMeserias.setVisibility(View.VISIBLE);
 
     }
 
@@ -833,11 +831,11 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
             public void onClick(View v) {
                 layoutLabelJ.setVisibility(View.GONE);
                 layoutTextJ.setVisibility(View.GONE);
-                checkPlatTva.setVisibility(View.INVISIBLE);
+                checkPlatTva.setVisibility(View.GONE);
 
                 verificaID.setVisibility(View.GONE);
-                checkFacturaPF.setVisibility(View.GONE);
-                labelIDClient.setText("COD");
+                checkFacturaPF.setVisibility(View.VISIBLE);
+                labelIDClient.setText("Cod");
 
                 setTextNumeClientEnabled(false);
                 ScreenUtils.setCheckBoxVisibility(checkCustodie, false);
@@ -950,6 +948,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 DateLivrare.getInstance().setTipComandaGed(TipCmdGed.ARTICOLE_COMANDA);
         }
 
+        DateLivrare.getInstance().setCodMeserias("0");
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -1026,7 +1026,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
                 return;
             }
 
-            if (radioClPF.isChecked()) {
+            if (radioClPF.isChecked() || radioClMeserias.isChecked()) {
                 CreareComandaGed.tipClient = "PF";
                 DateLivrare.getInstance().setTipPersClient("PF");
 
@@ -1068,7 +1068,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
                 }
 
-                CreareComandaGed.cnpClient = txtCNPClient.getText().toString().trim();
+                if (radioClPF.isChecked())
+                    CreareComandaGed.cnpClient = txtCNPClient.getText().toString().trim();
 
                 if (CreareComandaGed.codClientCUI != null && !CreareComandaGed.codClientCUI.trim().isEmpty())
                     CreareComandaGed.codClientVar = CreareComandaGed.codClientCUI;
@@ -1444,6 +1445,11 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
             CreareComandaGed.tipClientIP = client.getTipClientIP();
             CreareComandaGed.tipPlataContract = client.getTipPlata();
             DateLivrare.getInstance().setClientBlocat(client.isClientBlocat());
+
+            if (radioClMeserias.isChecked()) {
+                DateLivrare.getInstance().setCodMeserias(client.getCodClient());
+                CreareComandaGed.tipPlataContract = "";
+            }
 
             if (client.getTermenPlata() != null)
                 CreareComandaGed.listTermenPlata = client.getTermenPlata();

@@ -27,7 +27,6 @@ import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.beans.TaxeLivrare;
 import my.logon.screen.dialogs.TaxeTransportDialog;
 import my.logon.screen.enums.EnumTipCamion;
-import my.logon.screen.helpers.HelperMathaus;
 
 public class AdapterTransportFiliala extends BaseAdapter {
 
@@ -285,22 +284,6 @@ public class AdapterTransportFiliala extends BaseAdapter {
 
         return df.format(valoareTransport);
 
-    }
-
-
-
-    private String getValoareTransportMacara(TaxaTransport taxaTransport, LivrareMathaus dateLivrare) {
-        double valoareTransport = 0;
-
-        for (BeanTaxaCamion taxa : taxaTransport.getListTaxe()) {
-
-            if (taxa.getTipCamion().equals(taxaTransport.getSelectedCamion())) {
-                int nrPaleti = HelperMathaus.getNrPaletiFiliala(dateLivrare, taxaTransport.getFiliala());
-                valoareTransport = taxa.getTaxeLivrare().getTaxaMacara() * nrPaleti;
-            }
-        }
-
-        return df.format(valoareTransport);
     }
 
 

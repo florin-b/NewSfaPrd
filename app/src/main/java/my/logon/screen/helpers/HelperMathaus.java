@@ -8,10 +8,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import my.logon.screen.beans.ArticolDescarcare;
 import my.logon.screen.beans.ArticolPalet;
@@ -21,7 +19,6 @@ import my.logon.screen.beans.CostDescarcare;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.LivrareMathaus;
-import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.beans.TaxaMasina;
 import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.enums.EnumTipCamion;
@@ -254,41 +251,6 @@ public class HelperMathaus {
                         depozit.equals("92V1") || depozit.equals("95V1") || depozit.equals("DSCM") || depozit.equals("MAD1"));
     }
 
-    public static List<RezumatComanda> getRezumatComanda(List<ArticolComanda> listArticole) {
-
-        Set<String> filiale = getFilialeComanda(listArticole);
-
-        List<RezumatComanda> listComenzi = new ArrayList<RezumatComanda>();
-
-        for (String filiala : filiale) {
-
-            RezumatComanda rezumat = new RezumatComanda();
-            rezumat.setFilialaLivrare(filiala);
-            List<ArticolComanda> listArtComanda = new ArrayList<ArticolComanda>();
-
-            for (ArticolComanda articol : listArticole) {
-                if (articol.getFilialaSite().equals(filiala)) {
-                    listArtComanda.add(articol);
-                }
-            }
-
-            rezumat.setListArticole(listArtComanda);
-            listComenzi.add(rezumat);
-        }
-
-        return listComenzi;
-    }
-
-    private static Set<String> getFilialeComanda(List<ArticolComanda> listArticole) {
-
-        Set<String> filiale = new HashSet<String>();
-        for (final ArticolComanda articol : listArticole) {
-            filiale.add(articol.getFilialaSite());
-        }
-        return filiale;
-
-    }
-
     public static void setTonajComanda() {
 
         if (DateLivrare.getInstance().getDatePoligonLivrare() == null)
@@ -436,6 +398,7 @@ public class HelperMathaus {
                 costTransportMathaus.setFiliala(taxaMasina.getWerks());
                 costTransportMathaus.setTipTransp("TERT");
                 costTransportMathaus.setDepart(taxaMasina.getSpart());
+                costTransportMathaus.setTotalCuTva(taxaMasina.getTotalCuTva());
                 livrareMathaus.getCostTransport().add(costTransportMathaus);
             }
         }
@@ -602,18 +565,6 @@ public class HelperMathaus {
                     nrPaleti += articolPalet.getCantitate();
                 }
             }
-        }
-
-        return nrPaleti;
-    }
-
-    public static int getNrPaletiFilialaDepart(CostDescarcare costDescarcare, String filiala, String depart) {
-
-        int nrPaleti = 0;
-
-        for (ArticolPalet articolPalet : costDescarcare.getArticolePaleti()) {
-            if (articolPalet.getFiliala().equals(filiala) && articolPalet.getDepart().equals(depart))
-                nrPaleti += articolPalet.getCantitate();
         }
 
         return nrPaleti;

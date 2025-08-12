@@ -181,7 +181,7 @@ public class HelperCostDescarcare {
 
     }
 
-    public static ArticolComanda getArticolPalet(ArticolPalet articolPalet, String depozit, String unitLog) {
+    public static ArticolComanda getArticolPalet(ArticolPalet articolPalet, String unitLog) {
 
         ArticolComanda articolComanda = new ArticolComanda();
 
@@ -209,7 +209,7 @@ public class HelperCostDescarcare {
         articolComanda.setDepartAprob("");
         articolComanda.setIstoricPret("");
         articolComanda.setAlteValori("");
-        articolComanda.setDepozit(depozit);
+        articolComanda.setDepozit(cantPaletFiliala.getDepozit());
         articolComanda.setTipArt("");
         articolComanda.setDepart(articolPalet.getDepart());
         articolComanda.setDepartSintetic(articolPalet.getDepart());
@@ -227,6 +227,7 @@ public class HelperCostDescarcare {
         if (articolPalet.getCantFiliala() == null || articolPalet.getCantFiliala().isEmpty()) {
             retCantFiliala.setCantitate(articolPalet.getCantitate());
             retCantFiliala.setPretUnitPalet(articolPalet.getPretUnit());
+            retCantFiliala.setDepozit(articolPalet.getDepozit());
             return retCantFiliala;
         }
 
@@ -235,6 +236,7 @@ public class HelperCostDescarcare {
             if (cantFiliala.getFiliala().equals(filiala)) {
 
                 retCantFiliala.setPretUnitPalet(cantFiliala.getPretUnitPalet());
+                retCantFiliala.setDepozit(cantFiliala.getDepozit());
 
                 fltCantPaletFiliala += cantFiliala.getCantitate();
                 if (articolPalet.getCantitate() == cantFiliala.getCantTotal())
@@ -329,19 +331,6 @@ public class HelperCostDescarcare {
         }
 
         return costDescarcare;
-    }
-
-    public static String getDepozitPalet(List<ArticolComanda> listArticole, String codArticolPalet) {
-        String depozit = "";
-
-        for (ArticolComanda art : listArticole) {
-            if (art.getCodArticol().contains(codArticolPalet)) {
-                depozit = art.getDepozit().replace("040", "04").replace("041", "04");
-                break;
-            }
-        }
-
-        return depozit;
     }
 
 

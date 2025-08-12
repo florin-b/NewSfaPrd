@@ -8,6 +8,7 @@ public class CostTransportMathaus {
 	private String codArtTransp;
 	private String depart;
 	private String numeCost;
+	private double totalCuTva;
 
 
 	public String getFiliala() {
@@ -56,5 +57,13 @@ public class CostTransportMathaus {
 
 	public void setNumeCost(String numeCost) {
 		this.numeCost = numeCost;
+	}
+
+	public double getTotalCuTva() {
+		return totalCuTva;
+	}
+
+	public void setTotalCuTva(double totalCuTva) {
+		this.totalCuTva = totalCuTva;
 	}
 }

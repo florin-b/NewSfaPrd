@@ -15,6 +15,7 @@ import java.util.List;
 
 import my.logon.screen.beans.BeanArticolRetur;
 import my.logon.screen.beans.BeanStocTCLI;
+import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.LivrareMathaus;
@@ -310,7 +311,7 @@ public class UtilsComenzi {
                 && DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().length() > 4;
     }
 
-    public static String getCodFurnizorDL(){
+    public static String getCodFurnizorDL() {
 
         if (!isComandaDl())
             return "";
@@ -473,7 +474,7 @@ public class UtilsComenzi {
         return DateLivrare.getInstance().getTipPersClient().equals("PF") && UserInfo.getInstance().getCodDepart().equals("16");
     }
 
-    public static boolean isComandaPFDep16(DateLivrareAfisare dateLivrareAfisare){
+    public static boolean isComandaPFDep16(DateLivrareAfisare dateLivrareAfisare) {
 
         if (dateLivrareAfisare == null)
             return false;
@@ -483,14 +484,14 @@ public class UtilsComenzi {
     }
 
     public static List<ArticolComanda> getArticolComandaModif() {
-            if (ListaArticoleComanda.getInstance().getListArticoleLivrare()!= null &&
-                    ListaArticoleComanda.getInstance().getListArticoleLivrare().size() > 0)
-                return ListaArticoleComanda.getInstance().getListArticoleLivrare();
-            else if (ListaArticoleComandaGed.getInstance().getListArticoleLivrare()!= null &&
-                    ListaArticoleComandaGed.getInstance().getListArticoleLivrare().size() > 0)
-                return ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
-            else
-                return new ArrayList<>();
+        if (ListaArticoleComanda.getInstance().getListArticoleLivrare() != null &&
+                ListaArticoleComanda.getInstance().getListArticoleLivrare().size() > 0)
+            return ListaArticoleComanda.getInstance().getListArticoleLivrare();
+        else if (ListaArticoleComandaGed.getInstance().getListArticoleLivrare() != null &&
+                ListaArticoleComandaGed.getInstance().getListArticoleLivrare().size() > 0)
+            return ListaArticoleComandaGed.getInstance().getListArticoleLivrare();
+        else
+            return new ArrayList<>();
 
     }
 
@@ -500,6 +501,19 @@ public class UtilsComenzi {
             return false;
 
         return livrareMathaus.getListPaleti().size() > 0;
+    }
+
+    public static double getTotalCuTva(LivrareMathaus livrareMathaus) {
+
+        double totalCuTva = livrareMathaus.getTotalCuTva();
+
+        if (livrareMathaus.getCostTransport() != null) {
+            for (CostTransportMathaus costTransportMathaus : livrareMathaus.getCostTransport()) {
+                totalCuTva += costTransportMathaus.getTotalCuTva();
+            }
+        }
+
+        return totalCuTva;
     }
 
 }

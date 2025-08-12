@@ -24,6 +24,7 @@ public class TaxeLivrare {
     private double valoareTaxaTransport;
     private String depart;
     private List<TaxaMasina> taxeDivizii;
+    private double totalCuTva;
 
     public double getTaxaMacara() {
         return taxaMacara;
@@ -183,5 +184,13 @@ public class TaxeLivrare {
 
     public void setTaxaVehiculUsor(double taxaVehiculUsor) {
         this.taxaVehiculUsor = taxaVehiculUsor;
+    }
+
+    public double getTotalCuTva() {
+        return totalCuTva;
+    }
+
+    public void setTotalCuTva(double totalCuTva) {
+        this.totalCuTva = totalCuTva;
     }
 }

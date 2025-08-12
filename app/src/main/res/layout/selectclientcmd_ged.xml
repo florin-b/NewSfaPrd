@@ -61,15 +61,14 @@
                 android:typeface="serif" />
 
             <RadioButton
-                android:id="@+id/radioClNominal"
+                android:id="@+id/radioClMeserias"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dip"
-                android:text="Client nominal"
+                android:text="Clienti Vip"
                 android:textColor="@color/labelColor"
                 android:textSize="17sp"
-                android:typeface="serif"
-                android:visibility="invisible" />
+                android:typeface="serif" />
 
             <RadioButton
                 android:id="@+id/radioClInstPub"
@@ -83,14 +82,16 @@
                 android:visibility="invisible" />
 
             <RadioButton
-                android:id="@+id/radioClMeserias"
+                android:id="@+id/radioClNominal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dip"
-                android:text="Meseriasi - PFA"
+                android:text="Client nominal"
                 android:textColor="@color/labelColor"
                 android:textSize="17sp"
-                android:typeface="serif" />
+                android:typeface="serif"
+                android:visibility="invisible" />
+
         </RadioGroup>
     </LinearLayout>
 

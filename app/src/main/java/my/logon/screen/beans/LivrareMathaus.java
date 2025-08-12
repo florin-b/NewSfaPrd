@@ -5,6 +5,7 @@ import java.util.List;
 public class LivrareMathaus {
 
 	private ComandaMathaus comandaMathaus;
+	private double totalCuTva;
 	private List<CostTransportMathaus> costTransport;
 	private List<TaxaMasina> taxeMasini;
 	private List<ArticolPalet> listPaleti;
@@ -39,5 +40,13 @@ public class LivrareMathaus {
 
 	public void setListPaleti(List<ArticolPalet> listPaleti) {
 		this.listPaleti = listPaleti;
+	}
+
+	public double getTotalCuTva() {
+		return totalCuTva;
+	}
+
+	public void setTotalCuTva(double totalCuTva) {
+		this.totalCuTva = totalCuTva;
 	}
 }

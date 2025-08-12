@@ -242,6 +242,10 @@ public class UtilsUser {
 
     }
 
+    public static boolean isUserMeserias(){
+        return UserInfo.getInstance().getTipUserSap().equals("CVA");
+    }
+
     public static List<Agent> getListFromHash(ArrayList<HashMap<String, String>> hashAgenti) {
 
         List<Agent> listAgenti = new ArrayList<>();

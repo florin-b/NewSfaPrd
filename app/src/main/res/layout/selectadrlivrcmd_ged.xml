@@ -436,34 +436,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutMeseriasi"
-                android:layout_width="match_parent"
-                android:layout_height="60dip"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|left"
-                    android:layout_marginLeft="3dip"
-                    android:gravity="left|center"
-                    android:text="Meserias"
-                    android:textColor="@color/labelColor"
-                    android:textSize="17sp"
-                    android:typeface="serif" />
-
-                <Spinner
-                    android:id="@+id/spinnerMeseriasi"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginRight="180dip"
-                    android:layout_weight="0.25"
-                    android:gravity="left" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/layoutDocInsot"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"

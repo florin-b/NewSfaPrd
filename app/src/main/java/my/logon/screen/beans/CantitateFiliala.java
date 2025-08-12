@@ -5,6 +5,7 @@ public class CantitateFiliala {
     private int cantitate;
     private int cantTotal;
     private double pretUnitPalet;
+    private String depozit;
 
     public String getFiliala() {
         return filiala;
@@ -36,5 +37,13 @@ public class CantitateFiliala {
 
     public void setPretUnitPalet(double pretUnitPalet) {
         this.pretUnitPalet = pretUnitPalet;
+    }
+
+    public String getDepozit() {
+        return depozit;
+    }
+
+    public void setDepozit(String depozit) {
+        this.depozit = depozit;
     }
 }

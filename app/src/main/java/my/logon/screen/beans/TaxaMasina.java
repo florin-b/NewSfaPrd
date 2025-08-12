@@ -29,6 +29,7 @@ public class TaxaMasina {
     private double taxaTransport;
     private String spart;
     private String traty;
+    private double totalCuTva;
     private List<TaxaMasina> taxeDivizii;
 
     public String getWerks() {
@@ -237,5 +238,13 @@ public class TaxaMasina {
 
     public void setTaxaUsor(double taxaUsor) {
         this.taxaUsor = taxaUsor;
+    }
+
+    public double getTotalCuTva() {
+        return totalCuTva;
+    }
+
+    public void setTotalCuTva(double totalCuTva) {
+        this.totalCuTva = totalCuTva;
     }
 }

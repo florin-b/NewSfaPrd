@@ -784,6 +784,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             JSONObject jsonObject = new JSONObject((String) result);
 
             livrareMathaus.setComandaMathaus(deserializeStocMathaus(jsonObject.getString("comandaMathaus")));
+            livrareMathaus.setTotalCuTva(Double.parseDouble(jsonObject.getString("totalCuTva")));
 
             List<CostTransportMathaus> listCostTransport = new ArrayList<CostTransportMathaus>();
             List<TaxaMasina> taxeMasini = new ArrayList<>();
@@ -840,6 +841,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setSpart(taxaObject.getString("spart"));
                 taxaMasina.setTraty(taxaObject.getString("traty"));
                 taxaMasina.setTaxeDivizii(getTaxeDivizii(taxaObject.getString("taxeDivizii")));
+                taxaMasina.setTotalCuTva(Double.valueOf(taxaObject.getString("totalCuTva")));
 
                 taxeMasini.add(taxaMasina);
 
@@ -860,6 +862,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 articol.setNumeArticol(object.getString("numeArticol"));
                 articol.setCantArticol(object.getString("cantArticol"));
                 articol.setUmArticol(object.getString("umArticol"));
+                articol.setDepozit(object.getString("depozit"));
                 articol.setCantFiliala(getPaletiFiliala(object.getString("paletiFiliala")));
                 listPaleti.add(articol);
 
@@ -891,6 +894,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 cantFiliala.setCantitate(Integer.valueOf(object.getString("cantitate")));
                 cantFiliala.setCantTotal(Integer.valueOf(object.getString("cantTotal")));
                 cantFiliala.setPretUnitPalet(Double.valueOf(object.getString("pretUnitPalet")));
+                cantFiliala.setDepozit(object.getString("depozit"));
                 paletiFiliala.add(cantFiliala);
             }
 
@@ -941,6 +945,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setTaxaTransport(Double.valueOf(taxaObject.getString("taxaTransport")));
                 taxaMasina.setSpart(taxaObject.getString("spart"));
                 taxaMasina.setTraty(taxaObject.getString("traty"));
+                taxaMasina.setTotalCuTva(Double.valueOf(taxaObject.getString("totalCuTva")));
                 taxeDivizii.add(taxaMasina);
             }
 

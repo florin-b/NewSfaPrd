@@ -16,6 +16,7 @@ public class ArticolPalet {
 	private String umArticol;
 	private boolean adaugat;
 	private String filiala;
+	private String depozit;
 	private List<CantitateFiliala> cantFiliala;
 
 	
@@ -124,5 +125,13 @@ public class ArticolPalet {
 
 	public void setCantFiliala(List<CantitateFiliala> cantFiliala) {
 		this.cantFiliala = cantFiliala;
+	}
+
+	public String getDepozit() {
+		return depozit;
+	}
+
+	public void setDepozit(String depozit) {
+		this.depozit = depozit;
 	}
 }

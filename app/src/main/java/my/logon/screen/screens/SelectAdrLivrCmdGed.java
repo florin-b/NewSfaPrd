@@ -56,7 +56,6 @@ import my.logon.screen.adapters.AdapterFilialeLivrare;
 import my.logon.screen.beans.Address;
 import my.logon.screen.beans.BeanAdresaLivrare;
 import my.logon.screen.beans.BeanAdreseJudet;
-import my.logon.screen.beans.BeanClient;
 import my.logon.screen.beans.BeanCodPostal;
 import my.logon.screen.beans.BeanDateLivrareClient;
 import my.logon.screen.beans.BeanFilialaLivrare;
@@ -147,7 +146,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     private Spinner spinnerIndoire;
     private TextView textDataLivrare;
     private Button btnDataLivrare;
-    private Spinner spinnerMeseriasi;
+
     private CheckBox checkFactPaleti;
     private CheckBox chkCamionDescoperit;
     private Spinner spinnerProgramLivrare;
@@ -483,21 +482,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             btnDataLivrare = (Button) findViewById(R.id.btnDataLivrare);
             addListenerDataLivrare();
 
-            String tipUser;
-
-            if (UtilsUser.isAgentOrSD())
-                tipUser = "AV";
-            else
-                tipUser = "CV";
-
-            HashMap<String, String> params = new HashMap<String, String>();
-            params.put("codFiliala", UserInfo.getInstance().getUnitLog());
-            params.put("tipUser", tipUser);
-            params.put("codUser", UserInfo.getInstance().getCod());
-            params.put("codDepart", UserInfo.getInstance().getCodDepart());
-
-            spinnerMeseriasi = (Spinner) findViewById(R.id.spinnerMeseriasi);
-            operatiiClient.getMeseriasi(params);
 
             spinnerProgramLivrare = (Spinner) findViewById(R.id.spinnerProgramLivrare);
             spinnerProgramLivrare.setSelection(3);
@@ -2099,11 +2083,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         } else
             dateLivrareInstance.setPrelucrareLemn("-1");
 
-        if (spinnerMeseriasi.getSelectedItem() != null)
-            dateLivrareInstance.setCodMeserias(((BeanClient) spinnerMeseriasi.getSelectedItem()).getCodClient());
-        else
-            dateLivrareInstance.setCodMeserias("0");
-
         dateLivrareInstance.setFactPaletSeparat(checkFactPaleti.isChecked());
         dateLivrareInstance.setCamionDescoperit(chkCamionDescoperit.isChecked());
 
@@ -2428,42 +2407,11 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
 
     }
 
-    private void fillSpinnerMeseriasi(String result) {
-        List<BeanClient> listMeseriasi = operatiiClient.deserializeListClienti(result);
-
-        if (listMeseriasi.isEmpty()) {
-            ((LinearLayout) findViewById(R.id.layoutMeseriasi)).setVisibility(View.GONE);
-            return;
-        } else
-            ((LinearLayout) findViewById(R.id.layoutMeseriasi)).setVisibility(View.VISIBLE);
-
-        BeanClient client = new BeanClient();
-        client.setNumeClient("Selectati un meserias");
-        client.setCodClient("0");
-        listMeseriasi.add(0, client);
-
-        ArrayAdapter<BeanClient> spinnerArrayAdapter = new ArrayAdapter<BeanClient>(this, android.R.layout.simple_spinner_item, listMeseriasi);
-
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerMeseriasi.setAdapter(spinnerArrayAdapter);
-
-        if (!DateLivrare.getInstance().getCodMeserias().isEmpty()) {
-
-            for (int i = 0; i < spinnerMeseriasi.getAdapter().getCount(); i++)
-                if (((BeanClient) spinnerMeseriasi.getAdapter().getItem(i)).getCodClient().equals(DateLivrare.getInstance().getCodMeserias()))
-                    spinnerMeseriasi.setSelection(i);
-        }
-
-    }
-
     public void operationComplete(EnumClienti methodName, Object result) {
 
         switch (methodName) {
             case GET_ADRESE_LIVRARE:
                 fillAdreseLivrareClient((String) result);
-                break;
-            case GET_MESERIASI:
-                fillSpinnerMeseriasi((String) result);
                 break;
             default:
                 break;
