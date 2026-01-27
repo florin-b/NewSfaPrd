@@ -166,8 +166,9 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
         spinnerTipUser = (Spinner) findViewById(R.id.spinnerTipUser);
         populateSpinnerTipUser();
 
-        if (!isDirectorDistrib()) {
+        if (!isDirectorDistrib() || isDirectorConsilieri()) {
             spinnerTipUser.setVisibility(View.INVISIBLE);
+            spinnerTipUser.setEnabled(false);
         }
 
         checkStaticVars();
@@ -260,6 +261,10 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
 
     boolean isDirectorDistrib() {
         return UserInfo.getInstance().getTipAcces().equals("14") || UserInfo.getInstance().getTipAcces().equals("12");
+    }
+
+    boolean isDirectorConsilieri(){
+        return UserInfo.getInstance().getTipUserSap().equals("DVCVA") || UserInfo.getInstance().getTipUserSap().equals("DVIP");
     }
 
     boolean isDirector() {
@@ -374,6 +379,10 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
             selectedCodDepart = "11";
         }
 
+        if (isDirectorConsilieri()) {
+            selectedCodDepart = "11";
+        }
+
         // smr, smw, smg
         if (UtilsUser.isSMNou()) {
             selectedCodDepart = "11";
@@ -435,7 +444,8 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
                 break;
         }
 
-        agent.getListaAgenti(selectedFiliala, selectedCodDepart, AfisComanda.this, true, null);
+        if (!selectedFiliala.equals("-1"))
+            agent.getListaAgenti(selectedFiliala, selectedCodDepart, AfisComanda.this, true, null);
 
     }
 
@@ -609,6 +619,12 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
                 paramDepart = "11";
                 codSD = UserInfo.getInstance().getCod();
             }
+
+            if (isDirectorConsilieri()) {
+                tipUser = "CV";
+                paramDepart = "11";
+            }
+
 
             String paramInterval = intervalAfisare;
             if (intervalAfisare.equals("3")) {

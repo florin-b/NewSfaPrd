@@ -735,6 +735,7 @@ public class AprobareComanda extends Activity implements ComenziDAOListener, Den
             params.put("tipCmd", "2"); // pentru aprobare
             params.put("tipUser", tipUsr); // selectie comenzi
             params.put("depart", depart);
+            params.put("tipUserSap", UserInfo.getInstance().getTipUserSap());
 
             operatiiComenzi.getListComenzi(params);
 
