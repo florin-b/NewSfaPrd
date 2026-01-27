@@ -82,6 +82,9 @@ public class DateLivrareAfisare {
     private String aprobariNecesare;
     private String aprobariPrimite;
     private String prelucrare;
+    private String refHybris;
+    private String tipClientDoc;
+    private String canalB2B;
 
     public DateLivrareAfisare() {
 
@@ -694,5 +697,29 @@ public class DateLivrareAfisare {
 
     public void setPrelucrare(String prelucrare) {
         this.prelucrare = prelucrare;
+    }
+
+    public String getRefHybris() {
+        return refHybris;
+    }
+
+    public void setRefHybris(String refHybris) {
+        this.refHybris = refHybris;
+    }
+
+    public String getTipClientDoc() {
+        return tipClientDoc;
+    }
+
+    public void setTipClientDoc(String tipClientDoc) {
+        this.tipClientDoc = tipClientDoc;
+    }
+
+    public String getCanalB2B() {
+        return canalB2B;
+    }
+
+    public void setCanalB2B(String canalB2B) {
+        this.canalB2B = canalB2B;
     }
 }

@@ -15,6 +15,7 @@ public class ArticolDB {
 	private String stoc;
 	private String categorie;
 	private double lungime;
+	private String planificator;
 
 	public ArticolDB() {
 
@@ -124,6 +125,14 @@ public class ArticolDB {
 
 	public void setLungime(double lungime) {
 		this.lungime = lungime;
+	}
+
+	public String getPlanificator() {
+		return planificator;
+	}
+
+	public void setPlanificator(String planificator) {
+		this.planificator = planificator;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import my.logon.screen.beans.ArticolMathaus;
+import my.logon.screen.beans.BeanCautareArticolOferta;
 import my.logon.screen.beans.CategorieMathaus;
 import my.logon.screen.beans.RezultatArtMathaus;
 import my.logon.screen.enums.EnumOperatiiMathaus;
@@ -50,6 +51,12 @@ public class OperatiiMathaus implements AsyncTaskListener {
 	
 	public void cautaArticoleLocal(HashMap<String, String> params) {
 		numeComanda = EnumOperatiiMathaus.CAUTA_ARTICOLE_LOCAL;
+		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getNumeComanda(), params, (AsyncTaskListener) this, context);
+		call.getCallResultsFromFragment();
+	}
+
+	public void cautaArticoleOferta(HashMap<String, String> params){
+		numeComanda = EnumOperatiiMathaus.GET_ARTICOLE_OFERTA;
 		AsyncTaskWSCall call = new AsyncTaskWSCall(numeComanda.getNumeComanda(), params, (AsyncTaskListener) this, context);
 		call.getCallResultsFromFragment();
 	}
@@ -148,6 +155,34 @@ public class OperatiiMathaus implements AsyncTaskListener {
 		rezultat.setListArticole(objectsList);
 
 		return rezultat;
+	}
+
+	public String serializeCautareArticolOferta(BeanCautareArticolOferta articolOferta) {
+
+		JSONObject jsonParametru = new JSONObject();
+
+		try {
+
+			jsonParametru.put("codCategorie", articolOferta.getCodCategorie());
+			jsonParametru.put("codArticol", articolOferta.getCodArticol());
+			jsonParametru.put("numeArticol", articolOferta.getNumeArticol());
+			jsonParametru.put("codAgent", articolOferta.getCodAgent());
+			jsonParametru.put("codClient", articolOferta.getCodClient());
+			jsonParametru.put("tipTransport", articolOferta.getTipTransport());
+			jsonParametru.put("unitLog", articolOferta.getUnitLog());
+			jsonParametru.put("codJudet", articolOferta.getCodJudet());
+			jsonParametru.put("numeLocalitate", articolOferta.getNumeLocalitate());
+			jsonParametru.put("numeStrada", articolOferta.getNumeStrada());
+			jsonParametru.put("latitude", articolOferta.getLatitude());
+			jsonParametru.put("longitude", articolOferta.getLongitude());
+
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonParametru.toString();
+
 	}
 
 	@Override

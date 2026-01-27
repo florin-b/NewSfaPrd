@@ -2,16 +2,18 @@ package my.logon.screen.enums;
 
 public enum EnumOperatiiMathaus {
 
-	GET_CATEGORII("getCategoriiMathaus"), GET_ARTICOLE("getArticoleCategorieMathaus"), CAUTA_ARTICOLE("cautaArticoleMathaus"), CAUTA_ARTICOLE_LOCAL("cautaArticoleLocal");
-	
-	private String numeComanda;
+    GET_CATEGORII("getCategoriiMathaus"), GET_ARTICOLE("getArticoleCategorieMathaus"),
+    CAUTA_ARTICOLE("cautaArticoleMathaus"), CAUTA_ARTICOLE_LOCAL("cautaArticoleLocal"),
+    GET_ARTICOLE_OFERTA("getArticoleOferta");
 
-	EnumOperatiiMathaus(String numeComanda) {
-		this.numeComanda = numeComanda;
-	}
+    private String numeComanda;
 
-	public String getNumeComanda() {
-		return numeComanda;
-	}
+    EnumOperatiiMathaus(String numeComanda) {
+        this.numeComanda = numeComanda;
+    }
+
+    public String getNumeComanda() {
+        return numeComanda;
+    }
 
 }

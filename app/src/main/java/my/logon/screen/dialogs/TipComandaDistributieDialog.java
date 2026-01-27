@@ -27,11 +27,11 @@ public class TipComandaDistributieDialog extends Dialog {
 	private String codFilialaDest = "";
 
 
-	private String[] numeFiliala = { "Bacau", "Baia Mare", "Brasov", "Buzau", "Brasov-central", "Buc. Andronache", "Buc. Militari", "Buc. Otopeni",
+	private String[] numeFiliala = { "Bacau", "Baia Mare", "Brasov", "Buzau", "Brasov-central",  "Buc. Militari",
 			"Buc. Glina", "Constanta", "Cluj", "Craiova", "Focsani", "Galati", "Hunedoara", "Iasi", "Oradea", "Piatra Neamt", "Pitesti", "Ploiesti", "Sibiu",
 			"Suceava", "Timisoara", "Tg. Mures" };
 
-	private String[] codFiliala = { "BC10", "MM10", "BV10", "BZ10", "BV90", "BU13", "BU11", "BU12", "BU10", "CT10", "CJ10", "DJ10", "VN10", "GL10", "HD10",
+	private String[] codFiliala = { "BC10", "MM10", "BV10", "BZ10", "BV90",  "BU11",  "BU10", "CT10", "CJ10", "DJ10", "VN10", "GL10", "HD10",
 			"IS10", "BH10", "NT10", "AG10", "PH10", "SB10","SV10", "TM10", "MS10" };
 
 	public TipComandaDistributieDialog(Context context) {

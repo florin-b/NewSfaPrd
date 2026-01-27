@@ -812,6 +812,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
             String departCautare = DepartamentAgent.getDepartArticole(selectedDepartamentAgent);
 
+            if (isOriceComandaModificata() && UtilsComenzi.isComandaB2B())
+                departCautare = UtilsComenzi.getDepartCautareB2B();
+
             HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
             params.put("searchString", numeArticol);
             params.put("tipArticol", tipArticol);

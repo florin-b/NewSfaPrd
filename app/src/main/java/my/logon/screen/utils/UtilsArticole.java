@@ -18,6 +18,12 @@ public class UtilsArticole {
 
 	}
 
+	public static void getArticoleSimulate(List<ArticolDB> listArticole){
+
+		return ;
+
+	}
+
 	public static boolean isArticolPermitSubCmp(String codArticol) {
 
 		String articoleExceptie = "000000000010300576" + "000000000010300578" + "000000000010300582" + "000000000010300595" + "000000000010300598"

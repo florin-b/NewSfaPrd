@@ -933,7 +933,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             }
         }
 
-        if (valGreutateCmd > Constants.MAX_GREUTATE_CNP || valFTvaCmd >= Constants.MAX_VALOARE_CNP)
+        if (valGreutateCmd >= Constants.MAX_GREUTATE_CNP || valFTvaCmd >= Constants.MAX_VALOARE_CNP)
             return true;
 
         return false;
@@ -1694,6 +1694,8 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
             obj.put("isComandaCustodie", DateLivrare.getInstance().isComandaCustodie());
             obj.put("taxeComanda", opArticol.serializeTaxeComanda(DateLivrare.getInstance().getTaxeComanda()));
             obj.put("zona", DateLivrare.getInstance().getDatePoligonLivrare().getTipZona());
+            obj.put("appVer", UserInfo.getInstance().getAppVer());
+            obj.put("canalB2B", DateLivrare.getInstance().getCanalB2B());
 
         } catch (JSONException ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
@@ -2025,6 +2027,7 @@ public class CreareComanda extends Activity implements AsyncTaskListener, Valoar
         antetComanda.setNrCmdSap("");
         antetComanda.setStrada(DateLivrare.getInstance().getStrada());
         antetComanda.setCodFurnizor(UtilsComenzi.getCodFurnizorDL());
+        antetComanda.setLivrareCustodie(isLivrareCustodie());
 
         copyLivrareMathaus(antetComanda, comandaMathaus);
 

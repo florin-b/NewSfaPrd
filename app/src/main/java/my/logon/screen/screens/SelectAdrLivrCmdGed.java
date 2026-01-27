@@ -295,7 +295,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             layoutMail.setVisibility(View.VISIBLE);
             textMail.setText(dateLivrareInstance.getMail().trim().replace("~", "@"));
 
-            adapterSpinnerTransp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipTransport);
+            adapterSpinnerTransp = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tipTransport);
 
             if (DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_COMANDA)) {
                 List<String> itemsTransp = new ArrayList<>();
@@ -479,6 +479,9 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             if (!dateLivrareInstance.getDataLivrare().isEmpty())
                 textDataLivrare.setText(dateLivrareInstance.getDataLivrare());
 
+            if (dateLivrareInstance.getRefHybris() != null && !dateLivrareInstance.getRefHybris().trim().isEmpty())
+                ((EditText) findViewById(R.id.txtRefHybris)).setText(dateLivrareInstance.getRefHybris().trim());
+
             btnDataLivrare = (Button) findViewById(R.id.btnDataLivrare);
             addListenerDataLivrare();
 
@@ -539,7 +542,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 }
             }
 
-            if (DateLivrare.getInstance().isComandaCustodie()) {
+            if (DateLivrare.getInstance().isComandaCustodie() || UtilsComenzi.isComandaPFFaraFact()) {
                 spinnerTransp.setSelection(1, true);
                 spinnerTransp.setEnabled(false);
             } else {
@@ -548,7 +551,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             }
 
             if (!ulLivrareModifCmd.trim().isEmpty()) {
-                if (isAdresaLivrareTCLIModifCmd || DateLivrare.getInstance().getTransport().equals("TRAP"))
+                if (isAdresaLivrareTCLIModifCmd || DateLivrare.getInstance().getTransport().equals("TRAP") || DateLivrare.getInstance().getTransport().equals("TERT"))
                     spinnerTransp.setSelection(0, true);
 
                 else if (DateLivrare.getInstance().getTransport().equals("TCLI")) {
@@ -1602,7 +1605,6 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
     }
 
 
-
     private void setListenerTextLocalitate() {
 
         textLocalitate.addTextChangedListener(new TextWatcher() {
@@ -2095,6 +2097,10 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
         if (((LinearLayout) findViewById(R.id.layoutAdr21)).getVisibility() == View.VISIBLE)
             dateLivrareInstance.setCodPostal(((EditText) findViewById(R.id.textCodPostal)).getText().toString().trim());
 
+        dateLivrareInstance.setRefHybris("");
+        if (((LinearLayout) findViewById(R.id.layoutRefHybris)).getVisibility() == View.VISIBLE)
+            dateLivrareInstance.setRefHybris(((EditText) findViewById(R.id.txtRefHybris)).getText().toString().trim());
+
         if (DateLivrare.getInstance().getCoordonateAdresa() != null)
             getDatePoligonLivrare();
         else
@@ -2500,7 +2506,7 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
             valideazaAdresaResponse((String) result);
         } else if (numeComanda == EnumOperatiiAdresa.GET_DATE_LIVRARE_CLIENT) {
             loadDateLivrareClient(operatiiAdresa.deserializeDateLivrareClient((String) result));
-        }  else if (numeComanda == EnumOperatiiAdresa.GET_ADRESA_FILIALA) {
+        } else if (numeComanda == EnumOperatiiAdresa.GET_ADRESA_FILIALA) {
             setAdresalivrareFiliala((String) result);
         } else if (numeComanda == EnumOperatiiAdresa.GET_DATE_POLIGON_LIVRARE) {
             setDatePoligonLivrare((String) result);

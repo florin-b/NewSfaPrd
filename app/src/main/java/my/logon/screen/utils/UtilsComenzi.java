@@ -483,6 +483,10 @@ public class UtilsComenzi {
 
     }
 
+    public static boolean isComandaPFFaraFact() {
+        return DateLivrare.getInstance().getTipPersClient() != null && DateLivrare.getInstance().getTipPersClient().equals("PF") && !DateLivrare.getInstance().isFacturaCmd();
+    }
+
     public static List<ArticolComanda> getArticolComandaModif() {
         if (ListaArticoleComanda.getInstance().getListArticoleLivrare() != null &&
                 ListaArticoleComanda.getInstance().getListArticoleLivrare().size() > 0)
@@ -514,6 +518,28 @@ public class UtilsComenzi {
         }
 
         return totalCuTva;
+    }
+
+
+    public static boolean isComandaB2B() {
+        return DateLivrare.getInstance().getSite() != null && DateLivrare.getInstance().getSite().equals("B");
+    }
+
+    public static String getDepartCautareB2B() {
+
+        if (DateLivrare.getInstance().getCanalB2B().equals("20"))
+            return "";
+
+        if (DateLivrare.getInstance().getDepartComanda() != null && !DateLivrare.getInstance().getDepartComanda().trim().isEmpty() &&
+                !DateLivrare.getInstance().getDepartComanda().equals("11"))
+            return DateLivrare.getInstance().getDepartComanda();
+
+
+        return "";
+    }
+
+    public static boolean isComandaB2BCanal20() {
+        return (UserInfo.getInstance().getTipUserSap().equals("CVOB") || UtilsComenzi.isComandaB2B()) && DateLivrare.getInstance().getCanalB2B().equals("20");
     }
 
 }

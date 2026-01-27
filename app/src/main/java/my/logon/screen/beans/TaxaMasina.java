@@ -27,6 +27,9 @@ public class TaxaMasina {
     private String matnrTransport;
     private String maktxTransport;
     private double taxaTransport;
+    private String matnrAmbalare;
+    private String maktxAmbalare;
+    private double taxaAmbalare;
     private String spart;
     private String traty;
     private double totalCuTva;
@@ -246,5 +249,29 @@ public class TaxaMasina {
 
     public void setTotalCuTva(double totalCuTva) {
         this.totalCuTva = totalCuTva;
+    }
+
+    public String getMatnrAmbalare() {
+        return matnrAmbalare;
+    }
+
+    public void setMatnrAmbalare(String matnrAmbalare) {
+        this.matnrAmbalare = matnrAmbalare;
+    }
+
+    public String getMaktxAmbalare() {
+        return maktxAmbalare;
+    }
+
+    public void setMaktxAmbalare(String maktxAmbalare) {
+        this.maktxAmbalare = maktxAmbalare;
+    }
+
+    public double getTaxaAmbalare() {
+        return taxaAmbalare;
+    }
+
+    public void setTaxaAmbalare(double taxaAmbalare) {
+        this.taxaAmbalare = taxaAmbalare;
     }
 }

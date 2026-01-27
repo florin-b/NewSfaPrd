@@ -379,6 +379,7 @@ public class SelectClientCmd extends ListActivity implements OperatiiClientListe
 		dateLivrareInstance.setNrTel(detaliiClient.getTelefon());
 		dateLivrareInstance.setClientFurnizor(detaliiClient.isFurnizor());
 		dateLivrareInstance.setDiviziiClient(detaliiClient.getDivizii());
+		dateLivrareInstance.setCanalB2B(detaliiClient.getCanalB2B());
 
 		codClientVar = codClient;
 		numeClientVar = numeClient;

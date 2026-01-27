@@ -1142,6 +1142,7 @@ public class MainMenu extends Activity {
                 request.addProperty("depart", paramDepart);
                 request.addProperty("filiala", UserInfo.getInstance().getUnitLog());
                 request.addProperty("tipUser", UserInfo.getInstance().getTipUser());
+                request.addProperty("tipUserSap", UserInfo.getInstance().getTipUserSap());
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 envelope.dotNet = true;

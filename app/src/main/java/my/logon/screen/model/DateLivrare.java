@@ -110,6 +110,11 @@ public class DateLivrare {
 	private List<TaxaComanda> taxeComanda;
 	private String transpInit = "";
 	private List<ArticolComanda> comandaInit;
+	private String refHybris;
+	private String tipClientDoc;
+	private String canalB2B;
+	private String departComanda;
+	private String site;
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -175,6 +180,7 @@ public class DateLivrare {
 		this.isComandaCustodie = dateLivrareAfisare.isComandaCustodie();
 		this.codPostal = dateLivrareAfisare.getCodPostal();
 		this.transpInit = dateLivrareAfisare.getTransport();
+		this.canalB2B = dateLivrareAfisare.getCanalB2B();
 
 
 	}
@@ -795,6 +801,46 @@ public class DateLivrare {
 		this.comandaInit = comandaInit;
 	}
 
+	public String getRefHybris() {
+		return refHybris;
+	}
+
+	public void setRefHybris(String refHybris) {
+		this.refHybris = refHybris;
+	}
+
+	public String getTipClientDoc() {
+		return tipClientDoc;
+	}
+
+	public void setTipClientDoc(String tipClientDoc) {
+		this.tipClientDoc = tipClientDoc;
+	}
+
+	public String getCanalB2B() {
+		return canalB2B;
+	}
+
+	public void setCanalB2B(String canalB2B) {
+		this.canalB2B = canalB2B;
+	}
+
+	public String getDepartComanda() {
+		return departComanda;
+	}
+
+	public void setDepartComanda(String departComanda) {
+		this.departComanda = departComanda;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -865,6 +911,11 @@ public class DateLivrare {
 		taxeComanda = null;
 		transpInit = "";
 		comandaInit = null;
+		refHybris = "";
+		tipClientDoc = "";
+		canalB2B = "";
+		departComanda = "";
+		site = "";
 	}
 
 }

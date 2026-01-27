@@ -26,6 +26,7 @@ import my.logon.screen.R;
 import my.logon.screen.adapters.AdapterCategoriiMathaus;
 import my.logon.screen.adapters.ArticolMathausAdapter;
 import my.logon.screen.beans.ArticolMathaus;
+import my.logon.screen.beans.BeanCautareArticolOferta;
 import my.logon.screen.beans.CategorieMathaus;
 import my.logon.screen.beans.RezultatArtMathaus;
 import my.logon.screen.enums.EnumOperatiiMathaus;
@@ -64,6 +65,9 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
     private RadioGroup radioTipArt;
     private boolean expandMainList = true;
     private String filialaLivrareMathaus;
+    private String tipComandaParent;
+    private String codClientParent;
+    private RezultatArtMathaus rezultatOferta;
 
     private enum AfisArtMathaus {
         CATEGORIE, CAUTARE
@@ -145,25 +149,20 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
 
     private void setRadioTipArtListener() {
 
-        radioTipArt.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioTipArt.setOnCheckedChangeListener((group, checkedId) -> {
 
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            paginaCurenta = 1;
+            clearCautaView();
 
-                paginaCurenta = 1;
-                clearCautaView();
-
-                switch (checkedId) {
-                    case R.id.radio_site:
-                        tipArticolAfis = TipArticolAfis.SITE;
-                        getArticoleSite();
-                        break;
-                    case R.id.radio_nd:
-                        tipArticolAfis = TipArticolAfis.ND;
-                        getArticoleND();
-                        break;
-                }
-
+            switch (checkedId) {
+                case R.id.radio_site:
+                    tipArticolAfis = TipArticolAfis.SITE;
+                    getArticoleSite();
+                    break;
+                case R.id.radio_nd:
+                    tipArticolAfis = TipArticolAfis.ND;
+                    getArticoleND();
+                    break;
             }
 
         });
@@ -178,7 +177,9 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
                 if (paginaCurenta > 1) {
                     paginaCurenta = 1;
 
-                    if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
+                    if (isComandaSimulata())
+                        afisArticole(null);
+                    else if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
                         getArticole(categorieCurenta, paginaCurenta);
                     else
                         cautaArticoleMathaus();
@@ -197,7 +198,9 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
                 if (paginaCurenta > 1) {
                     paginaCurenta--;
 
-                    if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
+                    if (isComandaSimulata())
+                        afisArticole(null);
+                    else if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
                         getArticole(categorieCurenta, paginaCurenta);
                     else
                         cautaArticoleMathaus();
@@ -215,7 +218,9 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
                 if (paginaCurenta < nrPagini) {
                     paginaCurenta++;
 
-                    if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
+                    if (isComandaSimulata())
+                        afisArticole(null);
+                    else if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
                         getArticole(categorieCurenta, paginaCurenta);
                     else
                         cautaArticoleMathaus();
@@ -234,7 +239,9 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
                 if (paginaCurenta < nrPagini) {
                     paginaCurenta = nrPagini;
 
-                    if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
+                    if (isComandaSimulata())
+                        afisArticole(null);
+                    else if (tipAfisArticole == AfisArtMathaus.CATEGORIE)
                         getArticole(categorieCurenta, paginaCurenta);
                     else
                         cautaArticoleMathaus();
@@ -320,12 +327,20 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         params.put("tipComanda", tipComanda);
         params.put("transpTert", String.valueOf(DateLivrare.getInstance().getTranspInit().equals("TERT")));
 
-        if (this.categorieCurenta != null && this.categorieCurenta.equals("0"))
+        if (isComandaSimulata()) {
+            String codArticolCateg = tipCautare.equals("c") ? textCodArticol.getText().toString().trim().toLowerCase() : "";
+            String numeArticolCateg = tipCautare.equals("n") ? textCodArticol.getText().toString().trim().toLowerCase() : "";
+            getArticoleOferta("", codArticolCateg, numeArticolCateg);
+        } else if (this.categorieCurenta != null && this.categorieCurenta.equals("0"))
             opMathaus.cautaArticoleLocal(params);
         else
             opMathaus.cautaArticole(params);
 
 
+    }
+
+    private boolean isComandaSimulata() {
+        return tipComandaParent != null && tipComandaParent.toLowerCase().equals("s");
     }
 
     private void afisCategorii(String result) {
@@ -414,7 +429,6 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
     }
 
 
-
     private void addSpinner(CategorieMathaus categorie) {
 
         setParinti.clear();
@@ -477,11 +491,36 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
             tipAfisArticole = AfisArtMathaus.CATEGORIE;
 
 
-            getArticole(categorie.getCodHybris(), paginaCurenta);
+            if (isComandaSimulata()) {
+                getArticoleOferta(categorie.getCodHybris(), "", "");
+            } else
+                getArticole(categorie.getCodHybris(), paginaCurenta);
 
         }
 
 
+    }
+
+    private void getArticoleOferta(String codCategorie, String codArticol, String numeArticol) {
+
+        BeanCautareArticolOferta cautArticolOferta = new BeanCautareArticolOferta();
+        cautArticolOferta.setCodCategorie(codCategorie);
+        cautArticolOferta.setCodArticol(codArticol);
+        cautArticolOferta.setNumeArticol(numeArticol);
+        cautArticolOferta.setCodAgent(UserInfo.getInstance().getCod());
+        cautArticolOferta.setTipTransport(DateLivrare.getInstance().getTransport());
+        cautArticolOferta.setUnitLog(filialaLivrareMathaus);
+        cautArticolOferta.setCodClient(codClientParent != null ? codClientParent : "");
+        cautArticolOferta.setCodJudet(DateLivrare.getInstance().getCodJudet());
+        cautArticolOferta.setNumeLocalitate(DateLivrare.getInstance().getOras());
+        cautArticolOferta.setNumeStrada(DateLivrare.getInstance().getStrada());
+        cautArticolOferta.setLatitude(String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().latitude));
+        cautArticolOferta.setLongitude(String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().longitude));
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("dateArticol", opMathaus.serializeCautareArticolOferta(cautArticolOferta));
+
+        opMathaus.cautaArticoleOferta(params);
 
     }
 
@@ -529,15 +568,41 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
 
     }
 
+    private RezultatArtMathaus getPaginaOferta() {
+
+        RezultatArtMathaus paginaOferta = new RezultatArtMathaus();
+        paginaOferta.setNrTotalArticole(rezultatOferta.getNrTotalArticole());
+
+        int startIndex = (paginaCurenta - 1) * 10;
+        if (startIndex < 0)
+            startIndex = 0;
+
+        int endIndex = paginaCurenta * 10;
+        if (endIndex > rezultatOferta.getListArticole().size())
+            endIndex = rezultatOferta.getListArticole().size();
+
+        paginaOferta.setListArticole(rezultatOferta.getListArticole().subList(startIndex, endIndex));
+        return paginaOferta;
+    }
+
     private void afisArticole(String result) {
 
-        RezultatArtMathaus rezultat = opMathaus.deserializeArticole(result);
+        RezultatArtMathaus rezultat = null;
+
+        if (result != null) {
+            rezultat = opMathaus.deserializeArticole(result);
+            rezultatOferta = rezultat;
+        }
+
+
+        if (result == null || isComandaSimulata()) {
+            rezultat = getPaginaOferta();
+        }
 
         if (Integer.parseInt(rezultat.getNrTotalArticole()) <= Constants.NR_ARTICOLE_MATHAUS_PAGINA) {
             setPaginationVisibility(false);
             nrPagini = 1;
-        }
-        else {
+        } else {
             setPaginationVisibility(true);
 
             nrPagini = Integer.parseInt(rezultat.getNrTotalArticole()) / Constants.NR_ARTICOLE_MATHAUS_PAGINA;
@@ -578,8 +643,16 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
         this.listener = listener;
     }
 
-    public void setFilialaLivrareMathaus(String filialaLivrareMathaus){
+    public void setFilialaLivrareMathaus(String filialaLivrareMathaus) {
         this.filialaLivrareMathaus = filialaLivrareMathaus;
+    }
+
+    public void setTipComanda(String tipComanda) {
+        this.tipComandaParent = tipComanda;
+    }
+
+    public void setCodClientParent(String codClientParent) {
+        this.codClientParent = codClientParent;
     }
 
     @Override
@@ -591,6 +664,7 @@ public class CategoriiMathausDialogNew extends Dialog implements OperatiiMathaus
             case GET_ARTICOLE:
             case CAUTA_ARTICOLE:
             case CAUTA_ARTICOLE_LOCAL:
+            case GET_ARTICOLE_OFERTA:
                 afisArticole((String) result);
                 break;
             default:

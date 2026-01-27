@@ -396,6 +396,10 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                     articol.setStoc(articolObject.getString("stoc"));
                     articol.setCategorie(articolObject.getString("categorie"));
                     articol.setLungime(Double.valueOf(articolObject.getString("lungime")));
+
+                    if (articolObject.has("planificator") && articolObject.getString("planificator") != "null")
+                        articol.setPlanificator(articolObject.getString("planificator") );
+
                     listArticole.add(articol);
 
                 }
@@ -838,6 +842,9 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setMatnrTransport(taxaObject.getString("matnrTransport"));
                 taxaMasina.setMaktxTransport(taxaObject.getString("maktxTransport"));
                 taxaMasina.setTaxaTransport(Double.valueOf(taxaObject.getString("taxaTransport")));
+                taxaMasina.setMatnrAmbalare(taxaObject.getString("matnrAmbalare"));
+                taxaMasina.setMaktxAmbalare(taxaObject.getString("maktxAmbalare"));
+                taxaMasina.setTaxaAmbalare(Double.valueOf(taxaObject.getString("taxaAmbalare")));
                 taxaMasina.setSpart(taxaObject.getString("spart"));
                 taxaMasina.setTraty(taxaObject.getString("traty"));
                 taxaMasina.setTaxeDivizii(getTaxeDivizii(taxaObject.getString("taxeDivizii")));
@@ -943,6 +950,9 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setMatnrTransport(taxaObject.getString("matnrTransport"));
                 taxaMasina.setMaktxTransport(taxaObject.getString("maktxTransport"));
                 taxaMasina.setTaxaTransport(Double.valueOf(taxaObject.getString("taxaTransport")));
+                taxaMasina.setMatnrAmbalare(taxaObject.getString("matnrAmbalare"));
+                taxaMasina.setMaktxAmbalare(taxaObject.getString("maktxAmbalare"));
+                taxaMasina.setTaxaAmbalare(Double.valueOf(taxaObject.getString("taxaAmbalare")));
                 taxaMasina.setSpart(taxaObject.getString("spart"));
                 taxaMasina.setTraty(taxaObject.getString("traty"));
                 taxaMasina.setTotalCuTva(Double.valueOf(taxaObject.getString("totalCuTva")));
@@ -1024,6 +1034,10 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             jsonAntet.put("nrCmdSap", antetComanda.getNrCmdSap());
             jsonAntet.put("strada", antetComanda.getStrada().trim());
             jsonAntet.put("codFurnizor", antetComanda.getCodFurnizor());
+            jsonAntet.put("isLivrareCustodie", antetComanda.isLivrareCustodie());
+            jsonAntet.put("latitudeGps", String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().latitude));
+            jsonAntet.put("longitudeGps", String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().longitude));
+            jsonAntet.put("isComandaSimulata", antetComanda.isComandaSimulata());
 
         } catch (JSONException e) {
             e.printStackTrace();

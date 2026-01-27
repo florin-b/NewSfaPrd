@@ -256,6 +256,7 @@ public class OperatiiClient implements AsyncTaskListener {
                     detaliiClient.setErrMsg(jsonObject.getString("errMsg"));
 
                 detaliiClient.setEmail(jsonObject.getString("email"));
+                detaliiClient.setCanalB2B(jsonObject.getString("canalB2B"));
             }
 
         } catch (JSONException e) {
@@ -554,6 +555,8 @@ public class OperatiiClient implements AsyncTaskListener {
             jsonParametru.put("telPersContact", parametru.getTelPersContact());
             jsonParametru.put("coordonateAdresa", parametru.getCoordonateAdresa());
             jsonParametru.put("codAgent", UserInfo.getInstance().getCod());
+            jsonParametru.put("tipAngajat", UserInfo.getInstance().getTipUserSap());
+            jsonParametru.put("codDepart", UserInfo.getInstance().getCodDepart());
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -230,6 +230,9 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
         setListenerPretTransp(viewHolder, rezumat);
         viewHolder.spinnerTransport.setEnabled(selectTransp);
 
+        if (UtilsComenzi.isComandaPFFaraFact())
+            viewHolder.spinnerTransport.setEnabled(false);
+
         viewHolder.stergeComandaBtn.setVisibility(View.INVISIBLE);
 
         return convertView;
@@ -275,8 +278,6 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
 
     }
-
-
 
 
     private void setListenerSpinnerTransport(Spinner spinnerTransport, RezumatComanda rezumat, ViewHolder viewHolder) {

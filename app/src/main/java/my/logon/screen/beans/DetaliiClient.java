@@ -21,6 +21,7 @@ public class DetaliiClient {
 	private String tipPlata;
 	private String email;
 	private String errMsg;
+	private String canalB2B;
 
 	public DetaliiClient() {
 
@@ -176,5 +177,13 @@ public class DetaliiClient {
 
 	public void setErrMsg(String errMsg) {
 		this.errMsg = errMsg;
+	}
+
+	public String getCanalB2B() {
+		return canalB2B;
+	}
+
+	public void setCanalB2B(String canalB2B) {
+		this.canalB2B = canalB2B;
 	}
 }

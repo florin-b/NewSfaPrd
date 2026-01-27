@@ -20,6 +20,8 @@ public class AntetCmdMathaus {
     private String nrCmdSap;
     private String strada;
     private String codFurnizor;
+    private boolean isLivrareCustodie;
+    private boolean isComandaSimulata;
 
 
     public String getLocalitate() {
@@ -148,5 +150,21 @@ public class AntetCmdMathaus {
 
     public void setCodFurnizor(String codFurnizor) {
         this.codFurnizor = codFurnizor;
+    }
+
+    public boolean isLivrareCustodie() {
+        return isLivrareCustodie;
+    }
+
+    public void setLivrareCustodie(boolean livrareCustodie) {
+        isLivrareCustodie = livrareCustodie;
+    }
+
+    public boolean isComandaSimulata() {
+        return isComandaSimulata;
+    }
+
+    public void setComandaSimulata(boolean comandaSimulata) {
+        isComandaSimulata = comandaSimulata;
     }
 }
