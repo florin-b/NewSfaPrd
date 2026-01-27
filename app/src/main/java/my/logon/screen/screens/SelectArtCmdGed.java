@@ -458,6 +458,25 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             spinnerDepoz.setSelection(adapterSpinnerDepozite.getPosition(articolModificat.getDepozit()));
     }
 
+    private void setupSpinnerDepozModifB2B() {
+
+        if (isOriceComandaModificata() && UtilsComenzi.isComandaB2B() && DateLivrare.getInstance().getCanalB2B().equals("10")) {
+
+            String divizieCmdB2B = UtilsComenzi.getDepartCautareB2B();
+
+            if (divizieCmdB2B.isEmpty())
+                spinnerDepoz.setSelection(adapterSpinnerDepozite.getPosition("MAV1"));
+            else
+                spinnerDepoz.setSelection(0);
+
+            spinnerDepoz.setEnabled(false);
+
+        }
+
+
+
+    }
+
     private void setupSpinnerDepartModifArticol() {
 
         if (articolModificat == null)
@@ -674,6 +693,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                 }
 
                 setupSpinnerDepozModifArticol();
+                setupSpinnerDepozModifB2B();
 
             }
 
@@ -694,6 +714,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             int height = (int) (getResources().getDisplayMetrics().heightPixels);
             categoriiDialog = new CategoriiMathausDialogNew(SelectArtCmdGed.this);
             categoriiDialog.setFilialaLivrareMathaus(CreareComandaGed.filialaLivrareMathaus);
+            categoriiDialog.setTipComanda(tipComanda);
+            categoriiDialog.setCodClientParent(CreareComandaGed.codClientVar);
             categoriiDialog.setArticolMathausListener(this);
             categoriiDialog.getWindow().setLayout(width, height);
 
@@ -1376,6 +1398,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         if (UtilsUser.isUserSite() && isFilialaMavSite)
             UtilsArticole.getArt111Only(resultsList);
 
+        if (tipComanda.equalsIgnoreCase("S"))
+            UtilsArticole.getArticoleSimulate(resultsList);
+
         CautareArticoleAdapter adapterArticole = new CautareArticoleAdapter(this, resultsList);
         setListAdapter(adapterArticole);
 
@@ -1478,6 +1503,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
             tipComanda = "fasonate";
+
+        if (isOriceComandaModificata() && UtilsComenzi.isComandaB2B())
+            departCautare = UtilsComenzi.getDepartCautareB2B();
 
         HashMap<String, String> params = UtilsGeneral.newHashMapInstance();
         params.put("searchString", numeArticol);
@@ -1604,15 +1632,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                 }
 
                 if (selectedCant != Double.parseDouble(cantArticol)) {
-
-                    // pentru comenzile simulate fara rezervare de
-                    // stoc se poate afisa pretul
-                    if (tipComanda.equalsIgnoreCase("S") && !rezervStoc) {
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Pretul nu corespunde cantitatii solicitate!", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                    Toast.makeText(getApplicationContext(), "Pretul nu corespunde cantitatii solicitate!", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 if (!isComandaDL()
@@ -1775,6 +1796,19 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
                     if (isOriceComandaModificata() && UtilsUser.isUserCVOB())
                         articol.setFilialaSite(ModificareComanda.filialaAlternativaM);
+
+                    if (isOriceComandaModificata() && ModificareComanda.filialaAlternativaM.equals("BV90"))
+                        articol.setFilialaSite(ModificareComanda.filialaAlternativaM);
+
+                    if (isOriceComandaModificata() && isComandaClp()) {
+
+                        if (globalDepozSel.equals("MAV1"))
+                            articol.setFilialaSite(DateLivrare.getInstance().getCodFilialaCLP().substring(0, 2) + "2"
+                                    + DateLivrare.getInstance().getCodFilialaCLP().substring(3, 4));
+                        else
+                            articol.setFilialaSite(DateLivrare.getInstance().getCodFilialaCLP());
+
+                    }
 
                     articol.setArticolMathaus(articolMathaus);
 
@@ -2968,6 +3002,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             if (articolMathaus.getDepart().equals("01"))
                 paramDepozitStoc = "92V1";
         }
+
+        if (isOriceComandaModificata() && ModificareComanda.filialaAlternativaM.equals("BV90"))
+            varLocalUnitLog = "BV90";
 
         if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
             varLocalUnitLog = DateLivrare.getInstance().getCodFilialaFasonate();

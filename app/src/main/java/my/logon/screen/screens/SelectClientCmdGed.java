@@ -905,6 +905,8 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
     private void clearDateLivrare() {
 
+        CreareComandaGed.codClientCUI = "";
+
         if (DateLivrare.getInstance().getTipComandaGed() == TipCmdGed.ARTICOLE_DETERIORATE)
             return;
 

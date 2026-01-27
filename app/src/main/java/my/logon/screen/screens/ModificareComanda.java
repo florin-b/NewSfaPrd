@@ -675,7 +675,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             }
         }
 
-        if (valGreutateCmd > Constants.MAX_GREUTATE_CNP || valFTvaCmd >= Constants.MAX_VALOARE_CNP)
+        if (valGreutateCmd >= Constants.MAX_GREUTATE_CNP || valFTvaCmd >= Constants.MAX_VALOARE_CNP)
             return true;
 
         return false;
@@ -857,6 +857,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         if (UtilsUser.isUserCVOB())
             localCanal = "60";
 
+        if (comandaSelectata.getCanalDistrib().equals("60"))
+            comandaMathaus.setSellingPlant(comandaSelectata.getFiliala());
+
         double valPozArt = 0;
 
         for (ArticolComanda artCmd : listArticoleComanda) {
@@ -889,6 +892,11 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
 
             dateArticol.setUlStoc(artCmd.getFilialaSite());
+
+            if (dateArticol.getDepozit().startsWith("MAV")) {
+                dateArticol.setUlStoc(UtilsComenzi.getFilialaGed(dateArticol.getUlStoc()));
+                artCmd.setFilialaSite(UtilsComenzi.getFilialaGed(artCmd.getFilialaSite()));
+            }
 
             listArticoleMat.add(dateArticol);
 
@@ -1719,6 +1727,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             obj.put("isComandaCustodie", DateLivrare.getInstance().isComandaCustodie());
             obj.put("taxeComanda", opArticol.serializeTaxeComanda(DateLivrare.getInstance().getTaxeComanda()));
             obj.put("zona", DateLivrare.getInstance().getDatePoligonLivrare().getTipZona());
+            obj.put("appVer", UserInfo.getInstance().getAppVer());
+            obj.put("refHybris", DateLivrare.getInstance().getRefHybris());
+            obj.put("tipClientDoc", UtilsComenzi.isComandaPFFaraFact() ? "PF_BON": " ");
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
@@ -2003,6 +2014,14 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
         DateLivrare.getInstance().setDiviziiClient(articoleComanda.getDateLivrare().getDiviziiClient());
 
+        DateLivrare.getInstance().setRefHybris(dateLivrare.getRefHybris());
+
+        if (dateLivrare.getTipClientDoc() != null && !dateLivrare.getTipClientDoc().trim().isEmpty() && dateLivrare.getTipClientDoc().equals("PF_BON")) {
+            DateLivrare.getInstance().setTipPersClient("PF");
+            DateLivrare.getInstance().setFacturaCmd(false);
+        }
+
+
         if (UtilsComenzi.isComandaPFDep16(articoleComanda.getDateLivrare()))
             DateLivrare.getInstance().setDiviziiClient("03;040;041;09;11");
 
@@ -2272,6 +2291,8 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
         unitLogComanda = comandaSelectata.getFiliala();
         canalDistributie = comandaSelectata.getCanalDistrib();
+        DateLivrare.getInstance().setDepartComanda(comandaSelectata.getDivizieComanda());
+        DateLivrare.getInstance().setSite(comandaSelectata.getSite());
 
         selectedCmd = comanda.getId();
 

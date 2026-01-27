@@ -557,7 +557,7 @@ public class Stocuri extends ListActivity implements AsyncTaskListener, OnClickL
                 }
 
                 textStocImbatranit.setVisibility(View.VISIBLE);
-                textStocImbatranit.setText("Stoc imbatranit: " + tokStocArt[3]);
+                textStocImbatranit.setText("Stoc nociv: " + tokStocArt[3]);
 
                 String[] stocBlocat = tokStocArt[4].split("#");
 

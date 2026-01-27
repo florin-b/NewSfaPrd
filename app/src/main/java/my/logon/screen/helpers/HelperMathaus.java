@@ -50,6 +50,10 @@ public class HelperMathaus {
 
         eliminaCostTransport(listArticoleComanda);
         eliminaTaxeTransport(listArticoleComanda);
+        eliminaTaxeAmbalare(listArticoleComanda);
+
+        if (UtilsComenzi.isComandaB2BCanal20())
+            canalDistrib = "20";
 
         for (CostTransportMathaus cost : costTransport) {
 
@@ -117,6 +121,10 @@ public class HelperMathaus {
         return numeArticol != null && numeArticol.toUpperCase().contains("SERV") && numeArticol.toUpperCase().contains("TRANSP");
     }
 
+    public static boolean isArtCostAmbalare(String numeArticol) {
+        return numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("AMBALARE");
+    }
+
     public static boolean isArtTaxaAcces(String numeArticol) {
         boolean taxa1 = numeArticol != null && numeArticol.toUpperCase().contains("TAXA") && numeArticol.toUpperCase().contains("ACCES");
         boolean taxa2 = numeArticol != null && numeArticol.toUpperCase().contains("EXTRA") && numeArticol.toUpperCase().contains("METRO");
@@ -133,6 +141,19 @@ public class HelperMathaus {
 
             if (isArtTaxaTransp(articol.getNumeArticol()) || isArtTaxaMetro(articol.getNumeArticol()) || isArtTaxaVehicolUsor(articol.getNumeArticol())
                     || isSinteticServTransp(articol.getSintetic())) {
+                iterator.remove();
+            }
+        }
+    }
+
+    public static void eliminaTaxeAmbalare(List<ArticolComanda> listArticole) {
+
+        Iterator<ArticolComanda> iterator = listArticole.iterator();
+        while (iterator.hasNext()) {
+
+            ArticolComanda articol = iterator.next();
+
+            if (isArtCostAmbalare(articol.getNumeArticol())) {
                 iterator.remove();
             }
         }
@@ -198,7 +219,7 @@ public class HelperMathaus {
         articolComanda.setNumeArticol(costTransport.getNumeCost());
         articolComanda.setCantitate(1);
         articolComanda.setCantUmb(1);
-        articolComanda.setPretUnit(Double.valueOf(costTransport.getValTransp()));
+        articolComanda.setPretUnit(Double.valueOf(costTransport.getValTransp().replace(',','.')));
         articolComanda.setPret(articolComanda.getPretUnit());
         articolComanda.setPretUnitarClient(articolComanda.getPretUnit());
         articolComanda.setPretUnitarGed(articolComanda.getPretUnit());
@@ -377,6 +398,8 @@ public class HelperMathaus {
                 dateArticol.setUlStoc(artCmd.getFilialaSite());
         } else if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
             dateArticol.setUlStoc(DateLivrare.getInstance().getCodFilialaFasonate());
+        else if (artCmd.getDepozit() != null && artCmd.getDepozit().startsWith("MAV"))
+            dateArticol.setUlStoc(UtilsGeneral.getUnitLogGed(artCmd.getFilialaSite()));
 
         if (artCmd.getArticolMathaus() != null && artCmd.getArticolMathaus().getTipStoc() != null)
             dateArticol.setTipStoc(artCmd.getArticolMathaus().getTipStoc());
@@ -400,6 +423,20 @@ public class HelperMathaus {
                 costTransportMathaus.setDepart(taxaMasina.getSpart());
                 costTransportMathaus.setTotalCuTva(taxaMasina.getTotalCuTva());
                 livrareMathaus.getCostTransport().add(costTransportMathaus);
+
+
+                if (taxaMasina.getTaxaAmbalare() > 0) {
+                    costTransportMathaus = new CostTransportMathaus();
+                    costTransportMathaus.setCodArtTransp(taxaMasina.getMatnrAmbalare());
+                    costTransportMathaus.setNumeCost(taxaMasina.getMaktxAmbalare());
+                    costTransportMathaus.setValTransp(String.valueOf(taxaMasina.getTaxaAmbalare()));
+                    costTransportMathaus.setFiliala(taxaMasina.getWerks());
+                    costTransportMathaus.setTipTransp("TERT");
+                    costTransportMathaus.setDepart(taxaMasina.getSpart());
+                    livrareMathaus.getCostTransport().add(costTransportMathaus);
+                }
+
+
             }
         }
 
@@ -593,6 +630,22 @@ public class HelperMathaus {
 
             }
 
+        }
+
+        for (ArticolComanda articolComanda : listArticoleComanda){
+            if (isArtCostTransp(articolComanda.getNumeArticol()) && articolComanda.getTipTransport().equals("TERT")) {
+                CostTransportMathaus costTransportMathaus = new CostTransportMathaus();
+                if (articolComanda.getCodArticol().length() == 8)
+                    costTransportMathaus.setCodArtTransp("0000000000" + articolComanda.getCodArticol());
+                else
+                    costTransportMathaus.setCodArtTransp(articolComanda.getCodArticol());
+                costTransportMathaus.setDepart(articolComanda.getDepart());
+                costTransportMathaus.setFiliala(articolComanda.getFilialaSite());
+                costTransportMathaus.setNumeCost(articolComanda.getNumeArticol());
+                costTransportMathaus.setTipTransp("TERT");
+                costTransportMathaus.setValTransp(String.valueOf(articolComanda.getPretUnit()));
+                costTranspDepart.add(costTransportMathaus);
+            }
         }
 
         return costTranspDepart;
