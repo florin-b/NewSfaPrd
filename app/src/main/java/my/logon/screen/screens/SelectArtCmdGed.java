@@ -58,6 +58,7 @@ import my.logon.screen.beans.ComandaMathaus;
 import my.logon.screen.beans.DateArticolMathaus;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.beans.StocMathaus;
+import my.logon.screen.dialogs.ArticoleServiciiACDialog;
 import my.logon.screen.dialogs.Cabluri05Dialog;
 import my.logon.screen.dialogs.CategoriiMathausDialogNew;
 import my.logon.screen.dialogs.RecomArtDialog;
@@ -74,6 +75,7 @@ import my.logon.screen.helpers.HelperPreturi;
 import my.logon.screen.listeners.ArticolMathausListener;
 import my.logon.screen.listeners.Cablu05SelectedListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
+import my.logon.screen.listeners.ServiciiACListener;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.Constants;
@@ -91,7 +93,7 @@ import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
-public class SelectArtCmdGed extends ListActivity implements OperatiiArticolListener, ArticolMathausListener, Cablu05SelectedListener {
+public class SelectArtCmdGed extends ListActivity implements OperatiiArticolListener, ArticolMathausListener, Cablu05SelectedListener, ServiciiACListener {
 
     Button articoleBtn, saveArtBtn, pretBtn;
     String filiala = "", nume = "", cod = "", umStoc = "";
@@ -212,6 +214,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     private NumberFormat nfStoc;
     private double stocComandaModif;
     private int spinnerConversieCount = 0;
+    private String filialaTrapex = "";
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -435,6 +438,8 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         }
 
+        if (isOriceComandaModificata() && HelperComenzi.isComandaTrapex())
+            filialaTrapex =  HelperComenzi.getULStocArticolModifCmd();
     }
 
     private void setupSpinnerDepozModifArticol() {
@@ -887,12 +892,15 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         DateArticolMathaus dateArticol = comandaMathaus.getDeliveryEntryDataList().get(0);
         String strStoc = dateArticol.getQuantity() + "#" + dateArticol.getUnit() + "#1#";
 
+        articolMathaus.setWarehouse("");
+
         if (articolModificat != null)
             articolMathaus = articolModificat.getArticolMathaus();
 
         if (dateArticol.getQuantity() > 0) {
             listArtStoc(strStoc);
             articolMathaus.setTip2("S");
+            articolMathaus.setWarehouse(dateArticol.getWarehouse());
         } else {
             globalCodDepartSelectetItem = articolMathaus.getDepart();
             articolMathaus.setTip2("");
@@ -1338,6 +1346,31 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
     }
 
+    private void showServiciiACDialog(String listArticoleSer) {
+
+        List<ArticolDB> listServiciiAC = opArticol.deserializeArticoleVanzare(listArticoleSer);
+
+        if (!listServiciiAC.isEmpty()) {
+
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.6);
+            int height;
+
+            if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+                height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
+            else
+                height = (int) (getResources().getDisplayMetrics().heightPixels * 0.4);
+
+            boolean existaServiciuComanda = UtilsComenzi.existaServiciuComanda(ListaArticoleComandaGed.getInstance().getListArticoleComanda());
+
+            ArticoleServiciiACDialog articoleServiciiDialog = new ArticoleServiciiACDialog(this, listServiciiAC, existaServiciuComanda);
+            articoleServiciiDialog.setServiciiACListener(this);
+            articoleServiciiDialog.getWindow().setLayout(width, height);
+            articoleServiciiDialog.show();
+        }
+
+
+    }
+
     private String getCodJudetPret() {
 
         return DateLivrare.getInstance().getCodJudet();
@@ -1516,6 +1549,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         params.put("codUser", UserInfo.getInstance().getCod());
         params.put("tipComanda", tipComanda);
         params.put("transpTert", String.valueOf(DateLivrare.getInstance().getTranspInit().equals("TERT")));
+        params.put("filialaTrapex", UtilsGeneral.getUnitLogDistrib(filialaTrapex));
 
         opArticol.getArticoleDistributie(params);
 
@@ -1800,6 +1834,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                     if (isOriceComandaModificata() && ModificareComanda.filialaAlternativaM.equals("BV90"))
                         articol.setFilialaSite(ModificareComanda.filialaAlternativaM);
 
+                    if (isOriceComandaModificata() && !filialaTrapex.trim().isEmpty())
+                        articol.setFilialaSite(UtilsUser.getULUserSite(filialaTrapex, globalDepozSel));
+
                     if (isOriceComandaModificata() && isComandaClp()) {
 
                         if (globalDepozSel.equals("MAV1"))
@@ -1855,6 +1892,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
                     ListaArticoleComandaGed listaArticole = ListaArticoleComandaGed.getInstance();
                     listaArticole.addArticolComanda(articol);
 
+                    if (UtilsArticole.isArticolAC(articolDBSelected.getSintetic()) && !ScreenUtils.isIntentArticolModificat(intent)) {
+                        getServiciiInstalareAC(codArticol);
+                    }
 
                     textNumeArticol.setText("");
                     textCodArticol.setText("");
@@ -1935,7 +1975,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     }
 
     private boolean isConditieCabluri05BV90() {
-        return articolDBSelected.getDepart().equals("05") && CreareComandaGed.filialaAlternativa.equals("BV90");
+        return articolDBSelected.getDepart().equals("05") && (articolMathaus != null && articolMathaus.getWarehouse().contains("BV90"));
     }
 
     private void getCabluri05(String codArticol) {
@@ -1962,6 +2002,20 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         cabluriDialog.getWindow().setLayout(width, height);
         cabluriDialog.setCabluSelectedListener(this);
         cabluriDialog.show();
+
+    }
+
+    public void getServiciiInstalareAC(String codArticol) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("codArticol", codArticol);
+        params.put("codJudet", DateLivrare.getInstance().getCodJudet());
+
+        if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+            params.put("codJudet", "");
+
+        params.put("data", DateLivrare.getInstance().getDataLivrare());
+        opArticol.getServiciiInstalareAC(params);
 
     }
 
@@ -2756,6 +2810,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
 
         articolDBSelected = articol;
 
+        if (UtilsArticole.isServiciuAC(articolDBSelected))
+            return;
+
         numeArticol = articol.getNume();
         codArticol = articol.getCod();
 
@@ -3006,6 +3063,10 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         if (isOriceComandaModificata() && ModificareComanda.filialaAlternativaM.equals("BV90"))
             varLocalUnitLog = "BV90";
 
+        if (!filialaTrapex.trim().isEmpty()) {
+            varLocalUnitLog = UtilsUser.getULUserSite(filialaTrapex, globalDepozSel);
+        }
+
         if (!DateLivrare.getInstance().getCodFilialaFasonate().trim().isEmpty())
             varLocalUnitLog = DateLivrare.getInstance().getCodFilialaFasonate();
 
@@ -3095,6 +3156,9 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
             case GET_PRET_UNIC_CUSTODIE:
                 listPretArticolCustodie(opArticol.deserializePretGed(result));
                 break;
+            case GET_SERVICII_INSTAL_AC:
+                showServiciiACDialog((String) result);
+                break;
             default:
                 break;
 
@@ -3116,6 +3180,56 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     public void cabluriSelected(List<BeanCablu05> listCabluri) {
         this.listCabluri = listCabluri;
         saveArtBtn.performClick();
+
+    }
+
+    @Override
+    public void serviciuACSelected(ArticolDB articolServiciu) {
+
+        List<ArticolDB> listArticole = new ArrayList<ArticolDB>();
+
+        if (isDepartMathaus) {
+            articolMathaus = new ArticolMathaus();
+            articolMathaus.setCod(articolServiciu.getCod());
+            articolMathaus.setNume(articolServiciu.getNume());
+            articolMathaus.setDepart(articolServiciu.getDepart());
+            articolMathaus.setUmVanz(articolServiciu.getUmVanz());
+            articolMathaus.setUmVanz10(articolServiciu.getUmVanz10());
+            articolMathaus.setUmPalet(articolServiciu.isUmPalet());
+            articolMathaus.setSintetic(articolServiciu.getSintetic());
+            articolMathaus.setNivel1((articolServiciu.getNivel1()));
+        } else {
+            spinnerDepoz.setSelection(0);
+        }
+
+        CautareArticoleAdapter adapterArticole = new CautareArticoleAdapter(this, listArticole);
+        setListAdapter(adapterArticole);
+
+        articolDBSelected = articolServiciu;
+
+        numeArticol = articolServiciu.getNume();
+        codArticol = articolServiciu.getCod();
+        tipArticol = articolServiciu.getTipAB();
+
+        globalCodDepartSelectetItem = articolServiciu.getDepart();
+
+        resultLayout.setVisibility(View.VISIBLE);
+
+        textNumeArticol.setVisibility(View.VISIBLE);
+        textCodArticol.setVisibility(View.VISIBLE);
+        textUM.setVisibility(View.VISIBLE);
+        textStoc.setVisibility(View.VISIBLE);
+        textCant.setVisibility(View.VISIBLE);
+        labelCant.setVisibility(View.VISIBLE);
+        labelStoc.setVisibility(View.VISIBLE);
+        pretBtn.setVisibility(View.VISIBLE);
+
+        textNumeArticol.setText(numeArticol);
+        textCodArticol.setText(codArticol);
+
+        textUM.setText("BUC");
+        textStoc.setText(articolServiciu.getStoc());
+
 
     }
 

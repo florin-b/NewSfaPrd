@@ -13,7 +13,7 @@ public class ConnectionStrings {
 
 	private ConnectionStrings() {
 
-		myUrl = "http://10.1.0.58/androidwebservices/service1.asmx";
+		myUrl = "https://ws-origin.arabesque.ro/androidwebservices/service1.asmx";
 		myNamespace = "http://SmartScan.org/";
 
 	}

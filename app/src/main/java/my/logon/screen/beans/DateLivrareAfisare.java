@@ -85,6 +85,8 @@ public class DateLivrareAfisare {
     private String refHybris;
     private String tipClientDoc;
     private String canalB2B;
+    private String ulTrapex;
+    private BeanAdresaGenerica adresaInstalareAC;
 
     public DateLivrareAfisare() {
 
@@ -721,5 +723,21 @@ public class DateLivrareAfisare {
 
     public void setCanalB2B(String canalB2B) {
         this.canalB2B = canalB2B;
+    }
+
+    public String getUlTrapex() {
+        return ulTrapex;
+    }
+
+    public void setUlTrapex(String ulTrapex) {
+        this.ulTrapex = ulTrapex;
+    }
+
+    public BeanAdresaGenerica getAdresaInstalareAC() {
+        return adresaInstalareAC;
+    }
+
+    public void setAdresaInstalareAC(BeanAdresaGenerica adresaInstalareAC) {
+        this.adresaInstalareAC = adresaInstalareAC;
     }
 }

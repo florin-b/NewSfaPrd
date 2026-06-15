@@ -1078,7 +1078,7 @@ public class SelectClientCmdGed extends Activity implements OperatiiClientListen
 
 
                 if (UtilsComenzi.isComandaPFDep16())
-                    DateLivrare.getInstance().setDiviziiClient("03;040;041;09;11");
+                    DateLivrare.getInstance().setDiviziiClient("03;040;041;08;09;11");
 
             }
 

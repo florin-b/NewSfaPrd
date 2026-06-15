@@ -16,6 +16,7 @@ import java.util.List;
 
 import my.logon.screen.beans.ArticolAmob;
 import my.logon.screen.beans.ArticolCalculDesc;
+import my.logon.screen.beans.BeanAdresaGenerica;
 import my.logon.screen.beans.BeanArticolComandaRetur;
 import my.logon.screen.beans.BeanArticoleAfisare;
 import my.logon.screen.beans.BeanClientBorderou;
@@ -416,6 +417,12 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                 if (jsonLivrare.has("canalB2B"))
                     dateLivrare.setCanalB2B(jsonLivrare.getString("canalB2B"));
 
+                if (jsonLivrare.has("ulTrapex"))
+                    dateLivrare.setUlTrapex(jsonLivrare.getString("ulTrapex"));
+
+                if (jsonLivrare.has("adresaInstalareAC"))
+                    dateLivrare.setAdresaInstalareAC(deserializeAdresaInstalareAC(jsonLivrare.getString("adresaInstalareAC")));
+
                 JSONArray jsonArticole = jsonObject.getJSONArray("articoleComanda");
                 String tipAlert, subCmp;
                 for (int i = 0; i < jsonArticole.length(); i++) {
@@ -485,6 +492,11 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                     if (articolObject.has("procT1"))
                         articol.setProcT1(Double.valueOf(articolObject.getString("procT1")));
 
+                    if (articolObject.has("X"))
+                        articol.setProcentX(Double.valueOf(articolObject.getString("X")));
+                    if (articolObject.has("pretMinX"))
+                        articol.setPretMinX(Double.valueOf(articolObject.getString("pretMinX")));
+
                     if (articolObject.has("filialaSite"))
                         articol.setFilialaSite(articolObject.getString("filialaSite"));
 
@@ -516,6 +528,7 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
                     articol.setUm50(articolObject.getString("um50"));
                     articol.setCantitate50(Double.valueOf(articolObject.getString("cantitate50")));
                     articol.setPretMinim(Double.valueOf(articolObject.getString("pretMinim")));
+                    articol.setSintetic(articolObject.getString("sintetic"));
 
                     listArticole.add(articol);
 
@@ -573,6 +586,30 @@ public class ComenziDAO implements IComenziDAO, AsyncTaskListener {
 
         return articoleComanda;
     }
+
+    private BeanAdresaGenerica deserializeAdresaInstalareAC(String strAdresaInstalareAC) {
+
+        if (strAdresaInstalareAC == null || strAdresaInstalareAC.equals("null"))
+            return null;
+
+        BeanAdresaGenerica adresaInstalareAC = new BeanAdresaGenerica();
+
+        try {
+            JSONObject jsonObject = new JSONObject(strAdresaInstalareAC);
+
+            if (jsonObject instanceof JSONObject) {
+                adresaInstalareAC.setCodJudet(jsonObject.getString("codJudet"));
+                adresaInstalareAC.setOras(jsonObject.getString("localitate"));
+                adresaInstalareAC.setStrada(jsonObject.getString("strada"));
+            }
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return adresaInstalareAC;
+    }
+
 
     public ArrayList<BeanComandaCreata> deserializeListComenzi(String serializedListComenzi) {
 

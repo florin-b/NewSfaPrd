@@ -18,6 +18,7 @@ public class ArticolMathaus extends ArticolDB implements Serializable {
 	private String tip2;
 	private String planificator;
 	private EnumTipStoc tipStoc;
+	private String warehouse;
 
 	public ArticolMathaus(){
 
@@ -37,6 +38,7 @@ public class ArticolMathaus extends ArticolDB implements Serializable {
 		this.tip2 = articolMathaus.getTip2();
 		this.planificator = articolMathaus.getPlanificator();
 		this.tipStoc = articolMathaus.getTipStoc();
+		this.warehouse = articolMathaus.getWarehouse();
 	}
 
 	public String getCod() {
@@ -141,5 +143,13 @@ public class ArticolMathaus extends ArticolDB implements Serializable {
 
 	public void setTipStoc(EnumTipStoc tipStoc) {
 		this.tipStoc = tipStoc;
+	}
+
+	public String getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
 	}
 }

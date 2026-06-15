@@ -658,6 +658,9 @@ public class UtilsGeneral {
     }
 
     public static String getUnitLogDistrib(String unitLog) {
+        if (unitLog.trim().isEmpty())
+            return "";
+
         return unitLog.substring(0, 2) + "1" + unitLog.substring(3, 4);
     }
 

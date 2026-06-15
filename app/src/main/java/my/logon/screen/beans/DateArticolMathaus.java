@@ -17,6 +17,7 @@ public class DateArticolMathaus {
 
 	private double quantity50;
 	private String unit50;
+	private String warehouse;
 
 	private EnumTipStoc tipStoc;
 
@@ -132,5 +133,13 @@ public class DateArticolMathaus {
 
 	public void setCmpCorectat(double cmpCorectat) {
 		this.cmpCorectat = cmpCorectat;
+	}
+
+	public String getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
 	}
 }

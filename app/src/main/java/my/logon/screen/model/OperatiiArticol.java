@@ -116,6 +116,10 @@ public interface OperatiiArticol {
 
 	public void getFactorConversieModifCmd(HashMap<String, String> params);
 
+	public void getServiciiInstalareAC(HashMap<String, String> params);
+
+	public String serializeAdresaInstalareAC();
+
 }
 
 

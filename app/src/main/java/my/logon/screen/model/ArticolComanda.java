@@ -117,6 +117,8 @@ public class ArticolComanda implements Comparable<ArticolComanda>, Serializable 
 
 	private double pretMinim;
 	private double cmpCorectat;
+	private double procentX;
+	private double pretMinX;
 
 	private List<BeanStocTCLI> listStocTCLI;
 
@@ -789,6 +791,22 @@ public class ArticolComanda implements Comparable<ArticolComanda>, Serializable 
 
 	public void setCmpCorectat(double cmpCorectat) {
 		this.cmpCorectat = cmpCorectat;
+	}
+
+	public double getProcentX() {
+		return procentX;
+	}
+
+	public void setProcentX(double procentX) {
+		this.procentX = procentX;
+	}
+
+	public double getPretMinX() {
+		return pretMinX;
+	}
+
+	public void setPretMinX(double pretMinX) {
+		this.pretMinX = pretMinX;
 	}
 
 	@Override

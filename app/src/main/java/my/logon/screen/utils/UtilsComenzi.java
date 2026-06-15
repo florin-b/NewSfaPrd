@@ -20,6 +20,7 @@ import my.logon.screen.beans.DateLivrareAfisare;
 import my.logon.screen.beans.DatePoligonLivrare;
 import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.enums.TipCmdDistrib;
+import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ClientiGenericiGedInfoStrings;
 import my.logon.screen.model.Constants;
@@ -311,6 +312,14 @@ public class UtilsComenzi {
                 && DateLivrare.getInstance().getFurnizorComanda().getCodFurnizorMarfa().length() > 4;
     }
 
+    public static boolean isComandaAC_ZC(String canal){
+
+        if (canal.equals("10"))
+            return DateLivrare.getInstance().getTipComandaDistrib().equals(TipCmdDistrib.ARTICOLE_COMANDA);
+        else
+            return DateLivrare.getInstance().getTipComandaGed().equals(TipCmdGed.ARTICOLE_COMANDA);
+    }
+
     public static String getCodFurnizorDL() {
 
         if (!isComandaDl())
@@ -540,6 +549,16 @@ public class UtilsComenzi {
 
     public static boolean isComandaB2BCanal20() {
         return (UserInfo.getInstance().getTipUserSap().equals("CVOB") || UtilsComenzi.isComandaB2B()) && DateLivrare.getInstance().getCanalB2B().equals("20");
+    }
+
+    public static boolean existaServiciuComanda(List<ArticolComanda> listArticole) {
+
+        for(ArticolComanda articolComanda : listArticole) {
+            if (UtilsArticole.isArticolServiciuAC(articolComanda))
+                return true;
+        }
+
+        return false;
     }
 
 }

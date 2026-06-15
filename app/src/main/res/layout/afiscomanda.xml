@@ -410,6 +410,29 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layoutAdrInstalareAC"
+                        style="@style/dateLivrareDlLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <TextView
+                            style="@style/dateLivrareDlLabel"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:text="Adresa instalare AC" />
+
+                        <TextView
+                            android:id="@+id/textAdresaInstalareACC"
+                            style="@style/dateLivrareDlValori"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/layoutPrelucrare"
                         style="@style/dateLivrareDlLayout"
                         android:layout_width="match_parent"

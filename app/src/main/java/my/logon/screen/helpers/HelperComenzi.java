@@ -7,6 +7,7 @@ import java.util.List;
 import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.DateLivrare;
+import my.logon.screen.utils.UtilsGeneral;
 
 public class HelperComenzi {
 
@@ -48,6 +49,35 @@ public class HelperComenzi {
 
         return articolModifCmd;
 
+    }
+
+
+    public static String getULStocArticolModifCmd() {
+
+        String ulStoc= "";
+
+        if (DateLivrare.getInstance().getComandaInit() == null)
+            return null;
+
+        for (ArticolComanda articolComanda : DateLivrare.getInstance().getComandaInit()) {
+
+            if (articolComanda.getFilialaSite() != null && !articolComanda.getFilialaSite().trim().isEmpty()) {
+                ulStoc = articolComanda.getFilialaSite();
+                break;
+            }
+        }
+
+        return ulStoc;
+    }
+
+    public static boolean isComandaTrapex() {
+        return DateLivrare.getInstance().getUlTrapex() != null && !DateLivrare.getInstance().getUlTrapex().isEmpty();
+    }
+    
+    public static boolean isComandaTrapex(String unitLogLivrare){
+
+        return DateLivrare.getInstance().getTransport().equals("TRAP") &&
+                !UtilsGeneral.getUnitLogDistrib(unitLogLivrare).equals(UtilsGeneral.getUnitLogDistrib(DateLivrare.getInstance().getUnitLog()));
     }
 
     public static boolean articolExist(ArticolComanda articolComanda, HashMap<String, String> paramsStocDepozit) {

@@ -219,6 +219,12 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
         performOperation();
     }
 
+    public void getServiciiInstalareAC(HashMap<String, String> params) {
+        numeComanda = EnumArticoleDAO.GET_SERVICII_INSTAL_AC;
+        this.params = params;
+        performOperation();
+    }
+
     @Override
     public Object getDepartBV90(String codArticol) {
         numeComanda = EnumArticoleDAO.GET_DEP_BV90;
@@ -345,6 +351,24 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
 
     }
 
+    public String serializeAdresaInstalareAC() {
+
+        if (DateLivrare.getInstance().getAdresaInstalareAC() == null)
+            return "";
+
+        JSONObject objAdrAC = new JSONObject();
+
+        try {
+            objAdrAC.put("codJudet", DateLivrare.getInstance().getAdresaInstalareAC().getCodJudet());
+            objAdrAC.put("localitate", DateLivrare.getInstance().getAdresaInstalareAC().getOras());
+            objAdrAC.put("strada", DateLivrare.getInstance().getAdresaInstalareAC().getStrada());
+        } catch (Exception ex) {
+            Toast.makeText(context, ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return objAdrAC.toString();
+    }
+
     public String serializeTaxeComanda(List<TaxaComanda> listTaxe) {
 
         JSONArray taxeArray = new JSONArray();
@@ -398,7 +422,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                     articol.setLungime(Double.valueOf(articolObject.getString("lungime")));
 
                     if (articolObject.has("planificator") && articolObject.getString("planificator") != "null")
-                        articol.setPlanificator(articolObject.getString("planificator") );
+                        articol.setPlanificator(articolObject.getString("planificator"));
 
                     listArticole.add(articol);
 
@@ -989,6 +1013,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 articol.setUnit(articolObject.getString("unit"));
                 articol.setDepozit(articolObject.getString("depozit"));
                 articol.setCantUmb(Double.parseDouble(articolObject.getString("cantUmb")));
+                articol.setWarehouse(articolObject.getString("warehouse"));
 
                 if (articolObject.getString("cmpCorectat") != null && articolObject.getString("cmpCorectat") != "null")
                     articol.setCmpCorectat(Double.parseDouble(articolObject.getString("cmpCorectat")));
@@ -1035,8 +1060,15 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             jsonAntet.put("strada", antetComanda.getStrada().trim());
             jsonAntet.put("codFurnizor", antetComanda.getCodFurnizor());
             jsonAntet.put("isLivrareCustodie", antetComanda.isLivrareCustodie());
-            jsonAntet.put("latitudeGps", String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().latitude));
-            jsonAntet.put("longitudeGps", String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().longitude));
+
+            if (DateLivrare.getInstance().getCoordonateAdresa() != null) {
+                jsonAntet.put("latitudeGps", String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().latitude));
+                jsonAntet.put("longitudeGps", String.valueOf(DateLivrare.getInstance().getCoordonateAdresa().longitude));
+            } else {
+                jsonAntet.put("latitudeGps", "0");
+                jsonAntet.put("longitudeGps", "0");
+            }
+
             jsonAntet.put("isComandaSimulata", antetComanda.isComandaSimulata());
 
         } catch (JSONException e) {

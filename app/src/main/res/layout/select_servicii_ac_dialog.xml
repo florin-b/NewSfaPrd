@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+
+    <TextView
+        android:id="@+id/layoutLabelAdresa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:gravity="left"
+        android:layout_margin="10dp"
+        android:text="Completati adresa de instalare"
+        android:textColor="@color/labelColor"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <LinearLayout
+        android:id="@+id/layoutAdr1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:gravity="left"
+            android:paddingLeft="5dip"
+            android:text="Judet"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
+            android:typeface="serif" />
+
+        <Spinner
+            android:id="@+id/spinnerJudet"
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="bottom|left"
+            android:layout_weight="0.06"
+            android:gravity="left" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="right"
+            android:text="Localitate"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
+            android:typeface="serif" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteLocalitate"
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="bottom|left"
+            android:layout_marginRight="5dip"
+            android:layout_weight="0.1"
+            android:maxLength="75"
+            android:dropDownHeight="250dp"
+            android:inputType="textCapSentences|textNoSuggestions"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutAdr2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:gravity="left"
+            android:paddingLeft="5dip"
+            android:text="Strada"
+            android:textColor="@color/labelColor"
+            android:textSize="17sp"
+            android:typeface="serif" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteStrada"
+            android:layout_width="0dp"
+            android:layout_height="45dip"
+            android:layout_gravity="bottom|left"
+            android:layout_marginRight="5dip"
+            android:layout_weight="0.15"
+            android:dropDownHeight="250dp"
+            android:inputType="textCapSentences|textNoSuggestions"
+            android:maxLength="150"
+            android:singleLine="true"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+
+
+    <Spinner
+        android:id="@+id/spinnerServiciiAC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnCancelPalet"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/cancel_button_style"
+            android:paddingLeft="40dip"
+            android:paddingRight="40dip"
+            android:text="Inchide" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:id="@+id/btnOkArticol"
+            style="@style/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/ok_button_style"
+            android:paddingLeft="40dip"
+            android:paddingRight="40dip"
+            android:text="Adauga" />
+    </LinearLayout>
+
+</LinearLayout>

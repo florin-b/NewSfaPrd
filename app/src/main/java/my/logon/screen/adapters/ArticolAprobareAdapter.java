@@ -15,11 +15,9 @@ import java.util.List;
 import my.logon.screen.R;
 import my.logon.screen.beans.ValoriComanda;
 import my.logon.screen.model.ArticolComanda;
-import my.logon.screen.model.Constants;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
-
 
 public class ArticolAprobareAdapter extends BaseAdapter {
 
@@ -33,7 +31,6 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 	private NumberFormat nf3;
 	private NumberFormat nf2;
 	private NumberFormat nf4;
-	
 
 	public ArticolAprobareAdapter(Context context, List<ArticolComanda> listArticole) {
 		this.context = context;
@@ -48,7 +45,7 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 	public static class ViewHolder {
 		TextView textNrCrt, textNumeArt, textCodArt, textCantArt, textUmArt, textPretArt, textMonedaArt, textDepozit, textStatusArt, textProcRed, textAddCond,
 				textCmp, textProcCmp, textDisClient, textProcAprob, textMultipAprob, textInfoArticol, textPretSpecial, textIstoricPret, textVechimeStoc,
-				textMarjaT1Proc, textMarjaT1Val, textPMD;
+				textMarjaT1Proc, textMarjaT1Val, textPMD, textMarjaT1Moneda, textProcX, textPretMin;
 
 		LinearLayout layoutIstoricPret, layoutVechimeStoc, layoutMarjaT1, layoutPretMediuDistrib;
 	}
@@ -93,7 +90,9 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 			viewHolder.textMarjaT1Val = (TextView) convertView.findViewById(R.id.textMarjaT1Val);
 			viewHolder.layoutPretMediuDistrib = (LinearLayout) convertView.findViewById(R.id.layoutPretMediuDistrib);
 			viewHolder.textPMD = (TextView) convertView.findViewById(R.id.textPMD);
-			
+			viewHolder.textMarjaT1Moneda = (TextView) convertView.findViewById(R.id.textMarjaT1Moneda);
+			viewHolder.textProcX = (TextView) convertView.findViewById(R.id.textProcX);
+			viewHolder.textPretMin = (TextView) convertView.findViewById(R.id.textPretMin);
 			convertView.setTag(viewHolder);
 
 		} else {
@@ -108,7 +107,7 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 		viewHolder.textCantArt.setText(nf3.format(articol.getCantitate()));
 
 		if (!articol.getUmb().equals(articol.getUm())) {
-			unitPret = "RON/" + System.getProperty("line.separator") + articol.getUmb();
+			unitPret = articol.getMoneda() + "/" + System.getProperty("line.separator") + articol.getUmb();
 		}
 
 		viewHolder.textUmArt.setText(articol.getUm());
@@ -136,8 +135,12 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 
 			viewHolder.layoutMarjaT1.setVisibility(View.VISIBLE);
 			viewHolder.textMarjaT1Val.setText(nf2.format(articol.getValT1()));
-			viewHolder.textMarjaT1Proc.setText(nf2.format(articol.getProcT1()) + "%");			
-			
+			viewHolder.textMarjaT1Moneda.setText(articol.getMoneda());
+			viewHolder.textMarjaT1Proc.setText(nf2.format(articol.getProcT1()) + "%");
+
+			viewHolder.textProcX.setText(nf2.format(articol.getProcentX()) + "%");
+			viewHolder.textPretMin.setText(nf2.format(articol.getPretMinX()));
+
 			if (valoareCmp > 0) {
 				if (UserInfo.getInstance().getCodDepart().equals("07")) {
 					procentCmp = (articol.getPretUnit() / (valoareCmp * multiplu) - 1) * 100;
@@ -161,27 +164,25 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 			viewHolder.textIstoricPret.setText(articol.getIstoricPret());
 		} else
 			viewHolder.layoutIstoricPret.setVisibility(View.GONE);
-		
-		
+
 		if (articol.getVechime() != null && !articol.getVechime().equals("0")) {
 			viewHolder.layoutVechimeStoc.setVisibility(View.VISIBLE);
 			viewHolder.textVechimeStoc.setText(articol.getVechime());
 		} else
 			viewHolder.layoutVechimeStoc.setVisibility(View.GONE);
-		
 
 		if (isPretSpecial(articol.getInfoArticol()))
 			viewHolder.textPretSpecial.setText("(*)");
 
 		viewHolder.textMonedaArt.setText(articol.getMoneda());
-		
+
 		if (articol.getPretMediu() > 0 && UtilsUser.isDV() && UserInfo.getInstance().getInitDivizie().equals("11")) {
 			viewHolder.layoutPretMediuDistrib.setVisibility(View.VISIBLE);
-			viewHolder.textPMD.setText(nf2.format(articol.getPretMediu() * Constants.TVA));
+			viewHolder.textPMD.setText(nf2.format(articol.getPretMediu() * my.logon.screen.model.Constants.TVA));
 		} else {
 			viewHolder.layoutPretMediuDistrib.setVisibility(View.GONE);
-		}		
-		
+		}
+
 		if (colorPos % 2 == 0)
 			convertView.setBackgroundResource(R.drawable.shadow_dark);
 		else
@@ -208,8 +209,8 @@ public class ArticolAprobareAdapter extends BaseAdapter {
 		for (ArticolComanda art : articol) {
 
 			if (moneda.isEmpty())
-				moneda = art.getMoneda();
-
+				moneda = art.getMoneda(); 
+				
 			if (art.getTipArt().equals("B")) {
 				valoriComanda.setPondereB(art.getPret() + valoriComanda.getPondereB());
 			}

@@ -3,6 +3,7 @@ package my.logon.screen.model;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.ksoap2.HeaderProperty;
@@ -11,10 +12,17 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
 
 import my.logon.screen.connectors.ConnectionStrings;
 import my.logon.screen.listeners.AsyncTaskListener;
@@ -26,6 +34,7 @@ public class WebServiceCall extends AsyncTask<Void, Void, String> {
 	private AsyncTaskListener listener;
 	private String methodName;
 	private Map<String, String> params;
+	private static TrustManager[] trustManagers;
 
 	public WebServiceCall(Context context, String methodName, Map<String, String> params) {
 		super();
@@ -56,6 +65,7 @@ public class WebServiceCall extends AsyncTask<Void, Void, String> {
 			SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 			envelope.dotNet = true;
 			envelope.setOutputSoapObject(request);
+			allowAllSSL();
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(ConnectionStrings.getInstance().getUrl(), 60000);
 
 			List<HeaderProperty> headerList = new ArrayList<HeaderProperty>();
@@ -70,6 +80,7 @@ public class WebServiceCall extends AsyncTask<Void, Void, String> {
 		}
 		return response;
 	}
+
 
 	@Override
 	protected void onPostExecute(String result) {
@@ -88,8 +99,37 @@ public class WebServiceCall extends AsyncTask<Void, Void, String> {
 				listener.onTaskComplete(methodName, result);
 			}
 		} catch (Exception e) {
-			Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
 		}
 	}
+
+
+	public static void allowAllSSL() {
+
+		javax.net.ssl.HttpsURLConnection
+				.setDefaultHostnameVerifier(new HostnameVerifier() {
+					public boolean verify(String hostname, SSLSession session) {
+						return true;
+					}
+				});
+
+		javax.net.ssl.SSLContext context = null;
+
+		if (trustManagers == null) {
+			trustManagers = new TrustManager[] { new _FakeX509TrustManager() };
+		}
+
+		try {
+			context = javax.net.ssl.SSLContext.getInstance("TLS");
+			context.init(null, trustManagers, new SecureRandom());
+		} catch (NoSuchAlgorithmException e) {
+			Log.e("allowAllSSL", e.toString());
+		} catch (KeyManagementException e) {
+			Log.e("allowAllSSL", e.toString());
+		}
+		javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(context
+				.getSocketFactory());
+	}
+
 
 }

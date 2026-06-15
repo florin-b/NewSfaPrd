@@ -89,7 +89,8 @@ public class MapUtils {
             if (!UtilsFormatting.flattenToAscii(judetResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(judetAdresa).toLowerCase()))
                 isLocalitateCorecta = false;
             else if (localitateResult != null)
-                isLocalitateCorecta = UtilsFormatting.flattenToAscii(localitateResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa.replaceAll("\\(.*?\\)", "").trim()).toLowerCase());
+                isLocalitateCorecta = UtilsFormatting.flattenToAscii(localitateResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa.replaceAll("\\(.*?\\)", "").trim()).toLowerCase()) ||
+                        UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateResult.replaceAll("\\(.*?\\)", "").trim()).toLowerCase());
             else if (subLocalitateResult != null)
                 isLocalitateCorecta = UtilsFormatting.flattenToAscii(subLocalitateResult).toLowerCase().contains(UtilsFormatting.flattenToAscii(localitateAdresa).toLowerCase());
             else if (comunaResult != null)

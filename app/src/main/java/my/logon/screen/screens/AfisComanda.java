@@ -39,6 +39,7 @@ import my.logon.screen.R;
 import my.logon.screen.adapters.AdapterAgenti;
 import my.logon.screen.adapters.ArticolAfisAdapter;
 import my.logon.screen.adapters.ComandaAfisAdapter;
+import my.logon.screen.beans.BeanAdresaGenerica;
 import my.logon.screen.beans.BeanArticoleAfisare;
 import my.logon.screen.beans.BeanComandaCreata;
 import my.logon.screen.beans.DateLivrareAfisare;
@@ -48,6 +49,7 @@ import my.logon.screen.dialogs.SelectClientDialog;
 import my.logon.screen.dialogs.SelectDivizieDialog;
 import my.logon.screen.dialogs.SelectIntervalDialog;
 import my.logon.screen.enums.EnumComenziDAO;
+import my.logon.screen.enums.EnumJudete;
 import my.logon.screen.listeners.ClientDialogListener;
 import my.logon.screen.listeners.ComenziDAOListener;
 import my.logon.screen.listeners.CustomSpinnerClass;
@@ -263,7 +265,7 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
         return UserInfo.getInstance().getTipAcces().equals("14") || UserInfo.getInstance().getTipAcces().equals("12");
     }
 
-    boolean isDirectorConsilieri(){
+    boolean isDirectorConsilieri() {
         return UserInfo.getInstance().getTipUserSap().equals("DVCVA") || UserInfo.getInstance().getTipUserSap().equals("DVIP");
     }
 
@@ -758,6 +760,19 @@ public class AfisComanda extends Activity implements CustomSpinnerListener, Oper
             ((TextView) findViewById(R.id.textPrelucrare)).setText(dateLivrare.getPrelucrare());
         } else {
             findViewById(R.id.layoutPrelucrare).setVisibility(View.GONE);
+        }
+
+        findViewById(R.id.layoutAdrInstalareAC).setVisibility(View.GONE);
+        if (dateLivrare.getAdresaInstalareAC() != null && !dateLivrare.getAdresaInstalareAC().getCodJudet().trim().isEmpty()) {
+            findViewById(R.id.layoutAdrInstalareAC).setVisibility(View.VISIBLE);
+            BeanAdresaGenerica adresaInstalareAC = dateLivrare.getAdresaInstalareAC();
+
+            String adrInstAC = EnumJudete.getNumeJudet(Integer.parseInt(adresaInstalareAC.getCodJudet())) + ", " + adresaInstalareAC.getOras();
+            if (!adresaInstalareAC.getStrada().trim().isEmpty())
+                adrInstAC += ", " + adresaInstalareAC.getStrada();
+
+            ((TextView) findViewById(R.id.textAdresaInstalareACC)).setText(adrInstAC);
+
         }
 
     }

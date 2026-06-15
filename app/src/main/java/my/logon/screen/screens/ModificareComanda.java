@@ -56,6 +56,7 @@ import my.logon.screen.adapters.ArticolePretTransport;
 import my.logon.screen.adapters.ComandaModificareAdapter;
 import my.logon.screen.beans.AntetCmdMathaus;
 import my.logon.screen.beans.ArticolPalet;
+import my.logon.screen.beans.BeanAdresaGenerica;
 import my.logon.screen.beans.BeanArticoleAfisare;
 import my.logon.screen.beans.BeanComandaCreata;
 import my.logon.screen.beans.BeanConditii;
@@ -77,6 +78,7 @@ import my.logon.screen.dialogs.RezumatComandaDialog;
 import my.logon.screen.dialogs.SelectTipMasinaDialog;
 import my.logon.screen.dialogs.TaxeMasiniDialog;
 import my.logon.screen.enums.EnumComenziDAO;
+import my.logon.screen.enums.EnumJudete;
 import my.logon.screen.enums.EnumTipClientIP;
 import my.logon.screen.helpers.HelperComenzi;
 import my.logon.screen.helpers.HelperCostDescarcare;
@@ -104,6 +106,7 @@ import my.logon.screen.model.ListaArticoleModificareComanda;
 import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolImpl;
 import my.logon.screen.model.UserInfo;
+import my.logon.screen.utils.UtilsArticole;
 import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsComenziGed;
 import my.logon.screen.utils.UtilsFormatting;
@@ -837,7 +840,8 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         if (filialaLivrareMathaus.equals("BV90"))
             filialaLivrareMathaus = DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala();
 
-        if (isComandaCLP() && DateLivrare.getInstance().getCodFilialaCLP().equals("BV90"))
+        //if (isComandaCLP() && (DateLivrare.getInstance().getCodFilialaCLP().equals("BV90")))
+        if (isComandaCLP())
             filialaLivrareMathaus = DateLivrare.getInstance().getCodFilialaCLP();
         else if (DateLivrare.getInstance().getDatePoligonLivrare() != null &&
                 !DateLivrare.getInstance().getDatePoligonLivrare().getFilialaPrincipala().trim().isEmpty() &&
@@ -1423,6 +1427,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         globalAlertDVKA = "?";
         globalSubCmp = "0";
 
+
         totalComanda = 0;
 
         Collections.sort(ListaArticoleComanda.getInstance().getListArticoleLivrare(), ArticolComanda.DepartComparator);
@@ -1552,7 +1557,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
         JSONArray myArray = new JSONArray();
         TreeSet<String> aprobariCV = new TreeSet<String>();
         JSONObject obj = null;
-
+        boolean isServiciuInstalareAC = false;
 
         try {
             for (ArticolComanda artComanda : ListaArticoleComanda.getInstance().getListArticoleLivrare()) {
@@ -1607,6 +1612,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
                     }
                 }
 
+                if (UtilsArticole.isArticolServiciuAC(artComanda))
+                    isServiciuInstalareAC = true;
+
                 myArray.put(obj);
             }
         } catch (Exception ex) {
@@ -1619,6 +1627,9 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             String strAprobariCV = new String(aprobariCV.toString());
             comandaFinala.setNecesarAprobariCV(strAprobariCV.substring(1, strAprobariCV.length() - 1));
         }
+
+        if (!isServiciuInstalareAC)
+            DateLivrare.getInstance().setAdresaInstalareAC(null);
 
         return serializedResult;
 
@@ -1730,6 +1741,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             obj.put("appVer", UserInfo.getInstance().getAppVer());
             obj.put("refHybris", DateLivrare.getInstance().getRefHybris());
             obj.put("tipClientDoc", UtilsComenzi.isComandaPFFaraFact() ? "PF_BON": " ");
+            obj.put("adresaInstalareAC", opArticol.serializeAdresaInstalareAC());
 
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
@@ -2023,7 +2035,7 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
 
 
         if (UtilsComenzi.isComandaPFDep16(articoleComanda.getDateLivrare()))
-            DateLivrare.getInstance().setDiviziiClient("03;040;041;09;11");
+            DateLivrare.getInstance().setDiviziiClient("03;040;041;08;09;11");
 
         listArticoleComanda = articoleComanda.getListArticole();
 
@@ -2077,6 +2089,19 @@ public class ModificareComanda extends Activity implements AsyncTaskListener, Co
             layoutBV90.setVisibility(View.VISIBLE);
         } else {
             layoutBV90.setVisibility(View.GONE);
+        }
+
+        findViewById(R.id.layoutAdrInstalareAC).setVisibility(View.GONE);
+        if (dateLivrare.getAdresaInstalareAC() != null && !dateLivrare.getAdresaInstalareAC().getCodJudet().trim().isEmpty()) {
+            findViewById(R.id.layoutAdrInstalareAC).setVisibility(View.VISIBLE);
+            BeanAdresaGenerica adresaInstalareAC = dateLivrare.getAdresaInstalareAC();
+
+            String adrInstAC = EnumJudete.getNumeJudet(Integer.parseInt(adresaInstalareAC.getCodJudet())) + ", " + adresaInstalareAC.getOras();
+            if (!adresaInstalareAC.getStrada().trim().isEmpty())
+                adrInstAC += ", " + adresaInstalareAC.getStrada();
+
+            ((TextView) findViewById(R.id.textAdresaInstalareACC)).setText(adrInstAC);
+
         }
 
         displayCmdDetails(true);

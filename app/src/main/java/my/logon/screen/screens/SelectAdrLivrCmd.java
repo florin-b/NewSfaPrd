@@ -2184,14 +2184,14 @@ public class SelectAdrLivrCmd<tipTransport> extends AppCompatActivity implements
         if (UtilsComenzi.isModifTCLIinTRAP(poligonLivrare)) {
             UtilsComenzi.showFilialaLivrareDialog(this, DateLivrare.getInstance().getFilialaLivrareTCLI().getUnitLog());
             return;
-        } else if (DateLivrare.getInstance().getTransport().equals("TRAP") && UtilsComenzi.isComandaClp()
+        } /*else if (DateLivrare.getInstance().getTransport().equals("TRAP") && UtilsComenzi.isComandaClp()
                 && !DateLivrare.getInstance().getTranspInit().equals("TERT")
                 && !DateLivrare.getInstance().getCodFilialaCLP().equals("BV90")
                 && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaPrincipala())
                 && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaSecundara())) {
             UtilsComenzi.showFilialaLivrareDialog(this, DateLivrare.getInstance().getCodFilialaCLP());
             return;
-        } else if (!UtilsComenzi.isAdresaUnitLogModifCmd(this, ulLivrareModifCmd, poligonLivrare)) {
+        } */else if (!UtilsComenzi.isAdresaUnitLogModifCmd(this, ulLivrareModifCmd, poligonLivrare)) {
             return;
         } else {
             if (!poligonLivrare.getFilialaPrincipala().trim().isEmpty()) {

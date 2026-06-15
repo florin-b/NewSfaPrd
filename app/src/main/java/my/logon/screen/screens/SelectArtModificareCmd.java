@@ -48,6 +48,7 @@ import my.logon.screen.beans.ArticolDB;
 import my.logon.screen.beans.BeanCablu05;
 import my.logon.screen.beans.BeanParametruPretGed;
 import my.logon.screen.beans.PretArticolGed;
+import my.logon.screen.dialogs.ArticoleServiciiACDialog;
 import my.logon.screen.dialogs.Cabluri05Dialog;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumDepartExtra;
@@ -56,6 +57,7 @@ import my.logon.screen.helpers.HelperComenzi;
 import my.logon.screen.helpers.HelperPreturi;
 import my.logon.screen.listeners.Cablu05SelectedListener;
 import my.logon.screen.listeners.OperatiiArticolListener;
+import my.logon.screen.listeners.ServiciiACListener;
 import my.logon.screen.model.ArticolComanda;
 import my.logon.screen.model.ArticolComandaGed;
 import my.logon.screen.model.Constants;
@@ -65,12 +67,13 @@ import my.logon.screen.model.OperatiiArticol;
 import my.logon.screen.model.OperatiiArticolFactory;
 import my.logon.screen.model.UserInfo;
 import my.logon.screen.utils.DepartamentAgent;
+import my.logon.screen.utils.UtilsArticole;
 import my.logon.screen.utils.UtilsComenzi;
 import my.logon.screen.utils.UtilsFormatting;
 import my.logon.screen.utils.UtilsGeneral;
 import my.logon.screen.utils.UtilsUser;
 
-public class SelectArtModificareCmd extends ListActivity implements OperatiiArticolListener, Cablu05SelectedListener {
+public class SelectArtModificareCmd extends ListActivity implements OperatiiArticolListener, Cablu05SelectedListener, ServiciiACListener {
 
     Button articoleBtn, saveArtBtn, pretBtn;
     String filiala = "", nume = "", cod = "", umStoc = "";
@@ -137,6 +140,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
     private ArticolComanda articolComandaModif;
     private NumberFormat nfStoc;
     private double stocComandaModif;
+    private String filialaTrapex = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -256,6 +260,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         textCondPret.setVisibility(View.INVISIBLE);
 
         textMultipluArt.setVisibility(View.INVISIBLE);
+
+        if (isOriceComandaModificata() && HelperComenzi.isComandaTrapex())
+            filialaTrapex = HelperComenzi.getULStocArticolModifCmd();
 
     }
 
@@ -823,6 +830,7 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
             params.put("filiala", UserInfo.getInstance().getUnitLog());
             params.put("codUser", UserInfo.getInstance().getCod());
             params.put("transpTert", String.valueOf(DateLivrare.getInstance().getTranspInit().equals("TERT")));
+            params.put("filialaTrapex", UtilsGeneral.getUnitLogDistrib(filialaTrapex));
 
             opArticol.getArticoleDistributie(params);
 
@@ -1013,6 +1021,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                     unArticol.setGreutate(greutateArt);
                     unArticol.setFilialaSite(ModificareComanda.filialaAlternativaM);
 
+                    if (isOriceComandaModificata() && !filialaTrapex.trim().isEmpty())
+                        unArticol.setFilialaSite(UtilsUser.getULUserSite(filialaTrapex, globalDepozSel));
+
                     unArticol.setTipMarfa(tipMarfa);
                     unArticol.setGreutateBruta(greutateBruta);
                     unArticol.setLungimeArt(lungimeArt);
@@ -1030,6 +1041,10 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
                     ListaArticoleModificareComanda listaComanda = ListaArticoleModificareComanda.getInstance();
                     listaComanda.addArticolComanda(unArticol);
+
+                    if (UtilsArticole.isArticolAC(articolDBSelected.getSintetic())) {
+                        getServiciiInstalareAC(codArticol);
+                    }
 
                     if (!altDepozit) {
 
@@ -1145,6 +1160,20 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
     }
 
+    public void getServiciiInstalareAC(String codArticol) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("codArticol", codArticol);
+        params.put("codJudet", DateLivrare.getInstance().getCodJudet());
+
+        if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+            params.put("codJudet", "");
+
+        params.put("data", DateLivrare.getInstance().getDataLivrare());
+        opArticol.getServiciiInstalareAC(params);
+
+    }
+
 
     private void populateListViewArt(List<ArticolDB> resultsList) {
         listArticole.clear();
@@ -1241,6 +1270,31 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
             textUM.setText("");
             textStoc.setText("");
         }
+
+    }
+
+    private void showServiciiACDialog(String listArticoleSer) {
+
+        List<ArticolDB> listServiciiAC = opArticol.deserializeArticoleVanzare(listArticoleSer);
+
+        if (!listServiciiAC.isEmpty()) {
+
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.6);
+            int height;
+
+            if (DateLivrare.getInstance().getTransport().equals("TCLI"))
+                height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
+            else
+                height = (int) (getResources().getDisplayMetrics().heightPixels * 0.4);
+
+            boolean existaServiciuComanda = UtilsComenzi.existaServiciuComanda(ListaArticoleModificareComanda.getInstance().getListArticoleComanda());
+
+            ArticoleServiciiACDialog articoleServiciiDialog = new ArticoleServiciiACDialog(this, listServiciiAC, existaServiciuComanda);
+            articoleServiciiDialog.setServiciiACListener(this);
+            articoleServiciiDialog.getWindow().setLayout(width, height);
+            articoleServiciiDialog.show();
+        }
+
 
     }
 
@@ -1427,6 +1481,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
 
         articolDBSelected = articol;
 
+        if (UtilsArticole.isServiciuAC(articolDBSelected))
+            return;
+
         super.onListItemClick(l, v, position, id);
 
         numeArticol = articol.getNume();
@@ -1503,6 +1560,10 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
                 localFiliala = ModificareComanda.filialaAlternativaM;
         }
 
+        if (!filialaTrapex.trim().isEmpty()) {
+            localFiliala = UtilsUser.getULUserSite(filialaTrapex, globalDepozSel);
+        }
+
         paramsGetStocDepozit = new HashMap<String, String>();
 
         paramsGetStocDepozit.put("codArt", codArticol);
@@ -1537,6 +1598,9 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
             case GET_FACTOR_CONVERSIE_MODIF_CMD:
                 loadFactorConversieModifCmd((String) result);
                 break;
+            case GET_SERVICII_INSTAL_AC:
+                showServiciiACDialog((String) result);
+                break;
             default:
                 break;
 
@@ -1548,6 +1612,44 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
     public void cabluriSelected(List<BeanCablu05> listCabluri) {
         this.listCabluri = listCabluri;
         saveArtBtn.performClick();
+
+    }
+
+    @Override
+    public void serviciuACSelected(ArticolDB articolServiciu) {
+
+        List<ArticolDB> listArticole = new ArrayList<ArticolDB>();
+
+        spinnerDepoz.setSelection(0);
+
+        CautareArticoleAdapter adapterArticole = new CautareArticoleAdapter(this, listArticole);
+        setListAdapter(adapterArticole);
+
+        articolDBSelected = articolServiciu;
+
+        numeArticol = articolServiciu.getNume();
+        codArticol = articolServiciu.getCod();
+        tipArticol = articolServiciu.getTipAB();
+
+        globalCodDepartSelectetItem = articolServiciu.getDepart();
+
+        resultLayout.setVisibility(View.VISIBLE);
+
+        textNumeArticol.setVisibility(View.VISIBLE);
+        textCodArticol.setVisibility(View.VISIBLE);
+        textUM.setVisibility(View.VISIBLE);
+        textStoc.setVisibility(View.VISIBLE);
+        textCant.setVisibility(View.VISIBLE);
+        labelCant.setVisibility(View.VISIBLE);
+        labelStoc.setVisibility(View.VISIBLE);
+        pretBtn.setVisibility(View.VISIBLE);
+
+        textNumeArticol.setText(numeArticol);
+        textCodArticol.setText(codArticol);
+
+        textUM.setText("BUC");
+        textStoc.setText(articolServiciu.getStoc());
+
 
     }
 

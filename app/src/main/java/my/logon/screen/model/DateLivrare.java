@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 import enums.EnumZona;
+import my.logon.screen.beans.BeanAdresaGenerica;
 import my.logon.screen.beans.BeanFilialaLivrare;
 import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.DateLivrareAfisare;
@@ -115,6 +116,8 @@ public class DateLivrare {
 	private String canalB2B;
 	private String departComanda;
 	private String site;
+	private String ulTrapex;
+	private BeanAdresaGenerica adresaInstalareAC;
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -181,6 +184,8 @@ public class DateLivrare {
 		this.codPostal = dateLivrareAfisare.getCodPostal();
 		this.transpInit = dateLivrareAfisare.getTransport();
 		this.canalB2B = dateLivrareAfisare.getCanalB2B();
+		this.ulTrapex = dateLivrareAfisare.getUlTrapex();
+		this.adresaInstalareAC = dateLivrareAfisare.getAdresaInstalareAC();
 
 
 	}
@@ -841,6 +846,22 @@ public class DateLivrare {
 		this.site = site;
 	}
 
+	public String getUlTrapex() {
+		return ulTrapex;
+	}
+
+	public void setUlTrapex(String ulTrapex) {
+		this.ulTrapex = ulTrapex;
+	}
+
+	public BeanAdresaGenerica getAdresaInstalareAC() {
+		return adresaInstalareAC;
+	}
+
+	public void setAdresaInstalareAC(BeanAdresaGenerica adresaInstalareAC) {
+		this.adresaInstalareAC = adresaInstalareAC;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -916,6 +937,8 @@ public class DateLivrare {
 		canalB2B = "";
 		departComanda = "";
 		site = "";
+		ulTrapex = "";
+		adresaInstalareAC = null;
 	}
 
 }

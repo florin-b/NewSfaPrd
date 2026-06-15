@@ -25,6 +25,7 @@ import my.logon.screen.beans.CostTransportMathaus;
 import my.logon.screen.beans.RezumatComanda;
 import my.logon.screen.beans.TranspComenzi;
 import my.logon.screen.dialogs.ModifPretTranspDialog;
+import my.logon.screen.helpers.HelperComenzi;
 import my.logon.screen.helpers.HelperMathaus;
 import my.logon.screen.listeners.ModifPretTransportListener;
 import my.logon.screen.listeners.RezumatListener;
@@ -47,6 +48,7 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
     private String[] tipTransportDL = {"TRAP", "TFRN"};
     private String[] tipTransportDL_TCLI = {"TCLI", "TFRN"};
     private String[] tipTransportTertArray = {"TERT", "TCLI"};
+    private String[] tipTransportAC_ZC = {"TRAP"};
     private String tipTransportCmd;
     private String filialeArondate;
     private ArticolComanda articolTransport;
@@ -145,6 +147,9 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
                     if (DateLivrare.getInstance().getTransport().equals("TCLI"))
                         tipTransportArray = tipTransportDL_TCLI;
 
+                if (UtilsComenzi.isComandaAC_ZC(canalDistrib))
+                    tipTransportArray = tipTransportAC_ZC;
+
                 }
 
                 ArrayAdapter<String> adapterSpinnerTransp = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, tipTransportArray);
@@ -232,6 +237,11 @@ public class AdapterRezumatComanda extends BaseAdapter implements ModifPretTrans
 
         if (UtilsComenzi.isComandaPFFaraFact())
             viewHolder.spinnerTransport.setEnabled(false);
+
+        if (HelperComenzi.isComandaTrapex(rezumat.getFilialaLivrare())) {
+            viewHolder.spinnerTransport.setEnabled(false);
+            viewHolder.textFurnizor.setText(viewHolder.textFurnizor.getText() + " (TRAPEX)");
+        }
 
         viewHolder.stergeComandaBtn.setVisibility(View.INVISIBLE);
 
