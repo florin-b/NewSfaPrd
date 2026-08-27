@@ -3,6 +3,7 @@ package my.logon.screen.beans;
 import java.util.List;
 
 import my.logon.screen.enums.EnumTipCamion;
+import my.logon.screen.enums.EnumTipMacara;
 
 public class TaxaTransport {
 
@@ -11,6 +12,7 @@ public class TaxaTransport {
     private EnumTipCamion selectedCamion;
     private double taxaMacaraAgent;
     private boolean acceptaMacara;
+    private EnumTipMacara tipMacara;
 
     public String getFiliala() {
         return filiala;
@@ -50,5 +52,13 @@ public class TaxaTransport {
 
     public void setAcceptaMacara(boolean acceptaMacara) {
         this.acceptaMacara = acceptaMacara;
+    }
+
+    public EnumTipMacara getTipMacara() {
+        return tipMacara;
+    }
+
+    public void setTipMacara(EnumTipMacara tipMacara) {
+        this.tipMacara = tipMacara;
     }
 }

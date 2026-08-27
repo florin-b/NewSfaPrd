@@ -116,7 +116,7 @@ public class Salarizare extends Activity implements OperatiiSalarizareListener, 
 
     private void checkAccess() {
 
-        if ((UtilsUser.isAgentOrSD() || UtilsUser.isUserKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK()) && UserInfo.getInstance().getIsMeniuBlocat()) {
+        if ((UtilsUser.isAgentOrSD() || UtilsUser.isUserKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK() || UtilsUser.isUserIP()) && UserInfo.getInstance().getIsMeniuBlocat()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Acces blocat. Folositi modulul Utilizator pentru deblocare.").setCancelable(false)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {

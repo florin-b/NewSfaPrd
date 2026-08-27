@@ -83,7 +83,7 @@ public class SalarizareCVA extends Activity implements OperatiiSalarizareListene
 
     private void checkAccess() {
 
-        if (UtilsUser.isCVA() && UserInfo.getInstance().getIsMeniuBlocat()) {
+        if ((UtilsUser.isCVA() || UtilsUser.isUserIP()) && UserInfo.getInstance().getIsMeniuBlocat()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Acces blocat. Folositi modulul Utilizator pentru deblocare.").setCancelable(false)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {

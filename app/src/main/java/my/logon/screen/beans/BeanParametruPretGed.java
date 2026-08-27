@@ -20,6 +20,7 @@ public class BeanParametruPretGed {
 	private String codClientParavan;
 	private String filialaClp;
 	private String tipTransport;
+	private String modB2B;
 
 	public String getClient() {
 		return client;
@@ -163,6 +164,14 @@ public class BeanParametruPretGed {
 
 	public void setTipTransport(String tipTransport) {
 		this.tipTransport = tipTransport;
+	}
+
+	public String getModB2B() {
+		return modB2B;
+	}
+
+	public void setModB2B(String modB2B) {
+		this.modB2B = modB2B;
 	}
 
 	@Override

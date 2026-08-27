@@ -1340,6 +1340,12 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
         paramPret.setFilialaClp(DateLivrare.getInstance().getCodFilialaCLP());
         paramPret.setTipTransport(DateLivrare.getInstance().getTransport());
 
+        String modB2B = "";
+
+        if (isOriceComandaModificata() && UtilsComenzi.isComandaB2B())
+            modB2B = "X";
+        paramPret.setModB2B(modB2B);
+
         params.put("parametruPret", opArticol.serializeParamPretGed(paramPret));
 
         opArticol.getPretUnic(params);
@@ -1975,7 +1981,7 @@ public class SelectArtCmdGed extends ListActivity implements OperatiiArticolList
     }
 
     private boolean isConditieCabluri05BV90() {
-        return articolDBSelected.getDepart().equals("05") && (articolMathaus != null && articolMathaus.getWarehouse().contains("BV90"));
+        return articolDBSelected.getDepart().equals("05") && (articolMathaus != null && articolMathaus.getWarehouse()!= null && articolMathaus.getWarehouse().contains("BV90"));
     }
 
     private void getCabluri05(String codArticol) {

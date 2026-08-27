@@ -33,6 +33,7 @@ import my.logon.screen.beans.OptiuneCamion;
 import my.logon.screen.beans.PretArticolGed;
 import my.logon.screen.beans.TaxaComanda;
 import my.logon.screen.beans.TaxaMasina;
+import my.logon.screen.beans.Tonaj;
 import my.logon.screen.enums.EnumArticoleDAO;
 import my.logon.screen.enums.EnumUnitMas;
 import my.logon.screen.listeners.AsyncTaskListener;
@@ -392,6 +393,32 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
         return taxeArray.toString();
     }
 
+    public String serializeTonaje() {
+
+        JSONArray tonajeArray = new JSONArray();
+
+        if (DateLivrare.getInstance().getListTonaje() == null)
+            return "";
+
+        try {
+
+            for (Tonaj tonaj : DateLivrare.getInstance().getListTonaje()) {
+                JSONObject obj = new JSONObject();
+                obj.put("filiala", tonaj.getFiliala());
+                obj.put("tonajImplicit", tonaj.getTonajImplicit());
+                obj.put("tonajSelectat", tonaj.getTonajSelectat());
+                obj.put("liftMacaraImplicit", tonaj.getLiftMacaraImplicit());
+                obj.put("liftMacaraSelectat", tonaj.getLiftMacaraSelectat());
+                tonajeArray.put(obj);
+            }
+
+        } catch (Exception ex) {
+            Toast.makeText(context, ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return tonajeArray.toString();
+    }
+
     public ArrayList<ArticolDB> deserializeArticoleVanzare(String serializedListArticole) {
         ArticolDB articol = null;
         ArrayList<ArticolDB> listArticole = new ArrayList<ArticolDB>();
@@ -460,6 +487,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             jsonParametru.put("filialaClp", parametru.getFilialaClp());
             jsonParametru.put("tipTransport", parametru.getTipTransport());
             jsonParametru.put("appVer", UserInfo.getInstance().getAppVer());
+            jsonParametru.put("modB2B", parametru.getModB2B());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -873,6 +901,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
                 taxaMasina.setTraty(taxaObject.getString("traty"));
                 taxaMasina.setTaxeDivizii(getTaxeDivizii(taxaObject.getString("taxeDivizii")));
                 taxaMasina.setTotalCuTva(Double.valueOf(taxaObject.getString("totalCuTva")));
+                taxaMasina.setDefaultTonaj(taxaObject.getString("defaultTonaj"));
 
                 taxeMasini.add(taxaMasina);
 
@@ -1070,6 +1099,7 @@ public class OperatiiArticolImpl implements OperatiiArticol, AsyncTaskListener {
             }
 
             jsonAntet.put("isComandaSimulata", antetComanda.isComandaSimulata());
+            jsonAntet.put("codAdresa", antetComanda.getCodAdresa());
 
         } catch (JSONException e) {
             e.printStackTrace();

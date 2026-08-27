@@ -27,6 +27,7 @@ import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.beans.TaxeLivrare;
 import my.logon.screen.dialogs.TaxeTransportDialog;
 import my.logon.screen.enums.EnumTipCamion;
+import my.logon.screen.enums.EnumTipMacara;
 
 public class AdapterTransportFiliala extends BaseAdapter {
 
@@ -103,7 +104,16 @@ public class AdapterTransportFiliala extends BaseAdapter {
                     if (optiune.isMacara()) {
 
                         taxaTransport.setAcceptaMacara(true);
-                        String taxaMacara = getValoareTransportMacara(taxaTransport);
+
+                        String taxaMacara = "0";
+                        if (optiune.getNumeOptiune().contains("macara")) {
+                            taxaMacara = getValoareTransportMacara(taxaTransport);
+                            taxaTransport.setTipMacara(EnumTipMacara.MACARA);
+                        }
+                        else {
+                            taxaMacara = getValoareTransportLift(taxaTransport);
+                            taxaTransport.setTipMacara(EnumTipMacara.LIFT);
+                        }
 
                         if (Double.valueOf(taxaMacara) > 0) {
                             viewHolder.labelMacara.setVisibility(View.VISIBLE);
@@ -154,10 +164,24 @@ public class AdapterTransportFiliala extends BaseAdapter {
             }
         });
 
+        setDefaultTonaj(viewHolder);
+
         return convertView;
 
     }
 
+    private void setDefaultTonaj(ViewHolder viewHolder) {
+
+        for (int ii=0;ii<viewHolder.spinnerTipTransport.getAdapter().getCount();ii++) {
+            OptiuneLivrare optiuneLivrare = (OptiuneLivrare) viewHolder.spinnerTipTransport.getAdapter().getItem(ii);
+
+            if (optiuneLivrare.getDefaultTonaj() != null && optiuneLivrare.getDefaultTonaj().contains("X")) {
+                viewHolder.spinnerTipTransport.setSelection(ii, true);
+                break;
+            }
+        }
+
+    }
 
     private void showTaxeMasinaFiliala(int position) {
 
@@ -165,7 +189,7 @@ public class AdapterTransportFiliala extends BaseAdapter {
         List<Details> listTaxe = null;
 
         for (BeanTaxaCamion taxaCamion : taxaTransport.getListTaxe()) {
-            if (taxaCamion.getTipCamion().equals(taxaTransport.getSelectedCamion()) && taxaTransport.isAcceptaMacara() == isCamionLiftMacara(taxaCamion.getTaxeLivrare())) {
+            if (taxaCamion.getTipCamion().equals(taxaTransport.getSelectedCamion()) && taxaTransport.isAcceptaMacara() == isCamionLiftMacara(taxaCamion.getTaxeLivrare(), "")) {
                 listTaxe = new ArrayList<>();
                 Details details = new Details();
 
@@ -227,15 +251,20 @@ public class AdapterTransportFiliala extends BaseAdapter {
 
             numeOptiune = optiuneLivrare.getNumeOptiune();
 
-            if (taxaCamion.getTaxeLivrare().isMacara())
+            if (taxaCamion.getTaxeLivrare().isMacara()) {
                 optiuneLivrare.setNumeOptiune(numeOptiune + " cu macara");
-            else if (taxaCamion.getTaxeLivrare().isLift())
+                optiuneLivrare.setTipMacara(EnumTipMacara.MACARA);
+            }
+            else if (taxaCamion.getTaxeLivrare().isLift()) {
                 optiuneLivrare.setNumeOptiune(numeOptiune + " cu lift");
+                optiuneLivrare.setTipMacara(EnumTipMacara.LIFT);
+            }
 
-            optiuneLivrare.setValoareOptiune(getValoareTransport(taxaTransport, taxaCamion));
+            optiuneLivrare.setValoareOptiune(getValoareTransport(taxaTransport, taxaCamion, optiuneLivrare.getNumeOptiune()));
             optiuneLivrare.setTaxaTransport(taxaTransport);
             optiuneLivrare.setMacara(taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift());
             optiuneLivrare.setTipCamion(taxaCamion.getTipCamion());
+            optiuneLivrare.setDefaultTonaj(taxaCamion.getTaxeLivrare().getDefaultTonaj());
             listOptiuniLivare.add(optiuneLivrare);
 
 
@@ -253,12 +282,12 @@ public class AdapterTransportFiliala extends BaseAdapter {
     }
 
 
-    private String getValoareTransport(TaxaTransport taxaTransport, BeanTaxaCamion taxaCamion) {
+    private String getValoareTransport(TaxaTransport taxaTransport, BeanTaxaCamion taxaCamion, String numeOptiune) {
         double valoareTransport = 0;
 
         for (BeanTaxaCamion taxa : taxaTransport.getListTaxe()) {
 
-            if (taxa.getTipCamion().equals(taxaCamion.getTipCamion()) && (isCamionLiftMacara(taxa.getTaxeLivrare()) == isCamionLiftMacara(taxaCamion.getTaxeLivrare()))) {
+            if (taxa.getTipCamion().equals(taxaCamion.getTipCamion()) && (isCamionLiftMacara(taxa.getTaxeLivrare(), numeOptiune) == isCamionLiftMacara(taxaCamion.getTaxeLivrare(), numeOptiune))) {
                 valoareTransport = taxa.getTaxeLivrare().getValoareTaxaTransport() + taxa.getTaxeLivrare().getValoareTaxaAcces() +
                         taxa.getTaxeLivrare().getValoareTaxaZona() + taxa.getTaxeLivrare().getTaxaVehiculUsor();
             }
@@ -267,7 +296,12 @@ public class AdapterTransportFiliala extends BaseAdapter {
         return df.format(valoareTransport);
     }
 
-    private boolean isCamionLiftMacara(TaxeLivrare taxeLivrare) {
+    private boolean isCamionLiftMacara(TaxeLivrare taxeLivrare, String numeOptiune) {
+        if (numeOptiune.contains("lift"))
+            return taxeLivrare.isLift();
+        else if (numeOptiune.contains("macara"))
+            return taxeLivrare.isMacara();
+
         return taxeLivrare.isLift() || taxeLivrare.isMacara();
     }
 
@@ -275,7 +309,22 @@ public class AdapterTransportFiliala extends BaseAdapter {
         double valoareTransport = 0;
 
         for (BeanTaxaCamion taxa : taxaTransport.getListTaxe()) {
-            if (taxa.getTipCamion().equals(taxaTransport.getSelectedCamion()) && (taxa.getTaxeLivrare().isLift() || taxa.getTaxeLivrare().isMacara())) {
+            if (taxa.getTipCamion().equals(taxaTransport.getSelectedCamion()) && taxa.getTaxeLivrare().isMacara()) {
+                int nrPaleti = taxa.getTaxeLivrare().getNrPaleti();
+                valoareTransport = taxa.getTaxeLivrare().getTaxaMacara() * nrPaleti;
+            }
+
+        }
+
+        return df.format(valoareTransport);
+
+    }
+
+    private String getValoareTransportLift(TaxaTransport taxaTransport){
+        double valoareTransport = 0;
+
+        for (BeanTaxaCamion taxa : taxaTransport.getListTaxe()) {
+            if (taxa.getTipCamion().equals(taxaTransport.getSelectedCamion()) && taxa.getTaxeLivrare().isLift()) {
                 int nrPaleti = taxa.getTaxeLivrare().getNrPaleti();
                 valoareTransport = taxa.getTaxeLivrare().getTaxaMacara() * nrPaleti;
             }

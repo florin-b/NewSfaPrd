@@ -1830,7 +1830,7 @@ public class SelectArtCmd extends ListActivity implements OperatiiArticolListene
     }
 
     private boolean isConditieCabluri05BV90() {
-        return articolDBSelected.getDepart().equals("05") && (articolMathaus != null && articolMathaus.getWarehouse().contains("BV90"));
+        return articolDBSelected.getDepart().equals("05") && (articolMathaus != null && articolMathaus.getWarehouse() != null && articolMathaus.getWarehouse().contains("BV90"));
     }
 
     private void getCabluri05(String codArticol) {

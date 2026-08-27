@@ -34,6 +34,7 @@ public class TaxaMasina {
     private String traty;
     private double totalCuTva;
     private List<TaxaMasina> taxeDivizii;
+    public String defaultTonaj;
 
     public String getWerks() {
         return werks;
@@ -273,5 +274,13 @@ public class TaxaMasina {
 
     public void setTaxaAmbalare(double taxaAmbalare) {
         this.taxaAmbalare = taxaAmbalare;
+    }
+
+    public String getDefaultTonaj() {
+        return defaultTonaj;
+    }
+
+    public void setDefaultTonaj(String defaultTonaj) {
+        this.defaultTonaj = defaultTonaj;
     }
 }

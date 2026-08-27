@@ -120,6 +120,8 @@ public interface OperatiiArticol {
 
 	public String serializeAdresaInstalareAC();
 
+	public String serializeTonaje();
+
 }
 
 

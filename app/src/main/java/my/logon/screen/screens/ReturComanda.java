@@ -219,7 +219,7 @@ public class ReturComanda extends FragmentActivity implements ClientReturListene
                 break;
             case GET_ARTICOLE_DOCUMENT:
                 artReturListener.setListArtRetur(nrDocument, opRetur.deserializeListArticole((String) result), codClient, numeClient);
-                dateLivrareReturComanda.setListAdreseLivrare(docSelected.getListAdrese());
+                dateLivrareReturComanda.setListAdreseLivrare(opRetur.getListAdrese());
                 dateLivrareReturComanda.setPersoaneContact(docSelected.getListPersoane());
                 viewPager.setCurrentItem(2, true);
                 break;

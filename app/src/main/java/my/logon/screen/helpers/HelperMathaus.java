@@ -22,6 +22,7 @@ import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.TaxaMasina;
 import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.enums.EnumTipCamion;
+import my.logon.screen.enums.EnumTipMacara;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
 import my.logon.screen.model.ArticolComanda;
@@ -623,6 +624,11 @@ public class HelperMathaus {
 
                 if (taxaCamion.getTipCamion().equals(camionSelect) && acceptaMacara == (taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift())) {
 
+                    if (taxaTransportFil.getTipMacara() != null && taxaTransportFil.getTipMacara().equals(EnumTipMacara.LIFT) && !taxaCamion.getTaxeLivrare().isLift())
+                        continue;
+                    else if (taxaTransportFil.getTipMacara() != null && taxaTransportFil.getTipMacara().equals(EnumTipMacara.MACARA) && !taxaCamion.getTaxeLivrare().isMacara())
+                        continue;
+
                     List<CostTransportMathaus> taxeTranspFil = getCostTranspFiliala(taxaCamion.getTaxeLivrare().getTaxeDivizii(), taxaTransportFil.getFiliala(), listArticoleComanda);
                     costTranspDepart.addAll(taxeTranspFil);
 
@@ -755,6 +761,11 @@ public class HelperMathaus {
 
                 if (taxaCamion.getTipCamion().equals(tipCamionFiliala) && (taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift())) {
 
+                    if (taxaTransport.getTipMacara().equals(EnumTipMacara.LIFT) && !taxaCamion.getTaxeLivrare().isLift())
+                        continue;
+                    else if (taxaTransport.getTipMacara().equals(EnumTipMacara.MACARA) && !taxaCamion.getTaxeLivrare().isMacara())
+                        continue;
+
                     for (TaxaMasina taxaMasina : taxaCamion.getTaxeLivrare().getTaxeDivizii()) {
                         ArticolDescarcare articolDescarcare = new ArticolDescarcare();
                         articolDescarcare.setCod(taxaMasina.getMatnrMacara());
@@ -790,6 +801,10 @@ public class HelperMathaus {
 
                 if (taxaCamion.getTipCamion().equals(tipCamionFiliala) && (taxaCamion.getTaxeLivrare().isMacara() || taxaCamion.getTaxeLivrare().isLift())) {
 
+                    if (taxaTransport.getTipMacara().equals(EnumTipMacara.LIFT) && !taxaCamion.getTaxeLivrare().isLift())
+                        continue;
+                    else if (taxaTransport.getTipMacara().equals(EnumTipMacara.MACARA) && !taxaCamion.getTaxeLivrare().isMacara())
+                        continue;
 
                     ArticolDescarcare articolDescarcare = new ArticolDescarcare();
                     articolDescarcare.setCod(taxaCamion.getTaxeLivrare().getCodTaxaMacara());

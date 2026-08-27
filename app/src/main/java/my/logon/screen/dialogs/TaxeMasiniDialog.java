@@ -36,7 +36,9 @@ import my.logon.screen.beans.LivrareMathaus;
 import my.logon.screen.beans.TaxaMasina;
 import my.logon.screen.beans.TaxaTransport;
 import my.logon.screen.beans.TaxeLivrare;
+import my.logon.screen.beans.Tonaj;
 import my.logon.screen.enums.EnumTipCamion;
+import my.logon.screen.enums.EnumTipMacara;
 import my.logon.screen.helpers.HelperMathaus;
 import my.logon.screen.listeners.TaxeMasiniListener;
 import my.logon.screen.model.DateLivrare;
@@ -307,6 +309,7 @@ public class TaxeMasiniDialog extends Dialog {
                     taxeLivrare.setDepart(taxaMasina.getSpart());
                     taxeLivrare.setTaxeDivizii(taxaMasina.getTaxeDivizii());
                     taxeLivrare.setTotalCuTva(taxaMasina.getTotalCuTva());
+                    taxeLivrare.setDefaultTonaj(taxaMasina.getDefaultTonaj());
                     taxaCamion.setTaxeLivrare(taxeLivrare);
                     listTaxeCamion.add(taxaCamion);
 
@@ -338,13 +341,44 @@ public class TaxeMasiniDialog extends Dialog {
 
     private void setTaxeTransportAgent() {
 
+        List<Tonaj> listTonaje = new ArrayList<>();
+
         if (DateLivrare.getInstance().getTransport().equals("TCLI"))
             return;
 
         for (TaxaTransport taxaTransport : taxeTransport) {
 
+            Tonaj tonaj = new Tonaj();
+            tonaj.setFiliala(taxaTransport.getFiliala());
+
+
             for (BeanTaxaCamion taxaCamion : taxaTransport.getListTaxe()) {
+
+
+                if (taxaCamion.getTaxeLivrare().getDefaultTonaj()!=null && taxaCamion.getTaxeLivrare().getDefaultTonaj().contains("X")) {
+                    tonaj.setTonajImplicit(taxaCamion.getTipCamion().toString());
+
+                    tonaj.setLiftMacaraImplicit("");
+
+                    if (taxaCamion.getTaxeLivrare().isLift())
+                        tonaj.setLiftMacaraImplicit("L");
+                    else if (taxaCamion.getTaxeLivrare().isMacara())
+                        tonaj.setLiftMacaraImplicit("M");
+
+                }
+
+
                 if (taxaTransport.getSelectedCamion().equals(taxaCamion.getTipCamion()) && isCamionLiftMacara(taxaCamion.getTaxeLivrare()) == taxaTransport.isAcceptaMacara()) {
+
+                    if (taxaTransport.isAcceptaMacara() && taxaTransport.getTipMacara() != null) {
+
+                        if (taxaTransport.getTipMacara().equals(EnumTipMacara.LIFT) && !taxaCamion.getTaxeLivrare().isLift())
+                            continue;
+
+                        else if (taxaTransport.getTipMacara().equals(EnumTipMacara.MACARA) && !taxaCamion.getTaxeLivrare().isMacara())
+                            continue;
+
+                    }
 
                     trateazaTipMasina(taxaCamion);
 
@@ -358,6 +392,16 @@ public class TaxeMasiniDialog extends Dialog {
                     costTransportMathaus.setTotalCuTva(taxaCamion.getTaxeLivrare().getTotalCuTva());
                     dateLivrare.getCostTransport().add(costTransportMathaus);
 
+                    tonaj.setTonajSelectat(taxaCamion.getTipCamion().toString());
+
+                    tonaj.setLiftMacaraSelectat("");
+
+                    if (taxaCamion.getTaxeLivrare().isLift())
+                        tonaj.setLiftMacaraSelectat("L");
+                    else if (taxaCamion.getTaxeLivrare().isMacara())
+                        tonaj.setLiftMacaraSelectat("M");
+
+                    listTonaje.add(tonaj);
 
                     if (taxaCamion.getTaxeLivrare().getValoareTaxaZona() > 0) {
                         costTransportMathaus = new CostTransportMathaus();
@@ -396,6 +440,8 @@ public class TaxeMasiniDialog extends Dialog {
             }
 
         }
+
+        DateLivrare.getInstance().setListTonaje(listTonaje);
 
         HelperMathaus.setTransportTERT(dateLivrare);
 
@@ -479,6 +525,11 @@ public class TaxeMasiniDialog extends Dialog {
                 if (taxaCamion.getTipCamion().equals(taxaTransport.getSelectedCamion()) && isCamionLiftMacara(taxaCamion.getTaxeLivrare()) == taxaTransport.isAcceptaMacara()) {
 
                     if (taxaTransport.getTaxaMacaraAgent() > 0) {
+
+                        if (taxaTransport.getTipMacara().equals(EnumTipMacara.LIFT) && !taxaCamion.getTaxeLivrare().isLift())
+                            continue;
+                        else if (taxaTransport.getTipMacara().equals(EnumTipMacara.MACARA) && !taxaCamion.getTaxeLivrare().isMacara())
+                            continue;
 
                         ArticolDescarcare articol = new ArticolDescarcare();
                         int nrPaleti = HelperMathaus.getNrPaletiFiliala(dateLivrare, taxaTransport.getFiliala());

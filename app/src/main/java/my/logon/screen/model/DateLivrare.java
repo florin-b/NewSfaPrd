@@ -18,6 +18,7 @@ import my.logon.screen.beans.Delegat;
 import my.logon.screen.beans.FurnizorComanda;
 import my.logon.screen.beans.ObiectivConsilier;
 import my.logon.screen.beans.TaxaComanda;
+import my.logon.screen.beans.Tonaj;
 import my.logon.screen.beans.TranspComenzi;
 import my.logon.screen.enums.TipCmdDistrib;
 import my.logon.screen.enums.TipCmdGed;
@@ -118,6 +119,7 @@ public class DateLivrare {
 	private String site;
 	private String ulTrapex;
 	private BeanAdresaGenerica adresaInstalareAC;
+	private List<Tonaj> listTonaje;
 
 	public DateLivrareAfisare getDateLivrareAfisare() {
 		return dateLivrareAfisare;
@@ -862,6 +864,14 @@ public class DateLivrare {
 		this.adresaInstalareAC = adresaInstalareAC;
 	}
 
+	public List<Tonaj> getListTonaje() {
+		return listTonaje;
+	}
+
+	public void setListTonaje(List<Tonaj> listTonaje) {
+		this.listTonaje = listTonaje;
+	}
+
 	public void resetAll() {
 		codJudet = "";
 		numeJudet = "";
@@ -939,6 +949,7 @@ public class DateLivrare {
 		site = "";
 		ulTrapex = "";
 		adresaInstalareAC = null;
+		listTonaje = null;
 	}
 
 }

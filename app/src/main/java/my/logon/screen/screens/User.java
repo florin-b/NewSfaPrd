@@ -95,7 +95,7 @@ public class User extends Activity implements HelperSiteListener, CodPinDialogLi
 		labelFiliala = (TextView) findViewById(R.id.labelFiliala);
 		labelFiliala.setVisibility(View.GONE);
 
-		if (UtilsUser.isAgentOrSD() || UtilsUser.isKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK() || UtilsUser.isCVA()) {
+		if (UtilsUser.isAgentOrSD() || UtilsUser.isKA() || UtilsUser.isUserSDKA() || UtilsUser.isUserSK() || UtilsUser.isCVA() || UtilsUser.isUserIP()) {
 			((LinearLayout) findViewById(R.id.layoutSalarizare)).setVisibility(View.VISIBLE);
 
 			radioSalPermis = (RadioButton) findViewById(R.id.radioSalPermis);

@@ -25,6 +25,7 @@ public class TaxeLivrare {
     private String depart;
     private List<TaxaMasina> taxeDivizii;
     private double totalCuTva;
+    public String defaultTonaj;
 
     public double getTaxaMacara() {
         return taxaMacara;
@@ -192,5 +193,13 @@ public class TaxeLivrare {
 
     public void setTotalCuTva(double totalCuTva) {
         this.totalCuTva = totalCuTva;
+    }
+
+    public String getDefaultTonaj() {
+        return defaultTonaj;
+    }
+
+    public void setDefaultTonaj(String defaultTonaj) {
+        this.defaultTonaj = defaultTonaj;
     }
 }

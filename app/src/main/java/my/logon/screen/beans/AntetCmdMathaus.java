@@ -22,6 +22,7 @@ public class AntetCmdMathaus {
     private String codFurnizor;
     private boolean isLivrareCustodie;
     private boolean isComandaSimulata;
+    private String codAdresa;
 
 
     public String getLocalitate() {
@@ -166,5 +167,13 @@ public class AntetCmdMathaus {
 
     public void setComandaSimulata(boolean comandaSimulata) {
         isComandaSimulata = comandaSimulata;
+    }
+
+    public String getCodAdresa() {
+        return codAdresa;
+    }
+
+    public void setCodAdresa(String codAdresa) {
+        this.codAdresa = codAdresa;
     }
 }

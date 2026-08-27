@@ -723,6 +723,11 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
         paramPret.setTipUser(UserInfo.getInstance().getTipUserSap());
         paramPret.setFilialaAlternativa(ModificareComanda.filialaAlternativaM);
         paramPret.setTipTransport(DateLivrare.getInstance().getTransport());
+        String modB2B = "";
+
+        if (UtilsComenzi.isComandaB2B())
+            modB2B = "X";
+        paramPret.setModB2B(modB2B);
 
         params.put("parametruPret", opArticol.serializeParamPretGed(paramPret));
 
@@ -1455,7 +1460,6 @@ public class SelectArtModificareCmd extends ListActivity implements OperatiiArti
             textProcRed.setFocusable(false);
             tglProc.setEnabled(false);
             textPromo.setVisibility(View.VISIBLE);
-            textPromo.setText("Pret promotional");
             codPromo = "1";
         } else {
 

@@ -1,6 +1,7 @@
 package my.logon.screen.beans;
 
 import my.logon.screen.enums.EnumTipCamion;
+import my.logon.screen.enums.EnumTipMacara;
 
 public class OptiuneLivrare {
 
@@ -9,6 +10,8 @@ public class OptiuneLivrare {
     private TaxaTransport taxaTransport;
     private boolean isMacara;
     private EnumTipCamion tipCamion;
+    private EnumTipMacara tipMacara;
+    private String defaultTonaj;
 
     public String getNumeOptiune() {
         return numeOptiune;
@@ -48,5 +51,21 @@ public class OptiuneLivrare {
 
     public void setTipCamion(EnumTipCamion tipCamion) {
         this.tipCamion = tipCamion;
+    }
+
+    public EnumTipMacara getTipMacara() {
+        return tipMacara;
+    }
+
+    public void setTipMacara(EnumTipMacara tipMacara) {
+        this.tipMacara = tipMacara;
+    }
+
+    public String getDefaultTonaj() {
+        return defaultTonaj;
+    }
+
+    public void setDefaultTonaj(String defaultTonaj) {
+        this.defaultTonaj = defaultTonaj;
     }
 }
