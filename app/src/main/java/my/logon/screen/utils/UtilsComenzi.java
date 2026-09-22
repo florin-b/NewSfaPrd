@@ -561,4 +561,8 @@ public class UtilsComenzi {
         return false;
     }
 
+    public static boolean isExceptieLivrareBU10(DatePoligonLivrare poligonLivrare){
+        return UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals("BU10") && poligonLivrare.getFilialaPrincipala().equals("BU11");
+    }
+
 }

@@ -2127,8 +2127,9 @@ public class SelectAdrLivrCmdGed extends AppCompatActivity implements AsyncTaskL
                 && !DateLivrare.getInstance().getTranspInit().equals("TERT")
                 && !DateLivrare.getInstance().getCodFilialaCLP().equals("BV90")
                 && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaPrincipala())
-                && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaSecundara())) {
-            UtilsComenzi.showFilialaLivrareDialog(this, DateLivrare.getInstance().getCodFilialaCLP());
+                && !UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()).equals(poligonLivrare.getFilialaSecundara())
+                && !UtilsComenzi.isExceptieLivrareBU10(poligonLivrare)) {
+            UtilsComenzi.showFilialaLivrareDialog(this, UtilsComenzi.getFilialaDistrib(DateLivrare.getInstance().getCodFilialaCLP()));
             return;
         }  else if (!UtilsComenzi.isAdresaUnitLogModifCmd(this, ulLivrareModifCmd, poligonLivrare)) {
             return;
